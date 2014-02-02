@@ -102,6 +102,7 @@ header {
 
 #container .inner img {
     max-width: 100%;
+    box-shadow: 0px 00px 15px rgba(0,0,0,.5);
 }
 
 #downloads {

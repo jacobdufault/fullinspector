@@ -22,6 +22,18 @@
                 <hr>
             </header>
 
+            <!--
+            <section id="quicklinks">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#setup">Setup/Installation</a></li>
+                    <li><a href="#tutorial">Tutorial</a></li>
+                    <li><a href="#propertyeditors">Custom Property Editors</a></li>
+                    <li><a href="#issues">Issues</a></li>
+                </ul>
+            </section>
+            -->
+
             <section id="main_content">
                 <h3>
                     <a name="inspect-everything" class="anchor" href="#inspect-everything"><span class="octicon octicon-link"></span></a>Inspect Everything
@@ -39,21 +51,35 @@
                     <li>tooltips and comments via attributes on fields/properties/types</li>
                 </ul>
 
+                <hr />
+
                 <p>For example, using a dictionary couldn't be easier. Here's how to do it:</p>
 
 <pre><code class="language-csharp">[JsonObject(MemberSerialization.OptIn)]
 public class DictionaryDemoBehavior : BaseBehavior {
   [JsonProperty]
-  public Dictionary&lt;string, GameObject&gt; StringGameObjectDictionaryStringGameObjectDictionaryStringGameObjectDictionaryStringGameObjectDictionaryStringGameObjectDictionaryStringGameObjectDictionary;
+  public Dictionary&lt;string, GameObject&gt; StringGameObject;
 }
 </code></pre>
 
-                <p>Full Inspector cleanly integrates <a href="http://james.newtonking.com/json">Json.NET</a> serialization into Unity.</p>
+                <p>With that code, you get this awesome editor:</p>
 
-                <h3>
-                    <a name="issues" class="anchor" href="#issues"><span class="octicon octicon-link"></span></a>Issues
-                </h3>
+                <img src="images/dictionary-behavior.png">
+                
+                <hr />
 
+                <p>As you can tell, Full Inspector cleanly integrates <a href="http://james.newtonking.com/json">Json.NET</a> serialization into Unity.</p>
+
+                <h3>Day to Day Usage</h3>
+                <p>These are some guidelines that you need to keep in mind when programming. They are simple and obvious.</p>
+                <ul>
+                    <li>Derive from <code>BaseBehavior</code>, not <code>MonoBehaviour</code> (<em>enables the custom editor</em>)</li>
+                    <li>If you override <code>Awake</code>, call <code>base.Awake()</code> immediately (<em>enables deserialization from JSON</em>)</li>
+                    <li>Annotate your object with <code>[JsonObject(MemberSerialization.OptIn)]</code> and members with <code>[JsonProperty]</code> (<em>specifies what should be serialized</em>)</li>
+                    <li>Wrap <code>Component</code> references with <code>Ref&lt;&gt;</code> (<em>enables partial component serialization</em>)</li>
+                </ul>
+
+                <h3><a name="issues" class="anchor" href="#issues"><span class="octicon octicon-link"></span></a>Issues</h3>
                 <p>If you have found a bug or general issue, please report it <a href="https://github.com/jacobdufault/fullinspector/issues">here</a>.</p>
             </section>
 
