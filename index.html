@@ -16,6 +16,12 @@
 </head>
 
 <body>
+    <div id="header_container">
+        <div id="header">
+            <a href="http://www.google.com">Purchase Now</a>
+        </div>
+    </div>
+
     <div id="container">
         <div class="inner">
             <header>
@@ -41,21 +47,24 @@
                     <a name="inspect-everything" class="anchor" href="#inspect-everything"><span class="octicon octicon-link"></span></a>Inspect Everything
                 </h3>
 
-                <p>Simply extend from <code>BaseBehavior</code> instead of <code>MonoBehaviour</code>, and you'll be able to use any of the following types in your behaviors:</p>
+                <p>Wouldn't it be awesome if the inspector supported:</p>
 
                 <ul>
-                    <li>interfaces/abstract types (the implementation is selected in the inspector)</li>
+                    <li>interfaces/abstract types (with the implementation selected in the inspector)</li>
                     <li>structs</li>
                     <li>dictionaries</li>
                     <li>arbitrary generic types</li>
                     <li>properties</li>
-                    <li>a better array / list editor (using <a href="https://bitbucket.org/rotorz/reorderable-list-editor-field-for-unity">Rotorz</a>)</li>
+                    <li>a proper array / list editor (using <a href="https://bitbucket.org/rotorz/reorderable-list-editor-field-for-unity">Rotorz</a>)</li>
                     <li>tooltips and comments via attributes on fields/properties/types</li>
                 </ul>
 
-                <hr />
+                <p>With Full Inspector, it does! Further, you get clean and painless <a href="http://james.newtonking.com/json">Json.NET</a> integration.</p>
 
-                <p>For example, using a dictionary couldn't be easier. Here's how to do it:</p>
+                <hr />
+                <h3>Instant Demo</h3>
+
+                <p>Let's see how simple using a dictionary becomes. Here's a custom behavior:</p>
 
 <pre class="prettyprint"><code class="prettyprint">[JsonObject(MemberSerialization.OptIn)]
 public class DictionaryDemoBehavior : BaseBehavior {
@@ -64,29 +73,38 @@ public class DictionaryDemoBehavior : BaseBehavior {
 }
 </code></pre>
 
-                <p>With that code, you get this awesome editor:</p>
+                <p>With that code, you get this awesome editor inside of the inspector:</p>
 
                 <img src="images/dictionary-behavior.png">
                 
                 <hr />
+                <h3>Guidelines</h3>
 
-                <p>As you can tell, Full Inspector cleanly integrates <a href="http://james.newtonking.com/json">Json.NET</a> serialization into Unity.</p>
-
-                <h3>Day to Day Usage</h3>
                 <p>These are some guidelines that you need to keep in mind when programming. They are simple and obvious.</p>
                 <ul>
-                    <li>Derive from <code>BaseBehavior</code>, not <code>MonoBehaviour</code> (<em>enables the custom editor</em>)</li>
-                    <li>If you override <code>Awake</code>, call <code>base.Awake()</code> immediately (<em>enables deserialization from JSON</em>)</li>
-                    <li>Annotate your object with <code>[JsonObject(MemberSerialization.OptIn)]</code> and members with <code>[JsonProperty]</code> (<em>specifies what should be serialized</em>)</li>
-                    <li>Wrap <code>Component</code> references with <code>Ref&lt;&gt;</code> (<em>enables partial component serialization</em>)</li>
+                    <li>Derive from <code>BaseBehavior</code>, not <code>MonoBehaviour</code></li>
+                    <li>If you override <code>Awake</code>, immediately call <code>base.Awake()</code></li>
+                    <li>Annotate types with <code>[JsonObject(MemberSerialization.OptIn)]</code> and members with <code>[JsonProperty]</code></li>
+                    <li>Wrap <code>Component</code> references with <code>Ref&lt;&gt;</code></li>
                 </ul>
 
+                <p>If you have a save game system with special serialization logic, make sure you call <code>FullInspectorSaveManager.SaveAll()</code> before serialization.</p>
+
+                <hr />
                 <h3><a name="issues" class="anchor" href="#issues"><span class="octicon octicon-link"></span></a>Issues</h3>
                 <p>If you have found a bug or general issue, please report it <a href="https://github.com/jacobdufault/fullinspector/issues">here</a>.</p>
+
+                <hr />
+                <h3> Setup / AOT Compilation </h3>
+
+                <p>There is no setup! Simply install from the asset store and you're good to go.</p>
+                <p>If you need AOT compilation support, install <a href="https://www.assetstore.unity3d.com/#/content/11347">this</a> and delete the folder <code>FullInspector\Libraries\Json.NET</code></p>
+
+
             </section>
 
             <footer>
-                Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+                Original tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
             </footer>
 
             <script type="text/javascript">

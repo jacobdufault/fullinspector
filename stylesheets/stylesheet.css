@@ -69,8 +69,29 @@ a {
         color: #c5000c;
     }
 
+/* Make Header Sticky */
+#header_container {
+    background: rgba(1,1,0,0.7);
+    height: 30px;
+    position: fixed;
+    top: 0;
+    margin: 0 auto;
+    width: 100%;
+}
+
+    #header_container a {
+        color: #dddddd;
+        text-shadow: none;
+    }
+
+#header {
+    line-height: 30px;
+    margin: 0 auto;
+    text-align: center;
+}
+
 header {
-    padding-top: 35px;
+    padding-top: 45px;
 }
 
     header h1 {
