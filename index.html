@@ -7,6 +7,8 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <script src="google-code-prettify/run_prettify.js?skin=sons-of-obsidian"></script>
+
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -55,7 +57,7 @@
 
                 <p>For example, using a dictionary couldn't be easier. Here's how to do it:</p>
 
-<pre><code class="language-csharp">[JsonObject(MemberSerialization.OptIn)]
+<pre class="prettyprint"><code class="prettyprint">[JsonObject(MemberSerialization.OptIn)]
 public class DictionaryDemoBehavior : BaseBehavior {
   [JsonProperty]
   public Dictionary&lt;string, GameObject&gt; StringGameObject;
