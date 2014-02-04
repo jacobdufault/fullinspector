@@ -29,7 +29,7 @@
 
 <body>
     <div id="header_container">
-        <div id="header" style="z-index: 100000">
+        <div id="header">
             <a href="http://www.google.com">Get <em>Full Inspector</em></a>
         </div>
     </div>
@@ -68,13 +68,25 @@
 
                 <div id="tabs">
                     <ul>
+                        <li><a href="#demo-dictionaries">Dictionaries</a></li>
                         <li><a href="#demo-interfaces">Interfaces and Abstract Types</a></li>
                         <li><a href="#demo-structs">Structs</a></li>
-                        <li><a href="#demo-dictionaries">Dictionaries</a></li>
                         <li><a href="#demo-generics">Generics</a></li>
                         <li><a href="#demo-lists">Lists and Arrays</a></li>
                         <li><a href="#demo-comments">Comments, Tooltips, and Margins</a></li>
                     </ul>
+
+
+                    <div id="demo-dictionaries">
+<pre class="prettyprint"><code class="prettyprint">[JsonObject(MemberSerialization.OptIn)]
+public class DictionaryDemoBehavior : BaseBehavior {
+  [JsonProperty]
+  public Dictionary&lt;string, GameObject&gt; StringGameObject;
+}
+</code></pre>
+
+                        <img src="images/demo/dictionary.png" />
+                    </div>
 
                     <div id="demo-interfaces">
 <pre class="prettyprint"><code class="prettyprint">[JsonObject(MemberSerialization.OptIn)]
@@ -105,7 +117,6 @@ public class InterfaceDemoBehavior : BaseBehavior {
 
                     </div>
 
-
                     <div id="demo-structs">
 <pre class="prettyprint"><code class="prettyprint">[JsonObject(MemberSerialization.OptIn)]
 public struct Struct {
@@ -128,18 +139,6 @@ public class StructDemoBehavior : BaseBehavior {
 }
 </code></pre>
                         <img src="images/demo/struct.png">                    
-                    </div>
-
-
-                    <div id="demo-dictionaries">
-<pre class="prettyprint"><code class="prettyprint">[JsonObject(MemberSerialization.OptIn)]
-public class DictionaryDemoBehavior : BaseBehavior {
-  [JsonProperty]
-  public Dictionary&lt;string, GameObject&gt; StringGameObject;
-}
-</code></pre>
-
-                        <img src="images/demo/dictionary.png" />
                     </div>
 
 
@@ -205,7 +204,7 @@ public class TooltipsAndCommentsDemoBehavior : BaseBehavior {
                 <hr />
                 <h3>Guidelines</h3>
 
-                <p>These are some guidelines that you need to keep in mind when programming. They are simple and obvious.</p>
+                <p>These are a couple of guidelines to keep in mind when using Full Inspector. Don't worry, they're simple and non-intrusive.</p>
                 <ul>
                     <li>Derive from <code>BaseBehavior</code>, not <code>MonoBehaviour</code></li>
                     <li>If you override <code>Awake</code>, immediately call <code>base.Awake()</code></li>
@@ -232,7 +231,6 @@ public class TooltipsAndCommentsDemoBehavior : BaseBehavior {
                 Original tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
             </footer>
 
-            <!--
             <script type="text/javascript">
                 (function (i, s, o, g, r, a, m) {
                     i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
@@ -244,7 +242,6 @@ public class TooltipsAndCommentsDemoBehavior : BaseBehavior {
                 ga('create', 'UA-47723714-1', 'jacobdufault.github.io');
                 ga('send', 'pageview');
             </script>
-            -->
         </div>
     </div>
 </body>
