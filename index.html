@@ -73,11 +73,14 @@
                         <li><a href="#demo-structs">Structs</a></li>
                         <li><a href="#demo-generics">Generics</a></li>
                         <li><a href="#demo-lists">Lists and Arrays</a></li>
+                        <li><a href="#demo-properties">Properties</a></li>
                         <li><a href="#demo-comments">Comments, Tooltips, and Margins</a></li>
                     </ul>
 
 
                     <div id="demo-dictionaries">
+                        <h2>Dictionaries</h2>
+                        <img src="images/demo/dictionary.png" />
 <pre class="prettyprint"><code class="prettyprint">[JsonObject(MemberSerialization.OptIn)]
 public class DictionaryDemoBehavior : BaseBehavior {
   [JsonProperty]
@@ -85,10 +88,14 @@ public class DictionaryDemoBehavior : BaseBehavior {
 }
 </code></pre>
 
-                        <img src="images/demo/dictionary.png" />
                     </div>
 
                     <div id="demo-interfaces">
+                        <h2>Interfaces and Abstract Types</h2>
+                        <img src="images/demo/interfaces/none.png" width="600">
+                        <img src="images/demo/interfaces/1.png" width="625">
+                        <img src="images/demo/interfaces/2.png" width="650">
+
 <pre class="prettyprint"><code class="prettyprint">[JsonObject(MemberSerialization.OptIn)]
 public interface IInterface {
 }
@@ -111,13 +118,11 @@ public class InterfaceDemoBehavior : BaseBehavior {
     public IInterface MyInterface;
 }
 </code></pre>
-                        <img src="images/demo/interfaces/none.png">
-                        <img src="images/demo/interfaces/1.png">
-                        <img src="images/demo/interfaces/2.png">
-
                     </div>
 
                     <div id="demo-structs">
+                        <h2>Structs</h2>
+                        <img src="images/demo/struct.png">
 <pre class="prettyprint"><code class="prettyprint">[JsonObject(MemberSerialization.OptIn)]
 public struct Struct {
     [JsonProperty]
@@ -138,11 +143,12 @@ public class StructDemoBehavior : BaseBehavior {
     public Struct MyStructValue;
 }
 </code></pre>
-                        <img src="images/demo/struct.png">                    
                     </div>
 
 
                     <div id="demo-generics">
+                        <h2>Generics</h2>
+                        <img src="images/demo/generic.png" />
                         <pre class="prettyprint"><code class="prettyprint">[JsonObject(MemberSerialization.OptIn)]
 public class MyGenericType&lt;T&gt; {
     [JsonProperty]
@@ -155,11 +161,12 @@ public class GenericTypeDemoBehavior : BaseBehavior {
     [JsonProperty]
     public MyGenericType&lt;float&gt; GenericFloat;
 }</code></pre>
-                        <img src="images/demo/generic.png" />
                     </div>
                     
                     
                     <div id="demo-lists">
+                        <h2>Lists and Arrays</h2>
+                        <img src="images/demo/list.gif" />
                         <pre class="prettyprint"><code class="prettyprint">[JsonObject(MemberSerialization.OptIn)]
 public class ListDemoBehavior : BaseBehavior {
     [JsonProperty]
@@ -172,11 +179,24 @@ public class ListDemoBehavior : BaseBehavior {
     public List&lt;GameObject&gt; GameObjects;
 }</code></pre>
 
-                        <img src="images/demo/list.gif" />
                     </div>
 
 
+                    <div id="demo-properties">
+                        <h2>Properties</h2>
+                        <img src="images/demo/properties.png" />
+                        <pre class="prettyprint"><code class="prettyprint">[JsonObject(MemberSerialization.OptIn)]
+public class PropertiesDemoBehavior : BaseBehavior {
+    [JsonProperty]
+    public int MyProperty { get; private set; }
+}</code></pre>
+                    </div>
+
+
+
                     <div id="demo-comments">
+                        <h2>Comments, Tooltips, and Margins</h2>
+                        <img src="images/demo/comment.png" />
                         <pre class="prettyprint"><code class="prettyprint">[JsonObject(MemberSerialization.OptIn)]
 public class TooltipsAndCommentsDemoBehavior : BaseBehavior {
     [Comment("This is a comment")]
@@ -195,7 +215,6 @@ public class TooltipsAndCommentsDemoBehavior : BaseBehavior {
     [JsonProperty]
     public int NotVisibleInInspector;
 }</code></pre>
-                        <img src="images/demo/comment.png" />
                     </div>
 
                 </div>
