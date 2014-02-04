@@ -204,7 +204,7 @@ public class TooltipsAndCommentsDemoBehavior : BaseBehavior {
                 <hr />
                 <h3>Guidelines</h3>
 
-                <p>These are a couple of guidelines to keep in mind when using Full Inspector. Don't worry, they're simple and non-intrusive.</p>
+                <p>These are a couple of guidelines to keep in mind when using Full Inspector. Don't worry, they're simple and unintrusive.</p>
                 <ul>
                     <li>Derive from <code>BaseBehavior</code>, not <code>MonoBehaviour</code></li>
                     <li>If you override <code>Awake</code>, immediately call <code>base.Awake()</code></li>
@@ -213,6 +213,8 @@ public class TooltipsAndCommentsDemoBehavior : BaseBehavior {
                 </ul>
 
                 <p>If you have a save game system with special serialization logic, make sure you call <code>FullInspectorSaveManager.SaveAll()</code> before serialization.</p>
+
+                <p>And of course, there is more documentation with the guide, included in the download. It explains how to write custom property editors so that you can have custom inspectors that support the full range of .NET types.</p>
 
                 <hr />
                 <h3><a name="issues" class="anchor" href="#issues"><span class="octicon octicon-link"></span></a>Issues</h3>
