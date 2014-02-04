@@ -1,0 +1,35 @@
+#tabs {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    background: transparent;
+    border: none;
+}
+
+    #tabs .ui-widget-header {
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid #c0c0c0;
+        -moz-border-radius: 0px;
+        -webkit-border-radius: 0px;
+        border-radius: 0px;
+    }
+
+    #tabs .ui-tabs-nav .ui-state-default {
+        background: transparent;
+        border: none;
+    }
+
+    #tabs .ui-tabs-nav .ui-state-active {
+        /*background: transparent url(img/uiTabsArrow.png) no-repeat bottom center;*/
+        border: none;
+    }
+
+    #tabs .ui-tabs-nav .ui-state-default a {
+        color: #c0c0c0;
+    }
+
+    #tabs .ui-tabs-nav .ui-state-active a {
+        color: #d5000d;
+    }
