@@ -39,12 +39,13 @@
             <header>
                 <h1>Full Inspector</h1>
                 <h2>Unity Inspector support for all .NET types</h2>
+                <h2>Seamless protobuf-net, Json.NET, or custom serialization integration into Unity</h2>
                 <hr>
             </header>
 
             <section id="main_content">
                 <h3>
-                    <a name="inspect-everything" class="anchor" href="#inspect-everything"><span class="octicon octicon-link"></span></a>Inspect Everything
+                    <a name="inspect-everything" class="anchor" href="#inspect-everything"><span class="octicon octicon-link"></span></a>Inspect & Serialize Everything
                 </h3>
 
                 <p>Wouldn't it be awesome if the inspector supported:</p>
@@ -59,12 +60,12 @@
                     <li>tooltips and comments via attributes on fields/properties/types</li>
                 </ul>
 
-                <p>With Full Inspector, it does! Further, you get clean and painless <a href="http://james.newtonking.com/json">Json.NET</a> integration.</p>
+                <p>With Full Inspector, it does! Further, you get awesome serialization integration with your favorite serialization library, whether is be <a href="http://james.newtonking.com/json">Json.NET</a>,  <a href="https://code.google.com/p/protobuf-net/">protobuf-net</a>, or some other custom serialization solution.</p>
 
                 <hr />
                 <h3>Instant Demo</h3>
 
-                <p>Ready to be amazed? Click below to see the code and the generated editor.</p>
+                <p>Ready to be amazed? Click below to see the code and the generated editor. These samples target the Json.NET serializer; the only code that changes for protobuf-net (or your own serializer) are the annotations.</p>
 
                 <div id="tabs">
                     <ul>
@@ -231,9 +232,7 @@ public class TooltipsAndCommentsDemoBehavior : BaseBehavior {
                     <li>Wrap <code>Component</code> references with <code>Ref&lt;&gt;</code></li>
                 </ul>
 
-                <p>If you have a save game system with special serialization logic, make sure you call <code>FullInspectorSaveManager.SaveAll()</code> before serialization.</p>
-
-                <p>And of course, there is more documentation with the guide, included in the download. It explains how to write custom property editors so that you can have custom inspectors that support the full range of .NET types.</p>
+                <p>And of course, there is <em>much</em> more documentation with the <a href="guide-1.10.html">guide</a> or <a href="qa-1.10.html">q/a</a> style document.</p>
 
                 <hr />
                 <h3><a name="support" class="anchor" href="#support"><span class="octicon octicon-link"></span></a>Support</h3>
@@ -241,15 +240,14 @@ public class TooltipsAndCommentsDemoBehavior : BaseBehavior {
 
                 <p>For email support, please click <a href="http://www.google.com/recaptcha/mailhide/d?k=01zBpheh_eHn6xmVehOAEEQg==&amp;c=Zj84NxJm0F1O9SHggdd6IScjVdOYgJXQHp3k-4lsTYw4TU2pY1GcYldoeMNRif2b" onclick="window.open('http://www.google.com/recaptcha/mailhide/d?k\07501zBpheh_eHn6xmVehOAEEQg\75\75\46c\75Zj84NxJm0F1O9SHggdd6IScjVdOYgJXQHp3k-4lsTYw4TU2pY1GcYldoeMNRif2b', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;" title="Reveal this e-mail address">here</a>.</p>
                 <hr />
-                <h3>Setup / AOT Compilation</h3>
+                <h3>Setup</h3>
 
                 <p>There is no setup! Simply install from the asset store and you're good to go.</p>
-                <p>If you need AOT compilation support, install <a href="https://www.assetstore.unity3d.com/#/content/11347">this</a> and delete the folder <code>FullInspector\Libraries\Json.NET</code></p>
 
                 <hr />
                 <h3>Guide</h3>
 
-                <p>The full guide to using Full Inspector is freely available <a href="assets/Guide.pdf">here</a>.</p>
+                <p>The full guide to using Full Inspector is freely available <a href="guide-1.10.html">guide</a>.</p>
 
             </section>
 

@@ -1,0 +1,332 @@
+﻿<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Full Inspector | Guide (1.10)</title>
+    <link rel="stylesheet" href="css/foundation.css" />
+    <script src="js/vendor/modernizr.js"></script>
+    <link href="css/rainbow/github.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+    <div class="row">
+        <div class="large-12 columns">
+            <div data-magellan-expedition="fixed">
+                <dl class="sub-nav">
+                    <!-- <dd><a href="http://u3d.as/6tu">Purchase</a></dd> -->
+                    <dd data-magellan-arrival="overview"><a href="#overview">Overview</a></dd>
+                    <dd data-magellan-arrival="changelog"><a href="#changelog">Changes</a></dd>
+                    <dd data-magellan-arrival="support"><a href="#support">Support</a></dd>
+                    <dd data-magellan-arrival="usage"><a href="#usage">Usage</a></dd>
+                    <dd data-magellan-arrival="customization"><a href="#customization">Customization</a></dd>
+                    <dd data-magellan-arrival="extra-editor-features"><a href="#extra-editor-features">Editor</a></dd>
+                    <dd data-magellan-arrival="custom-property-editors"><a href="#custom-property-editors">Property Editors</a></dd>
+                    <dd data-magellan-arrival="custom-serializers"><a href="#custom-serializers">Serializers</a></dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="large-12 columns">
+            <div data-magellan-destination="overview" class="panel">
+                <h3>Overview</h3>
+                <a name="overview"></a>
+                <p>Congratulations! Full Inspector is a powerful editor extension that will simplify your work-flow as a game developer. It is extremely easy to integrate into your existing project and can accommodate any work-flow.</p>
+
+                <p>The inspector now supports interfaces and abstract types, structs, arbitrary generic types, properties, and has a better list/array editor. Of course, dictionaries are naturally supported too – they go through the normal generic type editing system.</p>
+
+                <p>Full Inspector naturally extends the Unity serialization system. Whether you like Json.NET or protobuf-net (or perhaps your own serialization framework), Full Inspector provides clean serialization integration.</p>
+
+                <p>The document you are currently viewing is the manual for Full Inspector. You may also be interested in the q/a style <a href="qa-1.10.html">document</a>.</p>
+            </div>
+
+
+            <div data-magellan-destination="changelog" class="panel">
+                <h3>Changelog</h3>
+                <a name="changelog"></a>
+
+                <div class="panel">
+                    <h5>1.10</h5>
+                    <ul>
+                        <li>Better deserialization error recovery, particularly if the variable type has changed.</li>
+                        <li>Added support for arbitrary serialization framework support; Full Inspector now ships with serializers for <a href="https://code.google.com/p/protobuf-net/">protobuf-net</a> and <a href="http://james.newtonking.com/json">Json.NET</a>.</li>
+                        <li><code>ScriptableObjects</code> are now fully supported.</li>
+                        <li>Added implicit conversions for <code>Ref</code>, simplifying its usage.</li>
+                        <li>The reflected property editor will now automatically display a fold-out for child <code>PropertyEditors</code> that are relatively tall.</li>
+                        <li>Added user setting to automatically instantiate *all* references (even private ones) in objects when the object has no deserialization data (<code>FullInspectorSettings.AutomaticReferenceInstantation</code>).</li>
+                        <li>Added user setting to disable automatic object instantiation in the inspector (<code>FullInspectorSettings.InspectorAutomaticReferenceInstantation</code>).</li>
+                        <li>Added more content to the manual, added a q/a section.</li>
+                    </ul>
+                </div>
+
+                <div class="panel">
+                    <h5>1.01</h5>
+                    Initial Release!
+                </div>
+            </div>
+
+
+            <div data-magellan-destination="support" class="panel">
+                <h3>Support</h3>
+                <a name="support"></a>
+                <p>Support is freely available for Full Inspector. Bugs and general issues can be reported on the GitHub Issues <a href="https://github.com/jacobdufault/fullinspector/issues?state=open">page</a>. Email contact is also available <a href="http://www.google.com/recaptcha/mailhide/d?k=01zBpheh_eHn6xmVehOAEEQg==&c=Zj84NxJm0F1O9SHggdd6IScjVdOYgJXQHp3k-4lsTYw4TU2pY1GcYldoeMNRif2b">here</a>.</p>
+            </div>
+
+
+
+
+            <div data-magellan-destination="usage" class="panel">
+                <h3>Usage</h3>
+                <a name="usage"></a>
+
+                <div class="panel">
+                    <h4>Working Guide</h4>
+                    <p>The following list is what you need to keep in mind to ensure that your objects serialize correctly and are fully inspectable using Full Inspector.</p>
+                    <ul>
+                        <li>Derive from <code>BaseBehavior</code>, not <code>MonoBehaviour</code></li>
+                        <li>If you override <code>Awake</code>, call <code>base.Awake()</code></li>
+                        <li>Annotate your object with <code>[JsonObject(MemberSerialization.OptIn)]</code> and members with <code>[JsonProperty]</code></li>
+                        <li>Wrap <code>Component</code> references with <code>Ref<></code></li>
+                        <li>(once) Call <code>FullInspectorSaveManager.SaveAll()</code> before custom save-game logic</li>
+                    </ul>
+                </div>
+
+                <div class="panel">
+                    <h4>All about Ref</h4>
+
+                    <div class="panel callout radius">
+                        <p>It's really important to wrap <code>Component</code> references with <code>Ref&lt;&gt;</code>. It allows for the components to be serialized correctly. <code>Ref&lt;&gt;</code> is a struct and will have no performance (gc or cpu) impact.</p>
+                    </div>
+
+                    <p><code>Ref<></code> ensures that the referenced <code>Component</code> serializes as a reference instead of as another full instance of the behavior. Please follow either Right (1) or Right (2). Writing code similar to Wrong will cause your object to be serialize incorrectly.</p>
+
+                    <p>Right (1):</p>
+                    <pre><code>[JsonObject(MemberSerialization.OptIn)]
+public class SampleRefBehavior : BaseBehavior {
+    [JsonProperty]
+    public Ref&lt;BaseBehavior&gt; BehaviorReference;
+}</code></pre>
+                    <p>Right (2):</p>
+                    <pre><code>[JsonObject(MemberSerialization.OptIn)]
+public class SampleRefBehavior : BaseBehavior {
+    [JsonProperty]
+    [JsonConverter(typeof(ComponentConverter))]
+    public BaseBehavior BehaviorReference;
+}</code></pre>
+                    <p>Wrong:</p>
+                    <pre><code>[JsonObject(MemberSerialization.OptIn)]
+public class SampleRefBehavior : BaseBehavior {
+    [JsonProperty]
+    public BaseBehavior BehaviorReference;
+}</code></pre>
+
+                    <p><code>Ref<></code> instances serialize identically to how Unity serializes <code>UnityEngine.Objects</code>; they exhibit the same behavior when the containing <code>GameObject</code> becomes a prefab, when it is instantiated, etc.</p>
+                </div>
+
+
+                <div class="panel">
+                    <h4>Using protobuf-net or another serializer instead of Json.NET</h4>
+                    <p><code>BaseBehavior</code> uses Json.NET by default for serialization because it derives from <code>BaseBehavior&lt;JsonNetSerializer&gt;</code>. If you want to use protobuf-net, just derive from <code>BaseBehavior&lt;ProtobufNetSerializer&gt;</code> or modify <code>BaseBehavior</code> so that it derives from <code>BaseBehavior&lt;ProtobufNetSerializer&gt;</code> instead.</p>
+
+                    <div class="panel">
+                        <p><code>JsonNetSerializer</code> is located in the  <code>FullInspector.Serializers.JsonNet</code> namespace.</p>
+                        <p><code>ProtobufNetSerializer</code> is located in the <code>FullInspector.Serializers.ProtobufNet</code> namespace.</p>
+                    </div>
+
+                    <p>Not every behavior has to use the same serializer; you can freely mix them.</p>
+
+                    <p>If you use protobuf-net, you'll have to use the protobuf-net annotations instead of the Json.NET ones. Otherwise, usage of Full Inspector does not change.</p>
+
+                    <p>You can also write your own serializer; the current ones are located in <kbd>FullInspector/FullInspector/Serializers</kbd>.</p>
+                </div>
+
+                <div class="panel callout radius">
+                    <p>If you have custom save-game logic, make sure that you run <code>FullInspectorSaveManager.SaveAll()</code> before your save logic; it will ensure that every <code>BaseBehavior</code> instance is ready to go through Unity serialization. Saves can be detected automatically in the editor but not in a published build.</p>
+                </div>
+
+                <div class="panel callout radius">
+                    <p>One potential gotcha with serialization: each <code>BaseBehavior</code> is serialized independently. If you have a class instance that is shared across multiple <code>BaseBehaviors</code>, it will be deserialized into multiple separate instances. You can ensure that it deserializes into one instance by deriving from a <code>UnityEngine.Object</code> child class, such as <code>BaseScriptableObject</code>.</p>
+                </div>
+
+                <div class="panel">
+                    <p>There are many samples inside of <kbd>Full Inspector/Samples</kbd>. Please feel free to view them. However, the full source code has been provided and it is highly commented, so please feel free to peruse it as well to understand how Full Inspector works internally.</p>
+                </div>
+            </div>
+
+
+            <div data-magellan-destination="customization" class="panel">
+                <h3>Customization</h3>
+                <a name="customization"></a>
+
+                <p>There are a couple of special attributes that you can apply to your class members to provide some easy inspector customization.</p>
+
+                <table>
+                    <tr>
+                        <th>CommentAttribute</th>
+                        <td>Add a comment below the given field/property/type</td>
+                    </tr>
+                    <tr>
+                        <th>TooltipAttribute</th>
+                        <td>Add a tooltip viewable after hovering over the field/property</td>
+                    </tr>
+                    <tr>
+                        <th>MarginAttribute</th>
+                        <td>Add space above the given field/property</td>
+                    </tr>
+                    <tr>
+                        <th>HiddenAttribute</th>
+                        <td>Don’t show this attribute in the inspector (by default, every member is shown, even private ones)</td>
+                    </tr>
+                </table>
+
+                <p>Please see <code>FullInspectorSettings</code> to customize how Full Inspector operates. It is located at <kbd>FullInspector/FullInspector/FullInspectorSettings.cs</kbd></p>
+
+                <table>
+                    <tr>
+                        <th>ForceSaveAllAssetsOnSceneSave</th>
+                        <td>A scene has just been saved. If true, then <em>every</em> <code>BaseBehavior</code> will be saved, not just the ones that have been modified.</td>
+                    </tr>
+                    <tr>
+                        <th>ForceSaveAllAssetsOnRecompilation</th>
+                        <td>A recompilation has been detected. If true, then <em>every</em> <code>BaseBehavior</code> will be saved, not just the ones that have been modified.</td>
+                    </tr>
+                    <tr>
+                        <th>AutomaticReferenceInstantation</th>
+                        <td>If true, then all fields/properties in a object that has no deserialization data will be instantiated to their default constructor value.</td>
+                    </tr>
+                    <tr>
+                        <th>InspectorAutomaticReferenceInstantation</th>
+                        <td>If true, then the reflected inspector will automatically instantiated null values to their default constructor value.</td>
+                    </tr>
+                </table>
+            </div>
+
+
+
+            <div data-magellan-destination="extra-editor-features" class="panel">
+                <h3>Extra Editor Features</h3>
+                <a name="extra-editor-features"></a>
+                <p>You can right-click on any component which derives from <code>BaseBehavior</code> to manually save its current state or restore its last saved state. Further, you can select <kbd>Window/FullInspector/Show Serialized State</kbd> in the Unity top-menu to view the currently serialized state of the object directly below the inspector content. This JSON is modifiable and the state of the behavior will update in real time to the serialized state modifications.</p>
+            </div>
+
+
+
+            <div data-magellan-destination="custom-property-editors" class="panel">
+                <h3>Custom Property Editors</h3>
+                <a name="custom-property-editors"></a>
+                <p>Full Inspector works its magic via a fully rewritten editing system inspired by <code>PropertyDrawer</code>; however, Full Inspector continues where <code>PropertyDrawer</code> stops. You only need to read this section if you’re interested in writing a custom property editor.</p>
+
+                <p>Writing a property editor is similar to writing a custom <code>PropertyDrawer</code>. We’ll go through how to write a <code>PropertyEditor</code> through a couple of real examples that are being used in Full Inspector. You can view all of the PropertyEditors in <kbd>FullInspector/FullInspector/Editor/PropertyEditors/Common</kbd>.</p>
+
+                <div class="panel callout">
+                    <p>If you want to completely replace the editor for a component, simply write a <code>PropertyEditor</code> for that component type.</p>
+                </div>
+
+                <div class="panel">
+
+                    <h4>Simple (non-generic) Property Editors</h4>
+
+                    <p>Let’s look at an extremely simple case: the property editor that gets invoked for <code>ints</code>.</p>
+
+                    <pre><code>[CustomPropertyEditor(typeof(int))]
+public class IntPropertyEditor : PropertyEditor&lt;int&gt; {
+    public override int Edit(Rect region, GUIContent label, int element) {
+        return EditorGUI.IntField(region, label, element);
+    }
+    public override float GetElementHeight(GUIContent label, int element) {
+        return EditorStyles.numberField.CalcHeight(label, 1000);
+    }
+}</code></pre>
+
+                    <p>Notice that this property editor is a public type that derives from <code>PropertyEditor&lt;int&gt;</code>. <code>PropertyEditor&lt;int&gt;</code> (which derives from <code>IPropertyEditor</code>) provides a type-safe version of <code>IPropertyEditor</code>. <code>IPropertyEditor</code> provides the core API that Full Inspector uses to interact with property editors.</p>
+
+                    <p>Next notice that this type has an attribute <code>[CustomPropertyEditor(typeof(int))]</code>; this notifies the property editing system that this type can be used to edit ints.</p>
+
+                    <p>The <code>Edit</code> callback simply provides the actual Unity editing experience; we just forward the call to <code>EditorGUI</code>; <code>GetElementHeight</code> returns how tall this property should be for the given label and property element.</p>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <h4>Generic Property Editors</h4>
+
+                    <p>The previous property editor is also writeable using a <code>PropertyDrawer</code>. However, <code>PropertyDrawer</code> lacks support for generic types; let’s see how the <code>PropertyEditor</code> for <code>Ref&lt;&gt;</code> is written.</p>
+
+                    <pre><code>[CustomPropertyEditor(typeof(Ref&lt;&gt;))]
+public class RefPropertyEditor&lt;ComponentType&gt; : PropertyEditor&lt;Ref&lt;ComponentType&gt;&gt;
+    where ComponentType : Component {
+    private IPropertyEditor _componentPropertyEditor = PropertyEditor.Get(typeof(ComponentType));
+    public override Ref&lt;ComponentType&gt; Edit(Rect region, GUIContent label, Ref&lt;ComponentType&gt; element) {
+        ComponentType component = (ComponentType)_componentPropertyEditor.Edit(region, label, element.Value);
+        return new Ref&lt;ComponentType&gt; {
+            Value = component
+        };
+    }
+    public override float GetElementHeight(GUIContent label, Ref&lt;ComponentType&gt; element) {
+        return _componentPropertyEditor.GetElementHeight(label, element.Value);
+    }
+}</code></pre>
+
+                    <p>This property editor looks very similar to the previous non-generic one, except that it is a generic type (class <code>RefPropertyEditor&lt;ComponentType&gt;</code>) and its attribute references an open generic type <code>Ref&lt;&gt;</code> (<code>[CustomPropertyEditor(typeof(Ref&lt;&gt;))]</code>).</p>
+
+                    <p>The only special part of generic property editors is that they have matching generic arguments for the generic property type that they edit.</p>
+
+                    <p>Here’s another example of how to define generic property editors:</p>
+
+                    <pre><code>public class Pair&lt;T1, T2&gt; { }
+[CustomPropertyEditor(typeof(Pair&lt;,&gt;))]
+public class PairPropertyEditor&lt;T1, T2&gt; : PropertyEditor&lt;Pair&lt;T1, T2&gt;&gt; { /*omitted*/ }
+</code></pre>
+
+                    <p>Again notice that the pattern holds.</p>
+
+                    <p>Let’s get back to the <code>RefPropertyEditor</code>. It doesn’t look like Edit and GetElementHeight do much except forward calls to some weird value called <code>_componentPropertyEditor</code>. This <code>_componentPropertyEditor</code> is actually the property editor for the component type that the <code>RefPropertyEditor</code> is editing. This is one of the key patterns for writing generic property editors: we defer editing the actual generic parameters to some other property editor. More complex generic property editors (for example, the dictionary or list ones) do more work before dispatching to other property editors, but the core idea remains the same.</p>
+                </div>
+
+                <div class="panel">
+                    <h3>Inherited Property Editors</h3>
+
+                    <p>So you’ve gone digging through the property editors and have noticed that there is no <code>ListPropertyEditor</code>! How does Full Inspector provide editing for <code>List</code>, <code>LinkedList</code>, … types? Full Inspector also provides property editors which are inherited to their child types. So, if you look closely, there is actually an <code>IListPropertyEditor</code> and an <code>IDictionaryPropertyEditor</code>. Why don’t we take a closer look at the <code>IListPropertyEditor</code>?</p>
+
+                    <pre><code>[CustomPropertyEditor(typeof(IList&lt;&gt;), Inherit = true)]
+public class IListPropertyEditor&lt;TList, TData&gt; : PropertyEditor&lt;TList&gt;
+        /* constraints omitted */ {
+    /* implementation omitted */
+}</code></pre>
+
+                    <p>The code and constraints behind the property editor has been omitted; they are not relevant to inherited property editors.</p>
+
+                    <p>Notice that <code>IListPropertyEditor</code> takes two generic arguments, despite the fact that <code>IList</code> takes only one! This is because for every inherited property editor, the first generic argument is always the derived type that the property editor is editing. So for <code>List&lt;int&gt;</code>, the property editor will be an instance of <code>IListPropertyEditor&lt;List&lt;int&gt;, int&gt;</code></p>
+
+                    <p>Also notice that for the attribute <code>[CustomPropertyEditor(typeof(IList&lt;&gt;), Inherit = true)]</code>, inherit has been set to true; by default, it is false.</p>
+
+                    <p>Inherited property editors also work with non-generic types. The property editor for non-generic types can have either zero or one generic arguments; if it has one, it will be the actual property type the property editor is editing.</p>
+                </div>
+            </div>
+
+
+            <div data-magellan-destination="custom-serializers" class="panel">
+                <h3>Custom Serializers</h3>
+                <a name="custom-serializers"></a>
+
+                <p>You have a serialization framework and want to use it inside of Full Inspector; how do you do that? Luckily, Full Inspector (since 1.1) has fantastic support for third party serializers.</p>
+
+                <p>The current serializers are located in <kbd>FullInspector/FullInspector/Serializers</kbd>. Feel free to take a look at the existing ones.</p>
+
+                <p>The process to create a new serializer is simple. Simply derive from <code>BaseSerializer</code> and implement the abstract methods. If you come across a <code>UnityEngine.Object</code> reference, make sure to serialize it using <code>SerializationHelpers.StoreObjectReference</code> and deserialize it using <code>SerializationHelpers.RetrieveObjectReference</code>. This ensures that the object reference will be treated correctly, when, e.g., the object becomes a prefab.</p>
+
+                <p>Lets say you created a new serializer called <code>MySerializer</code>. How do you actually use it? Simple: derive from <code>BaseBehavior&lt;MySerializer&gt;</code>. That's it.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/foundation.min.js"></script>
+    <script src="js/vendor/rainbow.min.js"></script>
+    <script>
+        $(document).foundation();
+    </script>
+</body>
+</html>
