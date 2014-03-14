@@ -146,7 +146,7 @@ Json.NET
 Please follow these steps to use Json.NET on AOT platforms:
 
 1. Purchase and install `Json.NET for Unity <http://u3d.as/5q2>`_ from the Asset Store.
-2. Delete *"FullInspector2/Serializers/JsonNet/DLLS"
+2. Delete *"FullInspector2/Serializers/JsonNet/DLLS"*
 
 That's it! You're now good to go for AOT platforms!
 

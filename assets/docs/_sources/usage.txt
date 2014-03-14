@@ -40,10 +40,11 @@ Here's an example of how to use Full Inspector with Json.NET:
         public Struct PublicValue;
 
         [SerializeField]
+        [ShowInInspector]
         private Struct _hidden;
     }
 
-.. image:: _static/usage_jsonnet.png
+.. image:: static/usage_jsonnet.png
 
 -------------------------
 
@@ -76,7 +77,7 @@ Or perhaps you prefer protobuf-net?
         public IInterface MyInterface;
     }
 
-.. image:: _static/usage_protobufnet.png
+.. image:: static/usage_protobufnet.png
 
 -------------------------
 
@@ -99,7 +100,7 @@ Or maybe even BinaryFormatter (beta)?
         public Dictionary<Enum, string> EnumStringDict;
     }
 
-.. image:: _static/usage_binaryformatter.png
+.. image:: static/usage_binaryformatter.png
 
 -------------------------
 
