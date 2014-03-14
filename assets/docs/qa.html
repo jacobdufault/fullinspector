@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Q/A &mdash; Full Inspector Documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Full Inspector Documentation" href="index.html" />
+    <link rel="next" title="API Reference" href="api_reference.html" />
+    <link rel="prev" title="Custom Serializers" href="custom_serializers.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="api_reference.html" title="API Reference"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="custom_serializers.html" title="Custom Serializers"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Full Inspector Documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changes.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="customization.html">Customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra_editor_features.html">Extra Editor Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_property_editors.html">Custom Property Editors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_serializers.html">Custom Serializers</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Q/A</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#i-cannot-derive-from-basebehavior-or-basescriptableobject">I cannot derive from BaseBehavior or BaseScriptableObject</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#does-full-inspector-impact-runtime-performance">Does Full Inspector impact runtime performance?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#i-want-to-use-ios-or-another-aot-platform">I want to use iOS or another AOT platform</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#binaryformatter">BinaryFormatter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#json-net">Json.NET</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#protobuf-net">protobuf-net</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="custom_serializers.html"
+                        title="previous chapter">Custom Serializers</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="api_reference.html"
+                        title="next chapter">API Reference</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="q-a">
+<h1>Q/A<a class="headerlink" href="#q-a" title="Permalink to this headline">¶</a></h1>
+<p>This document contains answers to common questions regarding Full Inspector.</p>
+<div class="section" id="i-cannot-derive-from-basebehavior-or-basescriptableobject">
+<h2>I cannot derive from BaseBehavior or BaseScriptableObject<a class="headerlink" href="#i-cannot-derive-from-basebehavior-or-basescriptableobject" title="Permalink to this headline">¶</a></h2>
+<p>Full Inspector has been designed to handle this scenario, but it&#8217;ll require a little bit of boilerplate code. Below is the boilerplate code that you need to enable serialization.</p>
+<p>Funnily enough, if you look into the actual code behind <code class="docutils literal highlight highlight-csharp"><span class="n">BaseBehavior</span></code> and <code class="docutils literal highlight highlight-csharp"><span class="n">BaseScriptableObject</span></code>, you&#8217;ll find it to be almost identical to the code below.</p>
+<div class="code c# highlight-csharp"><div class="highlight"><pre><span class="c1">/// &lt;summary&gt;</span>
+<span class="c1">/// This is your base type that extends some other type. It contains boilerplate code to get</span>
+<span class="c1">/// serialization working correctly.</span>
+<span class="c1">/// &lt;/summary&gt;</span>
+<span class="c1">/// &lt;typeparam name=&quot;TSerializer&quot;&gt;The type of serializer that will be used.&lt;/typeparam&gt;</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">CustomBaseType</span><span class="p">&lt;</span><span class="n">TSerializer</span><span class="p">&gt;</span> <span class="p">:</span> <span class="n">MonoBehaviour</span><span class="p">,</span> <span class="n">ISerializedObject</span>
+    <span class="k">where</span> <span class="n">TSerializer</span> <span class="p">:</span> <span class="n">BaseSerializer</span> <span class="p">{</span>
+
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// This awake base method calls RestoreState() by default. If you override this method, it</span>
+    <span class="c1">/// is *critically* important that this be the first call made in your Awake method. If it</span>
+    <span class="c1">/// is not, then your component may not be deserialized when you go to access values.</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+    <span class="k">protected</span> <span class="k">virtual</span> <span class="k">void</span> <span class="nf">Awake</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">RestoreState</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// Save the state of component so that it can go through Unity serialization correctly.</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">SaveState</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">SerializationHelpers</span><span class="p">.</span><span class="n">SaveState</span><span class="p">&lt;</span><span class="n">TSerializer</span><span class="p">&gt;(</span><span class="k">this</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// Restore the state of the component after it has gone through Unity serialization. If the</span>
+    <span class="c1">/// component has already been restored, it will be reset to its last saved state.</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+    <span class="k">public</span> <span class="k">void</span> <span class="nf">RestoreState</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">SerializationHelpers</span><span class="p">.</span><span class="n">RestoreState</span><span class="p">&lt;</span><span class="n">TSerializer</span><span class="p">&gt;(</span><span class="k">this</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// Serializing references derived from UnityObject is tricky for a number of reasons, so we</span>
+    <span class="c1">/// just let Unity handle it. The object can be modified in the inspector and be deleted, or</span>
+    <span class="c1">/// it can become a prefab. Further, there is no good way to uniquely identify components</span>
+    <span class="c1">/// and game objects that handle prefabs and instantiation well. We therefore just let Unity</span>
+    <span class="c1">/// serialize our references for us.</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+<span class="na">    [SerializeField]</span>
+    <span class="k">private</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">UnityEngine</span><span class="p">.</span><span class="n">Object</span><span class="p">&gt;</span> <span class="n">_objectReferences</span><span class="p">;</span>
+    <span class="n">List</span><span class="p">&lt;</span><span class="n">UnityEngine</span><span class="p">.</span><span class="n">Object</span><span class="p">&gt;</span> <span class="n">ISerializedObject</span><span class="p">.</span><span class="n">SerializedObjectReferences</span> <span class="p">{</span>
+        <span class="k">get</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">_objectReferences</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">set</span> <span class="p">{</span>
+            <span class="n">_objectReferences</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// The key fields that are serialized. These map to the properties/fields that Full</span>
+    <span class="c1">/// Inspector has discovered in the behavior type that need to be serialized. This value</span>
+    <span class="c1">/// needs to be serialized by Unity and therefore cannot be auto-implemented by a property.</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+<span class="na">    [SerializeField]</span>
+    <span class="k">private</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="n">_serializedStateKeys</span><span class="p">;</span>
+    <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="n">ISerializedObject</span><span class="p">.</span><span class="n">SerializedStateKeys</span> <span class="p">{</span>
+        <span class="k">get</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">_serializedStateKeys</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">set</span> <span class="p">{</span>
+            <span class="n">_serializedStateKeys</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// The value fields that are serialized. These correspond to the key fields that Full</span>
+    <span class="c1">/// Inspector has discovered in the behavior type that need to be serialized. This value</span>
+    <span class="c1">/// needs to be serialized by Unity and therefore cannot be auto-implemented by a property.</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+<span class="na">    [SerializeField]</span>
+    <span class="k">private</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="n">_serializedStateValues</span><span class="p">;</span>
+
+    <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="n">ISerializedObject</span><span class="p">.</span><span class="n">SerializedStateValues</span> <span class="p">{</span>
+        <span class="k">get</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">_serializedStateValues</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">set</span> <span class="p">{</span>
+            <span class="n">_serializedStateValues</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">/// &lt;summary&gt;</span>
+    <span class="c1">/// Has the behavior been restored? This is automatically set to true by the serialization</span>
+    <span class="c1">/// system after the behavior has been restored. This value should *not* be serialized.</span>
+    <span class="c1">/// &lt;/summary&gt;</span>
+<span class="na">    [NonSerialized]</span>
+    <span class="k">private</span> <span class="kt">bool</span> <span class="n">_restored</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">ISerializedObject</span><span class="p">.</span><span class="n">Restored</span> <span class="p">{</span>
+        <span class="k">get</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_restored</span><span class="p">;</span> <span class="p">}</span>
+        <span class="k">set</span> <span class="p">{</span> <span class="n">_restored</span> <span class="p">=</span> <span class="k">value</span><span class="p">;</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You&#8217;re also going to want to create an editor for <code class="docutils literal highlight highlight-csharp"><span class="n">CustomBaseType</span><span class="p">&lt;</span><span class="n">TSerializer</span><span class="p">&gt;</span></code>. To do this, we need to also perform some generic type erasure. Just introduce a type <code class="docutils literal highlight highlight-csharp"><span class="n">CustomBaseTypeErased</span> <span class="p">:</span> <span class="n">MonoBehavior</span><span class="p">,</span> <span class="n">ISerializedObject</span></code> that <code class="docutils literal highlight highlight-csharp"><span class="n">CustomBaseType</span><span class="p">&lt;</span><span class="n">TSerializer</span><span class="p">&gt;</span></code> derives from. Then, we can write an editor for <code class="docutils literal highlight highlight-csharp"><span class="n">CustomBaseTypeErased</span></code></p>
+<div class="code c# highlight-csharp"><div class="highlight"><pre><span class="na">[CustomEditor(typeof(CustomBaseTypeErased), true)]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">CustomBaseTypeErasedEditor</span> <span class="p">:</span> <span class="n">FullInspectorCommonSerializedObjectEditor</span> <span class="p">{</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>This <code class="docutils literal highlight highlight-csharp"><span class="n">CustomBaseTypeErasedEditor</span></code> will be used for <code class="docutils literal highlight highlight-csharp"><span class="n">CustomBaseType</span><span class="p">&lt;</span><span class="n">TSerializer</span><span class="p">&gt;</span></code>. <code class="docutils literal highlight highlight-csharp"><span class="n">FullInspectorCommonSerializedObjectEditor</span></code> provides the inspector editing experience for you.</p>
+</div>
+<div class="section" id="does-full-inspector-impact-runtime-performance">
+<h2>Does Full Inspector impact runtime performance?<a class="headerlink" href="#does-full-inspector-impact-runtime-performance" title="Permalink to this headline">¶</a></h2>
+<p>No! The only impact that Full Inspector has is a call to Awake for every object that requires special serialization support. The Awake call merely deserializes the object.</p>
+<p>Full Inspector imposes no runtime impacts (such as a call to Update); in fact, your code will likely run faster will Full Inspector due to less GC pressure because you can now extensively use structs.</p>
+</div>
+<div class="section" id="i-want-to-use-ios-or-another-aot-platform">
+<h2>I want to use iOS or another AOT platform<a class="headerlink" href="#i-want-to-use-ios-or-another-aot-platform" title="Permalink to this headline">¶</a></h2>
+<p>Awesome! Full Inspector Core supports AOT compilation quite well. On iOS, Full Inspector Core currently supports both Strip assemblies and Strip ByteCode.</p>
+<p>The other big question w.r.t. AOT compilation is your chosen serializer. For a multitude of reasons, it is <em>strongly</em> recommended that you use Json.NET.</p>
+</div>
+</div>
+<div class="section" id="binaryformatter">
+<h1>BinaryFormatter<a class="headerlink" href="#binaryformatter" title="Permalink to this headline">¶</a></h1>
+<p>You don&#8217;t have to do anything! Full Inspector will automatically configure BinaryFormatter to use reflection on iOS and other AOT platforms.</p>
+</div>
+<div class="section" id="json-net">
+<h1>Json.NET<a class="headerlink" href="#json-net" title="Permalink to this headline">¶</a></h1>
+<p>Please follow these steps to use Json.NET on AOT platforms:</p>
+<ol class="arabic simple">
+<li>Purchase and install <a class="reference external" href="http://u3d.as/5q2">Json.NET for Unity</a> from the Asset Store.</li>
+<li>Delete <a href="#id1"><span class="problematic" id="id2">*</span></a>&#8220;FullInspector2/Serializers/JsonNet/DLLS&#8221;</li>
+</ol>
+<p>That&#8217;s it! You&#8217;re now good to go for AOT platforms!</p>
+</div>
+<div class="section" id="protobuf-net">
+<h1>protobuf-net<a class="headerlink" href="#protobuf-net" title="Permalink to this headline">¶</a></h1>
+<p>We&#8217;re still working on getting easy protobuf-net support for AOT platforms! Don&#8217;t worry though, it&#8217;s coming.</p>
+<p>Right now, here&#8217;s what the process will probably look like:</p>
+<ol class="arabic simple">
+<li>Compile Full Inspector into a DLL format</li>
+<li>Add all of your types annotated with a <code class="docutils literal highlight highlight-csharp"><span class="na">[ProtoContract]</span></code> or that are referenced by the protobuf-net serializer into a separate DLL.</li>
+<li>Run <em>&#8220;Window/Full Inspector/Compile protobuf-net Serialization DLL&#8221;</em></li>
+</ol>
+<p>You should now be able to use protobuf-net on AOT platforms. However, this is still <em>beta</em>.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="api_reference.html" title="API Reference"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="custom_serializers.html" title="Custom Serializers"
+             >previous</a> |</li>
+        <li><a href="index.html">Full Inspector Documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Jacob Dufault.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Changelog &mdash; Full Inspector Documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Full Inspector Documentation" href="index.html" />
+    <link rel="next" title="Usage" href="usage.html" />
+    <link rel="prev" title="Support" href="support.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="usage.html" title="Usage"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="support.html" title="Support"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Full Inspector Documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">1.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">1.10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">1.01</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="customization.html">Customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra_editor_features.html">Extra Editor Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_property_editors.html">Custom Property Editors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_serializers.html">Custom Serializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qa.html">Q/A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qa.html#binaryformatter">BinaryFormatter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qa.html#json-net">Json.NET</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qa.html#protobuf-net">protobuf-net</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="support.html"
+                        title="previous chapter">Support</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="usage.html"
+                        title="next chapter">Usage</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>2.0<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>This is a big update! It is unfortunately not backwards compatible.</p>
+<ul class="simple">
+<li>Ref has been removed!</li>
+<li>You no longer have to annotate your <code class="docutils literal highlight highlight-csharp"><span class="n">BaseBehavior</span></code> derived type. In <code class="docutils literal highlight highlight-csharp"><span class="n">BaseBehaviors</span></code>, public fields / properties are serialized by default. You can also serialize private fields by annotating them with <code class="docutils literal highlight highlight-csharp"><span class="na">[SerializeField]</span></code>. Fields / properties will not be serialized if they are annotated with <code class="docutils literal highlight highlight-csharp"><span class="na">[NonSerialized]</span></code> or <code class="docutils literal highlight highlight-csharp"><span class="na">[NotSerialized]</span></code>.</li>
+<li>A (beta) BinaryFormatter serializer has been added</li>
+<li>An experimental EasySave2 serializer has been added</li>
+<li>Full Inspector now resides inside a <em>&#8220;FullInspector2&#8221;</em> folder due to a directory reorganization. Please make sure to delete your <em>&#8220;FullInspector&#8221;</em> directory if upgrading.</li>
+<li>Added a setting to disable automatic display of public properties in the inspector (<code class="docutils literal highlight highlight-csharp"><span class="n">FullInspectorSettings</span><span class="p">.</span><span class="n">InspectorAutomaticallyShowPublicPropertie</span></code>)</li>
+<li>Added a setting to automatically restore all assets on recompilation (<code class="docutils literal highlight highlight-csharp"><span class="n">FullInspectorSettings</span><span class="p">.</span><span class="n">ForceRestoreAllAssetsOnRecompilation</span></code>)</li>
+<li>Json.NET compatibility fixes for Json.NET from the Asset Store.</li>
+<li>Better prefab revert support</li>
+<li>(beta) protobuf-net one-click precompilation support</li>
+<li>Namespace changes, most things moved into FullInspector.Internal</li>
+<li>Foldouts are no longer displayed for structs &#8211; sorry! Hopefully this will get reenabled in the future, but it the current solution doesn&#8217;t support it.</li>
+<li><code class="docutils literal highlight highlight-csharp"><span class="n">SaveState</span></code> now marks an object as dirty if running in the editor</li>
+<li>The samples have been redesigned and sample scenes are now included.</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>1.2<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Use <code class="docutils literal highlight highlight-csharp"><span class="n">AbstractPropertyEditor</span></code> if the inspected type has any derived types</li>
+<li>Support generic derived types in the <code class="docutils literal highlight highlight-csharp"><span class="n">AbstractPropertyEditor</span></code></li>
+<li>Support object instantiation in the inspector for types without default constructors</li>
+<li>Full Inspector now only shows public variables by default in the inspector. Non-public properties / fields can be shown by adding a <code class="docutils literal highlight highlight-csharp"><span class="na">[ShowInInspector]</span></code> attribute</li>
+<li>Deprecate <code class="docutils literal highlight highlight-csharp"><span class="na">[Hidden]</span></code> in favor of <code class="docutils literal highlight highlight-csharp"><span class="na">[HideInInspector]</span></code></li>
+<li>Json.NET modified to support compilation with UnityVS</li>
+<li>Correct foldout width so that the header element is usable when foldout is active</li>
+<li>The enum property editor now identifies <code class="docutils literal highlight highlight-csharp"><span class="na">[Flags]</span></code> enums and shows a mask popup</li>
+<li>Support custom editors for enum types</li>
+<li>Allow inherited property editors to be overridden</li>
+<li>Added button sample</li>
+<li>Make it obvious in the inspector when a <code class="docutils literal highlight highlight-csharp"><span class="n">UnityEngine</span><span class="p">.</span><span class="n">Object</span></code> is not wrapped in a <code class="docutils literal highlight highlight-csharp"><span class="n">Ref</span><span class="p">&lt;&gt;</span></code></li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>1.10<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Better deserialization error recovery, particularly if the variable type has changed.</li>
+<li>Added support for arbitrary serialization framework support; Full Inspector now ships with serializers for protobuf-net and Json.NET.</li>
+<li><code class="docutils literal highlight highlight-csharp"><span class="n">ScriptableObjects</span></code> are now fully supported.</li>
+<li>Added implicit conversions for <code class="docutils literal highlight highlight-csharp"><span class="n">Ref</span></code>, simplifying its usage.</li>
+<li>The reflected property editor will now automatically display a fold-out for child <code class="docutils literal highlight highlight-csharp"><span class="n">PropertyEditors</span></code> that are relatively tall.</li>
+<li>Added user setting to automatically instantiate <em>all</em> references (even private ones) in objects when the object has no deserialization data (<code class="docutils literal highlight highlight-csharp"><span class="n">FullInspectorSettings</span><span class="p">.</span><span class="n">AutomaticReferenceInstantation</span></code>).</li>
+<li>Added user setting to disable automatic object instantiation in the inspector (<code class="docutils literal highlight highlight-csharp"><span class="n">FullInspectorSettings</span><span class="p">.</span><span class="n">InspectorAutomaticReferenceInstantation</span></code>).</li>
+<li>Added more content to the manual, added a QA section.</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h2>1.01<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Initial release!</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="usage.html" title="Usage"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="support.html" title="Support"
+             >previous</a> |</li>
+        <li><a href="index.html">Full Inspector Documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Jacob Dufault.
+    </div>
+  </body>
+</html>

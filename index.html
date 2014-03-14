@@ -30,7 +30,7 @@
 <body>
     <div id="header_container">
         <div id="header">
-            <a href="http://u3d.as/6tu">Get <em>Full Inspector</em></a>
+            <p><a href="http://u3d.as/6tu">Purchase</a> | <a href="http://goo.gl/mJWI5K">Free Trial</a></p>
         </div>
     </div>
 
@@ -39,7 +39,7 @@
             <header>
                 <h1>Full Inspector</h1>
                 <h2>Unity Inspector support for all .NET types</h2>
-                <h2>Seamless protobuf-net, Json.NET, or custom serialization integration into Unity</h2>
+                <h2>Painless protobuf-net, Json.NET, BinaryFormatter or custom serialization integration into Unity</h2>
                 <hr>
             </header>
 
@@ -60,12 +60,23 @@
                     <li>tooltips and comments via attributes on fields/properties/types</li>
                 </ul>
 
-                <p>With Full Inspector, it does! Further, you get awesome serialization integration with your favorite serialization library, whether is be <a href="http://james.newtonking.com/json">Json.NET</a>,  <a href="https://code.google.com/p/protobuf-net/">protobuf-net</a>, or some other custom serialization solution.</p>
+                <p>With Full Inspector, it does! Further, you get awesome serialization integration with your favorite serialization library, whether is be <a href="http://james.newtonking.com/json">Json.NET</a>,  <a href="https://code.google.com/p/protobuf-net/">protobuf-net</a>, BinaryFormatter, or some other custom serialization solution.</p>
 
+                <hr />
+                <h3>New! Try the trial!</h3>
+                
+                <p>A fully featured trial is available <a href="http://goo.gl/mJWI5K">here</a>. It contains <em>all</em> of Full Inspector, but has two primary limitations:</p>
+                <ul>
+                    <li>Unity will give an error when publishing a build</li>
+                    <li>Source code is not available</li>
+                </ul>
+                
+                <p>To install the trial, simply unzip the zip file into your Unity project's Asset directory. Remember to backup first!</p>
+                
                 <hr />
                 <h3>Instant Demo</h3>
 
-                <p>Ready to be amazed? Click below to see the code and the generated editor. These samples target the Json.NET serializer; the only code that changes for protobuf-net (or your own serializer) are the annotations.</p>
+                <p>Ready to be amazed? Click below to see the code and the generated editor. These samples target the Json.NET serializer; the only code that changes for protobuf-net/BinaryFormatter (or your own serializer) are the annotations.</p>
 
                 <div id="tabs">
                     <ul>
@@ -82,9 +93,7 @@
                     <div id="demo-dictionaries">
                         <h2>Dictionaries</h2>
                         <img src="images/demo/dictionary.png" />
-<pre class="prettyprint"><code class="prettyprint">[JsonObject(MemberSerialization.OptIn)]
-public class DictionaryDemoBehavior : BaseBehavior {
-  [JsonProperty]
+<pre class="prettyprint"><code class="prettyprint">public class DictionaryDemoBehavior : BaseBehavior {
   public Dictionary&lt;string, GameObject&gt; StringGameObject;
 }
 </code></pre>
@@ -113,9 +122,7 @@ public class Implementation2 : IInterface {
     public List&lt;string&gt; B;
 }
 
-[JsonObject(MemberSerialization.OptIn)]
 public class InterfaceDemoBehavior : BaseBehavior {
-    [JsonProperty]
     public IInterface MyInterface;
 }
 </code></pre>
@@ -136,11 +143,10 @@ public struct Struct {
     [JsonProperty, JsonConverter(typeof(ComponentConverter))]
     public Transform TransformReference;
     [JsonProperty]
-    public Ref&lt;Collider&gt; ColliderReference;
+    public Collider ColliderReference;
 }
-[JsonObject(MemberSerialization.OptIn)]
+
 public class StructDemoBehavior : BaseBehavior {
-    [JsonProperty]
     public Struct MyStructValue;
 }
 </code></pre>
@@ -155,11 +161,9 @@ public class MyGenericType&lt;T&gt; {
     [JsonProperty]
     public T Value;
 }
-[JsonObject(MemberSerialization.OptIn)]
+
 public class GenericTypeDemoBehavior : BaseBehavior {
-    [JsonProperty]
     public MyGenericType&lt;bool&gt; GenericBool;
-    [JsonProperty]
     public MyGenericType&lt;float&gt; GenericFloat;
 }</code></pre>
                     </div>
@@ -168,15 +172,9 @@ public class GenericTypeDemoBehavior : BaseBehavior {
                     <div id="demo-lists">
                         <h2>Lists and Arrays</h2>
                         <img src="images/demo/list.gif" />
-                        <pre class="prettyprint"><code class="prettyprint">[JsonObject(MemberSerialization.OptIn)]
-public class ListDemoBehavior : BaseBehavior {
-    [JsonProperty]
+                        <pre class="prettyprint"><code class="prettyprint">public class ListDemoBehavior : BaseBehavior {
     public List&lt;int&gt; Ints;
-
-    [JsonProperty]
     public float[] Floats;
-
-    [JsonProperty]
     public List&lt;GameObject&gt; GameObjects;
 }</code></pre>
 
@@ -186,9 +184,7 @@ public class ListDemoBehavior : BaseBehavior {
                     <div id="demo-properties">
                         <h2>Properties</h2>
                         <img src="images/demo/properties.png" />
-                        <pre class="prettyprint"><code class="prettyprint">[JsonObject(MemberSerialization.OptIn)]
-public class PropertiesDemoBehavior : BaseBehavior {
-    [JsonProperty]
+                        <pre class="prettyprint"><code class="prettyprint">public class PropertiesDemoBehavior : BaseBehavior {
     public int MyProperty { get; private set; }
 }</code></pre>
                     </div>
@@ -198,22 +194,17 @@ public class PropertiesDemoBehavior : BaseBehavior {
                     <div id="demo-comments">
                         <h2>Comments, Tooltips, and Margins</h2>
                         <img src="images/demo/comment.png" />
-                        <pre class="prettyprint"><code class="prettyprint">[JsonObject(MemberSerialization.OptIn)]
-public class TooltipsAndCommentsDemoBehavior : BaseBehavior {
+                        <pre class="prettyprint"><code class="prettyprint">public class TooltipsAndCommentsDemoBehavior : BaseBehavior {
     [Comment("This is a comment")]
-    [JsonProperty]
     public int Comment;
 
     [Tooltip("This has a tooltip")]
-    [JsonProperty]
     public int Tooltip;
 
     [Margin(50)]
-    [JsonProperty]
     public int FarDown;
 
     [Hidden]
-    [JsonProperty]
     public int NotVisibleInInspector;
 }</code></pre>
                     </div>
@@ -228,11 +219,10 @@ public class TooltipsAndCommentsDemoBehavior : BaseBehavior {
                 <ul>
                     <li>Derive from <code>BaseBehavior</code>, not <code>MonoBehaviour</code></li>
                     <li>If you override <code>Awake</code>, immediately call <code>base.Awake()</code></li>
-                    <li>Annotate types with <code>[JsonObject(MemberSerialization.OptIn)]</code> and members with <code>[JsonProperty]</code></li>
-                    <li>Wrap <code>Component</code> references with <code>Ref&lt;&gt;</code></li>
+                    <li>If you would have previously added <code>[Serializable]</code> to a type, then you need to add Json.NET / protobuf-net / BinaryFormatter annotations to it.</li>
                 </ul>
 
-                <p>And of course, there is <em>much</em> more documentation with the <a href="guide-1.2.html">guide</a> or <a href="qa-1.2.html">q/a</a> style document.</p>
+                <p>And of course, there is <em>much</em> more documentation with the <a href="assets/docs/index.html">guide</a></p>
 
                 <hr />
                 <h3><a name="support" class="anchor" href="#support"><span class="octicon octicon-link"></span></a>Support</h3>
@@ -247,7 +237,7 @@ public class TooltipsAndCommentsDemoBehavior : BaseBehavior {
                 <hr />
                 <h3>Guide</h3>
 
-                <p>The full guide to using Full Inspector is freely available <a href="guide-1.2.html">guide</a>.</p>
+                <p>The full guide to using Full Inspector is freely available <a href="assets/docs/index.html">here</a>.</p>
 
             </section>
 

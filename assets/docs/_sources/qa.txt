@@ -1,0 +1,164 @@
+.. highlight:: csharp
+
+Q/A
+===
+
+This document contains answers to common questions regarding Full Inspector.
+
+I cannot derive from BaseBehavior or BaseScriptableObject
+---------------------------------------------------------
+
+
+Full Inspector has been designed to handle this scenario, but it'll require a little bit of boilerplate code. Below is the boilerplate code that you need to enable serialization.
+
+Funnily enough, if you look into the actual code behind ``BaseBehavior`` and ``BaseScriptableObject``, you'll find it to be almost identical to the code below.
+
+.. code:: c#
+
+    /// <summary>
+    /// This is your base type that extends some other type. It contains boilerplate code to get
+    /// serialization working correctly.
+    /// </summary>
+    /// <typeparam name="TSerializer">The type of serializer that will be used.</typeparam>
+    public class CustomBaseType<TSerializer> : MonoBehaviour, ISerializedObject
+        where TSerializer : BaseSerializer {
+
+        /// <summary>
+        /// This awake base method calls RestoreState() by default. If you override this method, it
+        /// is *critically* important that this be the first call made in your Awake method. If it
+        /// is not, then your component may not be deserialized when you go to access values.
+        /// </summary>
+        protected virtual void Awake() {
+            RestoreState();
+        }
+
+        /// <summary>
+        /// Save the state of component so that it can go through Unity serialization correctly.
+        /// </summary>
+        public void SaveState() {
+            SerializationHelpers.SaveState<TSerializer>(this);
+        }
+
+        /// <summary>
+        /// Restore the state of the component after it has gone through Unity serialization. If the
+        /// component has already been restored, it will be reset to its last saved state.
+        /// </summary>
+        public void RestoreState() {
+            SerializationHelpers.RestoreState<TSerializer>(this);
+        }
+
+        /// <summary>
+        /// Serializing references derived from UnityObject is tricky for a number of reasons, so we
+        /// just let Unity handle it. The object can be modified in the inspector and be deleted, or
+        /// it can become a prefab. Further, there is no good way to uniquely identify components
+        /// and game objects that handle prefabs and instantiation well. We therefore just let Unity
+        /// serialize our references for us.
+        /// </summary>
+        [SerializeField]
+        private List<UnityEngine.Object> _objectReferences;
+        List<UnityEngine.Object> ISerializedObject.SerializedObjectReferences {
+            get {
+                return _objectReferences;
+            }
+            set {
+                _objectReferences = value;
+            }
+        }
+
+        /// <summary>
+        /// The key fields that are serialized. These map to the properties/fields that Full
+        /// Inspector has discovered in the behavior type that need to be serialized. This value
+        /// needs to be serialized by Unity and therefore cannot be auto-implemented by a property.
+        /// </summary>
+        [SerializeField]
+        private List<string> _serializedStateKeys;
+        List<string> ISerializedObject.SerializedStateKeys {
+            get {
+                return _serializedStateKeys;
+            }
+            set {
+                _serializedStateKeys = value;
+            }
+        }
+
+        /// <summary>
+        /// The value fields that are serialized. These correspond to the key fields that Full
+        /// Inspector has discovered in the behavior type that need to be serialized. This value
+        /// needs to be serialized by Unity and therefore cannot be auto-implemented by a property.
+        /// </summary>
+        [SerializeField]
+        private List<string> _serializedStateValues;
+
+        List<string> ISerializedObject.SerializedStateValues {
+            get {
+                return _serializedStateValues;
+            }
+            set {
+                _serializedStateValues = value;
+            }
+        }
+
+        /// <summary>
+        /// Has the behavior been restored? This is automatically set to true by the serialization
+        /// system after the behavior has been restored. This value should *not* be serialized.
+        /// </summary>
+        [NonSerialized]
+        private bool _restored;
+        bool ISerializedObject.Restored {
+            get { return _restored; }
+            set { _restored = value; }
+        }
+    }
+
+You're also going to want to create an editor for ``CustomBaseType<TSerializer>``. To do this, we need to also perform some generic type erasure. Just introduce a type ``CustomBaseTypeErased : MonoBehavior, ISerializedObject`` that ``CustomBaseType<TSerializer>`` derives from. Then, we can write an editor for ``CustomBaseTypeErased``
+
+.. code:: c#
+
+    [CustomEditor(typeof(CustomBaseTypeErased), true)]
+    public class CustomBaseTypeErasedEditor : FullInspectorCommonSerializedObjectEditor { }
+
+This ``CustomBaseTypeErasedEditor`` will be used for ``CustomBaseType<TSerializer>``. ``FullInspectorCommonSerializedObjectEditor`` provides the inspector editing experience for you.
+
+
+Does Full Inspector impact runtime performance?
+-----------------------------------------------
+
+No! The only impact that Full Inspector has is a call to Awake for every object that requires special serialization support. The Awake call merely deserializes the object.
+
+Full Inspector imposes no runtime impacts (such as a call to Update); in fact, your code will likely run faster will Full Inspector due to less GC pressure because you can now extensively use structs.
+
+
+I want to use iOS or another AOT platform
+-----------------------------------------
+
+Awesome! Full Inspector Core supports AOT compilation quite well. On iOS, Full Inspector Core currently supports both Strip assemblies and Strip ByteCode.
+
+The other big question w.r.t. AOT compilation is your chosen serializer. For a multitude of reasons, it is *strongly* recommended that you use Json.NET.
+
+BinaryFormatter
+===============
+
+You don't have to do anything! Full Inspector will automatically configure BinaryFormatter to use reflection on iOS and other AOT platforms.
+
+Json.NET
+========
+
+Please follow these steps to use Json.NET on AOT platforms:
+
+1. Purchase and install `Json.NET for Unity <http://u3d.as/5q2>`_ from the Asset Store.
+2. Delete *"FullInspector2/Serializers/JsonNet/DLLS"
+
+That's it! You're now good to go for AOT platforms!
+
+protobuf-net
+============
+
+We're still working on getting easy protobuf-net support for AOT platforms! Don't worry though, it's coming.
+
+Right now, here's what the process will probably look like:
+
+1. Compile Full Inspector into a DLL format
+2. Add all of your types annotated with a ``[ProtoContract]`` or that are referenced by the protobuf-net serializer into a separate DLL.
+3. Run *"Window/Full Inspector/Compile protobuf-net Serialization DLL"*
+
+You should now be able to use protobuf-net on AOT platforms. However, this is still *beta*.
