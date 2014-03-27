@@ -10,7 +10,7 @@ The following list is what you need to keep in mind to ensure that your objects 
 - Derive from ``BaseBehavior``, not ``MonoBehaviour``
 - If you override ``Awake``, immediately call ``base.Awake()``
 
-Let's say your using Json.NET. If a type would normally require a ``[Serializable]`` attribute, then it requires Json.NET attributes. Otherwise, you don't have to do anything. You'll see exactly what this means in the examples below.
+That's it! Of course, you'll also have to added your serialization specific annotations if your serializer requires them. If that sounds confusing, then don't worry. There are examples below that demonstrate this point.
 
 .. IMPORTANT::
     If you have custom save-game logic, make sure that you run ``FullInspectorSaveManager.SaveAll()`` before your save logic; it will ensure that every ``BaseBehavior`` instance is ready to go through Unity serialization. Saves can be detected automatically in the editor but not in a published build.
@@ -20,6 +20,10 @@ Let's say your using Json.NET. If a type would normally require a ``[Serializabl
 .. IMPORTANT::
     One potential gotcha with serialization: each ``BaseBehavior`` is serialized independently. If you have a class instance that is shared across multiple ``BaseBehaviors``, it will be deserialized into separate instances. You can ensure that it deserializes into one instance by deriving from a ``UnityEngine.Object`` child class, such as ``BaseScriptableObject``.
 
+You're recommended to use the Json.NET serializer. It works well without annotations and has support for every major platform that Unity can export to (via another asset store product).
+
+If you need performance, you can easily switch to protobuf-net for one specific component while using Json.NET for ease of use on the rest of your behaviors. Everything interacts correctly, even when using different serializers.
+
 Examples
 --------
 
@@ -27,24 +31,33 @@ Here's an example of how to use Full Inspector with Json.NET:
 
 .. code:: c#
 
-    [JsonObject(MemberSerialization.OptIn)]
     public struct Struct {
-        [JsonProperty]
         public GameObject SpawnObject;
-
-        [JsonProperty]
         public Dictionary<string, string> StrStrDict;
     }
 
-    public class JsonNetStructDemoBehavior : BaseBehavior<JsonNetSerializer> {
+    public class JsonNetStructDemoBehavior :
+        BaseBehavior<JsonNetSerializer> {
+        
         public Struct PublicValue;
 
-        [SerializeField]
         [ShowInInspector]
-        private Struct _hidden;
+        private Struct _hidden; /* this field is not serialized */
     }
 
 .. image:: static/usage_jsonnet.png
+
+If you like annotations, you could have optionally written ``Struct`` as
+
+.. code:: c#
+
+    [JsonObject]
+    public struct Struct {
+        [JsonProperty]
+        public GameObject SpawnObject;
+        [JsonProperty]
+        public Dictionary<string, string> StrStrDict;
+    }
 
 -------------------------
 
@@ -73,7 +86,9 @@ Or perhaps you prefer protobuf-net?
         public Transform Location;
     }
 
-    public class InterfaceDemoBehavior : BaseBehavior<ProtoBufNetSerializer> {
+    public class InterfaceDemoBehavior :
+        BaseBehavior<ProtoBufNetSerializer> {
+        
         public IInterface MyInterface;
     }
 
@@ -91,7 +106,9 @@ Or maybe even BinaryFormatter (beta)?
         public TValue MissingValue;
     }
 
-    public class BinaryFormatterStructDemoBehavior : BaseBehavior<BinaryFormatterSerializer> {
+    public class BinaryFormatterStructDemoBehavior :
+        BaseBehavior<BinaryFormatterSerializer> {
+        
         public Struct<Transform> SomeStruct;
 
         public enum Enum {

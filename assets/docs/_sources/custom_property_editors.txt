@@ -92,3 +92,54 @@ Notice that ``IListPropertyEditor`` takes two generic arguments, despite the fac
 Also notice that for the attribute ``[CustomPropertyEditor(typeof(IList<>), Inherit = true)]``, inherit has been set to true; by default, it is false.
 
 Inherited property editors also work with non-generic types. The property editor for non-generic types can have either zero or one generic arguments; if it has one, it will be the actual property type the property editor is editing.
+
+
+Attribute Property Editors
+--------------------------
+
+Property editors can also be activated via attributes. Let's take a look at the ``CommentAttributeEditor``.
+
+First, we'll need to take a look at the ``CommentAttribute``. It is simple and merely stores a string comment.
+
+.. code:: c#
+
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property |
+        AttributeTargets.Class | AttributeTargets.Struct)]
+    public class CommentAttribute : Attribute {
+        public string Comment;
+
+        public CommentAttribute(string comment) {
+            Comment = comment;
+        }
+    }
+
+Now let's take a look at the actual ``CommentAttributeEditor``.
+
+.. code:: c#
+
+    [CustomAttributePropertyEditor(typeof(CommentAttribute), ReplaceOthers = false)]
+    public class CommentAttributeEditor<T> : AttributePropertyEditor<T, CommentAttribute> {
+        protected override T Edit(Rect region, GUIContent label, T element, CommentAttribute attribute) {
+            EditorGUI.HelpBox(region, attribute.Comment, MessageType.None);
+            return element;
+        }
+
+        protected override float GetElementHeight(GUIContent label, T element, CommentAttribute attribute) {
+            return CommentUtils.GetCommentHeight(attribute.Comment);
+        }
+    }
+
+Notice that we declare this property editor slightly differently from other editors. First, we inherit from ``AttributePropertyEditor``, not ``PropertyEditor``. The type parameters on ``AttributePropertyEditor`` are 1st, the type being edited, and 2nd, the attribute type.
+
+In ``CommentAttributeEditor<T>``, the generic type T is instantiated with the field/property type that the attribute has been applied to. If you inherit from, say, ``AttributePropertyEditor<int, MyCustomAttribute>``, then the property editor will only be applied for fields/properties that store ``ints``.
+
+Let's also take a look at the attribute ``CustomAttributePropertyEditor``. The first parameter ``typeof(CommentAttribute)`` specifies the attribute that activates this editor. The second parameter, ``ReplaceOthers``, is a pretty cool feature that gives attribute property editors quite a bit more flexibility. If ``ReplaceOthers`` is true, then when the attribute property editor is encountered, it will be the final property editor applied to the field/property. Because this sample is a comment editor, we want to show the actual editor underneath the comment, so we set ``ReplaceOthers`` to ``false``.
+
+How do we use the ``CommentAttributeEditor``? It's simple; just use the attribute above fields/properties. Here's a quick example:
+
+.. code:: c#
+
+    public class SomeBehavior : BaseBehavior {
+        [Comment("This is some awesome comment")]
+        public int MyField;
+    }

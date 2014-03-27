@@ -60,9 +60,6 @@
 <li class="toctree-l1"><a class="reference internal" href="custom_property_editors.html">Custom Property Editors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_serializers.html">Custom Serializers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="qa.html">Q/A</a></li>
-<li class="toctree-l1"><a class="reference internal" href="qa.html#binaryformatter">BinaryFormatter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="qa.html#json-net">Json.NET</a></li>
-<li class="toctree-l1"><a class="reference internal" href="qa.html#protobuf-net">protobuf-net</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
 </ul>
 
@@ -102,7 +99,7 @@
 <li>Derive from <code class="docutils literal highlight highlight-csharp"><span class="n">BaseBehavior</span></code>, not <code class="docutils literal highlight highlight-csharp"><span class="n">MonoBehaviour</span></code></li>
 <li>If you override <code class="docutils literal highlight highlight-csharp"><span class="n">Awake</span></code>, immediately call <code class="docutils literal highlight highlight-csharp"><span class="k">base</span><span class="p">.</span><span class="n">Awake</span><span class="p">()</span></code></li>
 </ul>
-<p>Let&#8217;s say your using Json.NET. If a type would normally require a <code class="docutils literal highlight highlight-csharp"><span class="na">[Serializable]</span></code> attribute, then it requires Json.NET attributes. Otherwise, you don&#8217;t have to do anything. You&#8217;ll see exactly what this means in the examples below.</p>
+<p>That&#8217;s it! Of course, you&#8217;ll also have to added your serialization specific annotations if your serializer requires them. If that sounds confusing, then don&#8217;t worry. There are examples below that demonstrate this point.</p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
 <p>If you have custom save-game logic, make sure that you run <code class="docutils literal highlight highlight-csharp"><span class="n">FullInspectorSaveManager</span><span class="p">.</span><span class="n">SaveAll</span><span class="p">()</span></code> before your save logic; it will ensure that every <code class="docutils literal highlight highlight-csharp"><span class="n">BaseBehavior</span></code> instance is ready to go through Unity serialization. Saves can be detected automatically in the editor but not in a published build.</p>
@@ -112,29 +109,38 @@
 <p class="first admonition-title">Important</p>
 <p class="last">One potential gotcha with serialization: each <code class="docutils literal highlight highlight-csharp"><span class="n">BaseBehavior</span></code> is serialized independently. If you have a class instance that is shared across multiple <code class="docutils literal highlight highlight-csharp"><span class="n">BaseBehaviors</span></code>, it will be deserialized into separate instances. You can ensure that it deserializes into one instance by deriving from a <code class="docutils literal highlight highlight-csharp"><span class="n">UnityEngine</span><span class="p">.</span><span class="n">Object</span></code> child class, such as <code class="docutils literal highlight highlight-csharp"><span class="n">BaseScriptableObject</span></code>.</p>
 </div>
+<p>You&#8217;re recommended to use the Json.NET serializer. It works well without annotations and has support for every major platform that Unity can export to (via another asset store product).</p>
+<p>If you need performance, you can easily switch to protobuf-net for one specific component while using Json.NET for ease of use on the rest of your behaviors. Everything interacts correctly, even when using different serializers.</p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <p>Here&#8217;s an example of how to use Full Inspector with Json.NET:</p>
-<div class="code c# highlight-csharp"><div class="highlight"><pre><span class="na">[JsonObject(MemberSerialization.OptIn)]</span>
-<span class="k">public</span> <span class="k">struct</span> <span class="nc">Struct</span> <span class="p">{</span>
-<span class="na">    [JsonProperty]</span>
+<div class="code c# highlight-csharp"><div class="highlight"><pre><span class="k">public</span> <span class="k">struct</span> <span class="nc">Struct</span> <span class="p">{</span>
     <span class="k">public</span> <span class="n">GameObject</span> <span class="n">SpawnObject</span><span class="p">;</span>
-
-<span class="na">    [JsonProperty]</span>
     <span class="k">public</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">&gt;</span> <span class="n">StrStrDict</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="k">public</span> <span class="k">class</span> <span class="nc">JsonNetStructDemoBehavior</span> <span class="p">:</span> <span class="n">BaseBehavior</span><span class="p">&lt;</span><span class="n">JsonNetSerializer</span><span class="p">&gt;</span> <span class="p">{</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">JsonNetStructDemoBehavior</span> <span class="p">:</span>
+    <span class="n">BaseBehavior</span><span class="p">&lt;</span><span class="n">JsonNetSerializer</span><span class="p">&gt;</span> <span class="p">{</span>
+
     <span class="k">public</span> <span class="n">Struct</span> <span class="n">PublicValue</span><span class="p">;</span>
 
-<span class="na">    [SerializeField]</span>
 <span class="na">    [ShowInInspector]</span>
-    <span class="k">private</span> <span class="n">Struct</span> <span class="n">_hidden</span><span class="p">;</span>
+    <span class="k">private</span> <span class="n">Struct</span> <span class="n">_hidden</span><span class="p">;</span> <span class="cm">/* this field is not serialized */</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <img alt="_images/usage_jsonnet.png" src="_images/usage_jsonnet.png" />
+<p>If you like annotations, you could have optionally written <code class="docutils literal highlight highlight-csharp"><span class="n">Struct</span></code> as</p>
+<div class="code c# highlight-csharp"><div class="highlight"><pre><span class="na">[JsonObject]</span>
+<span class="k">public</span> <span class="k">struct</span> <span class="nc">Struct</span> <span class="p">{</span>
+<span class="na">    [JsonProperty]</span>
+    <span class="k">public</span> <span class="n">GameObject</span> <span class="n">SpawnObject</span><span class="p">;</span>
+<span class="na">    [JsonProperty]</span>
+    <span class="k">public</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">&gt;</span> <span class="n">StrStrDict</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <hr class="docutils" />
 <p>Or perhaps you prefer protobuf-net?</p>
 <div class="code c# highlight-csharp"><div class="highlight"><pre><span class="na">[ProtoContract]</span>
@@ -158,7 +164,9 @@
     <span class="k">public</span> <span class="n">Transform</span> <span class="n">Location</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="k">public</span> <span class="k">class</span> <span class="nc">InterfaceDemoBehavior</span> <span class="p">:</span> <span class="n">BaseBehavior</span><span class="p">&lt;</span><span class="n">ProtoBufNetSerializer</span><span class="p">&gt;</span> <span class="p">{</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">InterfaceDemoBehavior</span> <span class="p">:</span>
+    <span class="n">BaseBehavior</span><span class="p">&lt;</span><span class="n">ProtoBufNetSerializer</span><span class="p">&gt;</span> <span class="p">{</span>
+
     <span class="k">public</span> <span class="n">IInterface</span> <span class="n">MyInterface</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
@@ -172,7 +180,9 @@
     <span class="k">public</span> <span class="n">TValue</span> <span class="n">MissingValue</span><span class="p">;</span>
 <span class="p">}</span>
 
-<span class="k">public</span> <span class="k">class</span> <span class="nc">BinaryFormatterStructDemoBehavior</span> <span class="p">:</span> <span class="n">BaseBehavior</span><span class="p">&lt;</span><span class="n">BinaryFormatterSerializer</span><span class="p">&gt;</span> <span class="p">{</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">BinaryFormatterStructDemoBehavior</span> <span class="p">:</span>
+    <span class="n">BaseBehavior</span><span class="p">&lt;</span><span class="n">BinaryFormatterSerializer</span><span class="p">&gt;</span> <span class="p">{</span>
+
     <span class="k">public</span> <span class="n">Struct</span><span class="p">&lt;</span><span class="n">Transform</span><span class="p">&gt;</span> <span class="n">SomeStruct</span><span class="p">;</span>
 
     <span class="k">public</span> <span class="k">enum</span> <span class="n">Enum</span> <span class="p">{</span>

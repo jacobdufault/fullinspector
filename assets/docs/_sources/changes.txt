@@ -3,6 +3,42 @@
 Changelog
 =========
 
+2.1
+----
+
+New:
+
+- Full Inspector now supports property editors that are activated via attributes
+- Full Inspector now has undo/redo support!
+- Prefab override properties will now be displayed in bold
+- Support OnSceneGUI for IPropertyEditors or IAttributePropertyEditor types
+- A collapsed interface/abstract/inherited type will now display the current type in the foldout header
+- A collapsed array/list/dictionary will now show the number of elements in the collapsed container
+
+Samples:
+
+- Added two simple sample games (platformer and arena)
+
+API:
+
+- Default implementations are now provided for all (Attribute)PropertyEditor<TElement> methods, which simplifies implementing, for example, just an OnSceneGUI method.
+
+Fixes:
+
+- Vector2 and Vector3 now display properly in non-wide inspectors
+- Added a PropertyEditor and serialization support for LayerMasks
+- Fixed foldouts for interfaces
+- Fixed issue where prefab children would sometimes not properly display their serialized state
+- Fixed issue where [ShowInInspector] fields/properties could not be displayed if they were not also serialized.
+
+Misc:
+
+- CommentAttribute and MarginAttribute no longer have any special support within Full Inspector
+- [JsonObject(MemberSerialization.OptIn)] is no longer required for the Json.NET serializer
+- Replaced SurrogateSelector with custom implementation; SurrogateSelector could not disambiguate between two types with the same name but in different assemblies.
+- BinaryFormatter is now using a custom SerializationBinder that is more robust to type changes
+
+
 2.0
 ---
 

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset='utf-8'>
@@ -64,15 +64,15 @@
 
                 <hr />
                 <h3>New! Try the trial!</h3>
-                
+
                 <p>A fully featured trial is available <a href="http://goo.gl/mJWI5K">here</a>. It contains <em>all</em> of Full Inspector, but has two primary limitations:</p>
                 <ul>
                     <li>Unity will give an error when publishing a build</li>
                     <li>Source code is not available</li>
                 </ul>
-                
+
                 <p>To install the trial, simply unzip the zip file into your Unity project's Asset directory. Remember to backup first!</p>
-                
+
                 <hr />
                 <h3>Instant Demo</h3>
 
@@ -106,19 +106,14 @@
                         <img src="images/demo/interfaces/1.png" width="625">
                         <img src="images/demo/interfaces/2.png" width="650">
 
-<pre class="prettyprint"><code class="prettyprint">[JsonObject(MemberSerialization.OptIn)]
-public interface IInterface {
+<pre class="prettyprint"><code class="prettyprint">public interface IInterface {
 }
 
-[JsonObject(MemberSerialization.OptIn)]
 public class Implementation1 : IInterface {
-    [JsonProperty]
     public int A;
 }
 
-[JsonObject(MemberSerialization.OptIn)]
 public class Implementation2 : IInterface {
-    [JsonProperty]
     public List&lt;string&gt; B;
 }
 
@@ -131,18 +126,12 @@ public class InterfaceDemoBehavior : BaseBehavior {
                     <div id="demo-structs">
                         <h2>Structs</h2>
                         <img src="images/demo/struct.png">
-<pre class="prettyprint"><code class="prettyprint">[JsonObject(MemberSerialization.OptIn)]
-public struct Struct {
-    [JsonProperty]
+<pre class="prettyprint"><code class="prettyprint">public struct Struct {
     public int A;
-    [JsonProperty]
     public string B;
 
-    [JsonProperty]
     public GameObject GameObject;
-    [JsonProperty, JsonConverter(typeof(ComponentConverter))]
     public Transform TransformReference;
-    [JsonProperty]
     public Collider ColliderReference;
 }
 
@@ -156,9 +145,7 @@ public class StructDemoBehavior : BaseBehavior {
                     <div id="demo-generics">
                         <h2>Generics</h2>
                         <img src="images/demo/generic.png" />
-                        <pre class="prettyprint"><code class="prettyprint">[JsonObject(MemberSerialization.OptIn)]
-public class MyGenericType&lt;T&gt; {
-    [JsonProperty]
+                        <pre class="prettyprint"><code class="prettyprint">public class MyGenericType&lt;T&gt; {
     public T Value;
 }
 
@@ -167,8 +154,8 @@ public class GenericTypeDemoBehavior : BaseBehavior {
     public MyGenericType&lt;float&gt; GenericFloat;
 }</code></pre>
                     </div>
-                    
-                    
+
+
                     <div id="demo-lists">
                         <h2>Lists and Arrays</h2>
                         <img src="images/demo/list.gif" />
@@ -210,7 +197,7 @@ public class GenericTypeDemoBehavior : BaseBehavior {
                     </div>
 
                 </div>
-                
+
 
                 <hr />
                 <h3>Guidelines</h3>
@@ -219,7 +206,7 @@ public class GenericTypeDemoBehavior : BaseBehavior {
                 <ul>
                     <li>Derive from <code>BaseBehavior</code>, not <code>MonoBehaviour</code></li>
                     <li>If you override <code>Awake</code>, immediately call <code>base.Awake()</code></li>
-                    <li>If you would have previously added <code>[Serializable]</code> to a type, then you need to add Json.NET / protobuf-net / BinaryFormatter annotations to it.</li>
+                    <li>If you would have previously added <code>[Serializable]</code> to a type, then you may need to add Json.NET / protobuf-net / BinaryFormatter annotations to it, if that serializer requires annotations.</li>
                 </ul>
 
                 <p>And of course, there is <em>much</em> more documentation with the <a href="assets/docs/index.html">guide</a></p>

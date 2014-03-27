@@ -31,6 +31,7 @@ Serialization
 - ``public static int StoreObjectReference(UnityObject obj)``: Returns an integer that uniquely identifies the given UnityObject instance so that it can recovered after Unity has gone through a serialization cycle.
 - ``public static void SaveState<TSerializer>(ISerializedObject obj)``: Save the state of the given object using the selected serializer.
 - ``public static void RestoreState<TSerializer>(ISerializedObject obj)``: Restore the state of the given object using the selected serializer.
+- ``public static T Clone<T, TSerializer>(T obj)``: Clone the given object using the given serializer.
 
 Serializers
 -----------
@@ -41,7 +42,7 @@ Serializers
 
 ``interface IFormatterWorker``: Derive to modify the IFormatter surrogate selector. The derived type is automatically instantiated and invoked if it has a default constructor.
 
-- ``void Work(SurrogateSelector surrogates, StreamingContext context)``: Automatically invoked so that the ``SurrogateSelector`` can be modified by custom code.
+- ``void Work(DictionarySurrogateSelector surrogates, StreamingContext context)``: Automatically invoked so that the ``DictionarySurrogateSelector`` can be modified by custom code.
 
 ``class JsonNetSerializer``: Provides serialization support for Json.NET.
 
@@ -56,7 +57,7 @@ Editors
 
 ``class PropertyEditor``: Contains the main entry point for working with property editors.
 
-- ``public static IPropertyEditor Get(Type propertyType, params Type[] bannedPropertyEditorTypes)``: Fetch a property editor for the given property type. For example, if propertyType is typeof(GameObject[]), an array property editor will be returned that can edit a GameObject[] array. bannedPropertyEditorTypes contains a set of property editors that should *not* be returned.
+- ``public static IPropertyEditor Get(Type propertyType, ICustomAttributeProvider editedAttributes, Type[] bannedPropertyEditorTypes)``: Fetch a property editor for the given property type. For example, if propertyType is typeof(GameObject[]), an array property editor will be returned that can edit a GameObject[] array. editedAttributes contains the attributes that are applied to the given propertyType (from, for example, a field or a property). editedAttributes can be null if there are no associated attributes that should be applied. bannedPropertyEditorTypes contains a set of property editors that should *not* be returned.
 
 ``interface IPropertyEditor``: Contains the API that Full Inspector uses for interacting with property editors. You probably want to derive from `PropertyEditor<T>` instead of this.
 
@@ -65,6 +66,13 @@ Editors
 
 ``class CustomPropertyEditorAttribute : Attribute``: Mark a type as a property editor.
 
-- ``CustomPropertyEditorAttribute(Type propertyType, bool inherit=true)``: Specify this as a property editor for the given property type. If inherit is true, then this property editor will also be used for derived types.
+``interface IAttributePropertyEditor : IPropertyEditor``: Contains the API that Full Inspector uses for interacting with attribute-based property editors. You probably want to derive from ``AttributePropertyEditor<TElement, TAttribute>`` instead of this type.
 
-``class FullInspectorCommonSerializedObjectEditor : Editor``: Derive from this type to enable the Full Inspector editing experience. The type that is being edited needs to also extend `ISerializedObject`.
+
+``class AttributePropertyEditor<TElement, TAttribute> : IAttributePropertyEditor``: Provides a default implementation for the API that Full Inspector uses for interacting with attribute-based property editors.
+
+``class CustomAttributePropertyEditorAttribute(Type attributeActivator, bool replaceOthers)``: Specify this as an attribute property editor using the given attribute type to activate the editor. If replaceOthers is true, then this attribute editor will replace the default property editor and any attribute editors that follow it.
+
+``class CustomPropertyEditorAttribute(Type propertyType, bool inherit=true)``: Specify this as a property editor for the given property type. If inherit is true, then this property editor will also be used for derived types.
+
+``class FullInspectorCommonSerializedObjectEditor : Editor``: Derive from this type to enable the Full Inspector editing experience. The type that is being edited needs to also extend ``ISerializedObject``.

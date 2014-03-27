@@ -57,13 +57,11 @@
 <li class="toctree-l2"><a class="reference internal" href="#simple-non-generic-property-editors">Simple (non-generic) Property Editors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#generic-property-editors">Generic Property Editors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#inherited-property-editors">Inherited Property Editors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#attribute-property-editors">Attribute Property Editors</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="custom_serializers.html">Custom Serializers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="qa.html">Q/A</a></li>
-<li class="toctree-l1"><a class="reference internal" href="qa.html#binaryformatter">BinaryFormatter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="qa.html#json-net">Json.NET</a></li>
-<li class="toctree-l1"><a class="reference internal" href="qa.html#protobuf-net">protobuf-net</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
 </ul>
 
@@ -161,6 +159,46 @@
 <p>Notice that <code class="docutils literal highlight highlight-csharp"><span class="n">IListPropertyEditor</span></code> takes two generic arguments, despite the fact that IList takes only one! This is because for every inherited property editor, the first generic argument is always the derived type that the property editor is editing. So for <code class="docutils literal highlight highlight-csharp"><span class="n">List</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span></code>, the property editor will be an instance of <code class="docutils literal highlight highlight-csharp"><span class="n">IListPropertyEditor</span><span class="p">&lt;</span><span class="n">List</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;,</span> <span class="kt">int</span><span class="p">&gt;</span></code></p>
 <p>Also notice that for the attribute <code class="docutils literal highlight highlight-csharp"><span class="na">[CustomPropertyEditor(typeof(IList&lt;&gt;), Inherit = true)]</span></code>, inherit has been set to true; by default, it is false.</p>
 <p>Inherited property editors also work with non-generic types. The property editor for non-generic types can have either zero or one generic arguments; if it has one, it will be the actual property type the property editor is editing.</p>
+</div>
+<div class="section" id="attribute-property-editors">
+<h2>Attribute Property Editors<a class="headerlink" href="#attribute-property-editors" title="Permalink to this headline">¶</a></h2>
+<p>Property editors can also be activated via attributes. Let&#8217;s take a look at the <code class="docutils literal highlight highlight-csharp"><span class="n">CommentAttributeEditor</span></code>.</p>
+<p>First, we&#8217;ll need to take a look at the <code class="docutils literal highlight highlight-csharp"><span class="n">CommentAttribute</span></code>. It is simple and merely stores a string comment.</p>
+<div class="code c# highlight-csharp"><div class="highlight"><pre><span class="na">[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property |</span>
+<span class="na">    AttributeTargets.Class | AttributeTargets.Struct)]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">CommentAttribute</span> <span class="p">:</span> <span class="n">Attribute</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="kt">string</span> <span class="n">Comment</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="nf">CommentAttribute</span><span class="p">(</span><span class="kt">string</span> <span class="n">comment</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Comment</span> <span class="p">=</span> <span class="n">comment</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now let&#8217;s take a look at the actual <code class="docutils literal highlight highlight-csharp"><span class="n">CommentAttributeEditor</span></code>.</p>
+<div class="code c# highlight-csharp"><div class="highlight"><pre><span class="na">[CustomAttributePropertyEditor(typeof(CommentAttribute), ReplaceOthers = false)]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">CommentAttributeEditor</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="p">:</span> <span class="n">AttributePropertyEditor</span><span class="p">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">CommentAttribute</span><span class="p">&gt;</span> <span class="p">{</span>
+    <span class="k">protected</span> <span class="k">override</span> <span class="n">T</span> <span class="nf">Edit</span><span class="p">(</span><span class="n">Rect</span> <span class="n">region</span><span class="p">,</span> <span class="n">GUIContent</span> <span class="n">label</span><span class="p">,</span> <span class="n">T</span> <span class="n">element</span><span class="p">,</span> <span class="n">CommentAttribute</span> <span class="n">attribute</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">EditorGUI</span><span class="p">.</span><span class="n">HelpBox</span><span class="p">(</span><span class="n">region</span><span class="p">,</span> <span class="n">attribute</span><span class="p">.</span><span class="n">Comment</span><span class="p">,</span> <span class="n">MessageType</span><span class="p">.</span><span class="n">None</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">element</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">protected</span> <span class="k">override</span> <span class="kt">float</span> <span class="nf">GetElementHeight</span><span class="p">(</span><span class="n">GUIContent</span> <span class="n">label</span><span class="p">,</span> <span class="n">T</span> <span class="n">element</span><span class="p">,</span> <span class="n">CommentAttribute</span> <span class="n">attribute</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">CommentUtils</span><span class="p">.</span><span class="n">GetCommentHeight</span><span class="p">(</span><span class="n">attribute</span><span class="p">.</span><span class="n">Comment</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Notice that we declare this property editor slightly differently from other editors. First, we inherit from <code class="docutils literal highlight highlight-csharp"><span class="n">AttributePropertyEditor</span></code>, not <code class="docutils literal highlight highlight-csharp"><span class="n">PropertyEditor</span></code>. The type parameters on <code class="docutils literal highlight highlight-csharp"><span class="n">AttributePropertyEditor</span></code> are 1st, the type being edited, and 2nd, the attribute type.</p>
+<p>In <code class="docutils literal highlight highlight-csharp"><span class="n">CommentAttributeEditor</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span></code>, the generic type T is instantiated with the field/property type that the attribute has been applied to. If you inherit from, say, <code class="docutils literal highlight highlight-csharp"><span class="n">AttributePropertyEditor</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">MyCustomAttribute</span><span class="p">&gt;</span></code>, then the property editor will only be applied for fields/properties that store <code class="docutils literal highlight highlight-csharp"><span class="n">ints</span></code>.</p>
+<p>Let&#8217;s also take a look at the attribute <code class="docutils literal highlight highlight-csharp"><span class="n">CustomAttributePropertyEditor</span></code>. The first parameter <code class="docutils literal highlight highlight-csharp"><span class="k">typeof</span><span class="p">(</span><span class="n">CommentAttribute</span><span class="p">)</span></code> specifies the attribute that activates this editor. The second parameter, <code class="docutils literal highlight highlight-csharp"><span class="n">ReplaceOthers</span></code>, is a pretty cool feature that gives attribute property editors quite a bit more flexibility. If <code class="docutils literal highlight highlight-csharp"><span class="n">ReplaceOthers</span></code> is true, then when the attribute property editor is encountered, it will be the final property editor applied to the field/property. Because this sample is a comment editor, we want to show the actual editor underneath the comment, so we set <code class="docutils literal highlight highlight-csharp"><span class="n">ReplaceOthers</span></code> to <code class="docutils literal highlight highlight-csharp"><span class="k">false</span></code>.</p>
+<p>How do we use the <code class="docutils literal highlight highlight-csharp"><span class="n">CommentAttributeEditor</span></code>? It&#8217;s simple; just use the attribute above fields/properties. Here&#8217;s a quick example:</p>
+<div class="code c# highlight-csharp"><div class="highlight"><pre><span class="k">public</span> <span class="k">class</span> <span class="nc">SomeBehavior</span> <span class="p">:</span> <span class="n">BaseBehavior</span> <span class="p">{</span>
+<span class="na">    [Comment(&quot;This is some awesome comment&quot;)]</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">MyField</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div>
 </div>
 

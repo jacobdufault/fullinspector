@@ -56,9 +56,6 @@
 <li class="toctree-l1"><a class="reference internal" href="custom_property_editors.html">Custom Property Editors</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Custom Serializers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="qa.html">Q/A</a></li>
-<li class="toctree-l1"><a class="reference internal" href="qa.html#binaryformatter">BinaryFormatter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="qa.html#json-net">Json.NET</a></li>
-<li class="toctree-l1"><a class="reference internal" href="qa.html#protobuf-net">protobuf-net</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
 </ul>
 
@@ -91,10 +88,15 @@
             
   <div class="section" id="custom-serializers">
 <h1>Custom Serializers<a class="headerlink" href="#custom-serializers" title="Permalink to this headline">¶</a></h1>
-<p>You have a serialization framework and want to use it inside of Full Inspector; how do you do that? Luckily, Full Inspector (since 1.1) has fantastic support for third party serializers.</p>
+<p>You have a serialization framework and want to use it inside of Full Inspector; how do you do that? Luckily, Full Inspector has fantastic support for third party serializers.</p>
 <p>The current serializers are located in <em>&#8220;FullInspector2/Serializers&#8221;</em>. Feel free to take a look at the existing ones.</p>
-<p>The process to create a new serializer is simple. Simply derive from <code class="docutils literal highlight highlight-csharp"><span class="n">BaseSerializer</span></code> and implement the abstract methods. If you come across a <code class="docutils literal highlight highlight-csharp"><span class="n">UnityEngine</span><span class="p">.</span><span class="n">Object</span></code> (or derived type) reference, make sure to serialize it using <code class="docutils literal highlight highlight-csharp"><span class="n">SerializationHelpers</span><span class="p">.</span><span class="n">StoreObjectReference</span></code> and deserialize it using <code class="docutils literal highlight highlight-csharp"><span class="n">SerializationHelpers</span><span class="p">.</span><span class="n">RetrieveObjectReference</span></code>. This ensures that the object reference will be treated correctly, when, e.g., the object becomes a prefab.</p>
-<p>Lets say you created a new serializer called <code class="docutils literal highlight highlight-csharp"><span class="n">MySerializer</span></code>. How do you actually use it? Simple: derive from <code class="docutils literal highlight highlight-csharp"><span class="n">BaseBehavior</span><span class="p">&lt;</span><span class="n">MySerializer</span><span class="p">&gt;</span></code>. That&#8217;s it.</p>
+<p>The process to create a new serializer is simple. Simply derive from <code class="docutils literal highlight highlight-csharp"><span class="n">BaseSerializer</span></code> and implement the abstract methods.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>If you come across a <code class="docutils literal highlight highlight-csharp"><span class="n">UnityEngine</span><span class="p">.</span><span class="n">Object</span></code> (or derived type) reference, make sure to serialize it using <code class="docutils literal highlight highlight-csharp"><span class="n">SerializationHelpers</span><span class="p">.</span><span class="n">StoreObjectReference</span></code> and deserialize it using <code class="docutils literal highlight highlight-csharp"><span class="n">SerializationHelpers</span><span class="p">.</span><span class="n">RetrieveObjectReference</span></code>. This ensures that the object reference will be treated correctly, when, e.g., the object becomes a prefab.</p>
+<p class="last">These methods convert <code class="docutils literal highlight highlight-csharp"><span class="n">UnityEngine</span><span class="p">.</span><span class="n">Object</span></code> references into unique ids. The ids are unique relative to the behavior being serialized and will not be unique across multiple behaviors.</p>
+</div>
+<p>Lets say you created a new serializer called <code class="docutils literal highlight highlight-csharp"><span class="n">MySerializer</span></code>. To use it in a behavior or scriptable object, just derive from <code class="docutils literal highlight highlight-csharp"><span class="n">BaseBehavior</span><span class="p">&lt;</span><span class="n">MySerializer</span><span class="p">&gt;</span></code>.</p>
 </div>
 
 

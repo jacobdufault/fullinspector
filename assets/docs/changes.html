@@ -50,10 +50,11 @@
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">2.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">1.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">1.10</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">1.01</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">1.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">1.10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">1.01</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
@@ -62,9 +63,6 @@
 <li class="toctree-l1"><a class="reference internal" href="custom_property_editors.html">Custom Property Editors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_serializers.html">Custom Serializers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="qa.html">Q/A</a></li>
-<li class="toctree-l1"><a class="reference internal" href="qa.html#binaryformatter">BinaryFormatter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="qa.html#json-net">Json.NET</a></li>
-<li class="toctree-l1"><a class="reference internal" href="qa.html#protobuf-net">protobuf-net</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
 </ul>
 
@@ -98,7 +96,42 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
-<h2>2.0<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2>2.1<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>New:</p>
+<ul class="simple">
+<li>Full Inspector now supports property editors that are activated via attributes</li>
+<li>Full Inspector now has undo/redo support!</li>
+<li>Prefab override properties will now be displayed in bold</li>
+<li>Support OnSceneGUI for IPropertyEditors or IAttributePropertyEditor types</li>
+<li>A collapsed interface/abstract/inherited type will now display the current type in the foldout header</li>
+<li>A collapsed array/list/dictionary will now show the number of elements in the collapsed container</li>
+</ul>
+<p>Samples:</p>
+<ul class="simple">
+<li>Added two simple sample games (platformer and arena)</li>
+</ul>
+<p>API:</p>
+<ul class="simple">
+<li>Default implementations are now provided for all (Attribute)PropertyEditor&lt;TElement&gt; methods, which simplifies implementing, for example, just an OnSceneGUI method.</li>
+</ul>
+<p>Fixes:</p>
+<ul class="simple">
+<li>Vector2 and Vector3 now display properly in non-wide inspectors</li>
+<li>Added a PropertyEditor and serialization support for LayerMasks</li>
+<li>Fixed foldouts for interfaces</li>
+<li>Fixed issue where prefab children would sometimes not properly display their serialized state</li>
+<li>Fixed issue where [ShowInInspector] fields/properties could not be displayed if they were not also serialized.</li>
+</ul>
+<p>Misc:</p>
+<ul class="simple">
+<li>CommentAttribute and MarginAttribute no longer have any special support within Full Inspector</li>
+<li>[JsonObject(MemberSerialization.OptIn)] is no longer required for the Json.NET serializer</li>
+<li>Replaced SurrogateSelector with custom implementation; SurrogateSelector could not disambiguate between two types with the same name but in different assemblies.</li>
+<li>BinaryFormatter is now using a custom SerializationBinder that is more robust to type changes</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>2.0<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>This is a big update! It is unfortunately not backwards compatible.</p>
 <ul class="simple">
 <li>Ref has been removed!</li>
@@ -117,8 +150,8 @@
 <li>The samples have been redesigned and sample scenes are now included.</li>
 </ul>
 </div>
-<div class="section" id="id2">
-<h2>1.2<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h2>1.2<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>Use <code class="docutils literal highlight highlight-csharp"><span class="n">AbstractPropertyEditor</span></code> if the inspected type has any derived types</li>
 <li>Support generic derived types in the <code class="docutils literal highlight highlight-csharp"><span class="n">AbstractPropertyEditor</span></code></li>
@@ -134,8 +167,8 @@
 <li>Make it obvious in the inspector when a <code class="docutils literal highlight highlight-csharp"><span class="n">UnityEngine</span><span class="p">.</span><span class="n">Object</span></code> is not wrapped in a <code class="docutils literal highlight highlight-csharp"><span class="n">Ref</span><span class="p">&lt;&gt;</span></code></li>
 </ul>
 </div>
-<div class="section" id="id3">
-<h2>1.10<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h2>1.10<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>Better deserialization error recovery, particularly if the variable type has changed.</li>
 <li>Added support for arbitrary serialization framework support; Full Inspector now ships with serializers for protobuf-net and Json.NET.</li>
@@ -147,8 +180,8 @@
 <li>Added more content to the manual, added a QA section.</li>
 </ul>
 </div>
-<div class="section" id="id4">
-<h2>1.01<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h2>1.01<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>Initial release!</li>
 </ul>

@@ -56,9 +56,6 @@
 <li class="toctree-l1"><a class="reference internal" href="custom_property_editors.html">Custom Property Editors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_serializers.html">Custom Serializers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="qa.html">Q/A</a></li>
-<li class="toctree-l1"><a class="reference internal" href="qa.html#binaryformatter">BinaryFormatter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="qa.html#json-net">Json.NET</a></li>
-<li class="toctree-l1"><a class="reference internal" href="qa.html#protobuf-net">protobuf-net</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
 </ul>
 
@@ -118,6 +115,9 @@
 </tr>
 <tr class="row-odd"><td>HideInInspectorAttribute</td>
 <td>Force a field or property to be hidden in the inspector. Only public fields/properties are shown by default.</td>
+</tr>
+<tr class="row-even"><td>NotSerializedAttribute</td>
+<td>Do not serialize this field or property. Identical to NonSerialized, except that it can also be applied to properties.</td>
 </tr>
 </tbody>
 </table>
