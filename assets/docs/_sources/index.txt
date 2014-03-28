@@ -12,7 +12,7 @@ Fully Featured Trial
 
 Want to try out Full Inspector? Awesome!
 
-A fully featured version is available for `download <https://github.com/jacobdufault/fullinspector/blob/gh-pages/assets/FullInspector%202.0%20Trial.zip?raw=true>`_. However, there are two limitations:
+A fully featured version is available for `download <http://goo.gl/bVnoyv>`_. However, there are two limitations:
 
 1. Unity will error when publishing
 2. Source code is not available
