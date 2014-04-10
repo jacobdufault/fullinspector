@@ -10,7 +10,7 @@ The current serializers are located in *"FullInspector2/Serializers"*. Feel free
 The process to create a new serializer is simple. Simply derive from ``BaseSerializer`` and implement the abstract methods.
 
 .. IMPORTANT::
-    If you come across a ``UnityEngine.Object`` (or derived type) reference, make sure to serialize it using ``SerializationHelpers.StoreObjectReference`` and deserialize it using ``SerializationHelpers.RetrieveObjectReference``. This ensures that the object reference will be treated correctly, when, e.g., the object becomes a prefab.
+    If you come across a ``UnityEngine.Object`` (or derived type) reference, make sure to serialize it using ``ISerializationOperator.StoreObjectReference`` and deserialize it using ``ISerializationOperator.RetrieveObjectReference``. This ensures that the object reference will be treated correctly, when, e.g., the object becomes a prefab. It will also ensure that an appropriate error is raised when the user tries to serialize a ``UnityEngine.Object`` reference to disk.
 
     These methods convert ``UnityEngine.Object`` references into unique ids. The ids are unique relative to the behavior being serialized and will not be unique across multiple behaviors.
 

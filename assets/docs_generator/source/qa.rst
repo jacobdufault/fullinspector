@@ -35,7 +35,7 @@ The other big question w.r.t. AOT compilation is your chosen serializer. For a m
 BinaryFormatter
 ===============
 
-You don't have to do anything! Full Inspector will automatically configure BinaryFormatter to use reflection on iOS and other AOT platforms.
+You don't have to do anything! Full Inspector will automatically configure BinaryFormatter to use reflection on iOS.
 
 ========
 Json.NET
@@ -48,13 +48,11 @@ Please follow these steps to use Json.NET on AOT platforms:
 
 That's it! You're now good to go for AOT platforms!
 
-============
-protobuf-net
-============
+===================
+protobuf-net (beta)
+===================
 
-We're still working on getting easy protobuf-net support for AOT platforms! Don't worry though, it's coming.
-
-Right now, here's what the process will probably look like:
+Using protobuf-net on AOT compiled platforms is doable, but it is tricky. Here's what you need to do:
 
 1. Compile Full Inspector into a DLL format
 2. Add all of your types annotated with a ``[ProtoContract]`` or that are referenced by the protobuf-net serializer into a separate DLL ("data-type only DLL")

@@ -22,6 +22,7 @@ ShowInInspectorAttribute        Force a field or property to be displayed in the
 HideInInspectorAttribute        Force a field or property to be hidden in the inspector. Only public fields/properties are shown by default.
 
 NotSerializedAttribute          Do not serialize this field or property. Identical to NonSerialized, except that it can also be applied to properties.
+
 ========================        ======================================================================
 
 Please see ``FullInspectorSettings`` to customize how Full Inspector operates. It is located at *FullInspector/FullInspector/FullInspectorSettings.cs*
@@ -41,4 +42,7 @@ AutomaticReferenceInstantation                  If true, then all fields/propert
 InspectorAutomaticReferenceInstantation         If true, then the reflected inspector will automatically instantiated null values to their default constructor value.
 
 InspectorAutomaticallyShowPublicProperties      If true, then the inspector will automatically show public fields and properties. If this is false, then only properties with a ``[ShowInInspector]`` attribute will be shown in the inspector.
+
+ShowOpenScriptButton                            Should the "Open Script" button above every inspected BaseBehavior instance be shown?
+
 ==========================================      ============================================================

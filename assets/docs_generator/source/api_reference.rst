@@ -6,6 +6,9 @@ API Reference
 .. warning::
     This API reference is not yet complete. Each of these types (and internal ones) are *much* more heavily commented. This is just an overview of the important parts.
 
+.. tip::
+    The recommended way to explore the Full Inspector API is to use code completion on the ``FullInspector`` namespace. The ``FullInspector.Internal`` namespace contains types that are likely not going to be useful outside of internal logic in Full Inspector.
+
 This document contains the primary API endpoints that you may be interested in.
 
 Serialization
@@ -27,8 +30,6 @@ Serialization
 
 ``class SerializationHelpers``: Provides some common methods for serialization.
 
-- ``public static UnityObject RetrieveObjectReference(int storageId)``: Retrieve an object that has been stored with ``StoreObjectReference``. storageId is the value that was returned by ``StoreObjectReference``.
-- ``public static int StoreObjectReference(UnityObject obj)``: Returns an integer that uniquely identifies the given UnityObject instance so that it can recovered after Unity has gone through a serialization cycle.
 - ``public static void SaveState<TSerializer>(ISerializedObject obj)``: Save the state of the given object using the selected serializer.
 - ``public static void RestoreState<TSerializer>(ISerializedObject obj)``: Restore the state of the given object using the selected serializer.
 - ``public static T Clone<T, TSerializer>(T obj)``: Clone the given object using the given serializer.

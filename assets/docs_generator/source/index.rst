@@ -38,5 +38,6 @@ Documents
    extra_editor_features
    custom_property_editors
    custom_serializers
+   file_serialization
    qa
    api_reference

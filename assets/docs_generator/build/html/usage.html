@@ -1,0 +1,231 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Usage &mdash; Full Inspector Documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Full Inspector Documentation" href="index.html" />
+    <link rel="next" title="Customization" href="customization.html" />
+    <link rel="prev" title="Changelog" href="changes.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="customization.html" title="Customization"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="changes.html" title="Changelog"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Full Inspector Documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changes.html">Changelog</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#working-guide">Working Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="customization.html">Customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra_editor_features.html">Extra Editor Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_property_editors.html">Custom Property Editors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_serializers.html">Custom Serializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qa.html">Q/A</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="changes.html"
+                        title="previous chapter">Changelog</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="customization.html"
+                        title="next chapter">Customization</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="working-guide">
+<h2>Working Guide<a class="headerlink" href="#working-guide" title="Permalink to this headline">¶</a></h2>
+<p>The following list is what you need to keep in mind to ensure that your objects serialize correctly and are fully inspectable using Full Inspector.</p>
+<ul class="simple">
+<li>Derive from <code class="docutils literal highlight highlight-csharp"><span class="n">BaseBehavior</span></code>, not <code class="docutils literal highlight highlight-csharp"><span class="n">MonoBehaviour</span></code></li>
+<li>If you override <code class="docutils literal highlight highlight-csharp"><span class="n">Awake</span></code>, immediately call <code class="docutils literal highlight highlight-csharp"><span class="k">base</span><span class="p">.</span><span class="n">Awake</span><span class="p">()</span></code></li>
+</ul>
+<p>That&#8217;s it! Of course, you&#8217;ll also have to added your serialization specific annotations if your serializer requires them. If that sounds confusing, then don&#8217;t worry. There are examples below that demonstrate this point.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>If you have custom save-game logic, make sure that you run <code class="docutils literal highlight highlight-csharp"><span class="n">FullInspectorSaveManager</span><span class="p">.</span><span class="n">SaveAll</span><span class="p">()</span></code> before your save logic; it will ensure that every <code class="docutils literal highlight highlight-csharp"><span class="n">BaseBehavior</span></code> instance is ready to go through Unity serialization. Saves can be detected automatically in the editor but not in a published build.</p>
+<p class="last">If you&#8217;re working with an object in the editor and are modifying it without using the inspector, make sure to restore the serialized data by calling <code class="docutils literal highlight highlight-csharp"><span class="n">RestoreState</span><span class="p">()</span></code>. After you&#8217;re done modifying it, call <code class="docutils literal highlight highlight-csharp"><span class="n">SaveState</span><span class="p">()</span></code>.</p>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">One potential gotcha with serialization: each <code class="docutils literal highlight highlight-csharp"><span class="n">BaseBehavior</span></code> is serialized independently. If you have a class instance that is shared across multiple <code class="docutils literal highlight highlight-csharp"><span class="n">BaseBehaviors</span></code>, it will be deserialized into separate instances. You can ensure that it deserializes into one instance by deriving from a <code class="docutils literal highlight highlight-csharp"><span class="n">UnityEngine</span><span class="p">.</span><span class="n">Object</span></code> child class, such as <code class="docutils literal highlight highlight-csharp"><span class="n">BaseScriptableObject</span></code>.</p>
+</div>
+<p>You&#8217;re recommended to use the Json.NET serializer. It works well without annotations and has support for every major platform that Unity can export to (via another asset store product).</p>
+<p>If you need performance, you can easily switch to protobuf-net for one specific component while using Json.NET for ease of use on the rest of your behaviors. Everything interacts correctly, even when using different serializers.</p>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>Here&#8217;s an example of how to use Full Inspector with Json.NET:</p>
+<div class="code c# highlight-csharp"><div class="highlight"><pre><span class="k">public</span> <span class="k">struct</span> <span class="nc">Struct</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="n">GameObject</span> <span class="n">SpawnObject</span><span class="p">;</span>
+    <span class="k">public</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">&gt;</span> <span class="n">StrStrDict</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">JsonNetStructDemoBehavior</span> <span class="p">:</span>
+    <span class="n">BaseBehavior</span><span class="p">&lt;</span><span class="n">JsonNetSerializer</span><span class="p">&gt;</span> <span class="p">{</span>
+
+    <span class="k">public</span> <span class="n">Struct</span> <span class="n">PublicValue</span><span class="p">;</span>
+
+<span class="na">    [ShowInInspector]</span>
+    <span class="k">private</span> <span class="n">Struct</span> <span class="n">_hidden</span><span class="p">;</span> <span class="cm">/* this field is not serialized */</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<img alt="_images/usage_jsonnet.png" src="_images/usage_jsonnet.png" />
+<p>If you like annotations, you could have optionally written <code class="docutils literal highlight highlight-csharp"><span class="n">Struct</span></code> as</p>
+<div class="code c# highlight-csharp"><div class="highlight"><pre><span class="na">[JsonObject]</span>
+<span class="k">public</span> <span class="k">struct</span> <span class="nc">Struct</span> <span class="p">{</span>
+<span class="na">    [JsonProperty]</span>
+    <span class="k">public</span> <span class="n">GameObject</span> <span class="n">SpawnObject</span><span class="p">;</span>
+<span class="na">    [JsonProperty]</span>
+    <span class="k">public</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="kt">string</span><span class="p">&gt;</span> <span class="n">StrStrDict</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>Or perhaps you prefer protobuf-net?</p>
+<div class="code c# highlight-csharp"><div class="highlight"><pre><span class="na">[ProtoContract]</span>
+<span class="na">[ProtoInclude(1, typeof(Implementation1))]</span>
+<span class="na">[ProtoInclude(2, typeof(Implementation2))]</span>
+<span class="k">public</span> <span class="k">interface</span> <span class="n">IInterface</span> <span class="p">{</span>
+<span class="p">}</span>
+
+<span class="na">[ProtoContract]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">Implementation1</span> <span class="p">:</span> <span class="n">IInterface</span> <span class="p">{</span>
+<span class="na">    [ProtoMember(1)]</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">A</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="na">[ProtoContract]</span>
+<span class="k">public</span> <span class="k">class</span> <span class="nc">Implementation2</span> <span class="p">:</span> <span class="n">IInterface</span> <span class="p">{</span>
+<span class="na">    [ProtoMember(1)]</span>
+    <span class="k">public</span> <span class="kt">bool</span> <span class="n">B</span><span class="p">;</span>
+
+<span class="na">    [ProtoMember(2)]</span>
+    <span class="k">public</span> <span class="n">Transform</span> <span class="n">Location</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">InterfaceDemoBehavior</span> <span class="p">:</span>
+    <span class="n">BaseBehavior</span><span class="p">&lt;</span><span class="n">ProtoBufNetSerializer</span><span class="p">&gt;</span> <span class="p">{</span>
+
+    <span class="k">public</span> <span class="n">IInterface</span> <span class="n">MyInterface</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<img alt="_images/usage_protobufnet.png" src="_images/usage_protobufnet.png" />
+<hr class="docutils" />
+<p>Or maybe even BinaryFormatter (beta)?</p>
+<div class="code c# highlight-csharp"><div class="highlight"><pre><span class="na">[Serializable]</span>
+<span class="k">public</span> <span class="k">struct</span> <span class="nc">Struct</span><span class="p">&lt;</span><span class="n">TValue</span><span class="p">&gt;</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="n">TValue</span><span class="p">&gt;</span> <span class="n">MyDict</span><span class="p">;</span>
+    <span class="k">public</span> <span class="n">TValue</span> <span class="n">MissingValue</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">BinaryFormatterStructDemoBehavior</span> <span class="p">:</span>
+    <span class="n">BaseBehavior</span><span class="p">&lt;</span><span class="n">BinaryFormatterSerializer</span><span class="p">&gt;</span> <span class="p">{</span>
+
+    <span class="k">public</span> <span class="n">Struct</span><span class="p">&lt;</span><span class="n">Transform</span><span class="p">&gt;</span> <span class="n">SomeStruct</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">enum</span> <span class="n">Enum</span> <span class="p">{</span>
+        <span class="n">ValueA</span><span class="p">,</span> <span class="n">ValueB</span><span class="p">,</span> <span class="n">ValueC</span>
+    <span class="p">}</span>
+    <span class="k">public</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="n">Enum</span><span class="p">,</span> <span class="kt">string</span><span class="p">&gt;</span> <span class="n">EnumStringDict</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<img alt="_images/usage_binaryformatter.png" src="_images/usage_binaryformatter.png" />
+<hr class="docutils" />
+<p>Full Inspector also includes experimental support for EasySave2. If none of these four serializers is your favorite, then it&#8217;s extremely easy to add support for a new one.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>There are many samples inside of <em>&#8220;FullInspector2/Samples&#8221;</em>.</p>
+<p class="last">The full source code has been provided and it is highly commented, so please feel free to peruse it as well to understand how Full Inspector works internally.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="customization.html" title="Customization"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="changes.html" title="Changelog"
+             >previous</a> |</li>
+        <li><a href="index.html">Full Inspector Documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Jacob Dufault.
+    </div>
+  </body>
+</html>

@@ -3,6 +3,33 @@
 Changelog
 =========
 
+2.2
+---
+
+New:
+
+- Easily serialize and deserialize structs/etc to files
+- Mimick the "open script" button present on MonoBehaviors/ScriptableObjects. This can be disabled via the FullInspectorSettings.ShowOpenScriptButton setting
+- Editor support for all ``ICollection<T>`` derived types, such as ``HashSet<T>``
+- Support new ``Order`` attribute, which allows for custom ordering of fields/properties in the inspector (even across partial types)
+
+Fixes:
+
+- Fix issue where non-prefab override properties would be shown in bold
+- Fix issue where inspected object would be deserialized during gameplay from old data
+- Inspector is now redrawn constantly while in play mode
+- Comments will now display with minimal height
+- Updated EasySave2 serializer
+- The inspector can now utilize every bit for long/ulong/decimal/double types
+- ``Array``/``List``/``ICollection``/``IDictionary`` editors now have a minimum height for, say, an empty class
+- ``ICollection`` and ``IDictionary`` now reset the next insertion object to the default value after an insertion
+- Fix issue where ``[NonSerialized]`` attribute would be ignored if a ``[SerializeField]`` property was also present
+
+Misc:
+
+- Improved the Json.NET serialization error reporting message
+
+
 2.1
 ----
 
