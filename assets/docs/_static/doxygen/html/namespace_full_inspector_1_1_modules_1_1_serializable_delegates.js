@@ -1,0 +1,9 @@
+var namespace_full_inspector_1_1_modules_1_1_serializable_delegates =
+[
+    [ "BaseSerializationDelegate", "class_full_inspector_1_1_modules_1_1_serializable_delegates_1_1_base_serialization_delegate.html", "class_full_inspector_1_1_modules_1_1_serializable_delegates_1_1_base_serialization_delegate" ],
+    [ "BaseSerializationActionEditor< TSerializationAction >", "class_full_inspector_1_1_modules_1_1_serializable_delegates_1_1_base_serialization_action_editor503c92bf5d44766977bbc6a39ef2e268.html", "class_full_inspector_1_1_modules_1_1_serializable_delegates_1_1_base_serialization_action_editor503c92bf5d44766977bbc6a39ef2e268" ],
+    [ "BaseSerialiationInvokableEditor< TSerializationDelegate >", "class_full_inspector_1_1_modules_1_1_serializable_delegates_1_1_base_serialiation_invokable_editb786580474badf0c11c2f884c6873995.html", "class_full_inspector_1_1_modules_1_1_serializable_delegates_1_1_base_serialiation_invokable_editb786580474badf0c11c2f884c6873995" ],
+    [ "BaseSerializationFuncEditor< TSerializationFunc >", "class_full_inspector_1_1_modules_1_1_serializable_delegates_1_1_base_serialization_func_editor_3_01_t_serialization_func_01_4.html", "class_full_inspector_1_1_modules_1_1_serializable_delegates_1_1_base_serialization_func_editor_3_01_t_serialization_func_01_4" ],
+    [ "BaseSerializedAction", "class_full_inspector_1_1_modules_1_1_serializable_delegates_1_1_base_serialized_action.html", null ],
+    [ "BaseSerializedFunc", "class_full_inspector_1_1_modules_1_1_serializable_delegates_1_1_base_serialized_func.html", null ]
+];

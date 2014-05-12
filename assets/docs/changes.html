@@ -50,22 +50,23 @@
 <li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">2.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">2.1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">2.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">1.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">1.10</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id6">1.01</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">2.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">2.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">1.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">1.10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">1.01</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="static_inspector.html">Static Inspector</a></li>
 <li class="toctree-l1"><a class="reference internal" href="customization.html">Customization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="extra_editor_features.html">Extra Editor Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_property_editors.html">Custom Property Editors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_serializers.html">Custom Serializers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="file_serialization.html">Serialization to a File</a></li>
 <li class="toctree-l1"><a class="reference internal" href="qa.html">Q/A</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
 </ul>
 
   <h4>Previous topic</h4>
@@ -98,7 +99,50 @@
   <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
-<h2>2.2<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2>2.3<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>New:</p>
+<ul class="simple">
+<li>Added the static inspector, which allows easy inspecting of static/global variables directly from within Unity</li>
+<li>Added a generic <code class="docutils literal highlight highlight-csharp"><span class="n">SerializableAction</span></code> and <code class="docutils literal highlight highlight-csharp"><span class="n">SerializableFunc</span></code> as equivalents to <code class="docutils literal highlight highlight-csharp"><span class="n">System</span><span class="p">.</span><span class="n">Action</span></code> and <code class="docutils literal highlight highlight-csharp"><span class="n">System</span><span class="p">.</span><span class="n">Func</span></code>, except they can be serialized (but require a <code class="docutils literal highlight highlight-csharp"><span class="n">UnityEngine</span><span class="p">.</span><span class="n">Object</span></code> function source). These are extremely powerful and support full type safety with contra/covariance.</li>
+<li>Methods can now be easily displayed in the inspector using the <code class="docutils literal highlight highlight-csharp"><span class="na">[InspectorButton]</span></code> attribute</li>
+<li>Inspector attribute property editors can now explicitly state what order they should appear in via extending <code class="docutils literal highlight highlight-csharp"><span class="n">IInspectorAttributeOrder</span></code></li>
+<li>Added <code class="docutils literal highlight highlight-csharp"><span class="na">[InspectorHidePrimary]</span></code> property attribute that hides the primary inspector. This is extremely useful for displaying a comment inside of an inspector that is not associated with any editor.</li>
+<li>Added new <code class="docutils literal highlight highlight-csharp"><span class="na">[InspectorDivider]</span></code> attribute that draws a divider in the inspector</li>
+<li>Introduced <code class="docutils literal highlight highlight-csharp"><span class="n">PropertyEditorChain</span></code> abstraction for those writing custom property editors; see docs.</li>
+<li>Add <code class="docutils literal highlight highlight-csharp"><span class="n">EditWithGUILayout</span></code> extension method to <code class="docutils literal highlight highlight-csharp"><span class="n">IPropertyEditor</span></code> that makes a property editor easily usable within a <code class="docutils literal highlight highlight-csharp"><span class="n">GUILayout</span></code> section (note: this is <em>not</em> <code class="docutils literal highlight highlight-csharp"><span class="n">GUILayout</span></code> support within property editors &#8211; sorry!)</li>
+<li>Added a property editor for <code class="docutils literal highlight highlight-csharp"><span class="n">System</span><span class="p">.</span><span class="n">Type</span></code></li>
+<li>Added a very basic property editor for <code class="docutils literal highlight highlight-csharp"><span class="n">System</span><span class="p">.</span><span class="n">ICustomAttributeProvider</span></code></li>
+<li>Added property editors for <code class="docutils literal highlight highlight-csharp"><span class="n">System</span><span class="p">.</span><span class="n">DateTime</span></code> and <code class="docutils literal highlight highlight-csharp"><span class="n">System</span><span class="p">.</span><span class="n">TimeSpan</span></code></li>
+<li>Added a new <code class="docutils literal highlight highlight-csharp"><span class="n">CommentType</span></code> enum to the <code class="docutils literal highlight highlight-csharp"><span class="n">CommentAttribute</span></code>, allowing an info, warning, or error image to be displayed with the comment</li>
+<li>Added a custom property editor for nullable types</li>
+</ul>
+<p>Fixes:</p>
+<ul class="simple">
+<li>The reflected property editor will now correctly handle cyclic object graphs</li>
+<li>The reflected property editor will no longer infinitely allocate objects to an unlimited depth (allows for recursive type definitions)</li>
+<li>Fix issue where Unity would draw highly indented <code class="docutils literal highlight highlight-csharp"><span class="n">EditorGUI</span></code> methods incorrectly</li>
+<li>Reflection-based allocation code will now instantiate <code class="docutils literal highlight highlight-csharp"><span class="n">ScriptableObjects</span></code> correctly</li>
+<li>Fix null dereference in object modification detector</li>
+<li>Corrected issue where when disabling warnings caused the editor to incorrectly handle null inspector targets</li>
+<li>Fix issue where too much data was being serialized for the base FI types</li>
+<li>The inspected object&#8217;s state will not be serialized during play mode</li>
+<li>Fix spelling error in <code class="docutils literal highlight highlight-csharp"><span class="n">IAttributePropertyEditor</span><span class="p">.</span><span class="n">Attribute</span></code></li>
+<li><code class="docutils literal highlight highlight-csharp"><span class="n">LayerMaskEditor</span></code> previously generated invalid LayerMasks</li>
+<li>Fixed serialization of <code class="docutils literal highlight highlight-csharp"><span class="n">Color</span><span class="p">?</span></code>, <code class="docutils literal highlight highlight-csharp"><span class="n">Vector2</span><span class="p">?</span></code>, <code class="docutils literal highlight highlight-csharp"><span class="n">Vector3</span><span class="p">?</span></code>, <code class="docutils literal highlight highlight-csharp"><span class="n">Vector4</span><span class="p">?</span></code> in Json.NET</li>
+<li>protobuf-net will now serialize default values by default (fixes nullable type serialization)</li>
+</ul>
+<p>Deprecations:</p>
+<ul class="simple">
+<li><code class="docutils literal highlight highlight-csharp"><span class="na">[Order]</span></code> has been deprecated; use <code class="docutils literal highlight highlight-csharp"><span class="na">[InspectorOrder]</span></code> instead</li>
+</ul>
+<p>Misc:</p>
+<ul class="simple">
+<li>Performance improvements for <code class="docutils literal highlight highlight-csharp"><span class="n">ICollection</span></code> and <code class="docutils literal highlight highlight-csharp"><span class="n">IDictionary</span></code> property editors</li>
+<li>Code reorganization and cleanup</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>2.2<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>New:</p>
 <ul class="simple">
 <li>Easily serialize and deserialize structs/etc to files</li>
@@ -123,8 +167,8 @@
 <li>Improved the Json.NET serialization error reporting message</li>
 </ul>
 </div>
-<div class="section" id="id2">
-<h2>2.1<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h2>2.1<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>New:</p>
 <ul class="simple">
 <li>Full Inspector now supports property editors that are activated via attributes</li>
@@ -158,8 +202,8 @@
 <li>BinaryFormatter is now using a custom SerializationBinder that is more robust to type changes</li>
 </ul>
 </div>
-<div class="section" id="id3">
-<h2>2.0<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h2>2.0<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>This is a big update! It is unfortunately not backwards compatible.</p>
 <ul class="simple">
 <li>Ref has been removed!</li>
@@ -178,8 +222,8 @@
 <li>The samples have been redesigned and sample scenes are now included.</li>
 </ul>
 </div>
-<div class="section" id="id4">
-<h2>1.2<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h2>1.2<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>Use <code class="docutils literal highlight highlight-csharp"><span class="n">AbstractPropertyEditor</span></code> if the inspected type has any derived types</li>
 <li>Support generic derived types in the <code class="docutils literal highlight highlight-csharp"><span class="n">AbstractPropertyEditor</span></code></li>
@@ -195,8 +239,8 @@
 <li>Make it obvious in the inspector when a <code class="docutils literal highlight highlight-csharp"><span class="n">UnityEngine</span><span class="p">.</span><span class="n">Object</span></code> is not wrapped in a <code class="docutils literal highlight highlight-csharp"><span class="n">Ref</span><span class="p">&lt;&gt;</span></code></li>
 </ul>
 </div>
-<div class="section" id="id5">
-<h2>1.10<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h2>1.10<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>Better deserialization error recovery, particularly if the variable type has changed.</li>
 <li>Added support for arbitrary serialization framework support; Full Inspector now ships with serializers for protobuf-net and Json.NET.</li>
@@ -208,8 +252,8 @@
 <li>Added more content to the manual, added a QA section.</li>
 </ul>
 </div>
-<div class="section" id="id6">
-<h2>1.01<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id7">
+<h2>1.01<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>Initial release!</li>
 </ul>

@@ -1,0 +1,9 @@
+digraph "Core/Editor/Processors" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_91b975a49321e0262d55dd907b08a846 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Editor" fontname="Helvetica", fontsize="10", URL="dir_91b975a49321e0262d55dd907b08a846.html"]
+  dir_0767f0777c8a73fb07b1980142de6c13 [shape=box, label="Processors", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_0767f0777c8a73fb07b1980142de6c13.html"];
+  }
+}

@@ -24,7 +24,6 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Full Inspector Documentation" href="index.html" />
-    <link rel="next" title="API Reference" href="api_reference.html" />
     <link rel="prev" title="Serialization to a File" href="file_serialization.html" /> 
   </head>
   <body>
@@ -34,9 +33,6 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="api_reference.html" title="API Reference"
-             accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="file_serialization.html" title="Serialization to a File"
              accesskey="P">previous</a> |</li>
@@ -51,6 +47,7 @@
 <li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changes.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="static_inspector.html">Static Inspector</a></li>
 <li class="toctree-l1"><a class="reference internal" href="customization.html">Customization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="extra_editor_features.html">Extra Editor Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_property_editors.html">Custom Property Editors</a></li>
@@ -59,6 +56,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="">Q/A</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#i-cannot-derive-from-basebehavior-or-basescriptableobject">I cannot derive from BaseBehavior or BaseScriptableObject</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#does-full-inspector-impact-runtime-performance">Does Full Inspector impact runtime performance?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#i-just-imported-full-inspector-and-i-m-getting-internal-compiler-errors">I just imported Full Inspector and I&#8217;m getting internal compiler errors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#i-want-to-use-ios-or-another-aot-platform">I want to use iOS or another AOT platform</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#binaryformatter">BinaryFormatter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#json-net">Json.NET</a></li>
@@ -67,15 +65,11 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="file_serialization.html"
                         title="previous chapter">Serialization to a File</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="api_reference.html"
-                        title="next chapter">API Reference</a></p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
@@ -110,6 +104,21 @@
 <h2>Does Full Inspector impact runtime performance?<a class="headerlink" href="#does-full-inspector-impact-runtime-performance" title="Permalink to this headline">¶</a></h2>
 <p>No! The only impact that Full Inspector has is a call to <code class="docutils literal highlight highlight-csharp"><span class="n">Awake</span></code> for every object that requires special serialization support. The <code class="docutils literal highlight highlight-csharp"><span class="n">Awake</span></code> call merely deserializes the object. Sometimes this can actually be faster than Unity deserialization, particularly with protobuf-net when the serialized object graph is large.</p>
 <p>Full Inspector imposes no runtime impacts (such as a call to Update); in fact, your code will likely run faster will Full Inspector due to less GC pressure because you can now extensively use structs.</p>
+</div>
+<div class="section" id="i-just-imported-full-inspector-and-i-m-getting-internal-compiler-errors">
+<h2>I just imported Full Inspector and I&#8217;m getting internal compiler errors<a class="headerlink" href="#i-just-imported-full-inspector-and-i-m-getting-internal-compiler-errors" title="Permalink to this headline">¶</a></h2>
+<p>The short answer: switch your build platform to a desktop build.</p>
+<p>The long answer: This is almost certainly a problem with one of the serializers &#8211; in particular, the Json.NET build that Full Inspector ships with.</p>
+<p>You can deal with this by either completely removing Json.NET and using one of the other serializers, or you can prepare Full Inspector for iOS / AOT serialization, as described in the next Q/A question.</p>
+<p>To remove Json.NET, just delete <em>&#8220;Serializers/JsonNet&#8221;</em>, <em>&#8220;Samples/Json.NET&#8221;</em>, and <em>&#8220;Samples/Other&#8221;</em>. You&#8217;re also probably going to want to add these class definitions somewhere in your project:</p>
+<div class="code c# highlight-csharp"><div class="highlight"><pre><span class="k">public</span> <span class="k">class</span> <span class="nc">BaseBehavior</span> <span class="p">:</span>
+    <span class="n">BaseBehavior</span><span class="p">&lt;</span><span class="n">ProtoBufNetSerializer</span><span class="p">&gt;</span> <span class="p">{}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">BaseScriptableObject</span> <span class="p">:</span>
+    <span class="n">BaseScriptableObject</span><span class="p">&lt;</span><span class="n">ProtoBufNetSerializer</span><span class="p">&gt;</span> <span class="p">{}</span>
+</pre></div>
+</div>
+<p>(or <code class="docutils literal highlight highlight-csharp"><span class="n">BinaryFormatterSerializer</span></code>).</p>
 </div>
 <div class="section" id="i-want-to-use-ios-or-another-aot-platform">
 <h2>I want to use iOS or another AOT platform<a class="headerlink" href="#i-want-to-use-ios-or-another-aot-platform" title="Permalink to this headline">¶</a></h2>
@@ -153,9 +162,6 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="api_reference.html" title="API Reference"
-             >next</a> |</li>
         <li class="right" >
           <a href="file_serialization.html" title="Serialization to a File"
              >previous</a> |</li>

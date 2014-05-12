@@ -1,0 +1,9 @@
+digraph "Samples/Json.NET/Editor" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_8521715f72fa102bcee2b92d11a83559 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Json.NET" fontname="Helvetica", fontsize="10", URL="dir_8521715f72fa102bcee2b92d11a83559.html"]
+  dir_b687c6123ec108096098e8efafcd7e9d [shape=box, label="Editor", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_b687c6123ec108096098e8efafcd7e9d.html"];
+  }
+}

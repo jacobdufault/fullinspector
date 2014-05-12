@@ -3,6 +3,50 @@
 Changelog
 =========
 
+2.3
+---
+
+New:
+
+- Added the static inspector, which allows easy inspecting of static/global variables directly from within Unity
+- Added a generic ``SerializableAction`` and ``SerializableFunc`` as equivalents to ``System.Action`` and ``System.Func``, except they can be serialized (but require a ``UnityEngine.Object`` function source). These are extremely powerful and support full type safety with contra/covariance.
+- Methods can now be easily displayed in the inspector using the ``[InspectorButton]`` attribute
+- Inspector attribute property editors can now explicitly state what order they should appear in via extending ``IInspectorAttributeOrder``
+- Added ``[InspectorHidePrimary]`` property attribute that hides the primary inspector. This is extremely useful for displaying a comment inside of an inspector that is not associated with any editor.
+- Added new ``[InspectorDivider]`` attribute that draws a divider in the inspector
+- Introduced ``PropertyEditorChain`` abstraction for those writing custom property editors; see docs.
+- Add ``EditWithGUILayout`` extension method to ``IPropertyEditor`` that makes a property editor easily usable within a ``GUILayout`` section (note: this is *not* ``GUILayout`` support within property editors -- sorry!)
+- Added a property editor for ``System.Type``
+- Added a very basic property editor for ``System.ICustomAttributeProvider``
+- Added property editors for ``System.DateTime`` and ``System.TimeSpan``
+- Added a new ``CommentType`` enum to the ``CommentAttribute``, allowing an info, warning, or error image to be displayed with the comment
+- Added a custom property editor for nullable types
+
+Fixes:
+
+- The reflected property editor will now correctly handle cyclic object graphs
+- The reflected property editor will no longer infinitely allocate objects to an unlimited depth (allows for recursive type definitions)
+- Fix issue where Unity would draw highly indented ``EditorGUI`` methods incorrectly
+- Reflection-based allocation code will now instantiate ``ScriptableObjects`` correctly
+- Fix null dereference in object modification detector
+- Corrected issue where when disabling warnings caused the editor to incorrectly handle null inspector targets
+- Fix issue where too much data was being serialized for the base FI types
+- The inspected object's state will not be serialized during play mode
+- Fix spelling error in ``IAttributePropertyEditor.Attribute``
+- ``LayerMaskEditor`` previously generated invalid LayerMasks
+- Fixed serialization of ``Color?``, ``Vector2?``, ``Vector3?``, ``Vector4?`` in Json.NET
+- protobuf-net will now serialize default values by default (fixes nullable type serialization)
+
+Deprecations:
+
+- ``[Order]`` has been deprecated; use ``[InspectorOrder]`` instead
+
+Misc:
+
+- Performance improvements for ``ICollection`` and ``IDictionary`` property editors
+- Code reorganization and cleanup
+
+
 2.2
 ---
 

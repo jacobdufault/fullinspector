@@ -1,0 +1,4 @@
+var class_full_inspector_1_1_samples_1_1_proto_buf_net_1_1_sample_proto_inheritance_1_1_derived_i_face_b =
+[
+    [ "B", "class_full_inspector_1_1_samples_1_1_proto_buf_net_1_1_sample_proto_inheritance_1_1_derived_i_face_b.html#a800ba41ee29ddce1bde4007bf3e88bba", null ]
+];

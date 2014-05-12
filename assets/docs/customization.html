@@ -25,7 +25,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Full Inspector Documentation" href="index.html" />
     <link rel="next" title="Extra Editor Features" href="extra_editor_features.html" />
-    <link rel="prev" title="Usage" href="usage.html" /> 
+    <link rel="prev" title="Static Inspector" href="static_inspector.html" /> 
   </head>
   <body>
     <div class="related">
@@ -38,7 +38,7 @@
           <a href="extra_editor_features.html" title="Extra Editor Features"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="usage.html" title="Usage"
+          <a href="static_inspector.html" title="Static Inspector"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">Full Inspector Documentation</a> &raquo;</li> 
       </ul>
@@ -51,18 +51,18 @@
 <li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changes.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="static_inspector.html">Static Inspector</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Customization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="extra_editor_features.html">Extra Editor Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_property_editors.html">Custom Property Editors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_serializers.html">Custom Serializers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="file_serialization.html">Serialization to a File</a></li>
 <li class="toctree-l1"><a class="reference internal" href="qa.html">Q/A</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="usage.html"
-                        title="previous chapter">Usage</a></p>
+  <p class="topless"><a href="static_inspector.html"
+                        title="previous chapter">Static Inspector</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="extra_editor_features.html"
                         title="next chapter">Extra Editor Features</a></p>
@@ -92,8 +92,8 @@
 <p>There are a couple of special attributes that you can apply to your class members to provide some easy inspector customization.</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="17%" />
-<col width="83%" />
+<col width="20%" />
+<col width="80%" />
 </colgroup>
 <tbody valign="top">
 <tr class="row-odd"><td><strong>Attribute</strong></td>
@@ -119,6 +119,12 @@
 </tr>
 <tr class="row-even"><td>NotSerializedAttribute</td>
 <td>Do not serialize this field or property. Identical to NonSerialized, except that it can also be applied to properties.</td>
+</tr>
+<tr class="row-odd"><td>InspectorDividerAttribute</td>
+<td>Draw a divider in the inspector.</td>
+</tr>
+<tr class="row-even"><td>InspectorHidePrimaryAttribute</td>
+<td>Hide the primary property editor, only showing the attribute ones.</td>
 </tr>
 </tbody>
 </table>
@@ -173,7 +179,7 @@
           <a href="extra_editor_features.html" title="Extra Editor Features"
              >next</a> |</li>
         <li class="right" >
-          <a href="usage.html" title="Usage"
+          <a href="static_inspector.html" title="Static Inspector"
              >previous</a> |</li>
         <li><a href="index.html">Full Inspector Documentation</a> &raquo;</li> 
       </ul>
