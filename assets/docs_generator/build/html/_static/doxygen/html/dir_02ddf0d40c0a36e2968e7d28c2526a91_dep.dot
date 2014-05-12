@@ -1,0 +1,9 @@
+digraph "Core/Editor/PropertyEditors" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_91b975a49321e0262d55dd907b08a846 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Editor" fontname="Helvetica", fontsize="10", URL="dir_91b975a49321e0262d55dd907b08a846.html"]
+  dir_02ddf0d40c0a36e2968e7d28c2526a91 [shape=box, label="PropertyEditors", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_02ddf0d40c0a36e2968e7d28c2526a91.html"];
+  }
+}

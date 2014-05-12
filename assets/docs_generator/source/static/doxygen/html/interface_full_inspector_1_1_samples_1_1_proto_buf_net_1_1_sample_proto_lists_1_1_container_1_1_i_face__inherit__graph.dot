@@ -1,0 +1,11 @@
+digraph "FullInspector.Samples.ProtoBufNet.SampleProtoLists.Container.IFace"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="FullInspector.Samples.Proto\lBufNet.SampleProtoLists.Container.IFace",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="FullInspector.Samples.Proto\lBufNet.SampleProtoLists.Container.\lDerivedA",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_full_inspector_1_1_samples_1_1_proto_buf_net_1_1_sample_proto_lists_1_1_container_1_1_derived_a.html"];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="FullInspector.Samples.Proto\lBufNet.SampleProtoLists.Container.\lDerivedB",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_full_inspector_1_1_samples_1_1_proto_buf_net_1_1_sample_proto_lists_1_1_container_1_1_derived_b.html"];
+}

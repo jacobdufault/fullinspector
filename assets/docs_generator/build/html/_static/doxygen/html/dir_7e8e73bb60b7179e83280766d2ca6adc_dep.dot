@@ -1,0 +1,9 @@
+digraph "Samples/Other/MinMax/Editor" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_41a004cfa0443e6cc240f30934d1e8c1 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="MinMax" fontname="Helvetica", fontsize="10", URL="dir_41a004cfa0443e6cc240f30934d1e8c1.html"]
+  dir_7e8e73bb60b7179e83280766d2ca6adc [shape=box, label="Editor", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_7e8e73bb60b7179e83280766d2ca6adc.html"];
+  }
+}

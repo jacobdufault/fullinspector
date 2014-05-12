@@ -1,0 +1,4 @@
+var struct_full_inspector_1_1_samples_1_1_proto_buf_net_1_1_sample_proto_dictionaries_1_1_container =
+[
+    [ "StrGoDict", "struct_full_inspector_1_1_samples_1_1_proto_buf_net_1_1_sample_proto_dictionaries_1_1_container.html#a0200a2fbe122bf199925ab48c43b9c17", null ]
+];

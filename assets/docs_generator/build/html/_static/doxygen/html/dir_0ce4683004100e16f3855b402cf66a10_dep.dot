@@ -1,0 +1,13 @@
+digraph "Serializers/Formatter" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_61eec73073e3a0e9cd8f37732c89a49e {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Serializers" fontname="Helvetica", fontsize="10", URL="dir_61eec73073e3a0e9cd8f37732c89a49e.html"]
+  subgraph clusterdir_0ce4683004100e16f3855b402cf66a10 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_0ce4683004100e16f3855b402cf66a10.html"];
+    dir_0ce4683004100e16f3855b402cf66a10 [shape=plaintext label="Formatter"];
+    dir_ef209487b0bb773c3d5e7b48050e3085 [shape=box label="Surrogates" color="black" fillcolor="white" style="filled" URL="dir_ef209487b0bb773c3d5e7b48050e3085.html"];
+  }
+  }
+}

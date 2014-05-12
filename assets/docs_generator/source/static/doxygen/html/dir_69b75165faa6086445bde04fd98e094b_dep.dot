@@ -1,0 +1,9 @@
+digraph "Samples/Other/Limits/Editor" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_24a977829e69fab07a7dcd6b9c4c6515 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Limits" fontname="Helvetica", fontsize="10", URL="dir_24a977829e69fab07a7dcd6b9c4c6515.html"]
+  dir_69b75165faa6086445bde04fd98e094b [shape=box, label="Editor", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_69b75165faa6086445bde04fd98e094b.html"];
+  }
+}

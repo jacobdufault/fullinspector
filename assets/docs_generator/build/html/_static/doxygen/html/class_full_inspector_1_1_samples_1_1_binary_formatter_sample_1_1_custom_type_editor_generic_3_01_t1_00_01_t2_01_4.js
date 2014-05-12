@@ -1,0 +1,5 @@
+var class_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_custom_type_editor_generic_3_01_t1_00_01_t2_01_4 =
+[
+    [ "Value1", "class_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_custom_type_editor_generic_3_01_t1_00_01_t2_01_4.html#ae47e3d541a8232e5567d86ccab8bfd49", null ],
+    [ "Value2", "class_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_custom_type_editor_generic_3_01_t1_00_01_t2_01_4.html#af975ecb0ac8120be0d6b6fc937ec4d1b", null ]
+];

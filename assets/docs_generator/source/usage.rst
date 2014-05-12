@@ -15,7 +15,13 @@ That's it! Of course, you'll also have to added your serialization specific anno
 .. IMPORTANT::
     If you have custom save-game logic, make sure that you run ``FullInspectorSaveManager.SaveAll()`` before your save logic; it will ensure that every ``BaseBehavior`` instance is ready to go through Unity serialization. Saves can be detected automatically in the editor but not in a published build.
 
+    It's worth stating that the ``FullInspectorSaveManager.SaveAll()`` is the robust, but slow, method of serializing data. If you're saving your game and looking to increase performance, you can selectively specify which objects to serialize via calling ``SaveState()`` on them.  ``SaveAll()`` does this via iterating every object that derives from ``ISerializedObject``.
+
+.. DANGER::
+
     If you're working with an object in the editor and are modifying it without using the inspector, make sure to restore the serialized data by calling ``RestoreState()``. After you're done modifying it, call ``SaveState()``.
+
+    This should go away in Unity 4.5, when serialization callbacks have landed.
 
 .. IMPORTANT::
     One potential gotcha with serialization: each ``BaseBehavior`` is serialized independently. If you have a class instance that is shared across multiple ``BaseBehaviors``, it will be deserialized into separate instances. You can ensure that it deserializes into one instance by deriving from a ``UnityEngine.Object`` child class, such as ``BaseScriptableObject``.
@@ -120,6 +126,37 @@ Or maybe even BinaryFormatter (beta)?
 .. image:: static/usage_binaryformatter.png
 
 -------------------------
+
+.. IMPORTANT::
+
+    If you have a private member on a ``BaseBehavior`` type that you want serialized, you need to use ``SerializeField``, *not* ``JsonMember`` or ``ProtoMember``.
+
+    For example,
+
+    .. code:: c#
+
+        public class Serializes : BaseBehavior {
+            [SerializeField]
+            private GenericHolder<int> SerializeField;
+        }
+
+    will serialize correctly.
+
+    However,
+
+    .. code:: c#
+
+        public class DoesNotSerialize : BaseBehavior {
+            [JsonProperty]
+            private GenericHolder<int> DoesNotSerializeField;
+        }
+
+    does not serialize as expected.
+
+    ``[JsonProperty]`` and ``[ProtoMember]`` support will be added in a future version.
+
+-------------------------
+
 
 Full Inspector also includes experimental support for EasySave2. If none of these four serializers is your favorite, then it's extremely easy to add support for a new one.
 

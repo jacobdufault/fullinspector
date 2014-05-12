@@ -1,0 +1,9 @@
+digraph "Samples/Other/Skill System" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_dce8745f504bfee879cc2042fbd4ebc0 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Other" fontname="Helvetica", fontsize="10", URL="dir_dce8745f504bfee879cc2042fbd4ebc0.html"]
+  dir_6244ba06895aa149dbbe66197e1b90af [shape=box, label="Skill System", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_6244ba06895aa149dbbe66197e1b90af.html"];
+  }
+}

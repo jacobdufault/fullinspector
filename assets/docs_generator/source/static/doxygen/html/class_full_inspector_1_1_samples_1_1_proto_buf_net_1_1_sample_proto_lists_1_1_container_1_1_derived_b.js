@@ -1,0 +1,4 @@
+var class_full_inspector_1_1_samples_1_1_proto_buf_net_1_1_sample_proto_lists_1_1_container_1_1_derived_b =
+[
+    [ "B", "class_full_inspector_1_1_samples_1_1_proto_buf_net_1_1_sample_proto_lists_1_1_container_1_1_derived_b.html#aa41c0df4fdcc25d03be2ca0df8d446a2", null ]
+];

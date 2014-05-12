@@ -1,0 +1,16 @@
+digraph "Samples" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_24e107d8aaaa0f0fb9ce89773de45c08 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_24e107d8aaaa0f0fb9ce89773de45c08.html"];
+    dir_24e107d8aaaa0f0fb9ce89773de45c08 [shape=plaintext label="Samples"];
+    dir_9babdeb18cec137e301d142ada3bd3ad [shape=box label="AssetStore" color="black" fillcolor="white" style="filled" URL="dir_9babdeb18cec137e301d142ada3bd3ad.html"];
+    dir_4572d6d5d08b754707711f067dba6c90 [shape=box label="BinaryFormatter" color="red" fillcolor="white" style="filled" URL="dir_4572d6d5d08b754707711f067dba6c90.html"];
+    dir_44e0a37a7020575e3081786a2fb7489b [shape=box label="Games" color="red" fillcolor="white" style="filled" URL="dir_44e0a37a7020575e3081786a2fb7489b.html"];
+    dir_8521715f72fa102bcee2b92d11a83559 [shape=box label="Json.NET" color="red" fillcolor="white" style="filled" URL="dir_8521715f72fa102bcee2b92d11a83559.html"];
+    dir_dce8745f504bfee879cc2042fbd4ebc0 [shape=box label="Other" color="red" fillcolor="white" style="filled" URL="dir_dce8745f504bfee879cc2042fbd4ebc0.html"];
+    dir_8be20a4acd4ce1425b53174f7683c2cb [shape=box label="Performance" color="red" fillcolor="white" style="filled" URL="dir_8be20a4acd4ce1425b53174f7683c2cb.html"];
+    dir_9a772622625144d668fa059ea8c36ec8 [shape=box label="protobuf-net" color="red" fillcolor="white" style="filled" URL="dir_9a772622625144d668fa059ea8c36ec8.html"];
+  }
+}

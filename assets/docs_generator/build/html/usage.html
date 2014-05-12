@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Full Inspector Documentation" href="index.html" />
-    <link rel="next" title="Customization" href="customization.html" />
+    <link rel="next" title="Static Inspector" href="static_inspector.html" />
     <link rel="prev" title="Changelog" href="changes.html" /> 
   </head>
   <body>
@@ -35,7 +35,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="customization.html" title="Customization"
+          <a href="static_inspector.html" title="Static Inspector"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="changes.html" title="Changelog"
@@ -55,20 +55,21 @@
 <li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="static_inspector.html">Static Inspector</a></li>
 <li class="toctree-l1"><a class="reference internal" href="customization.html">Customization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="extra_editor_features.html">Extra Editor Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_property_editors.html">Custom Property Editors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_serializers.html">Custom Serializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_serialization.html">Serialization to a File</a></li>
 <li class="toctree-l1"><a class="reference internal" href="qa.html">Q/A</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="changes.html"
                         title="previous chapter">Changelog</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="customization.html"
-                        title="next chapter">Customization</a></p>
+  <p class="topless"><a href="static_inspector.html"
+                        title="next chapter">Static Inspector</a></p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
@@ -103,7 +104,12 @@
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
 <p>If you have custom save-game logic, make sure that you run <code class="docutils literal highlight highlight-csharp"><span class="n">FullInspectorSaveManager</span><span class="p">.</span><span class="n">SaveAll</span><span class="p">()</span></code> before your save logic; it will ensure that every <code class="docutils literal highlight highlight-csharp"><span class="n">BaseBehavior</span></code> instance is ready to go through Unity serialization. Saves can be detected automatically in the editor but not in a published build.</p>
-<p class="last">If you&#8217;re working with an object in the editor and are modifying it without using the inspector, make sure to restore the serialized data by calling <code class="docutils literal highlight highlight-csharp"><span class="n">RestoreState</span><span class="p">()</span></code>. After you&#8217;re done modifying it, call <code class="docutils literal highlight highlight-csharp"><span class="n">SaveState</span><span class="p">()</span></code>.</p>
+<p class="last">It&#8217;s worth stating that the <code class="docutils literal highlight highlight-csharp"><span class="n">FullInspectorSaveManager</span><span class="p">.</span><span class="n">SaveAll</span><span class="p">()</span></code> is the robust, but slow, method of serializing data. If you&#8217;re saving your game and looking to increase performance, you can selectively specify which objects to serialize via calling <code class="docutils literal highlight highlight-csharp"><span class="n">SaveState</span><span class="p">()</span></code> on them.  <code class="docutils literal highlight highlight-csharp"><span class="n">SaveAll</span><span class="p">()</span></code> does this via iterating every object that derives from <code class="docutils literal highlight highlight-csharp"><span class="n">ISerializedObject</span></code>.</p>
+</div>
+<div class="admonition danger">
+<p class="first admonition-title">Danger</p>
+<p>If you&#8217;re working with an object in the editor and are modifying it without using the inspector, make sure to restore the serialized data by calling <code class="docutils literal highlight highlight-csharp"><span class="n">RestoreState</span><span class="p">()</span></code>. After you&#8217;re done modifying it, call <code class="docutils literal highlight highlight-csharp"><span class="n">SaveState</span><span class="p">()</span></code>.</p>
+<p class="last">This should go away in Unity 4.5, when serialization callbacks have landed.</p>
 </div>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
@@ -194,6 +200,28 @@
 </div>
 <img alt="_images/usage_binaryformatter.png" src="_images/usage_binaryformatter.png" />
 <hr class="docutils" />
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>If you have a private member on a <code class="docutils literal highlight highlight-csharp"><span class="n">BaseBehavior</span></code> type that you want serialized, you need to use <code class="docutils literal highlight highlight-csharp"><span class="n">SerializeField</span></code>, <em>not</em> <code class="docutils literal highlight highlight-csharp"><span class="n">JsonMember</span></code> or <code class="docutils literal highlight highlight-csharp"><span class="n">ProtoMember</span></code>.</p>
+<p>For example,</p>
+<div class="code c# highlight-csharp"><div class="highlight"><pre><span class="k">public</span> <span class="k">class</span> <span class="nc">Serializes</span> <span class="p">:</span> <span class="n">BaseBehavior</span> <span class="p">{</span>
+<span class="na">    [SerializeField]</span>
+    <span class="k">private</span> <span class="n">GenericHolder</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">SerializeField</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>will serialize correctly.</p>
+<p>However,</p>
+<div class="code c# highlight-csharp"><div class="highlight"><pre><span class="k">public</span> <span class="k">class</span> <span class="nc">DoesNotSerialize</span> <span class="p">:</span> <span class="n">BaseBehavior</span> <span class="p">{</span>
+<span class="na">    [JsonProperty]</span>
+    <span class="k">private</span> <span class="n">GenericHolder</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">DoesNotSerializeField</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>does not serialize as expected.</p>
+<p class="last"><code class="docutils literal highlight highlight-csharp"><span class="na">[JsonProperty]</span></code> and <code class="docutils literal highlight highlight-csharp"><span class="na">[ProtoMember]</span></code> support will be added in a future version.</p>
+</div>
+<hr class="docutils" />
 <p>Full Inspector also includes experimental support for EasySave2. If none of these four serializers is your favorite, then it&#8217;s extremely easy to add support for a new one.</p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
@@ -216,7 +244,7 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="customization.html" title="Customization"
+          <a href="static_inspector.html" title="Static Inspector"
              >next</a> |</li>
         <li class="right" >
           <a href="changes.html" title="Changelog"

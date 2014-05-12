@@ -1,0 +1,9 @@
+digraph "FullInspector.SerializedAction&lt; TParam1, TParam2, TParam3 &gt;.Invoke"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="FullInspector.Serialized\lAction\< TParam1, TParam2,\l TParam3 \>.Invoke",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="FullInspector.Modules.Serializable\lDelegates.BaseSerializationDelegate.\lDoInvoke",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_full_inspector_1_1_modules_1_1_serializable_delegates_1_1_base_serialization_delegate.html#a1d3c9b1d28adde530fe6eecce15d83ca",tooltip="Internal helper method to invoke the delegate with the given parameters. "];
+}

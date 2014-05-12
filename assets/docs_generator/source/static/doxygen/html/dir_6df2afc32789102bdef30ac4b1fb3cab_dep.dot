@@ -1,0 +1,13 @@
+digraph "Libraries/Rotorz/Editor" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_0dcad0072906efcc441528b6fa71ba58 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Rotorz" fontname="Helvetica", fontsize="10", URL="dir_0dcad0072906efcc441528b6fa71ba58.html"]
+  subgraph clusterdir_6df2afc32789102bdef30ac4b1fb3cab {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_6df2afc32789102bdef30ac4b1fb3cab.html"];
+    dir_6df2afc32789102bdef30ac4b1fb3cab [shape=plaintext label="Editor"];
+    dir_45a9acbd4c3e29fe93f4e7bbc8482cb9 [shape=box label="Internal" color="black" fillcolor="white" style="filled" URL="dir_45a9acbd4c3e29fe93f4e7bbc8482cb9.html"];
+  }
+  }
+}

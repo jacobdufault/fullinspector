@@ -1,0 +1,13 @@
+digraph "Serializers/JsonNet" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_61eec73073e3a0e9cd8f37732c89a49e {
+    graph [ bgcolor="#ddddee", pencolor="black", label="Serializers" fontname="Helvetica", fontsize="10", URL="dir_61eec73073e3a0e9cd8f37732c89a49e.html"]
+  subgraph clusterdir_9feea9bf8d1343abbf976f48d80329e3 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_9feea9bf8d1343abbf976f48d80329e3.html"];
+    dir_9feea9bf8d1343abbf976f48d80329e3 [shape=plaintext label="JsonNet"];
+    dir_402ed1dcedb326ed3ac3909ea937ea73 [shape=box label="Converters" color="black" fillcolor="white" style="filled" URL="dir_402ed1dcedb326ed3ac3909ea937ea73.html"];
+  }
+  }
+}

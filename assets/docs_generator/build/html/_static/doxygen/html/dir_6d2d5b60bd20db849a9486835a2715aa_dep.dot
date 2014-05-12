@@ -1,0 +1,10 @@
+digraph "Libraries" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_6d2d5b60bd20db849a9486835a2715aa {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_6d2d5b60bd20db849a9486835a2715aa.html"];
+    dir_6d2d5b60bd20db849a9486835a2715aa [shape=plaintext label="Libraries"];
+    dir_0dcad0072906efcc441528b6fa71ba58 [shape=box label="Rotorz" color="red" fillcolor="white" style="filled" URL="dir_0dcad0072906efcc441528b6fa71ba58.html"];
+  }
+}

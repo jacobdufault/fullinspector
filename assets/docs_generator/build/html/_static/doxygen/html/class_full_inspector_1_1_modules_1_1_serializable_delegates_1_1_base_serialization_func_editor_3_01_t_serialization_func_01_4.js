@@ -1,0 +1,4 @@
+var class_full_inspector_1_1_modules_1_1_serializable_delegates_1_1_base_serialization_func_editor_3_01_t_serialization_func_01_4 =
+[
+    [ "IsValidMethod", "class_full_inspector_1_1_modules_1_1_serializable_delegates_1_1_base_serialization_func_editor_3_01_t_serialization_func_01_4.html#a720c3f5c8c7963430e2a4c43b7bfa113", null ]
+];

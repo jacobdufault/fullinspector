@@ -24,6 +24,28 @@ No! The only impact that Full Inspector has is a call to ``Awake`` for every obj
 Full Inspector imposes no runtime impacts (such as a call to Update); in fact, your code will likely run faster will Full Inspector due to less GC pressure because you can now extensively use structs.
 
 
+I just imported Full Inspector and I'm getting internal compiler errors
+-----------------------------------------------------------------------
+
+The short answer: switch your build platform to a desktop build.
+
+The long answer: This is almost certainly a problem with one of the serializers -- in particular, the Json.NET build that Full Inspector ships with.
+
+You can deal with this by either completely removing Json.NET and using one of the other serializers, or you can prepare Full Inspector for iOS / AOT serialization, as described in the next Q/A question.
+
+To remove Json.NET, just delete *"Serializers/JsonNet"*, *"Samples/Json.NET"*, and *"Samples/Other"*. You're also probably going to want to add these class definitions somewhere in your project:
+
+.. code:: c#
+
+    public class BaseBehavior :
+        BaseBehavior<ProtoBufNetSerializer> {}
+
+    public class BaseScriptableObject :
+        BaseScriptableObject<ProtoBufNetSerializer> {}
+
+(or ``BinaryFormatterSerializer``).
+
+
 I want to use iOS or another AOT platform
 -----------------------------------------
 

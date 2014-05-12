@@ -1,0 +1,7 @@
+var struct_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_simple_types_1_1_struct_container =
+[
+    [ "BoolValue", "struct_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_simple_types_1_1_struct_container.html#a410fe7b79fb570dd9e7529f185b8d42c", null ],
+    [ "FloatValue", "struct_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_simple_types_1_1_struct_container.html#a140a7fc38692b7acdb3497a5f59598e1", null ],
+    [ "IntValue", "struct_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_simple_types_1_1_struct_container.html#a66c65cd6aa357838813099a31e8dd819", null ],
+    [ "StringValue", "struct_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_simple_types_1_1_struct_container.html#ade6b55eea9f6549102b109550bbd018e", null ]
+];

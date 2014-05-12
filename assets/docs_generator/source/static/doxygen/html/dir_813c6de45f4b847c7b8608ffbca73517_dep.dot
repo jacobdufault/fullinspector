@@ -1,0 +1,9 @@
+digraph "Serializers/protobuf-net/Editor" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_e45ee73f26036c1dde3cbeccc28989cd {
+    graph [ bgcolor="#ddddee", pencolor="black", label="protobuf-net" fontname="Helvetica", fontsize="10", URL="dir_e45ee73f26036c1dde3cbeccc28989cd.html"]
+  dir_813c6de45f4b847c7b8608ffbca73517 [shape=box, label="Editor", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_813c6de45f4b847c7b8608ffbca73517.html"];
+  }
+}

@@ -1,0 +1,12 @@
+digraph "FullInspector.BaseBehavior&lt; TSerializer &gt;"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="FullInspector.BaseBehavior\l\< TSerializer \>",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="CommonBaseBehavior",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_full_inspector_1_1_internal_1_1_common_base_behavior.html",tooltip="A common class that derives from MonoBehavior so that we can provide a custom editor for BaseBehavior..."];
+  Node3 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="MonoBehaviour",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node4 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="ISerializedObject",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interface_full_inspector_1_1_i_serialized_object.html",tooltip="The API that the editor code needs to interact with UnityObjects. "];
+}

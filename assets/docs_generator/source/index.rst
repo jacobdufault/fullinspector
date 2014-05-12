@@ -24,6 +24,16 @@ Examples / Demo
 
 There are lots of examples in :doc:`usage` section of the guide and in the "FullInspector2/Samples" directory (if you purchased from the asset store) or the "Samples" directory (if you're running the trial).
 
+Help! I get internal compiler errors when importing Full Inspector!
+-------------------------------------------------------------------
+
+See :doc:`qa`, "I just imported Full Inspector and I’m getting internal compiler errors".
+
+API Reference
+-------------
+
+The API reference is available at `this <_static/doxygen/html/annotated.html>`_ link.
+
 Documents
 ---------
 
@@ -34,10 +44,10 @@ Documents
    support
    changes
    usage
+   static_inspector
    customization
    extra_editor_features
    custom_property_editors
    custom_serializers
    file_serialization
    qa
-   api_reference
