@@ -1,9 +1,0 @@
-digraph "Samples/BinaryFormatter/Editor" {
-  compound=true
-  node [ fontsize="10", fontname="Helvetica"];
-  edge [ labelfontsize="10", labelfontname="Helvetica"];
-  subgraph clusterdir_4572d6d5d08b754707711f067dba6c90 {
-    graph [ bgcolor="#ddddee", pencolor="black", label="BinaryFormatter" fontname="Helvetica", fontsize="10", URL="dir_4572d6d5d08b754707711f067dba6c90.html"]
-  dir_25e3e2938fb051aad96f831a4cc44cb9 [shape=box, label="Editor", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_25e3e2938fb051aad96f831a4cc44cb9.html"];
-  }
-}

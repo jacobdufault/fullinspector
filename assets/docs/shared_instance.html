@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Shared Instance &mdash; Full Inspector Documentation</title>
+    
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Full Inspector Documentation" href="index.html" />
+    <link rel="next" title="Facade" href="facade.html" />
+    <link rel="prev" title="Serialization to a File" href="file_serialization.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="facade.html" title="Facade"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="file_serialization.html" title="Serialization to a File"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Full Inspector Documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changes.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="static_inspector.html">Static Inspector</a></li>
+<li class="toctree-l1"><a class="reference internal" href="customization.html">Customization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extra_editor_features.html">Extra Editor Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_property_editors.html">Custom Property Editors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_serializers.html">Custom Serializers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_serialization.html">Serialization to a File</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Shared Instance</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#example-user-story-prefab-variants">Example User Story - Prefab Variants</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="facade.html">Facade</a></li>
+<li class="toctree-l1"><a class="reference internal" href="qa.html">Q/A</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="file_serialization.html"
+                        title="previous chapter">Serialization to a File</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="facade.html"
+                        title="next chapter">Facade</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="shared-instance">
+<h1>Shared Instance<a class="headerlink" href="#shared-instance" title="Permalink to this headline">¶</a></h1>
+<p>Have you ever wanted to share a single object instance across multiple <code class="docutils literal highlight highlight-csharp"><span class="n">BaseBehaviors</span></code> without having to deal with the
+hassle and non-intuitive UX of <code class="docutils literal highlight highlight-csharp"><span class="n">ScriptableObjects</span></code>? <code class="docutils literal highlight highlight-csharp"><span class="n">SharedInstance</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span></code> is here for you!</p>
+<div class="code c# highlight-csharp"><div class="highlight"><pre><span class="k">using</span> <span class="nn">FullInspector</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">MySharedInstance</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="kt">int</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">C</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">MyDemoBehavior1</span> <span class="p">:</span> <span class="n">BaseBehavior</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="n">SharedInstance</span><span class="p">&lt;</span><span class="n">MySharedInstance</span><span class="p">&gt;</span> <span class="n">Shared</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">MyDemoBehavior2</span> <span class="p">:</span> <span class="n">BaseBehavior</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="n">SharedInstance</span><span class="p">&lt;</span><span class="n">MySharedInstance</span><span class="p">&gt;</span> <span class="n">Shared</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now, instances of <code class="docutils literal highlight highlight-csharp"><span class="n">MyDemoBehavior1</span></code> and <code class="docutils literal highlight highlight-csharp"><span class="n">MyDemoBehavior2</span></code> can share the exact same object instance.</p>
+<div class="section" id="example-user-story-prefab-variants">
+<h2>Example User Story - Prefab Variants<a class="headerlink" href="#example-user-story-prefab-variants" title="Permalink to this headline">¶</a></h2>
+<p>Notice that <code class="docutils literal highlight highlight-csharp"><span class="n">SharedInstance</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span></code> does a lot more than it seems. It enables extremely easy data-sharing between prefabs, providing
+a nice solution to Unity&#8217;s current lack of nested prefabs. For example, let&#8217;s say that we have multiple variants of <em>RomboidZombie</em>.</p>
+<div class="code c# highlight-csharp"><div class="highlight"><pre><span class="k">using</span> <span class="nn">FullInspector</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">ZombieStats</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="kt">float</span> <span class="n">Health</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">float</span> <span class="n">AttackStrength</span><span class="p">;</span>
+    <span class="k">public</span> <span class="kt">float</span> <span class="n">RegenerationRate</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">Zombie</span> <span class="p">:</span> <span class="n">BaseBehavior</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="n">SharedInstance</span><span class="p">&lt;</span><span class="n">ZombieStats</span><span class="p">&gt;</span> <span class="n">Stats</span><span class="p">;</span>
+
+    <span class="k">protected</span> <span class="k">void</span> <span class="nf">OnEnable</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">Debug</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="s">&quot;This zombie has &quot;</span> <span class="p">+</span> <span class="n">Stats</span><span class="p">.</span><span class="n">Instance</span><span class="p">.</span><span class="n">Health</span> <span class="p">+</span> <span class="s">&quot; health!&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>We want to have variants <em>RomboidZombie_Small</em>, <em>RomboidZombie_Big</em>, and <em>RomboidZombie_Fast</em>.</p>
+<p>Without Full Inspector, we would need to either have one <em>RomboidZombie</em> prefab and then have three prefab instances (one for <em>small</em>, <em>big</em>, and <em>fast</em>). However, this is hard to maintain in large projects.</p>
+<p>If we think about it, the only data that is really shared across the three zombie types is the <code class="docutils literal highlight highlight-csharp"><span class="n">ZombieStats</span></code> instance. Since the goal for prefabs is reuse, we can just use <code class="docutils literal highlight highlight-csharp"><span class="n">SharedInstance</span><span class="p">&lt;</span><span class="n">ZombieStats</span><span class="p">&gt;</span></code> to reuse the same <code class="docutils literal highlight highlight-csharp"><span class="n">ZombieStats</span></code> instance across three new prefabs!</p>
+<p>Here we create a new <code class="docutils literal highlight highlight-csharp"><span class="n">ZombieStats</span></code> instance for one of our zombies. We shall share this <code class="docutils literal highlight highlight-csharp"><span class="n">ZombieStats</span></code> instance across our three prefabs.</p>
+<img alt="_images/zombie_create_instance.gif" src="_images/zombie_create_instance.gif" />
+<p>Here we demonstrate that the <code class="docutils literal highlight highlight-csharp"><span class="n">ZombieStats</span></code> instance is actually being shared, and how easy it is to find the instance you want and quickly view or make changes to it.</p>
+<img alt="_images/zombie_instance_selection.gif" src="_images/zombie_instance_selection.gif" />
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="facade.html" title="Facade"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="file_serialization.html" title="Serialization to a File"
+             >previous</a> |</li>
+        <li><a href="index.html">Full Inspector Documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Jacob Dufault.
+    </div>
+  </body>
+</html>

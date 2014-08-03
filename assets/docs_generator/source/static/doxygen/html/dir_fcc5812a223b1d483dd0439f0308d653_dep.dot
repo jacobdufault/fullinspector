@@ -1,9 +1,0 @@
-digraph "Samples/Other/DiskSerialization" {
-  compound=true
-  node [ fontsize="10", fontname="Helvetica"];
-  edge [ labelfontsize="10", labelfontname="Helvetica"];
-  subgraph clusterdir_dce8745f504bfee879cc2042fbd4ebc0 {
-    graph [ bgcolor="#ddddee", pencolor="black", label="Other" fontname="Helvetica", fontsize="10", URL="dir_dce8745f504bfee879cc2042fbd4ebc0.html"]
-  dir_fcc5812a223b1d483dd0439f0308d653 [shape=box, label="DiskSerialization", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_fcc5812a223b1d483dd0439f0308d653.html"];
-  }
-}

@@ -1,9 +1,0 @@
-digraph "Serializers/Formatter/Surrogates" {
-  compound=true
-  node [ fontsize="10", fontname="Helvetica"];
-  edge [ labelfontsize="10", labelfontname="Helvetica"];
-  subgraph clusterdir_0ce4683004100e16f3855b402cf66a10 {
-    graph [ bgcolor="#ddddee", pencolor="black", label="Formatter" fontname="Helvetica", fontsize="10", URL="dir_0ce4683004100e16f3855b402cf66a10.html"]
-  dir_ef209487b0bb773c3d5e7b48050e3085 [shape=box, label="Surrogates", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_ef209487b0bb773c3d5e7b48050e3085.html"];
-  }
-}

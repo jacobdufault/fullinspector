@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Full Inspector Documentation" href="index.html" />
-    <link rel="prev" title="Serialization to a File" href="file_serialization.html" /> 
+    <link rel="prev" title="Facade" href="facade.html" /> 
   </head>
   <body>
     <div class="related">
@@ -34,7 +34,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="file_serialization.html" title="Serialization to a File"
+          <a href="facade.html" title="Facade"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">Full Inspector Documentation</a> &raquo;</li> 
       </ul>
@@ -53,11 +53,13 @@
 <li class="toctree-l1"><a class="reference internal" href="custom_property_editors.html">Custom Property Editors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_serializers.html">Custom Serializers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="file_serialization.html">Serialization to a File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shared_instance.html">Shared Instance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="facade.html">Facade</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Q/A</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#i-cannot-derive-from-basebehavior-or-basescriptableobject">I cannot derive from BaseBehavior or BaseScriptableObject</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#does-full-inspector-impact-runtime-performance">Does Full Inspector impact runtime performance?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#i-just-imported-full-inspector-and-i-m-getting-internal-compiler-errors">I just imported Full Inspector and I&#8217;m getting internal compiler errors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#i-want-to-use-ios-or-another-aot-platform">I want to use iOS or another AOT platform</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#full-serializer">Full Serializer</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#binaryformatter">BinaryFormatter</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#json-net">Json.NET</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#protobuf-net-beta">protobuf-net (beta)</a></li>
@@ -68,8 +70,8 @@
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="file_serialization.html"
-                        title="previous chapter">Serialization to a File</a></p>
+  <p class="topless"><a href="facade.html"
+                        title="previous chapter">Facade</a></p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
@@ -105,25 +107,14 @@
 <p>No! The only impact that Full Inspector has is a call to <code class="docutils literal highlight highlight-csharp"><span class="n">Awake</span></code> for every object that requires special serialization support. The <code class="docutils literal highlight highlight-csharp"><span class="n">Awake</span></code> call merely deserializes the object. Sometimes this can actually be faster than Unity deserialization, particularly with protobuf-net when the serialized object graph is large.</p>
 <p>Full Inspector imposes no runtime impacts (such as a call to Update); in fact, your code will likely run faster will Full Inspector due to less GC pressure because you can now extensively use structs.</p>
 </div>
-<div class="section" id="i-just-imported-full-inspector-and-i-m-getting-internal-compiler-errors">
-<h2>I just imported Full Inspector and I&#8217;m getting internal compiler errors<a class="headerlink" href="#i-just-imported-full-inspector-and-i-m-getting-internal-compiler-errors" title="Permalink to this headline">¶</a></h2>
-<p>The short answer: switch your build platform to a desktop build.</p>
-<p>The long answer: This is almost certainly a problem with one of the serializers &#8211; in particular, the Json.NET build that Full Inspector ships with.</p>
-<p>You can deal with this by either completely removing Json.NET and using one of the other serializers, or you can prepare Full Inspector for iOS / AOT serialization, as described in the next Q/A question.</p>
-<p>To remove Json.NET, just delete <em>&#8220;Serializers/JsonNet&#8221;</em>, <em>&#8220;Samples/Json.NET&#8221;</em>, and <em>&#8220;Samples/Other&#8221;</em>. You&#8217;re also probably going to want to add these class definitions somewhere in your project:</p>
-<div class="code c# highlight-csharp"><div class="highlight"><pre><span class="k">public</span> <span class="k">class</span> <span class="nc">BaseBehavior</span> <span class="p">:</span>
-    <span class="n">BaseBehavior</span><span class="p">&lt;</span><span class="n">ProtoBufNetSerializer</span><span class="p">&gt;</span> <span class="p">{}</span>
-
-<span class="k">public</span> <span class="k">class</span> <span class="nc">BaseScriptableObject</span> <span class="p">:</span>
-    <span class="n">BaseScriptableObject</span><span class="p">&lt;</span><span class="n">ProtoBufNetSerializer</span><span class="p">&gt;</span> <span class="p">{}</span>
-</pre></div>
-</div>
-<p>(or <code class="docutils literal highlight highlight-csharp"><span class="n">BinaryFormatterSerializer</span></code>).</p>
-</div>
 <div class="section" id="i-want-to-use-ios-or-another-aot-platform">
 <h2>I want to use iOS or another AOT platform<a class="headerlink" href="#i-want-to-use-ios-or-another-aot-platform" title="Permalink to this headline">¶</a></h2>
 <p>Awesome! Full Inspector Core supports AOT compilation quite well. On iOS, Full Inspector Core currently supports both Strip assemblies and Strip ByteCode.</p>
-<p>The other big question w.r.t. AOT compilation is your chosen serializer. For a multitude of reasons, it is <em>strongly</em> recommended that you use Json.NET.</p>
+<p>The other big question w.r.t. AOT compilation is your chosen serializer. For a multitude of reasons, it is <em>strongly</em> recommended that you use Full Serializer. You can also use Json.NET for Unity if you have purchased it from the Asset Store.</p>
+<div class="section" id="full-serializer">
+<h3>Full Serializer<a class="headerlink" href="#full-serializer" title="Permalink to this headline">¶</a></h3>
+<p>It just works :).</p>
+</div>
 <div class="section" id="binaryformatter">
 <h3>BinaryFormatter<a class="headerlink" href="#binaryformatter" title="Permalink to this headline">¶</a></h3>
 <p>You don&#8217;t have to do anything! Full Inspector will automatically configure BinaryFormatter to use reflection on iOS.</p>
@@ -139,12 +130,8 @@
 </div>
 <div class="section" id="protobuf-net-beta">
 <h3>protobuf-net (beta)<a class="headerlink" href="#protobuf-net-beta" title="Permalink to this headline">¶</a></h3>
-<p>Using protobuf-net on AOT compiled platforms is doable, but it is tricky. Here&#8217;s what you need to do:</p>
-<ol class="arabic simple">
-<li>Compile Full Inspector into a DLL format</li>
-<li>Add all of your types annotated with a <code class="docutils literal highlight highlight-csharp"><span class="na">[ProtoContract]</span></code> or that are referenced by the protobuf-net serializer into a separate DLL (&#8220;data-type only DLL&#8221;)</li>
-<li>Run <em>&#8220;Window/Full Inspector/Compile protobuf-net Serialization DLL&#8221;</em></li>
-</ol>
+<p>Using protobuf-net on AOT compiled platforms is currently in alpha/beta. You just need to run <em>&#8220;Window/Full Inspector/Developer/Create protobuf-net precompiled serializer&#8221;</em> before an AOT build (while Unity is <em>not</em> in iOS or an AOT build environment).</p>
+<p>Please note that if you&#8217;re on OSX, you need to have a separate mono installation for the precompiled serializer. protobuf-net natively supports AOT DLL generation, but these AOT DLLs are not compatible with Unity&#8217;s build system, so Full Inspector runs a decompiler over it. This decompiler requires .NET 4.0, and unfortunately Unity is a .NET 3.5 environment.</p>
 <p>You should now be able to use protobuf-net on AOT platforms. However, this is still alpha/beta.</p>
 </div>
 </div>
@@ -163,7 +150,7 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="file_serialization.html" title="Serialization to a File"
+          <a href="facade.html" title="Facade"
              >previous</a> |</li>
         <li><a href="index.html">Full Inspector Documentation</a> &raquo;</li> 
       </ul>

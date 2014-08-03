@@ -1,7 +1,0 @@
-digraph "Graphical Class Hierarchy"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node1 [label="FullInspector.Modules.Common.\lTypePropertyEditor.StateObject",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_full_inspector_1_1_modules_1_1_common_1_1_type_property_editor_1_1_state_object.html"];
-}

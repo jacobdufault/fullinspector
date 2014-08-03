@@ -3,6 +3,8 @@ Full Inspector - Documentation
 
 Welcome! Here you'll find the documentation for Full Inspector, which extends the Unity inspector to support every .NET type and naturally incorporates your favorite serialization library into Unity.
 
+There is a `Unity Forum Topic <http://forum.unity3d.com/threads/full-inspector-inspector-and-serialization-for-structs-dicts-generics-interfaces.224270/>`_.
+
 Purchase
 --------
 Full Inspector is available on the Asset Store `here <http://u3d.as/6tu>`_. Thanks for making Full Inspector possible!
@@ -23,11 +25,6 @@ Examples / Demo
 ---------------
 
 There are lots of examples in :doc:`usage` section of the guide and in the "FullInspector2/Samples" directory (if you purchased from the asset store) or the "Samples" directory (if you're running the trial).
-
-Help! I get internal compiler errors when importing Full Inspector!
--------------------------------------------------------------------
-
-See :doc:`qa`, "I just imported Full Inspector and I’m getting internal compiler errors".
 
 API Reference
 -------------
@@ -50,4 +47,6 @@ Documents
    custom_property_editors
    custom_serializers
    file_serialization
+   shared_instance
+   facade
    qa

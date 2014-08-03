@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['margin',['Margin',['../class_full_inspector_1_1_margin_attribute.html#a88f56e21ede4a6132579bd298f723310',1,'FullInspector::MarginAttribute']]],
-  ['methodcontainer',['MethodContainer',['../class_full_inspector_1_1_modules_1_1_serializable_delegates_1_1_base_serialization_delegate.html#ab2ad19fa0438f18c42214040f1a4e182',1,'FullInspector::Modules::SerializableDelegates::BaseSerializationDelegate']]],
-  ['methodname',['MethodName',['../class_full_inspector_1_1_modules_1_1_serializable_delegates_1_1_base_serialization_delegate.html#affc03fcbf1c5610d924df83aab68cab2',1,'FullInspector::Modules::SerializableDelegates::BaseSerializationDelegate']]],
-  ['mystaticint',['MyStaticInt',['../class_full_inspector_1_1_modules_1_1_static_inspector_1_1_static_inspector_window.html#a8ab7c76c7c9ba0648db1e4904a7517ae',1,'FullInspector::Modules::StaticInspector::StaticInspectorWindow']]]
+  ['key',['Key',['../struct_full_serializer_1_1_internal_1_1fs_i_dictionary_adapter_1_1_dictionary_item.html#adc71e8b0d5b3c03abab7978cd0f2098a',1,'FullSerializer::Internal::fsIDictionaryAdapter::DictionaryItem']]],
+  ['keys',['keys',['../class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_animation_curve_surrogate.html#a1abcfdb6ee8e0027330a46a6a9bb09da',1,'FullInspector::Serializers::ProtoBufNet::AnimationCurveSurrogate']]]
 ];

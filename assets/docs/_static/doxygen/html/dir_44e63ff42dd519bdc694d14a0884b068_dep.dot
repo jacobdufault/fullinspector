@@ -1,9 +1,0 @@
-digraph "Samples/Games/Platformer" {
-  compound=true
-  node [ fontsize="10", fontname="Helvetica"];
-  edge [ labelfontsize="10", labelfontname="Helvetica"];
-  subgraph clusterdir_44e0a37a7020575e3081786a2fb7489b {
-    graph [ bgcolor="#ddddee", pencolor="black", label="Games" fontname="Helvetica", fontsize="10", URL="dir_44e0a37a7020575e3081786a2fb7489b.html"]
-  dir_44e63ff42dd519bdc694d14a0884b068 [shape=box, label="Platformer", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_44e63ff42dd519bdc694d14a0884b068.html"];
-  }
-}

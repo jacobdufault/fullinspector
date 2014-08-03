@@ -1,9 +1,0 @@
-digraph "Modules/SerializableDelegates/Editor" {
-  compound=true
-  node [ fontsize="10", fontname="Helvetica"];
-  edge [ labelfontsize="10", labelfontname="Helvetica"];
-  subgraph clusterdir_9d5dac4aa97678cd79b3135ac4d0e0ac {
-    graph [ bgcolor="#ddddee", pencolor="black", label="SerializableDelegates" fontname="Helvetica", fontsize="10", URL="dir_9d5dac4aa97678cd79b3135ac4d0e0ac.html"]
-  dir_d28f391453b9d7848b2397bb720c21cb [shape=box, label="Editor", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_d28f391453b9d7848b2397bb720c21cb.html"];
-  }
-}

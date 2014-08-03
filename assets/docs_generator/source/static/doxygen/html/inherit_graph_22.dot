@@ -1,7 +1,0 @@
-digraph "Graphical Class Hierarchy"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node1 [label="FullInspector.PropertyEditor\lChain",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_full_inspector_1_1_property_editor_chain.html",tooltip="In Full Inspector, there are typically a large number of property editors that can be used for each t..."];
-}

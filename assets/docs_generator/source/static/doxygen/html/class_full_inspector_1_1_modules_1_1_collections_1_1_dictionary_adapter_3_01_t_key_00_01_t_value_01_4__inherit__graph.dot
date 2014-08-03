@@ -1,8 +1,0 @@
-digraph "FullInspector.Modules.Collections.DictionaryAdapter&lt; TKey, TValue &gt;"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  Node1 [label="FullInspector.Modules.Collections.\lDictionaryAdapter\< TKey, TValue \>",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
-  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="IReorderableListAdaptor",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interface_full_inspector_1_1_rotorz_1_1_reorderable_list_1_1_i_reorderable_list_adaptor.html",tooltip="Adaptor allowing reorderable list control to interface with list data. "];
-}

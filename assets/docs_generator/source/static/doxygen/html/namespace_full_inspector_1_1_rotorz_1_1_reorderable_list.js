@@ -1,6 +1,5 @@
 var namespace_full_inspector_1_1_rotorz_1_1_reorderable_list =
 [
-    [ "Internal", "namespace_full_inspector_1_1_rotorz_1_1_reorderable_list_1_1_internal.html", null ],
     [ "GenericListAdaptor< T >", "class_full_inspector_1_1_rotorz_1_1_reorderable_list_1_1_generic_list_adaptor_3_01_t_01_4.html", "class_full_inspector_1_1_rotorz_1_1_reorderable_list_1_1_generic_list_adaptor_3_01_t_01_4" ],
     [ "IReorderableListAdaptor", "interface_full_inspector_1_1_rotorz_1_1_reorderable_list_1_1_i_reorderable_list_adaptor.html", "interface_full_inspector_1_1_rotorz_1_1_reorderable_list_1_1_i_reorderable_list_adaptor" ],
     [ "ItemInsertedEventArgs", "class_full_inspector_1_1_rotorz_1_1_reorderable_list_1_1_item_inserted_event_args.html", "class_full_inspector_1_1_rotorz_1_1_reorderable_list_1_1_item_inserted_event_args" ],

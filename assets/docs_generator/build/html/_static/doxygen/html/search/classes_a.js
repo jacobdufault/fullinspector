@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['marginattribute',['MarginAttribute',['../class_full_inspector_1_1_margin_attribute.html',1,'FullInspector']]],
-  ['marginattributeeditor_3c_20t_20_3e',['MarginAttributeEditor&lt; T &gt;',['../class_full_inspector_1_1_modules_1_1_attributes_1_1_margin_attribute_editor_3_01_t_01_4.html',1,'FullInspector::Modules::Attributes']]]
+  ['keyframesurrogate',['KeyframeSurrogate',['../class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_keyframe_surrogate.html',1,'FullInspector::Serializers::ProtoBufNet']]]
 ];

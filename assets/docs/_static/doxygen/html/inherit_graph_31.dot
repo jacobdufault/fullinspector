@@ -1,7 +1,0 @@
-digraph "Graphical Class Hierarchy"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node1 [label="FullInspector.Samples.Binary\lFormatterSample.CustomTypeEditor\lGeneric\< T1, T2 \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_custom_type_editor_generic_3_01_t1_00_01_t2_01_4.html"];
-}

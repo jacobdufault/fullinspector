@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['vectorconverters_2ecs',['VectorConverters.cs',['../_vector_converters_8cs.html',1,'']]],
-  ['vectorsurrogates_2ecs',['VectorSurrogates.cs',['../_formatter_2_surrogates_2_vector_surrogates_8cs.html',1,'']]],
-  ['vectorsurrogates_2ecs',['VectorSurrogates.cs',['../protobuf-net_2_surrogates_2_vector_surrogates_8cs.html',1,'']]]
+  ['unityinternalreflection_2ecs',['UnityInternalReflection.cs',['../_unity_internal_reflection_8cs.html',1,'']]],
+  ['unityobjectconverter_2ecs',['UnityObjectConverter.cs',['../_json_net_2_converters_2_unity_object_converter_8cs.html',1,'']]],
+  ['unityobjectconverter_2ecs',['UnityObjectConverter.cs',['../_full_serializer_2_converters_2_unity_object_converter_8cs.html',1,'']]],
+  ['unityobjectsurrogate_2ecs',['UnityObjectSurrogate.cs',['../protobuf-net_2_surrogates_2_unity_object_surrogate_8cs.html',1,'']]],
+  ['unityobjectsurrogate_2ecs',['UnityObjectSurrogate.cs',['../_formatter_2_surrogates_2_unity_object_surrogate_8cs.html',1,'']]]
 ];

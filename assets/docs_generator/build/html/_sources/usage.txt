@@ -12,26 +12,34 @@ The following list is what you need to keep in mind to ensure that your objects 
 
 That's it! Of course, you'll also have to added your serialization specific annotations if your serializer requires them. If that sounds confusing, then don't worry. There are examples below that demonstrate this point.
 
-.. IMPORTANT::
-    If you have custom save-game logic, make sure that you run ``FullInspectorSaveManager.SaveAll()`` before your save logic; it will ensure that every ``BaseBehavior`` instance is ready to go through Unity serialization. Saves can be detected automatically in the editor but not in a published build.
-
-    It's worth stating that the ``FullInspectorSaveManager.SaveAll()`` is the robust, but slow, method of serializing data. If you're saving your game and looking to increase performance, you can selectively specify which objects to serialize via calling ``SaveState()`` on them.  ``SaveAll()`` does this via iterating every object that derives from ``ISerializedObject``.
-
-.. DANGER::
-
-    If you're working with an object in the editor and are modifying it without using the inspector, make sure to restore the serialized data by calling ``RestoreState()``. After you're done modifying it, call ``SaveState()``.
-
-    This should go away in Unity 4.5, when serialization callbacks have landed.
+If you're using Full Serializer as your default serializer (use "Window/Full Inspector/Developer/Show Serializer Importer" and then change it to the default serializer), then you don't need to change any behavior. Everything will continue to work as it did with Unity's inspector.
 
 .. IMPORTANT::
-    One potential gotcha with serialization: each ``BaseBehavior`` is serialized independently. If you have a class instance that is shared across multiple ``BaseBehaviors``, it will be deserialized into separate instances. You can ensure that it deserializes into one instance by deriving from a ``UnityEngine.Object`` child class, such as ``BaseScriptableObject``.
+    One potential gotcha with serialization: each ``BaseBehavior`` field/property is serialized independently. If you have a class instance that is shared across multiple ``BaseBehaviors`` or multiple fields/properties, it will be deserialized into separate instances. You can ensure that it deserializes into one instance by deriving from a ``UnityEngine.Object`` child class, such as ``BaseScriptableObject`` or ``SharedInstance<T>``.
 
-You're recommended to use the Json.NET serializer. It works well without annotations and has support for every major platform that Unity can export to (via another asset store product).
+The Full Serializer serializer is recommended for default usage, for for legacy reasons Json.NET is activated by default. Full Serializer works well without annotations, and works on all major Unity platforms.
 
-If you need performance, you can easily switch to protobuf-net for one specific component while using Json.NET for ease of use on the rest of your behaviors. Everything interacts correctly, even when using different serializers.
+If you need performance, you can easily switch to protobuf-net for one specific component while using Full Serializer for ease of use on the rest of your behaviors. Everything interacts correctly, even when using different serializers.
 
 Examples
 --------
+
+Here's an example of the simplicity of Full Serializer:
+
+.. code:: c#
+
+    public struct Simple<T> {
+        public T Value { get; set; }
+    }
+
+    public class FullDemo : BaseBehavior<FullSerializerSerializer> {
+        public Simple<int> SimpleInt;
+        public Simple<float> SimpleFloat;
+    }
+
+.. image:: static/usage_fullserializer.png
+
+-------------------------
 
 Here's an example of how to use Full Inspector with Json.NET:
 
@@ -100,6 +108,11 @@ Or perhaps you prefer protobuf-net?
 
 .. image:: static/usage_protobufnet.png
 
+.. IMPORTANT::
+    There is experimental support for protobuf-net on AOT platforms such as iOS. Please use *"Window/Full Inspector/Developer/Create protobuf-net precompiled serializer"* before deploying to those targets.
+
+    The precompiled serializer requires an explicit installation of mono on OSX (due to Unity build system limitations, the protobuf-net DLL has to be decompiled into C#, and FI includes a tool to do such, but it is written in C# and requires .NET 4 and so cannot be run in the Unity runtime environment).
+
 -------------------------
 
 Or maybe even BinaryFormatter (beta)?
@@ -128,39 +141,6 @@ Or maybe even BinaryFormatter (beta)?
 -------------------------
 
 .. IMPORTANT::
-
-    If you have a private member on a ``BaseBehavior`` type that you want serialized, you need to use ``SerializeField``, *not* ``JsonMember`` or ``ProtoMember``.
-
-    For example,
-
-    .. code:: c#
-
-        public class Serializes : BaseBehavior {
-            [SerializeField]
-            private GenericHolder<int> SerializeField;
-        }
-
-    will serialize correctly.
-
-    However,
-
-    .. code:: c#
-
-        public class DoesNotSerialize : BaseBehavior {
-            [JsonProperty]
-            private GenericHolder<int> DoesNotSerializeField;
-        }
-
-    does not serialize as expected.
-
-    ``[JsonProperty]`` and ``[ProtoMember]`` support will be added in a future version.
-
--------------------------
-
-
-Full Inspector also includes experimental support for EasySave2. If none of these four serializers is your favorite, then it's extremely easy to add support for a new one.
-
-.. IMPORTANT::
-    There are many samples inside of *"FullInspector2/Samples"*.
+    There are many samples inside of *"FullInspector2/Samples"*. The source code for the samples lies in their selected serializer directories *"FullInspector2/Serializer/*/Samples".
 
     The full source code has been provided and it is highly commented, so please feel free to peruse it as well to understand how Full Inspector works internally.

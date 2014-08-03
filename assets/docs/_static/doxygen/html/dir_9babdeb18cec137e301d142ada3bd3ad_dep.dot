@@ -1,9 +1,0 @@
-digraph "Samples/AssetStore" {
-  compound=true
-  node [ fontsize="10", fontname="Helvetica"];
-  edge [ labelfontsize="10", labelfontname="Helvetica"];
-  subgraph clusterdir_24e107d8aaaa0f0fb9ce89773de45c08 {
-    graph [ bgcolor="#ddddee", pencolor="black", label="Samples" fontname="Helvetica", fontsize="10", URL="dir_24e107d8aaaa0f0fb9ce89773de45c08.html"]
-  dir_9babdeb18cec137e301d142ada3bd3ad [shape=box, label="AssetStore", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_9babdeb18cec137e301d142ada3bd3ad.html"];
-  }
-}

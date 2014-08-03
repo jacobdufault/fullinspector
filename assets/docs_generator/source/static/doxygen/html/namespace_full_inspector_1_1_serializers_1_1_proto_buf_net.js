@@ -1,14 +1,27 @@
 var namespace_full_inspector_1_1_serializers_1_1_proto_buf_net =
 [
-    [ "ProtoBufNetMenus", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_proto_buf_net_menus.html", null ],
-    [ "KeyframeSurrogate", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_keyframe_surrogate.html", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_keyframe_surrogate" ],
     [ "AnimationCurveSurrogate", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_animation_curve_surrogate.html", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_animation_curve_surrogate" ],
+    [ "AnimationKeyframeWorker", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_animation_keyframe_worker.html", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_animation_keyframe_worker" ],
+    [ "BoundsModelWorker", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_bounds_model_worker.html", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_bounds_model_worker" ],
     [ "BoundsSurrogate", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_bounds_surrogate.html", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_bounds_surrogate" ],
+    [ "ColorModelWorker", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_color_model_worker.html", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_color_model_worker" ],
     [ "ColorSurrogate", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_color_surrogate.html", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_color_surrogate" ],
+    [ "fiProtoBufNetMenus", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1fi_proto_buf_net_menus.html", null ],
+    [ "fiProtoBufPrecompiler", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1fi_proto_buf_precompiler.html", null ],
+    [ "GradientAlphaKeySurrogate", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_gradient_alpha_key_surrogate.html", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_gradient_alpha_key_surrogate" ],
+    [ "GradientColorKeySurrogate", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_gradient_color_key_surrogate.html", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_gradient_color_key_surrogate" ],
+    [ "GradientModelWorker", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_gradient_model_worker.html", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_gradient_model_worker" ],
+    [ "GradientSurrogate", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_gradient_surrogate.html", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_gradient_surrogate" ],
+    [ "IProtoModelWorker", "interface_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_i_proto_model_worker.html", "interface_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_i_proto_model_worker" ],
+    [ "KeyframeSurrogate", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_keyframe_surrogate.html", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_keyframe_surrogate" ],
+    [ "LayerMaskModelWorker", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_layer_mask_model_worker.html", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_layer_mask_model_worker" ],
     [ "LayerMaskSurrogate", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_layer_mask_surrogate.html", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_layer_mask_surrogate" ],
+    [ "ProtoBufNetMetadata", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_proto_buf_net_metadata.html", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_proto_buf_net_metadata" ],
+    [ "ProtoModelWorker", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_proto_model_worker.html", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_proto_model_worker" ],
     [ "UnityObjectModelWorker", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_unity_object_model_worker.html", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_unity_object_model_worker" ],
     [ "UnityObjectSurrogate< TObject >", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_unity_object_surrogate_3_01_t_object_01_4.html", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_unity_object_surrogate_3_01_t_object_01_4" ],
     [ "Vector2Surrogate", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_vector2_surrogate.html", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_vector2_surrogate" ],
     [ "Vector3Surrogate", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_vector3_surrogate.html", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_vector3_surrogate" ],
-    [ "Vector4Surrogate", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_vector4_surrogate.html", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_vector4_surrogate" ]
+    [ "Vector4Surrogate", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_vector4_surrogate.html", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_vector4_surrogate" ],
+    [ "VectorModelWorker", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_vector_model_worker.html", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_vector_model_worker" ]
 ];

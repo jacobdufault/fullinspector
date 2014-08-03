@@ -3,7 +3,7 @@
 Serialization to a File
 =======================
 
-Great news! Full Inspector makes it really easy use your favorite serializer (Json.NET, BinaryFormatter, or protobuf-net) to serialize/deserialize content to and from files.
+Great news! Full Inspector makes it really easy use your favorite serializer (Full Serializer, Json.NET, BinaryFormatter, or protobuf-net) to serialize/deserialize content to and from files.
 
 .. IMPORTANT::
     This serialization method does not support ``UnityEngine.Object`` references. If you try to serialize a type that contains a ``UnityEngine.Object`` reference, you will get a ``NotSupportedException``.
@@ -36,4 +36,4 @@ Deserialize from a string
 
 Explanation
 -----------
-In these samples, ``SerializedStruct`` is the type being serialized, and ``JsonNetSerializer`` is the serializer to use. You could also have used ``BinaryFormatterSerializer`` or ``ProtoBufNetSerializer`` instead of ``JsonNetSerializer`` to serialize the object.
+In these samples, ``SerializedStruct`` is the type being serialized, and ``JsonNetSerializer`` is the serializer to use. You could also have used ``FullSerializerSerializer``, ``BinaryFormatterSerializer``, or ``ProtoBufNetSerializer`` instead of ``JsonNetSerializer`` to serialize the object.

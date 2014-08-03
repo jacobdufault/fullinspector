@@ -1,9 +1,0 @@
-digraph "Core/Attributes" {
-  compound=true
-  node [ fontsize="10", fontname="Helvetica"];
-  edge [ labelfontsize="10", labelfontname="Helvetica"];
-  subgraph clusterdir_c6310732a22f63c0c2fc5595561e68f1 {
-    graph [ bgcolor="#ddddee", pencolor="black", label="Core" fontname="Helvetica", fontsize="10", URL="dir_c6310732a22f63c0c2fc5595561e68f1.html"]
-  dir_fb5f0fc4f6305f2279d40d97e8736590 [shape=box, label="Attributes", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_fb5f0fc4f6305f2279d40d97e8736590.html"];
-  }
-}

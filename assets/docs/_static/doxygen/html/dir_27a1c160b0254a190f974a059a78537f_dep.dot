@@ -1,9 +1,0 @@
-digraph "Modules/Attributes/Editor" {
-  compound=true
-  node [ fontsize="10", fontname="Helvetica"];
-  edge [ labelfontsize="10", labelfontname="Helvetica"];
-  subgraph clusterdir_f75184297aea957b2945c9d4c7f6b2d4 {
-    graph [ bgcolor="#ddddee", pencolor="black", label="Attributes" fontname="Helvetica", fontsize="10", URL="dir_f75184297aea957b2945c9d4c7f6b2d4.html"]
-  dir_27a1c160b0254a190f974a059a78537f [shape=box, label="Editor", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_27a1c160b0254a190f974a059a78537f.html"];
-  }
-}

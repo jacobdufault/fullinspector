@@ -61,6 +61,8 @@
 <li class="toctree-l1"><a class="reference internal" href="custom_property_editors.html">Custom Property Editors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_serializers.html">Custom Serializers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="file_serialization.html">Serialization to a File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shared_instance.html">Shared Instance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="facade.html">Facade</a></li>
 <li class="toctree-l1"><a class="reference internal" href="qa.html">Q/A</a></li>
 </ul>
 
@@ -101,25 +103,29 @@
 <li>If you override <code class="docutils literal highlight highlight-csharp"><span class="n">Awake</span></code>, immediately call <code class="docutils literal highlight highlight-csharp"><span class="k">base</span><span class="p">.</span><span class="n">Awake</span><span class="p">()</span></code></li>
 </ul>
 <p>That&#8217;s it! Of course, you&#8217;ll also have to added your serialization specific annotations if your serializer requires them. If that sounds confusing, then don&#8217;t worry. There are examples below that demonstrate this point.</p>
+<p>If you&#8217;re using Full Serializer as your default serializer (use &#8220;Window/Full Inspector/Developer/Show Serializer Importer&#8221; and then change it to the default serializer), then you don&#8217;t need to change any behavior. Everything will continue to work as it did with Unity&#8217;s inspector.</p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
-<p>If you have custom save-game logic, make sure that you run <code class="docutils literal highlight highlight-csharp"><span class="n">FullInspectorSaveManager</span><span class="p">.</span><span class="n">SaveAll</span><span class="p">()</span></code> before your save logic; it will ensure that every <code class="docutils literal highlight highlight-csharp"><span class="n">BaseBehavior</span></code> instance is ready to go through Unity serialization. Saves can be detected automatically in the editor but not in a published build.</p>
-<p class="last">It&#8217;s worth stating that the <code class="docutils literal highlight highlight-csharp"><span class="n">FullInspectorSaveManager</span><span class="p">.</span><span class="n">SaveAll</span><span class="p">()</span></code> is the robust, but slow, method of serializing data. If you&#8217;re saving your game and looking to increase performance, you can selectively specify which objects to serialize via calling <code class="docutils literal highlight highlight-csharp"><span class="n">SaveState</span><span class="p">()</span></code> on them.  <code class="docutils literal highlight highlight-csharp"><span class="n">SaveAll</span><span class="p">()</span></code> does this via iterating every object that derives from <code class="docutils literal highlight highlight-csharp"><span class="n">ISerializedObject</span></code>.</p>
+<p class="last">One potential gotcha with serialization: each <code class="docutils literal highlight highlight-csharp"><span class="n">BaseBehavior</span></code> field/property is serialized independently. If you have a class instance that is shared across multiple <code class="docutils literal highlight highlight-csharp"><span class="n">BaseBehaviors</span></code> or multiple fields/properties, it will be deserialized into separate instances. You can ensure that it deserializes into one instance by deriving from a <code class="docutils literal highlight highlight-csharp"><span class="n">UnityEngine</span><span class="p">.</span><span class="n">Object</span></code> child class, such as <code class="docutils literal highlight highlight-csharp"><span class="n">BaseScriptableObject</span></code> or <code class="docutils literal highlight highlight-csharp"><span class="n">SharedInstance</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span></code>.</p>
 </div>
-<div class="admonition danger">
-<p class="first admonition-title">Danger</p>
-<p>If you&#8217;re working with an object in the editor and are modifying it without using the inspector, make sure to restore the serialized data by calling <code class="docutils literal highlight highlight-csharp"><span class="n">RestoreState</span><span class="p">()</span></code>. After you&#8217;re done modifying it, call <code class="docutils literal highlight highlight-csharp"><span class="n">SaveState</span><span class="p">()</span></code>.</p>
-<p class="last">This should go away in Unity 4.5, when serialization callbacks have landed.</p>
-</div>
-<div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p class="last">One potential gotcha with serialization: each <code class="docutils literal highlight highlight-csharp"><span class="n">BaseBehavior</span></code> is serialized independently. If you have a class instance that is shared across multiple <code class="docutils literal highlight highlight-csharp"><span class="n">BaseBehaviors</span></code>, it will be deserialized into separate instances. You can ensure that it deserializes into one instance by deriving from a <code class="docutils literal highlight highlight-csharp"><span class="n">UnityEngine</span><span class="p">.</span><span class="n">Object</span></code> child class, such as <code class="docutils literal highlight highlight-csharp"><span class="n">BaseScriptableObject</span></code>.</p>
-</div>
-<p>You&#8217;re recommended to use the Json.NET serializer. It works well without annotations and has support for every major platform that Unity can export to (via another asset store product).</p>
-<p>If you need performance, you can easily switch to protobuf-net for one specific component while using Json.NET for ease of use on the rest of your behaviors. Everything interacts correctly, even when using different serializers.</p>
+<p>The Full Serializer serializer is recommended for default usage, for for legacy reasons Json.NET is activated by default. Full Serializer works well without annotations, and works on all major Unity platforms.</p>
+<p>If you need performance, you can easily switch to protobuf-net for one specific component while using Full Serializer for ease of use on the rest of your behaviors. Everything interacts correctly, even when using different serializers.</p>
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<p>Here&#8217;s an example of the simplicity of Full Serializer:</p>
+<div class="code c# highlight-csharp"><div class="highlight"><pre><span class="k">public</span> <span class="k">struct</span> <span class="nc">Simple</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="n">T</span> <span class="n">Value</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">public</span> <span class="k">class</span> <span class="nc">FullDemo</span> <span class="p">:</span> <span class="n">BaseBehavior</span><span class="p">&lt;</span><span class="n">FullSerializerSerializer</span><span class="p">&gt;</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="n">Simple</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">SimpleInt</span><span class="p">;</span>
+    <span class="k">public</span> <span class="n">Simple</span><span class="p">&lt;</span><span class="kt">float</span><span class="p">&gt;</span> <span class="n">SimpleFloat</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<img alt="_images/usage_fullserializer.png" src="_images/usage_fullserializer.png" />
+<hr class="docutils" />
 <p>Here&#8217;s an example of how to use Full Inspector with Json.NET:</p>
 <div class="code c# highlight-csharp"><div class="highlight"><pre><span class="k">public</span> <span class="k">struct</span> <span class="nc">Struct</span> <span class="p">{</span>
     <span class="k">public</span> <span class="n">GameObject</span> <span class="n">SpawnObject</span><span class="p">;</span>
@@ -178,6 +184,11 @@
 </pre></div>
 </div>
 <img alt="_images/usage_protobufnet.png" src="_images/usage_protobufnet.png" />
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>There is experimental support for protobuf-net on AOT platforms such as iOS. Please use <em>&#8220;Window/Full Inspector/Developer/Create protobuf-net precompiled serializer&#8221;</em> before deploying to those targets.</p>
+<p class="last">The precompiled serializer requires an explicit installation of mono on OSX (due to Unity build system limitations, the protobuf-net DLL has to be decompiled into C#, and FI includes a tool to do such, but it is written in C# and requires .NET 4 and so cannot be run in the Unity runtime environment).</p>
+</div>
 <hr class="docutils" />
 <p>Or maybe even BinaryFormatter (beta)?</p>
 <div class="code c# highlight-csharp"><div class="highlight"><pre><span class="na">[Serializable]</span>
@@ -202,30 +213,7 @@
 <hr class="docutils" />
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
-<p>If you have a private member on a <code class="docutils literal highlight highlight-csharp"><span class="n">BaseBehavior</span></code> type that you want serialized, you need to use <code class="docutils literal highlight highlight-csharp"><span class="n">SerializeField</span></code>, <em>not</em> <code class="docutils literal highlight highlight-csharp"><span class="n">JsonMember</span></code> or <code class="docutils literal highlight highlight-csharp"><span class="n">ProtoMember</span></code>.</p>
-<p>For example,</p>
-<div class="code c# highlight-csharp"><div class="highlight"><pre><span class="k">public</span> <span class="k">class</span> <span class="nc">Serializes</span> <span class="p">:</span> <span class="n">BaseBehavior</span> <span class="p">{</span>
-<span class="na">    [SerializeField]</span>
-    <span class="k">private</span> <span class="n">GenericHolder</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">SerializeField</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>will serialize correctly.</p>
-<p>However,</p>
-<div class="code c# highlight-csharp"><div class="highlight"><pre><span class="k">public</span> <span class="k">class</span> <span class="nc">DoesNotSerialize</span> <span class="p">:</span> <span class="n">BaseBehavior</span> <span class="p">{</span>
-<span class="na">    [JsonProperty]</span>
-    <span class="k">private</span> <span class="n">GenericHolder</span><span class="p">&lt;</span><span class="kt">int</span><span class="p">&gt;</span> <span class="n">DoesNotSerializeField</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>does not serialize as expected.</p>
-<p class="last"><code class="docutils literal highlight highlight-csharp"><span class="na">[JsonProperty]</span></code> and <code class="docutils literal highlight highlight-csharp"><span class="na">[ProtoMember]</span></code> support will be added in a future version.</p>
-</div>
-<hr class="docutils" />
-<p>Full Inspector also includes experimental support for EasySave2. If none of these four serializers is your favorite, then it&#8217;s extremely easy to add support for a new one.</p>
-<div class="admonition important">
-<p class="first admonition-title">Important</p>
-<p>There are many samples inside of <em>&#8220;FullInspector2/Samples&#8221;</em>.</p>
+<p>There are many samples inside of <em>&#8220;FullInspector2/Samples&#8221;</em>. The source code for the samples lies in their selected serializer directories <em>&#8220;FullInspector2/Serializer/</em>/Samples&#8221;.</p>
 <p class="last">The full source code has been provided and it is highly commented, so please feel free to peruse it as well to understand how Full Inspector works internally.</p>
 </div>
 </div>

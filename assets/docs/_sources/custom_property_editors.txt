@@ -9,6 +9,20 @@ Writing a property editor is similar to writing a custom ``PropertyDrawer``. Weâ
 
 If you want to completely replace the editor for a component, simply write a ``PropertyEditor`` for that component type.
 
+.. NOTE::
+    This system is mirrored for ``BehaviorEditors``; simply replace ``[CustomPropertyEditor]`` with ``[CustomBehaviorEditor]`` and ``PropertyEditor`` with ``BehaviorEditor``.
+
+
+.. NOTE::
+    ``fiGraphMetadata`` is the new metadata system that allows you to store arbitrary metadata on any object. The graph metadata system is hiearchial; that is, metadata storage is based on the actual editing structure.
+
+    If you try to call an ``Edit`` function or similar on an ``IPropertyEditor`` instance, you'll notice that it takes a ``fiGraphMetadataChild`` item. This is retrieved from ``metadata.Enter(...)``. It is critical that you get the value for ... correct; but the rules are simple.
+
+    For the .. argument, if you're editing a collection, it is simply the index of that item in the collection. If you're editing a field or property, it is the name of the property. These two rules are really just guidelines; just make sure that the argument to ``Enter`` is the same for the corresponding element between ``GetElementHeight`` and ``Edit`` calls, even for varying object instances and for varying call times.
+
+    If the ... argument is not the same across call locations and times, then the metadata engine will not work properly and you will not have a good time.
+
+
 Simple (non-generic) Property Editors
 -------------------------------------
 
@@ -18,10 +32,10 @@ Letâ€™s look at an extremely simple case: the property editor that gets invoked 
 
     [CustomPropertyEditor(typeof(int))]
     public class IntPropertyEditor : PropertyEditor<int> {
-        public override int Edit(Rect region, GUIContent label, int element) {
+        public override int Edit(Rect region, GUIContent label, int element, fiGraphMetadata metadata) {
             return EditorGUI.IntField(region, label, element);
         }
-        public override float GetElementHeight(GUIContent label, int element) {
+        public override float GetElementHeight(GUIContent label, int element, fiGraphMetadata metadata) {
             return EditorStyles.numberField.CalcHeight(label, 1000);
         }
     }
@@ -44,13 +58,13 @@ The previous property editor is also writeable using a ``PropertyDrawer``. Howev
     public class RefPropertyEditor<ComponentType> : PropertyEditor<Ref<ComponentType>>
         where ComponentType : Component {
         private IPropertyEditor _componentPropertyEditor = PropertyEditor.Get(typeof(ComponentType));
-        public override Ref<ComponentType> Edit(Rect region, GUIContent label, Ref<ComponentType> element) {
+        public override Ref<ComponentType> Edit(Rect region, GUIContent label, Ref<ComponentType> element, fiGraphMetadata metadata) {
             ComponentType component = (ComponentType)_componentPropertyEditor.Edit(region, label, element.Value);
             return new Ref<ComponentType> {
                 Value = component
             };
         }
-        public override float GetElementHeight(GUIContent label, Ref<ComponentType> element) {
+        public override float GetElementHeight(GUIContent label, Ref<ComponentType> element, fiGraphMetadata metadata) {
             return _componentPropertyEditor.GetElementHeight(label, element.Value);
         }
     }
@@ -119,12 +133,12 @@ Now let's take a look at the actual ``CommentAttributeEditor``.
 
     [CustomAttributePropertyEditor(typeof(CommentAttribute), ReplaceOthers = false)]
     public class CommentAttributeEditor<T> : AttributePropertyEditor<T, CommentAttribute> {
-        protected override T Edit(Rect region, GUIContent label, T element, CommentAttribute attribute) {
+        protected override T Edit(Rect region, GUIContent label, T element, CommentAttribute attribute, fiGraphMetadata metadata) {
             EditorGUI.HelpBox(region, attribute.Comment, MessageType.None);
             return element;
         }
 
-        protected override float GetElementHeight(GUIContent label, T element, CommentAttribute attribute) {
+        protected override float GetElementHeight(GUIContent label, T element, CommentAttribute attribute, fiGraphMetadata metadata) {
             return CommentUtils.GetCommentHeight(attribute.Comment);
         }
     }

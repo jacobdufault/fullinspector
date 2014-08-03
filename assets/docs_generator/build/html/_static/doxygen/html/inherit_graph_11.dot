@@ -1,7 +1,0 @@
-digraph "Graphical Class Hierarchy"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node1 [label="FullInspector.Internal.Runtime\lReflectionUtilities",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_full_inspector_1_1_internal_1_1_runtime_reflection_utilities.html",tooltip="Some reflection utilities that can be AOT compiled (and are therefore available at runtime)..."];
-}

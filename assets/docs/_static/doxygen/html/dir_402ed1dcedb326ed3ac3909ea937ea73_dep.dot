@@ -1,9 +1,0 @@
-digraph "Serializers/JsonNet/Converters" {
-  compound=true
-  node [ fontsize="10", fontname="Helvetica"];
-  edge [ labelfontsize="10", labelfontname="Helvetica"];
-  subgraph clusterdir_9feea9bf8d1343abbf976f48d80329e3 {
-    graph [ bgcolor="#ddddee", pencolor="black", label="JsonNet" fontname="Helvetica", fontsize="10", URL="dir_9feea9bf8d1343abbf976f48d80329e3.html"]
-  dir_402ed1dcedb326ed3ac3909ea937ea73 [shape=box, label="Converters", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_402ed1dcedb326ed3ac3909ea937ea73.html"];
-  }
-}

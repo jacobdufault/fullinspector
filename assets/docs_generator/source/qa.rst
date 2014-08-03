@@ -23,35 +23,18 @@ No! The only impact that Full Inspector has is a call to ``Awake`` for every obj
 
 Full Inspector imposes no runtime impacts (such as a call to Update); in fact, your code will likely run faster will Full Inspector due to less GC pressure because you can now extensively use structs.
 
-
-I just imported Full Inspector and I'm getting internal compiler errors
------------------------------------------------------------------------
-
-The short answer: switch your build platform to a desktop build.
-
-The long answer: This is almost certainly a problem with one of the serializers -- in particular, the Json.NET build that Full Inspector ships with.
-
-You can deal with this by either completely removing Json.NET and using one of the other serializers, or you can prepare Full Inspector for iOS / AOT serialization, as described in the next Q/A question.
-
-To remove Json.NET, just delete *"Serializers/JsonNet"*, *"Samples/Json.NET"*, and *"Samples/Other"*. You're also probably going to want to add these class definitions somewhere in your project:
-
-.. code:: c#
-
-    public class BaseBehavior :
-        BaseBehavior<ProtoBufNetSerializer> {}
-
-    public class BaseScriptableObject :
-        BaseScriptableObject<ProtoBufNetSerializer> {}
-
-(or ``BinaryFormatterSerializer``).
-
-
 I want to use iOS or another AOT platform
 -----------------------------------------
 
 Awesome! Full Inspector Core supports AOT compilation quite well. On iOS, Full Inspector Core currently supports both Strip assemblies and Strip ByteCode.
 
-The other big question w.r.t. AOT compilation is your chosen serializer. For a multitude of reasons, it is *strongly* recommended that you use Json.NET.
+The other big question w.r.t. AOT compilation is your chosen serializer. For a multitude of reasons, it is *strongly* recommended that you use Full Serializer. You can also use Json.NET for Unity if you have purchased it from the Asset Store.
+
+===============
+Full Serializer
+===============
+
+It just works :).
 
 ===============
 BinaryFormatter
@@ -74,10 +57,9 @@ That's it! You're now good to go for AOT platforms!
 protobuf-net (beta)
 ===================
 
-Using protobuf-net on AOT compiled platforms is doable, but it is tricky. Here's what you need to do:
+Using protobuf-net on AOT compiled platforms is currently in alpha/beta. You just need to run *"Window/Full Inspector/Developer/Create protobuf-net precompiled serializer"* before an AOT build (while Unity is *not* in iOS or an AOT build environment).
 
-1. Compile Full Inspector into a DLL format
-2. Add all of your types annotated with a ``[ProtoContract]`` or that are referenced by the protobuf-net serializer into a separate DLL ("data-type only DLL")
-3. Run *"Window/Full Inspector/Compile protobuf-net Serialization DLL"*
+Please note that if you're on OSX, you need to have a separate mono installation for the precompiled serializer. protobuf-net natively supports AOT DLL generation, but these AOT DLLs are not compatible with Unity's build system, so Full Inspector runs a decompiler over it. This decompiler requires .NET 4.0, and unfortunately Unity is a .NET 3.5 environment.
+
 
 You should now be able to use protobuf-net on AOT platforms. However, this is still alpha/beta.

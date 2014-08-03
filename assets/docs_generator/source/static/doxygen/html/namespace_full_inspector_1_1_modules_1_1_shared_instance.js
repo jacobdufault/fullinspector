@@ -1,0 +1,6 @@
+var namespace_full_inspector_1_1_modules_1_1_shared_instance =
+[
+    [ "fiISharedInstancePropertyEditor", "interface_full_inspector_1_1_modules_1_1_shared_instance_1_1fi_i_shared_instance_property_editor.html", null ],
+    [ "fiSharedInstancePropertyEditor< T >", "class_full_inspector_1_1_modules_1_1_shared_instance_1_1fi_shared_instance_property_editor_3_01_t_01_4.html", "class_full_inspector_1_1_modules_1_1_shared_instance_1_1fi_shared_instance_property_editor_3_01_t_01_4" ],
+    [ "fiSharedInstanceSelectorWindow", "class_full_inspector_1_1_modules_1_1_shared_instance_1_1fi_shared_instance_selector_window.html", "class_full_inspector_1_1_modules_1_1_shared_instance_1_1fi_shared_instance_selector_window" ]
+];

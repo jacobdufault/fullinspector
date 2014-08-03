@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Full Inspector Documentation" href="index.html" />
-    <link rel="next" title="Q/A" href="qa.html" />
+    <link rel="next" title="Shared Instance" href="shared_instance.html" />
     <link rel="prev" title="Custom Serializers" href="custom_serializers.html" /> 
   </head>
   <body>
@@ -35,7 +35,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="qa.html" title="Q/A"
+          <a href="shared_instance.html" title="Shared Instance"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="custom_serializers.html" title="Custom Serializers"
@@ -62,6 +62,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#explanation">Explanation</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="shared_instance.html">Shared Instance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="facade.html">Facade</a></li>
 <li class="toctree-l1"><a class="reference internal" href="qa.html">Q/A</a></li>
 </ul>
 
@@ -69,8 +71,8 @@
   <p class="topless"><a href="custom_serializers.html"
                         title="previous chapter">Custom Serializers</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="qa.html"
-                        title="next chapter">Q/A</a></p>
+  <p class="topless"><a href="shared_instance.html"
+                        title="next chapter">Shared Instance</a></p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
@@ -94,7 +96,7 @@
             
   <div class="section" id="serialization-to-a-file">
 <h1>Serialization to a File<a class="headerlink" href="#serialization-to-a-file" title="Permalink to this headline">¶</a></h1>
-<p>Great news! Full Inspector makes it really easy use your favorite serializer (Json.NET, BinaryFormatter, or protobuf-net) to serialize/deserialize content to and from files.</p>
+<p>Great news! Full Inspector makes it really easy use your favorite serializer (Full Serializer, Json.NET, BinaryFormatter, or protobuf-net) to serialize/deserialize content to and from files.</p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
 <p class="last">This serialization method does not support <code class="docutils literal highlight highlight-csharp"><span class="n">UnityEngine</span><span class="p">.</span><span class="n">Object</span></code> references. If you try to serialize a type that contains a <code class="docutils literal highlight highlight-csharp"><span class="n">UnityEngine</span><span class="p">.</span><span class="n">Object</span></code> reference, you will get a <code class="docutils literal highlight highlight-csharp"><span class="n">NotSupportedException</span></code>.</p>
@@ -125,7 +127,7 @@
 </div>
 <div class="section" id="explanation">
 <h2>Explanation<a class="headerlink" href="#explanation" title="Permalink to this headline">¶</a></h2>
-<p>In these samples, <code class="docutils literal highlight highlight-csharp"><span class="n">SerializedStruct</span></code> is the type being serialized, and <code class="docutils literal highlight highlight-csharp"><span class="n">JsonNetSerializer</span></code> is the serializer to use. You could also have used <code class="docutils literal highlight highlight-csharp"><span class="n">BinaryFormatterSerializer</span></code> or <code class="docutils literal highlight highlight-csharp"><span class="n">ProtoBufNetSerializer</span></code> instead of <code class="docutils literal highlight highlight-csharp"><span class="n">JsonNetSerializer</span></code> to serialize the object.</p>
+<p>In these samples, <code class="docutils literal highlight highlight-csharp"><span class="n">SerializedStruct</span></code> is the type being serialized, and <code class="docutils literal highlight highlight-csharp"><span class="n">JsonNetSerializer</span></code> is the serializer to use. You could also have used <code class="docutils literal highlight highlight-csharp"><span class="n">FullSerializerSerializer</span></code>, <code class="docutils literal highlight highlight-csharp"><span class="n">BinaryFormatterSerializer</span></code>, or <code class="docutils literal highlight highlight-csharp"><span class="n">ProtoBufNetSerializer</span></code> instead of <code class="docutils literal highlight highlight-csharp"><span class="n">JsonNetSerializer</span></code> to serialize the object.</p>
 </div>
 </div>
 
@@ -142,7 +144,7 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="qa.html" title="Q/A"
+          <a href="shared_instance.html" title="Shared Instance"
              >next</a> |</li>
         <li class="right" >
           <a href="custom_serializers.html" title="Custom Serializers"

@@ -1,0 +1,4 @@
+var class_full_inspector_1_1_samples_1_1_full_serializer_1_1_sample_full_serializer_inheritance_1_1_derived_base_a =
+[
+    [ "A", "class_full_inspector_1_1_samples_1_1_full_serializer_1_1_sample_full_serializer_inheritance_1_1_derived_base_a.html#ad17f191e5a094594a9fc2f8113f6d785", null ]
+];

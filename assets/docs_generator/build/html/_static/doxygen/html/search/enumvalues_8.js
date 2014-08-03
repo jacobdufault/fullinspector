@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['postintoplay',['PostIntoPlay',['../class_full_inspector_1_1_internal_1_1_play_mode_detector.html#aeeb9b90b2ae42659e32942de10fc6d7daf290e47d507068aaecb8f158768625f9',1,'FullInspector::Internal::PlayModeDetector']]],
-  ['postoutplay',['PostOutPlay',['../class_full_inspector_1_1_internal_1_1_play_mode_detector.html#aeeb9b90b2ae42659e32942de10fc6d7dae294d8fe774fce10125cef357ae29924',1,'FullInspector::Internal::PlayModeDetector']]],
-  ['preintoplay',['PreIntoPlay',['../class_full_inspector_1_1_internal_1_1_play_mode_detector.html#aeeb9b90b2ae42659e32942de10fc6d7da79df1ae25cc73368a8dd1fef58924246',1,'FullInspector::Internal::PlayModeDetector']]]
+  ['none',['None',['../namespace_full_inspector.html#a75b620495ad0138f4b901f4b3f6a7148a6adf97f83acf6453d4a6a4b1070f3754',1,'FullInspector.None()'],['../namespace_full_inspector.html#abcb6acf7b6185e7e30f81486d3139777a6adf97f83acf6453d4a6a4b1070f3754',1,'FullInspector.None()']]],
+  ['null',['Null',['../namespace_full_serializer.html#a6eee33d63b94e40fdfcfc59af9fcfc82abbb93ef26e3c101ff11cdd21cab08a94',1,'FullSerializer']]],
+  ['number',['Number',['../namespace_full_serializer.html#a6eee33d63b94e40fdfcfc59af9fcfc82ab2ee912b91d69b435159c7c3f6df7f5f',1,'FullSerializer']]]
 ];

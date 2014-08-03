@@ -1,5 +1,6 @@
 var class_full_inspector_1_1_samples_1_1_proto_buf_net_1_1_sample_proto_custom_behavior_editor_editor =
 [
-    [ "Edit", "class_full_inspector_1_1_samples_1_1_proto_buf_net_1_1_sample_proto_custom_behavior_editor_editor.html#af0263088e337323006db7f1dcae17a4b", null ],
-    [ "GetElementHeight", "class_full_inspector_1_1_samples_1_1_proto_buf_net_1_1_sample_proto_custom_behavior_editor_editor.html#a4fb66ef805613d5c2fce56f28d5e1f12", null ]
+    [ "OnEdit", "class_full_inspector_1_1_samples_1_1_proto_buf_net_1_1_sample_proto_custom_behavior_editor_editor.html#a30ada3017322b63e28c26e1f23884731", null ],
+    [ "OnGetHeight", "class_full_inspector_1_1_samples_1_1_proto_buf_net_1_1_sample_proto_custom_behavior_editor_editor.html#a440771064de70b80a7872cea163d4edb", null ],
+    [ "OnSceneGUI", "class_full_inspector_1_1_samples_1_1_proto_buf_net_1_1_sample_proto_custom_behavior_editor_editor.html#ace20b0a08cc0dd8b8a93e1e52fef0763", null ]
 ];

@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['inherit',['Inherit',['../class_full_inspector_1_1_custom_property_editor_attribute.html#aa8ae71cfb319cbfff863491d6aaf3290',1,'FullInspector::CustomPropertyEditorAttribute']]],
-  ['initialtype',['InitialType',['../class_full_inspector_1_1_modules_1_1_common_1_1_type_selection_popup_window.html#a7598815c40604cf8890b08c17d880884',1,'FullInspector::Modules::Common::TypeSelectionPopupWindow']]],
-  ['intangent',['inTangent',['../class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_keyframe_surrogate.html#a8ef6b4946051c2d62fa0d7cd6784058a',1,'FullInspector::Serializers::ProtoBufNet::KeyframeSurrogate']]]
+  ['header',['Header',['../class_full_inspector_1_1_inspector_header_attribute.html#abd060e8a099c676e93a0fea87797869e',1,'FullInspector::InspectorHeaderAttribute']]],
+  ['healthincrease',['HealthIncrease',['../class_full_inspector_1_1_samples_1_1_item_database_1_1_health_boost_item.html#a9d7be7d80c42bc4ee8756a88e1abfcc0',1,'FullInspector::Samples::ItemDatabase::HealthBoostItem']]],
+  ['height',['Height',['../class_full_inspector_1_1_inspector_text_area_attribute.html#a6ec8dff050d6123e460280c10491bb51',1,'FullInspector::InspectorTextAreaAttribute']]],
+  ['hoveroverme',['HoverOverMe',['../class_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_attributes.html#a969c9b953126b572d1d5db2aa5b831d7',1,'FullInspector.Samples.BinaryFormatterSample.SampleBinaryFormatterAttributes.HoverOverMe()'],['../class_full_inspector_1_1_samples_1_1_full_serializer_1_1_sample_full_serializer_attributes.html#a6415d7e4c5eae6fc369d48ce94e0b5a2',1,'FullInspector.Samples.FullSerializer.SampleFullSerializerAttributes.HoverOverMe()'],['../class_full_inspector_1_1_samples_1_1_json_net_1_1_sample_json_attributes.html#a39271c9376eebfb6d9578cb68f51844f',1,'FullInspector.Samples.JsonNet.SampleJsonAttributes.HoverOverMe()'],['../class_full_inspector_1_1_samples_1_1_proto_buf_net_1_1_sample_proto_attributes.html#a6ef1345d5351214d1f7c448292df3530',1,'FullInspector.Samples.ProtoBufNet.SampleProtoAttributes.HoverOverMe()']]]
 ];

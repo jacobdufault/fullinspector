@@ -1,9 +1,0 @@
-digraph "Samples/Performance/Editor" {
-  compound=true
-  node [ fontsize="10", fontname="Helvetica"];
-  edge [ labelfontsize="10", labelfontname="Helvetica"];
-  subgraph clusterdir_8be20a4acd4ce1425b53174f7683c2cb {
-    graph [ bgcolor="#ddddee", pencolor="black", label="Performance" fontname="Helvetica", fontsize="10", URL="dir_8be20a4acd4ce1425b53174f7683c2cb.html"]
-  dir_c62c9fc93118ce28ef41792770b7e0b4 [shape=box, label="Editor", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_c62c9fc93118ce28ef41792770b7e0b4.html"];
-  }
-}

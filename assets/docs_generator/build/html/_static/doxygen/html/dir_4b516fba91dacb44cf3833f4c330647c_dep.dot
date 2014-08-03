@@ -1,9 +1,0 @@
-digraph "Samples/Games/Arena/Spawning/Editor" {
-  compound=true
-  node [ fontsize="10", fontname="Helvetica"];
-  edge [ labelfontsize="10", labelfontname="Helvetica"];
-  subgraph clusterdir_e32508ebf0a524e54c21f6ef0d6bd738 {
-    graph [ bgcolor="#ddddee", pencolor="black", label="Spawning" fontname="Helvetica", fontsize="10", URL="dir_e32508ebf0a524e54c21f6ef0d6bd738.html"]
-  dir_4b516fba91dacb44cf3833f4c330647c [shape=box, label="Editor", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_4b516fba91dacb44cf3833f4c330647c.html"];
-  }
-}

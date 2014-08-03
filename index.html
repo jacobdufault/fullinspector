@@ -39,7 +39,6 @@
             <header>
                 <h1>Full Inspector</h1>
                 <h2>Unity Inspector support for all .NET types</h2>
-                <h2>Painless protobuf-net, Json.NET, BinaryFormatter or custom serialization integration into Unity</h2>
                 <hr>
             </header>
 
@@ -51,19 +50,28 @@
                 <p>Wouldn't it be awesome if the inspector supported:</p>
 
                 <ul>
-                    <li>interfaces/abstract types (with the implementation selected in the inspector)</li>
-                    <li>structs</li>
+                    <li>interfaces/abstract types</li>
                     <li>dictionaries</li>
                     <li>arbitrary generic types</li>
                     <li>properties</li>
                     <li>a proper array / list editor (using <a href="https://bitbucket.org/rotorz/reorderable-list-editor-field-for-unity">Rotorz</a>)</li>
                     <li>tooltips and comments via attributes on fields/properties/types</li>
+					<li>and a whole ton of other features?</li>
                 </ul>
 
-                <p>With Full Inspector, it does! Further, you get awesome serialization integration with your favorite serialization library, whether is be <a href="http://james.newtonking.com/json">Json.NET</a>,  <a href="https://code.google.com/p/protobuf-net/">protobuf-net</a>, BinaryFormatter, or some other custom serialization solution.</p>
+                <p>With Full Inspector, it does! Further, you get awesome serialization integration with your favorite serialization library, whether is be <a href="http://www.github.com/jacobdufault/fullserializer">Full Serializer</a>, <a href="http://james.newtonking.com/json">Json.NET</a>,  <a href="https://code.google.com/p/protobuf-net/">protobuf-net</a>, BinaryFormatter, or some other custom serialization solution.</p>
 
+				<hr />
+				<h3>Massively Multiplatform</h3>
+				<p>You shouldn't be limited in your export potential. Full Inspector works wonderfully on Win/Linux/OSX, WebPlayer, Android, iOS, Windows Phone, and Windows Store -- all perfectly with Full Serializer.</p>
+				
+				<hr />
+				<h3>You're in good hands</h3>
+				<p>You're in good hands with Full Inspector. Hundreds use it and <em>love</em> it. Just check out the reviews.</p>
+				
+				<p>If you have any issues -- don't worry. Full Inspector comes with some of the best support out there.</p>
                 <hr />
-                <h3>New! Try the trial!</h3>
+                <h3>Try the trial!</h3>
 
                 <p>A fully featured trial is available <a href="http://goo.gl/bVnoyv">here</a>. It contains <em>all</em> of Full Inspector, but has two primary limitations:</p>
                 <ul>
@@ -71,7 +79,7 @@
                     <li>Source code is not available</li>
                 </ul>
 
-                <p>To install the trial, simply unzip the zip file into your Unity project's Asset directory. Remember to backup first!</p>
+                <p>To install the trial, simply unzip the file and then import the contained unitypackage file. As always, remember to backup first!</p>
 
                 <hr />
                 <h3>Instant Demo</h3>
@@ -182,16 +190,16 @@ public class GenericTypeDemoBehavior : BaseBehavior {
                         <h2>Comments, Tooltips, and Margins</h2>
                         <img src="images/demo/comment.png" />
                         <pre class="prettyprint"><code class="prettyprint">public class TooltipsAndCommentsDemoBehavior : BaseBehavior {
-    [Comment("This is a comment")]
+    [InspectorComment("This is a comment")]
     public int Comment;
 
-    [Tooltip("This has a tooltip")]
+    [InspectorTooltip("This has a tooltip")]
     public int Tooltip;
 
-    [Margin(50)]
+    [InspectorMargin(50)]
     public int FarDown;
 
-    [Hidden]
+    [HideInInspector]
     public int NotVisibleInInspector;
 }</code></pre>
                     </div>
@@ -200,19 +208,22 @@ public class GenericTypeDemoBehavior : BaseBehavior {
 
 
                 <hr />
-                <h3>Guidelines</h3>
+                <h3>Quick Start / Guidelines</h3>
 
                 <p>These are a couple of guidelines to keep in mind when using Full Inspector. Don't worry, they're simple and not intrusive.</p>
                 <ul>
                     <li>Derive from <code>BaseBehavior</code>, not <code>MonoBehaviour</code></li>
                     <li>If you override <code>Awake</code>, immediately call <code>base.Awake()</code></li>
-                    <li>If you would have previously added <code>[Serializable]</code> to a type, then you may need to add Json.NET / protobuf-net / BinaryFormatter annotations to it, if that serializer requires annotations.</li>
+                    <li>If you would have previously added <code>[Serializable]</code> to a type, then you may need to add Full Serializer, Json.NET / protobuf-net / BinaryFormatter annotations to it, if that serializer requires annotations. With Full Serializer and BinaryFormatter, the annotaitons you use don't need to change.</li>
                 </ul>
 
                 <p>And of course, there is <em>much</em> more documentation with the <a href="assets/docs/index.html">guide</a></p>
 
                 <hr />
                 <h3><a name="support" class="anchor" href="#support"><span class="octicon octicon-link"></span></a>Support</h3>
+				
+				<p>The forum topic can be found <a href="forum.unity3d.com/threads/224270-Full-Inspector-Inspector-and-serialization-for-structs-dicts-generics-interfaces">here</a>.</p>
+				
                 <p>If you have found a bug or general issue, please report it <a href="https://github.com/jacobdufault/fullinspector/issues">here</a>.</p>
 
                 <p>For email support, please click <a href="http://www.google.com/recaptcha/mailhide/d?k=01zBpheh_eHn6xmVehOAEEQg==&amp;c=Zj84NxJm0F1O9SHggdd6IScjVdOYgJXQHp3k-4lsTYw4TU2pY1GcYldoeMNRif2b" onclick="window.open('http://www.google.com/recaptcha/mailhide/d?k\07501zBpheh_eHn6xmVehOAEEQg\75\75\46c\75Zj84NxJm0F1O9SHggdd6IScjVdOYgJXQHp3k-4lsTYw4TU2pY1GcYldoeMNRif2b', '', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=500,height=300'); return false;" title="Reveal this e-mail address">here</a>.</p>

@@ -57,6 +57,8 @@
 <li class="toctree-l1"><a class="reference internal" href="custom_property_editors.html">Custom Property Editors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="custom_serializers.html">Custom Serializers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="file_serialization.html">Serialization to a File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shared_instance.html">Shared Instance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="facade.html">Facade</a></li>
 <li class="toctree-l1"><a class="reference internal" href="qa.html">Q/A</a></li>
 </ul>
 
@@ -90,8 +92,11 @@
   <div class="section" id="extra-editor-features">
 <h1>Extra Editor Features<a class="headerlink" href="#extra-editor-features" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li>You can right-click on any component which derives from <code class="docutils literal highlight highlight-csharp"><span class="n">BaseBehavior</span></code> to manually save its current state or restore its automatically last saved state. This will typically only be useful if there was a deserialization error that you have corrected and you wish to recover the serialized state.</li>
-<li>You can select <em>&#8220;Window/FullInspector/Show Serialized State&#8221;</em> in the Unity top-menu to view the currently serialized state of the object directly below the inspector content. This serialized data is modifiable and the state of the behavior will update in real time to the serialized state modifications.</li>
+<li>You can right-click any <code class="docutils literal highlight highlight-csharp"><span class="n">BaseBehavior</span></code> or <code class="docutils literal highlight highlight-csharp"><span class="n">BaseScriptableObject</span></code> object instance to back the current state up. This even works across play-mode! Select <em>&#8220;Window/Full Inspector/Backup Window&#8221;</em> to show all active backups.</li>
+<li>You can right-click on any <code class="docutils literal highlight highlight-csharp"><span class="n">BaseBehavior</span></code> or <code class="docutils literal highlight highlight-csharp"><span class="n">BaseScriptableObject</span></code> object instance to manually save its current state or restore its automatically last saved state. This will typically only be useful if there was a deserialization error that you have corrected and you wish to recover the serialized state.</li>
+<li>You can select <em>&#8220;Window/Full Inspector/Developer/Show Serialized State&#8221;</em> in the Unity top-menu to view the currently serialized state of the object directly below the inspector content. This serialized data is modifiable and the state of the behavior will update in real time to the serialized state modifications.</li>
+<li>You can manage the active serializers by using <em>&#8220;Window/FullInspector/Developer/Show Serializer Importer&#8221;</em>.</li>
+<li>You can view the editor for a <code class="docutils literal highlight highlight-csharp"><span class="n">UnityEngine</span><span class="p">.</span><span class="n">Object</span></code> reference inline by hitting the dropdown that appears next to it (if no viewer is available, a dropdown will not appear. This is the case for types that do not derive from <code class="docutils literal highlight highlight-csharp"><span class="n">BaseBehavior</span></code> or <code class="docutils literal highlight highlight-csharp"><span class="n">BaseScriptableObject</span></code>, with a few exceptions).</li>
 </ul>
 </div>
 
