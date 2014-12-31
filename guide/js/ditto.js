@@ -188,7 +188,23 @@ function display_search_results(data) {
 
     $(ditto.content_id).html(results_html);
     $(ditto.search_results_class + " .link").click(function(){
-        var destination = "#" + $(this).html().replace(".md", "");
+        /*
+        toRemove:
+          example.com/ => ""
+          example.com/guide/ => "guide/"
+
+        file:
+          guide/sidebar.md => guide/sidebar
+          guide/docs/why.md => guide/docs/why
+
+        destination:
+          #sidebar
+          #docs/why
+        */
+
+        var toRemove = location.pathname.substring(1);
+        var file = $(this).html().replace(".md", "");
+        var destination = "#" + file.substring(toRemove.length)
         location.hash = destination;
     });
 }
