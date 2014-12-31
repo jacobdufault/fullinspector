@@ -15,7 +15,7 @@ var ditto = {
 
     // display elements
     sidebar: true,
-    edit_button: false,
+    edit_button: true,
     back_to_top_button: false,
     searchbar: true,
 
