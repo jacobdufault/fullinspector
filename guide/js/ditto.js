@@ -153,16 +153,34 @@ function build_result_matches_html(matches) {
     html += "<ul class='" + class_name + "'>";
     for (var i = 0; i < matches.length; i++) {
         var url = matches[i].path;
+        if (url.indexOf("sidebar.md") >= 0 ||
+            url.indexOf("index.md") >= 0) {
+
+            console.log("Search - ignoring " + url);
+            continue;
+        }
 
         if (url !== ditto.sidebar_file) {
             var hash = "#" + url.replace(".md", "");
             var path = window.location.origin+ "/" + hash;
 
-            // html += "<li>";
-            html += "<li class='link'>";
-            html += url;
-            // html += "<a href='" + path +"'>" + url + "</a>";
-            html += "</li>";
+            //html += "<li class='link'>" + url + "</li>"
+
+            // url/sidebar.md
+            // url/docs/sidebar.md
+            var file = url.replace(".md", "");
+
+            // /url/
+            // /fullname/url/
+            var toRemove = location.pathname;
+
+            // /url
+            // /fullname/url
+            toRemove = toRemove.substring(0, toRemove.length - 1);
+
+            var destination = "#" +  trim_start_with_end(file, toRemove);
+
+            html += "<a href='" + destination +"'>" + url + "</a>";
 
             var match = build_text_matches_html(matches[i].text_matches);
             html += match;
@@ -177,8 +195,6 @@ function build_result_matches_html(matches) {
 function display_search_results(data) {
     var results_html = "<h1>Search Results</h1>";
 
-    console.log(data);
-
     if (data.items.length) {
         $(ditto.error_id).hide();
         results_html += build_result_matches_html(data.items);
@@ -187,27 +203,6 @@ function display_search_results(data) {
     }
 
     $(ditto.content_id).html(results_html);
-    $(ditto.search_results_class + " .link").click(function(){
-        // url/sidebar.md
-        // url/docs/sidebar.md
-        var file = $(this).html().replace(".md", "");
-
-        // /url/
-        // /fullname/url/
-        var toRemove = location.pathname;
-
-        // /url
-        // /fullname/url
-        toRemove = toRemove.substring(0, toRemove.length - 1);
-
-        var destination = "#" +  trim_start_with_end(file, toRemove);
-
-        console.log("file: " + file)
-        console.log("toRemove: " + toRemove);
-        console.log("destination: " + destination);
-
-        location.hash = destination;
-    });
 }
 
 // Example input/output
@@ -219,7 +214,6 @@ function trim_start_with_end(initial, ending) {
 
   for (var i = 0; i < ending.length; ++i) {
       var sub = ending.substring(i);
-      console.log(sub);
       if (starts_with(initial, sub)) {
           return initial.substring(sub.length);
       }
