@@ -188,25 +188,44 @@ function display_search_results(data) {
 
     $(ditto.content_id).html(results_html);
     $(ditto.search_results_class + " .link").click(function(){
-        /*
-        toRemove:
-          example.com/ => ""
-          example.com/guide/ => "guide/"
-
-        file:
-          guide/sidebar.md => guide/sidebar
-          guide/docs/why.md => guide/docs/why
-
-        destination:
-          #sidebar
-          #docs/why
-        */
-
-        var toRemove = location.pathname.substring(1);
+        // url/sidebar.md
+        // url/docs/sidebar.md
         var file = $(this).html().replace(".md", "");
-        var destination = "#" + file.substring(toRemove.length)
+
+        // /url/
+        // /fullname/url/
+        var toRemove = location.pathname;
+
+        // /url
+        // /fullname/url
+        toRemove = toRemove.substring(0, toRemove.length - 1);
+
+        var destination = "#" +  trim_start_with_end(file, toRemove);
+
+        console.log("file: " + file)
+        console.log("toRemove: " + toRemove);
+        console.log("destination: " + destination);
+
         location.hash = destination;
     });
+}
+
+// Example input/output
+//  trim_start_with_end("aabccd", "foo/aab") -> "ccd"
+function trim_start_with_end(initial, ending) {
+  function starts_with(str, starting) {
+      return str.indexOf(starting) == 0;
+  }
+
+  for (var i = 0; i < ending.length; ++i) {
+      var sub = ending.substring(i);
+      console.log(sub);
+      if (starts_with(initial, sub)) {
+          return initial.substring(sub.length);
+      }
+  }
+
+  return initial;
 }
 
 function github_search(query) {
