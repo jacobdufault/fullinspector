@@ -104,6 +104,7 @@ function init_edit_button() {
                 hash = "/" + ditto.index.replace(".md", "");
             }
 
+            hash = hash.split('?')[0];
             window.open(ditto.base_url + hash + ".md");
             // open is better than redirecting, as the previous page history
             // with redirect is a bit messed up
