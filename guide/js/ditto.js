@@ -27,7 +27,25 @@ var ditto = {
     run: initialize
 };
 
+var cache = {
+    // TODO:
+    //    -- run a fetch from the server to make sure we haven't changed the data
+    //    -- reprocess the markdown each time -- there are some issues with embedded images
+    present: false, // !!window.localStorage,
+
+    store: function(key, value) {
+        if (!value) return;
+        return localStorage[ditto.storage_key + key] = value;
+    },
+
+    fetch: function(key) {
+        return localStorage[ditto.storage_key + key];
+    }
+};
+
 function initialize() {
+    window.localStorage.clear();
+
     // initialize sidebar and buttons
     if (ditto.sidebar) {
         init_sidebar_section();
@@ -47,18 +65,31 @@ function initialize() {
 }
 
 function init_sidebar_section() {
-    $.get(ditto.sidebar_file, function(data) {
-        $(ditto.sidebar_id).html(marked(data));
+    function init_with_data(marked_data) {
+        $(ditto.sidebar_id).html(marked_data);
 
         if (ditto.searchbar) {
             init_searchbar();
         }
+    }
 
-    }, "text").fail(function() {
-        alert("Oops! can't find the sidebar file to display!");
-    });
+    var cached_marked_data = cache.fetch("sidebar");
+    if (cache.present && cached_marked_data) {
+        init_with_data(cached_marked_data);
+    }
 
+    else {
+        $.get(ditto.sidebar_file, function(data) {
+            var marked_data = marked(data);
+            cache.store("sidebar", marked_data);
+
+            init_with_data(marked_data);
+        }, "text").fail(function() {
+            alert("Oops! can't find the sidebar file to display!");
+        });
+    }
 }
+
 
 function init_edit_button() {
     if (ditto.base_url === null) {
@@ -375,33 +406,47 @@ function page_getter() {
 
     // otherwise get the markdown and render it
     var loading = show_loading();
-    $.get(path , function(data) {
-        $(ditto.error_id).hide();
-        data = marked(data);
-        $(ditto.content_id).html(data);
-        escape_github_badges(data);
+    var cache_value = cache.fetch(path);
 
-        normalize_paths();
-        create_page_anchors();
+    // compile data into dom
+    if (cache.present && cache_value) {
+        compile_into_dom(path, cache_value);
+    } else {
+        console.log("running request for " + path);
+        $.get(path, function(data) {
+            compile_into_dom(path, data);
+        }).fail(function() {
+            show_error("Opps! ... File not found!");
+        })
+    }
 
-        $('pre code').each(function(i, block) {
-            if (typeof hljs !== "undefined") {
-                hljs.highlightBlock(block);
-            }
-        });
+    // clear loading
+    clearInterval(loading);
+    $(ditto.loading_id).hide();
 
-        if (target) {
-          var header = find_header(target);
-          if (header)
-            scroll_to_header(header, /*animate:*/false);
+    if (target) {
+      var header = find_header(target);
+      if (header)
+          scroll_to_header(header, /*animate:*/false);
+    }
+}
+
+function compile_into_dom(path, data, target) {
+    $(ditto.error_id).hide();
+    data = marked(data);
+    $(ditto.content_id).html(data);
+    escape_github_badges(data);
+
+    normalize_paths();
+    create_page_anchors();
+
+    $('pre code').each(function(i, block) {
+        if (typeof hljs !== "undefined") {
+            hljs.highlightBlock(block);
         }
-
-    }).fail(function() {
-        show_error("Oops! ... File not found!");
-    }).always(function() {
-        clearInterval(loading);
-        $(ditto.loading_id).hide();
     });
+
+    cache.store(path, data);
 }
 
 function router() {
