@@ -250,6 +250,19 @@ function li_create_linkage(li_tag, header_level) {
     });
 }
 
+
+function find_header(anchor_name) {
+    // anchor name, is, ie, "my_custom_title" which has been created from "My custom title"
+    for (var i = 1; i <= 6; i++) {
+
+      var header = find_header_at_level(anchor_name, i);
+      if (header.length == 0) continue;
+
+      return header;
+    }
+}
+
+
 function find_header_at_level(anchor_name, level) {
     return $(ditto.content_id + " h" + level + "." + anchor_name);
 }
@@ -278,15 +291,6 @@ function make_link(element) {
   $(element).append("<a href=" + link + ">" + title + "</a>");
 }
 
-function find_header(anchor_name) {
-    // anchor name, is, ie, "my_custom_title" which has been created from "My custom title"
-    for (var i = 1; i <= 6; i++) {
-      var header = find_header_at_level(anchor_name, i);
-      if (header.length == 0) continue;
-
-      return header;
-    }
-}
 
 function create_page_anchors() {
     // create page anchors by matching li's to headers
@@ -410,28 +414,17 @@ function page_getter() {
 
     // compile data into dom
     if (cache.present && cache_value) {
-        compile_into_dom(path, cache_value);
+        compile_into_dom(path, cache_value, loading, target);
     } else {
-        console.log("running request for " + path);
         $.get(path, function(data) {
-            compile_into_dom(path, data);
+            compile_into_dom(path, data, loading, target);
         }).fail(function() {
             show_error("Opps! ... File not found!");
         })
     }
-
-    // clear loading
-    clearInterval(loading);
-    $(ditto.loading_id).hide();
-
-    if (target) {
-      var header = find_header(target);
-      if (header)
-          scroll_to_header(header, /*animate:*/false);
-    }
 }
 
-function compile_into_dom(path, data, target) {
+function compile_into_dom(path, data, loading, target) {
     $(ditto.error_id).hide();
     data = marked(data);
     $(ditto.content_id).html(data);
@@ -447,6 +440,17 @@ function compile_into_dom(path, data, target) {
     });
 
     cache.store(path, data);
+
+    // clear loading
+    clearInterval(loading);
+    $(ditto.loading_id).hide();
+
+    // move to target
+    if (target) {
+      var header = find_header(target);
+      if (header)
+          scroll_to_header(header, /*animate:*/false);
+    }
 }
 
 function router() {
