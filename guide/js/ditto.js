@@ -27,24 +27,9 @@ var ditto = {
     run: initialize
 };
 
-var cache = {
-    // TODO:
-    //    -- run a fetch from the server to make sure we haven't changed the data
-    //    -- reprocess the markdown each time -- there are some issues with embedded images
-    present: false, // !!window.localStorage,
-
-    store: function(key, value) {
-        if (!value) return;
-        return localStorage[ditto.storage_key + key] = value;
-    },
-
-    fetch: function(key) {
-        return localStorage[ditto.storage_key + key];
-    }
-};
-
 function initialize() {
-    window.localStorage.clear();
+    // always clear the cache on startup so we don't have stale data
+    lscache.flush();
 
     // initialize sidebar and buttons
     if (ditto.sidebar) {
@@ -65,29 +50,18 @@ function initialize() {
 }
 
 function init_sidebar_section() {
-    function init_with_data(marked_data) {
-        $(ditto.sidebar_id).html(marked_data);
-
-        if (ditto.searchbar) {
-            init_searchbar();
-        }
-    }
-
-    var cached_marked_data = cache.fetch("sidebar");
-    if (cache.present && cached_marked_data) {
-        init_with_data(cached_marked_data);
-    }
-
-    else {
-        $.get(ditto.sidebar_file, function(data) {
+    get_file(ditto.sidebar_file,
+        /*processor:*/function(data) {
             var marked_data = marked(data);
-            cache.store("sidebar", marked_data);
+            $(ditto.sidebar_id).html(marked_data);
 
-            init_with_data(marked_data);
-        }, "text").fail(function() {
+            if (ditto.searchbar) {
+                init_searchbar();
+            }
+        },
+        /*error:*/function() {
             alert("Oops! can't find the sidebar file to display!");
         });
-    }
 }
 
 
@@ -197,7 +171,7 @@ function display_search_results(data) {
     var results_html = "<h1>Search Results</h1>";
 
     if (data.items.length) {
-        $(ditto.error_id).hide();
+        hide_error();
         results_html += build_result_matches_html(data.items);
     } else {
         show_error("Oops! No matches found");
@@ -378,16 +352,24 @@ function show_error(err_msg) {
     $(ditto.error_id).show();
 }
 
+function hide_error() {
+  $(ditto.error_id).hide();
+}
+
 function show_loading() {
     $(ditto.loading_id).show();
     $(ditto.content_id).html("");  // clear content
 
     // infinite loop until clearInterval() is called on loading
-    var loading = setInterval(function() {
+    ditto.loading = setInterval(function() {
         $(ditto.loading_id).fadeIn(1000).fadeOut(1000);
     }, 2000);
+}
 
-    return loading;
+function hide_loading() {
+    clearInterval(ditto.loading);
+    delete ditto.loading;
+    $(ditto.loading_id).hide();
 }
 
 function escape_github_badges(data) {
@@ -407,6 +389,28 @@ function escape_github_badges(data) {
         }
     });
     return data;
+}
+
+function get_file(path, processor, failed, always) {
+    var CACHE_EXPIRATION_MINUTES = 5;
+    lscache.enableWarnings(true);
+    
+    var data = lscache.get(path);
+    if (data) {
+        console.log("found cached result for " + path);
+        processor(data);
+        
+        if (always) always();
+    }
+    
+    else {
+        console.log("running query for " + path);
+        $.get(path, function(data) {
+           lscache.set(path, data, CACHE_EXPIRATION_MINUTES); 
+           processor(data);
+        }).fail(failed)
+          .always(always)
+    }
 }
 
 function page_getter() {
@@ -439,48 +443,38 @@ function page_getter() {
     }
 
     // otherwise get the markdown and render it
-    var loading = show_loading();
-    var cache_value = cache.fetch(path);
+    hide_error();
+    show_loading();
+     
+    get_file(path,
+        /*processor:*/ function(data) {
+            // compile the data
+            data = marked(data);
+            $(ditto.content_id).html(data);
 
-    // compile data into dom
-    if (cache.present && cache_value) {
-        compile_into_dom(path, cache_value, loading, target);
-    } else {
-        $.get(path, function(data) {
-            compile_into_dom(path, data, loading, target);
-        }).fail(function() {
+            escape_github_badges(data);
+            normalize_paths();
+            create_page_anchors();
+
+            $('pre code').each(function(i, block) {
+                if (typeof hljs !== "undefined") {
+                    hljs.highlightBlock(block);
+                }
+            });
+            
+            // move to target
+            if (target) {
+              var header = find_header(target);
+              if (header)
+                  scroll_to_header(header, /*animate:*/false);
+            }
+        },
+        /*error:*/ function() {
             show_error("Opps! ... File not found!");
-        })
-    }
-}
-
-function compile_into_dom(path, data, loading, target) {
-    $(ditto.error_id).hide();
-    data = marked(data);
-    $(ditto.content_id).html(data);
-    escape_github_badges(data);
-
-    normalize_paths();
-    create_page_anchors();
-
-    $('pre code').each(function(i, block) {
-        if (typeof hljs !== "undefined") {
-            hljs.highlightBlock(block);
-        }
-    });
-
-    cache.store(path, data);
-
-    // clear loading
-    clearInterval(loading);
-    $(ditto.loading_id).hide();
-
-    // move to target
-    if (target) {
-      var header = find_header(target);
-      if (header)
-          scroll_to_header(header, /*animate:*/false);
-    }
+        },
+        /*always:*/ function() {
+            hide_loading();
+        });
 }
 
 function router() {

@@ -81,10 +81,17 @@ body {
     padding-top: 10px;
     padding-bottom: 10px;
 
-    text-align: justify;
+    /*text-align: left;*/
     font-size: 15px;
+
+
+    /*text-align: left;*/
+    
+    /*padding-right: 20px;
+    box-shadow: 15px 0 20px -15px #bbb;*/
     
     /* border: 1px solid black; */
+    /*border-right: 1px solid black;*/
 }
 
 #content pre {
@@ -215,28 +222,83 @@ important em {
 }
 */
 
+/*
+note::before {
+    content: "note:";
+    font-weight: bold;
+}
+note {
+    padding-left: 10px;
+    display: block;
+}*/
+
+note {
+  display:block;
+  background: #fff;
+  padding: 35px 20px 15px 15px;
+  margin: 0 0 20px;
+  position: relative;
+  
+  margin-top: 20px;
+  margin-bottom: 20px;
+  
+  /*Font*/
+  /*
+  font-family: Georgia, serif;
+  font-size: 16px;
+  line-height: 1.2;
+  color: #666;
+  text-align: justify;
+  */
+  
+  /*Borders - (Optional)*//*
+  border-left: 15px solid #c76c0c;
+  border-right: 2px solid #c76c0c;
+  
+  /*Box Shadow - (Optional)*/
+  box-shadow: 2px 2px 15px #ccc;
+}
+
+note::before{
+  font-family: Georgia, serif;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #CC6633;
+  
+  position: absolute;
+  left: 15px;
+  top: 10px;
+  
+  content: "Note";
+}
+
+note::after {
+  /*Reset to make sure*/
+  content: "";
+}
+
+indent {
+    padding-left: 10px;
+    display: block;
+}
+
+#content h1 {
+    font-size: 2.5em;
+}
+
 #content h2 {
-    /*margin-top: 50px;*/
-    margin-bottom: 0px;
-
     padding-top: 10px;
-    padding-bottom: 0px;
-
-    font-size: 18px;
-    text-align: left;
-
-    /*border-top: 2px solid #666;*/
+    font-size: 1.3em;
 }
 
 #content h3 {
-    /*margin-top: 50px;*/
-    margin-bottom: 0px;
+    padding-top: 10px;
+    font-size: 1.1em;
+}
 
-    padding-top: 20px;
-    padding-bottom: 0px;
-
-    text-align: left;
-    /*border-top: 1px dotted #777;*/
+#content h4 {
+    padding-top: 10px;
+    font-size: 1em;
 }
 
 #content hr {

@@ -1,50 +1,35 @@
-# ditto
-`ditto` inspired by [flatdoc](http://ricostacruz.com/flatdoc/) is a markdown code
-documentation system, capable of producing documentation similar to
-[Three.js][1] and [Backbone.js][2]. It is designed for people who use Github
-Pages to host their code documentation, but it can easily be adapted for other
-use cases (it only consists of html, css, and javascript after all).
+# Full Inspector
 
-- No build process needed
-- Deployable via GitHub Pages
-- Easily customizable (**No bloated Twitter Bootstrap**)
-- Can fetch more than just the README file
-- Just create an HTML file, create some markdown files and deploy! :)
-
-Live Demo [**here**](http://chutsu.github.io/ditto)
-
-## Features
-- **NEW Github Search**! (on your gh-pages)
-- Auto-generation of Page Anchors
-- Edit button to Github pages
-- Scroll back to top button
+Welcome! Here you’ll find the documentation for Full Inspector, which seamlessly enables you to use any type within `MonoBehaviours` or `ScriptableObjects` with inspector and serialization support. Full Inspector gives you all of .NET in Unity - interfaces and abstract types, generic types, properties, hashsets, dictionaries, and so forth.
 
 
-### LICENSE
+It is extremely easy to integrate Full Inspector either through [fiValue&lt;T&gt;](#docs/fivalue) or by deriving from [BaseBehavior or BaseScriptableObject](#docs/usage?working_guide).
 
-The MIT License (MIT)
+The serialization engine is easily pluggable. You can use  [Full Serializer](https://github.com/jacobdufault/fullserializer), which just works, or if you prefer you can use [Json.NET](http://james.newtonking.com/json), [protobuf-net](https://code.google.com/p/protobuf-net/), or BinaryFormatter. It's easy to integrate own serialization framework too.
 
-Copyright (c) 2014 Chris Choi
+## Platform Support
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Full Inspector supports Windows / Linux / OSX, Android, iOS, WebPlayer, Windows Store, and Windows Phone with Full Serializer. Certain serializers are not available on every platform.
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
+WebGL / il2cpp will be fully supported when it becomes more stable.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+## Purchase / Trial
 
+Full Inspector is available on the Asset Store [here](http://u3d.as/6tu). Thanks for making Full Inspector possible!
 
+A fully featured trial version is available for [download](http://goo.gl/bVnoyv). However, there are two limitations:
 
-[1]: http://threejs.org/docs/
-[2]: http://backbonejs.org/
+- Unity will error when building a runtime player
+- Source code is not available
+
+## Support
+
+Support is freely available for Full Inspector.
+
+There is a [forum topic](http://forum.unity3d.com/threads/full-inspector-inspector-and-serialization-for-structs-dicts-generics-interfaces.224270/) for any questions.
+
+Bugs and general issues can be reported on the GitHub Issues [page](https://github.com/jacobdufault/fullinspector/issues?state=open).
+
+Email contact is also available [here](http://www.google.com/recaptcha/mailhide/d?k=01zBpheh_eHn6xmVehOAEEQg==&c=Zj84NxJm0F1O9SHggdd6IScjVdOYgJXQHp3k-4lsTYw4TU2pY1GcYldoeMNRif2b).
+
+In general, please use the GitHub Issues page. It allows you to easily track updates on your issue.
