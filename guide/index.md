@@ -7,6 +7,8 @@ It is extremely easy to integrate Full Inspector either through [fiValue&lt;T&gt
 
 The serialization engine is easily pluggable. You can use  [Full Serializer](https://github.com/jacobdufault/fullserializer), which just works, or if you prefer you can use [Json.NET](http://james.newtonking.com/json), [protobuf-net](https://code.google.com/p/protobuf-net/), or BinaryFormatter. It's easy to integrate own serialization framework too.
 
+Full Inspector has zero impact at runtime. The only performance impact will be the time it takes to deserialize your content when you load a level or `Instantiate` a `BaseBehavior` / `BaseScriptableObject` type.
+
 ## Platform Support
 
 Full Inspector supports Windows / Linux / OSX, Android, iOS, WebPlayer, Windows Store, and Windows Phone with Full Serializer. Certain serializers are not available on every platform.
