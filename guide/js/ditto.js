@@ -475,6 +475,9 @@ function page_getter() {
         /*always:*/ function() {
             hide_loading();
         });
+        
+    // hide loading after five seconds... sometimes the *always* function is not invoked
+    setTimeout(hide_loading, 5000);
 }
 
 function router() {
