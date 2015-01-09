@@ -2,9 +2,9 @@
 
 // TODO: rewrite this, create a custom example
 
-You have a serialization framework and want to use it inside of Full Inspector; how do you do that? Luckily, Full Inspector has fantastic support for third party serializers.
+You have a serialization framework and want to use it inside of Full Inspector; how do you do that? Luckily, Full Inspector has fantastic support for third party serializers. Json.NET, protobuf-net, and BinaryFormatter are all treated as third-party serializers.
 
-The current serializers are located in “FullInspector2/Serializers”. Feel free to take a look at the existing ones.
+The current serializers are located in FullInspector2/Serializers. Feel free to take a look at the existing ones.
 
 The process to create a new serializer is simple. Simply derive from `BaseSerializer` and implement the abstract methods.
 

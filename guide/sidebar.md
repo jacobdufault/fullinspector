@@ -10,9 +10,12 @@ version 2.5 documentation
     - [Upgrading](#docs/upgrading)
 - [Usage](#docs/usage)
 	- [fiValue&lt;T&gt;](#docs/fivalue)
+	- [Settings](#docs/usage_settings)
+	- [Attribute Customization](#docs/usage_attributes)
 
 ## Workflow Enhancements
 
+- [Inline Object Editing](#docs/workflow_inline_object_editing)
 - [Static Inspector](#docs/workflow_static_inspector)
 - [Shared Instance](#docs/workflow_shared_instance)
 - [File Serialization](#docs/workflow_file_serialization)
