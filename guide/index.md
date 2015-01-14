@@ -2,7 +2,6 @@
 
 Welcome! Here you’ll find the documentation for Full Inspector, which seamlessly enables you to use any type within `MonoBehaviours` or `ScriptableObjects` with inspector and serialization support. Full Inspector gives you all of .NET in Unity - interfaces and abstract types, generic types, properties, hashsets, dictionaries, and so forth.
 
-
 It is extremely easy to integrate Full Inspector either through [fiValue&lt;T&gt;](#docs/fivalue) or by deriving from [BaseBehavior or BaseScriptableObject](#docs/usage?working_guide).
 
 The serialization engine is easily pluggable. You can use  [Full Serializer](https://github.com/jacobdufault/fullserializer), which just works, or if you prefer you can use [Json.NET](http://james.newtonking.com/json), [protobuf-net](https://code.google.com/p/protobuf-net/), or BinaryFormatter. It's easy to integrate own serialization framework too.

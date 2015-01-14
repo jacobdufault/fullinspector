@@ -7,7 +7,7 @@
 ```c#
 using FullInspector;
 
-public class HelloDictionary : BaseBehavior {
+public class HelloFullInspector : BaseBehavior {
     public Dictionary<string, GameObject> dict;
 }
 ```
@@ -26,11 +26,17 @@ If deriving from a custom base class is not an option or you wish to limit how F
 One potential gotcha with serialization: each `BaseBehavior` field/property is serialized independently. If you have a class instance that is shared across multiple `BaseBehaviors` or multiple fields/properties, it will be deserialized into separate instances. You can ensure that it deserializes into one instance by deriving from a `UnityEngine.Object` child class, such as `BaseScriptableObject` or `SharedInstance<T>`.
 </important>
 
-The Full Serializer serializer is recommended for default usage, for for legacy reasons Json.NET is activated by default. Full Serializer works well without annotations, and works on all major Unity platforms.
+<important>
+If you're modifying `BaseBehavior` object instances that are not being inspected, then everything will usually work *unless* the object is a prefab. If it's a prefab, then you need to call `obj.SaveState()` after you're done editing it so that the changes will be serialized. 
+<br /> <br />
+It's perfectly fine to call `obj.SaveState()` if the object is not a prefab. However, you do not need to as Full Inspector makes this call automatically for you so that you don't have to worry about it.
+</important>
+
+When you first install Full Inspector you'll see the [serializer manager](#docs/usage_serializer_manager) popup which will let you pick the default serializer. Full Serializer is recommended for default usage; it works well without annotations and supports every major Unity platform.
 
 Best of all, with Full Serializer you don't need to learn any new serialization annotations - it will work just like Unity, except that everything can now be serialized.
 
-[How do I change my default serializer?](#docs/serialization_manager)
+[How do I change my default serializer?](#docs/usage_serializer_manager)
 
 If you need performance, you can easily switch to protobuf-net for one specific component while using Full Serializer for ease of use on the rest of your behaviors. Everything interacts correctly, even when using different serializers.
 
