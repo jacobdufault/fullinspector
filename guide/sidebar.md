@@ -1,5 +1,4 @@
 # [Full Inspector]()
-version 2.5 documentation
 
 [ditto:searchbar]
 
@@ -10,7 +9,7 @@ version 2.5 documentation
     - [Upgrading](#docs/upgrading)
 - [Usage](#docs/usage)
 	- [fiValue&lt;T&gt;](#docs/usage_fivalue)
-	- [[fiInspectorOnly]](#docs/usage_fiinspectoronly)
+	- [[fiInspectorOnly]](#docs/usage_fiinspectoronly) **new**
 	- [Settings](#docs/usage_settings)
 	- [Attribute Customization](#docs/usage_attributes)
 	- [Serializer Manager](#docs/usage_serializer_manager)
@@ -26,6 +25,7 @@ version 2.5 documentation
 
 ## Extending Full Inspector
 
+- [Using the ToolKit](#docs/extending_toolkit) **new**
 - [Adding a Serializer](#docs/extending_serializer)
 - [Writing a Behavior Editor](#docs/extending_behavior_editor)
 - [Writing a Property Editor](#docs/extending_property_editor)
