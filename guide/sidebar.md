@@ -7,6 +7,7 @@
 - [Overview]()
     - [Serializer Platform Support](#docs/platforms_serializers)
     - [Upgrading](#docs/upgrading)
+    - [DLLs](#docs/intro_dlls) **new**
 - [Usage](#docs/usage)
 	- [fiValue&lt;T&gt;](#docs/usage_fivalue)
 	- [[fiInspectorOnly]](#docs/usage_fiinspectoronly) **new**
