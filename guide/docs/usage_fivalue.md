@@ -4,7 +4,11 @@
 
 <important>
 `fiValue<T>` only supports Full Serializer, as it is the only serializer which supports serialization within Unity's `ISerializationCallbackReceiver`. Don't worry though - Full Serializer runs everywhere and serializes everything.
-</important> 
+</important>
+
+<important>
+`fiValue<T>` cannot currently be used within a namespace - sorry! This is because Unity does not expose namespace information to `serializedObject.type`.
+</important>
 
 If you've used `UnityEvent<T>`, then you know how to use `fiValue<T>`. Because Unity doesn't serialize generic types, you just need to derive a new type from `fiValue<T>` and then use that in your class. Here's an example:
 
