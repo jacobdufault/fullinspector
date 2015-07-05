@@ -152,4 +152,4 @@ It's also important to notice that for the attribute `[CustomPropertyEditor(type
 
 ## Attribute Property Editors
 
-Feel free to reference [the old docs](http://jacobdufault.github.io/fullinspector/assets/docs/custom_property_editors.html#attribute-property-editors) for now regarding attribute property editors, but the next update will rewrite how attribute property editors work so the docs have not been migrated to the new system.
+Feel free to reference [the old docs](http://jacobdufault.github.io/fullinspector/assets/docs/custom_property_editors.html#attribute-property-editors) for now regarding attribute property editors, but the next major update (2.7) will rewrite how attribute property editors work so the docs have not been migrated to the new system. The new attribute editing system should be sigificantly more flexible and powerful.
