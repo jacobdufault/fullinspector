@@ -1,3 +1,3 @@
 # Graph Metadata Engine
 
-// TODO: write this
+See [this](#docs/extending_property_editor?metadata) section in the property editor document.
