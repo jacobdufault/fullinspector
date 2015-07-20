@@ -14,6 +14,7 @@
 	- [Settings](#docs/usage_settings)
 	- [Attribute Customization](#docs/usage_attributes)
 	- [Serializer Manager](#docs/usage_serializer_manager)
+	- [Embedding FI](#docs/usage_embedding)
 
 ## Workflow Enhancements
 
