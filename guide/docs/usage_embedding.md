@@ -46,15 +46,15 @@ public class EmbedDemo : EditorWindow {
     private fiGraphMetadata metadata = new fiGraphMetadata();
 
     protected void OnEnable() {
-		// This will make animation smooth.
+        // This will make animation smooth.
         fiEditorUtility.RepaintableEditorWindows.Add(this);
     }
 
     protected void OnGUI() {
         var editor = PropertyEditor.Get(typeof(MyType), null);
 
-		// For convenience, FI defines an `EditWithGUILayout` method that just wraps the calls
-		// to `GetElementHeight` and `Edit`.
+        // For convenience, FI defines an `EditWithGUILayout` method that just wraps
+        //  the calls to `GetElementHeight` and `Edit`.
         instance = editor.FirstEditor.EditWithGUILayout(null, instance, metadata.Enter("Hi"));
     }
 }
