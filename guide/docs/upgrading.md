@@ -6,7 +6,7 @@ Version 2.5 moves all scripts that are specific to your project into a `FullInsp
 
 The `BaseBehavior` and `BaseScriptableObject` types  were removed in the default distribution for 2.5, as Full Inspector now allows the default serializer to be easily selection upon import.
 
-## The easiest way to update
+## The sure-fire way to update
 
 1. Import Full Inspector into an empty project
 2. Exit Unity completely
