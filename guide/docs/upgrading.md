@@ -6,6 +6,14 @@ Version 2.5 moves all scripts that are specific to your project into a `FullInsp
 
 The `BaseBehavior` and `BaseScriptableObject` types  were removed in the default distribution for 2.5, as Full Inspector now allows the default serializer to be easily selection upon import.
 
+## The easiest way to update
+
+1. Import Full Inspector into an empty project
+2. Exit Unity completely
+3. Open up your actual project, delete just the `FullInspector2` folder.
+4. Copy over the version of Full Inspector you just imported into the empty project.
+5. Restart Unity, you're good to go! Delete your dummy project.
+
 ## Q/A: No `BaseBehavior` or `BaseScriptableObject` type
 
 If you are getting error messages about no `BaseBehavior` \ `BaseScriptableObject` type, then there are a number of ways to solve this issue.
@@ -36,9 +44,9 @@ Add these classes somewhere in a C# file within your project (Full Serializer):
 
 ```
 namespace FullInspector {
-    public abstract class BaseBehavior : 
+    public abstract class BaseBehavior :
         BaseBehavior<FullSerializerSerializer> {}
-    public abstract class BaseScriptableObject : 
+    public abstract class BaseScriptableObject :
         BaseScriptableObject<FullSerializerSerializer> {}
     public abstract class SharedInstance<T> :
         SharedInstance<T, FullSerializerSerializer> {}
@@ -49,9 +57,9 @@ If you wish to use Json.NET instead of Full Serializer, use this code snippet in
 
 ```
 namespace FullInspector {
-    public abstract class BaseBehavior : 
+    public abstract class BaseBehavior :
         BaseBehavior<JsonNetSerializer> {}
-    public abstract class BaseScriptableObject : 
+    public abstract class BaseScriptableObject :
         BaseScriptableObject<JsonNetSerializer> {}
     public abstract class SharedInstance<T> :
         SharedInstance<T, JsonNetSerializer> {}

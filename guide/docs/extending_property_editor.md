@@ -1,13 +1,13 @@
 # Writing a Property Editor
 
-Full Inspector works its magic via a fully rewritten editing system inspired by PropertyDrawer; however, Full Inspector continues where PropertyDrawer stops. You only need to read this section if you're interested in writing a custom property editor.
+Full Inspector works its magic via a fully rewritten editing system inspired by PropertyDrawer; however, Full Inspector continues where `PropertyDrawer` stops. You only need to read this section if you're interested in writing a custom property editor.
 
 Writing a `PropertyEditor` is similar to writing a custom `PropertyDrawer`. We’ll go through how to write a `PropertyEditor` through a couple of real examples that are being used in Full Inspector. You can view all of the `PropertyEditors` in "FullInspector2/Modules/Common/Editor".
 
 If you want to completely replace the editor for a component, simply write a `PropertyEditor` for that component type.
 
 <note>
-This system is mirrored for BehaviorEditors; simply replace [CustomPropertyEditor] with [CustomBehaviorEditor] and PropertyEditor with BehaviorEditor.
+This system is mirrored for `BehaviorEditors`; simply replace `[CustomPropertyEditor]` with `[CustomBehaviorEditor]` and `PropertyEditor` with `BehaviorEditor`.
 </note>
 
 ## Simple (non-generic) Property Editors

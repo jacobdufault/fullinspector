@@ -85,7 +85,7 @@ public class EmbedEditor : Editor {
 
 `PropertyDrawers` might be a bit tricky because FI requires the actual object instance - luckily, FI defines some helper methods that make this really easy.
 
-<important>Be careful of writing PropertyDrawers that embed FI, as FI will automatically generate a PropertyEditor->PropertyDrawer binding which can lead you do infinite recursion. This would have happened if we defined the `PropertyDrawer` for `MyType` instead of `MyTypeContainer`</important>
+<important>Be careful of writing `PropertyDrawers` that embed FI, as FI will automatically generate a `PropertyEditor`->`PropertyDrawer` binding which can lead you do infinite recursion. This would have happened if we defined the `PropertyDrawer` for `MyType` instead of `MyTypeContainer`</important>
 
 ```c#
 using FullInspector;

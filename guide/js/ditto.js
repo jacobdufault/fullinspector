@@ -68,7 +68,6 @@ function init_sidebar_section() {
 function init_edit_button() {
     if (ditto.base_url === null) {
         alert("Error! You didn't set 'base_url' when calling ditto.run()!");
-
     } else {
         $(ditto.edit_id).show();
         $(ditto.edit_id).on("click", function() {
@@ -79,9 +78,10 @@ function init_edit_button() {
             }
 
             hash = hash.split('?')[0];
-            window.open(ditto.base_url + hash + ".md");
+
             // open is better than redirecting, as the previous page history
             // with redirect is a bit messed up
+            window.open(ditto.base_url + hash + ".md");
         });
     }
 }
@@ -254,7 +254,6 @@ function li_create_linkage(li_tag, header_level) {
     });
 }
 
-
 function find_header(anchor_name) {
     // anchor name, is, ie, "my_custom_title" which has been created from "My custom title"
     for (var i = 1; i <= 6; i++) {
@@ -266,7 +265,6 @@ function find_header(anchor_name) {
     }
 }
 
-
 function find_header_at_level(anchor_name, level) {
     return $(ditto.content_id + " h" + level + "." + anchor_name);
 }
@@ -277,13 +275,8 @@ function scroll_to_header(header, animate) {
     }, animate ? 200 : 0);
 
     // highlight the relevant section
-    var new_color = "#ED1C24";
-    new_color = "#4682BE";
-    original_color = header.css("color");
-    header.animate({ color: new_color, }, 500, function() {
-        // revert back to orig color
-        $(this).animate({color: original_color}, 2000);
-    });
+    header.css('color', "#4682BE");
+    header.css('text-decoration', 'underline');
 }
 
 function make_link(element) {
@@ -394,19 +387,19 @@ function escape_github_badges(data) {
 function get_file(path, processor, failed, always) {
     var CACHE_EXPIRATION_MINUTES = 5;
     lscache.enableWarnings(true);
-    
+
     var data = lscache.get(path);
     if (data) {
         console.log("found cached result for " + path);
         processor(data);
-        
+
         if (always) always();
     }
-    
+
     else {
         console.log("running query for " + path);
         $.get(path, function(data) {
-           lscache.set(path, data, CACHE_EXPIRATION_MINUTES); 
+           lscache.set(path, data, CACHE_EXPIRATION_MINUTES);
            processor(data);
         }).fail(failed)
           .always(always)
@@ -445,7 +438,7 @@ function page_getter() {
     // otherwise get the markdown and render it
     hide_error();
     show_loading();
-     
+
     get_file(path,
         /*processor:*/ function(data) {
             // compile the data
@@ -461,7 +454,7 @@ function page_getter() {
                     hljs.highlightBlock(block);
                 }
             });
-            
+
             // move to target
             if (target) {
               var header = find_header(target);
@@ -475,7 +468,7 @@ function page_getter() {
         /*always:*/ function() {
             hide_loading();
         });
-        
+
     // hide loading after five seconds... sometimes the *always* function is not invoked
     setTimeout(hide_loading, 5000);
 }

@@ -77,7 +77,7 @@ body {
 
     margin-left: 315px;
     margin-right: 55px;
-    
+
     padding-top: 10px;
     padding-bottom: 10px;
 
@@ -85,10 +85,10 @@ body {
     font-size: 15px;
 
     /*text-align: left;*/
-    
+
     /*padding-right: 20px;
     box-shadow: 15px 0 20px -15px #bbb;*/
-    
+
     /* border: 1px solid black; */
     /*border-right: 1px solid black;*/
 }
@@ -103,18 +103,12 @@ body {
     padding-right: 13px;
 
     color: #FFF;
-    white-space: pre-wrap;       /* css-3 */
-    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-    white-space: -pre-wrap;      /* Opera 4-6 */
-    white-space: -o-pre-wrap;    /* Opera 7 */
-    word-wrap: break-word;       /* Internet Explorer 5.5+ */
-
     background: #F8F8F8;
     border-radius: 5px;
 }
 
 #content pre code {
-    padding-left: 0;
+    padding-left: 0em;
 }
 
 #content code {
@@ -130,71 +124,34 @@ body {
     border-radius: 2px;
 }
 
-/*
-#content blockquote {
-    color: #00FF00
-}
-*/
-
-/*
-blockquote {
-  background: #f9f9f9;
-  border-left: 10px solid #ccc;
-  margin: 1.5em 10px;
-  padding: 0.5em 10px;
-}
-blockquote:before {
-  color: #ccc;
-  font-size: 4em;
-  line-height: 0.1em;
-  margin-right: 0.25em;
-  vertical-align: -0.4em;
-}
-blockquote p {
-  display: inline;
-}
-*/
-
 important {
   display:block;
   background: #fff;
   padding: 40px 20px 15px 15px;
   margin: 0 0 20px;
   position: relative;
-  
+
   margin-top: 20px;
   margin-bottom: 20px;
-  
-  /*Font*/
-  /*
-  font-family: Georgia, serif;
-  font-size: 16px;
-  line-height: 1.2;
-  color: #666;
-  text-align: justify;
-  */
-  
+
   /*Borders - (Optional)*/
   border-left: 15px solid #c76c0c;
   border-right: 2px solid #c76c0c;
-  
+
   /*Box Shadow - (Optional)*/
   box-shadow: 2px 2px 15px #ccc;
 }
 
 important::before{
-  /*Font*/
   font-family: Georgia, serif;
   font-size: 20px;
   font-weight: bold;
-  /*color: #999;*/
   color: #CC6633;
-  
-  /*Positioning*/
+
   position: absolute;
   left: 15px;
   top: 10px;
-  
+
   content: "Important";
 }
 
@@ -203,58 +160,16 @@ important::after {
   content: "";
 }
 
-/*
-important a {
-  text-decoration: none;
-  background: #eee;
-  cursor: pointer;
-  padding: 0 3px;
-  color: #c76c0c;
-}
-
-important a:hover {
- color: #666;
-}
-
-important em {
-  font-style: italic;
-}
-*/
-
-/*
-note::before {
-    content: "note:";
-    font-weight: bold;
-}
-note {
-    padding-left: 10px;
-    display: block;
-}*/
-
 note {
   display:block;
   background: #fff;
   padding: 35px 20px 15px 15px;
   margin: 0 0 20px;
   position: relative;
-  
+
   margin-top: 20px;
   margin-bottom: 20px;
-  
-  /*Font*/
-  /*
-  font-family: Georgia, serif;
-  font-size: 16px;
-  line-height: 1.2;
-  color: #666;
-  text-align: justify;
-  */
-  
-  /*Borders - (Optional)*//*
-  border-left: 15px solid #c76c0c;
-  border-right: 2px solid #c76c0c;
-  
-  /*Box Shadow - (Optional)*/
+
   box-shadow: 2px 2px 15px #ccc;
 }
 
@@ -263,11 +178,11 @@ note::before{
   font-size: 1.2em;
   font-weight: bold;
   color: #CC6633;
-  
+
   position: absolute;
   left: 15px;
   top: 10px;
-  
+
   content: "Note";
 }
 
@@ -357,28 +272,28 @@ indent {
 
 #edit {
     display: none;
-    
+
     position: fixed;
     bottom: 20px;
     left: 38px;
     /*left: 775px;*/
-    
+
     height: auto;
     width: 150px;
-    
+
     color: #222222;
     vertical-align: middle;
     text-align: center;
-    
+
     padding-top: 1px;
     padding-bottom: 3px;
-    
-    background-color: #f0f0ff;
+
+    background-color: #f8f8f8;
     box-shadow: 3px 1px 3px #CCC;
 }
 
 #edit:hover {
-    background-color: #f0f0f0;
+    background-color: #ffffff;
     cursor: pointer;
 }
 
@@ -410,8 +325,6 @@ input[type=search] {
 .fragments {
     margin: 0;
     padding: 10px;
-    /* border: 1px solid #777; */
-    /* border-radius: 5px; */
 }
 
 .fragment {
@@ -419,9 +332,7 @@ input[type=search] {
     padding-right: 10px;
     padding-top: 0px;
     padding-bottom: 0px;
-
-    /* border: 1px solid #777; */
-    /* border-radius: 5px; */
+    word-wrap: break-word;
 }
 
 .search_results .link {
