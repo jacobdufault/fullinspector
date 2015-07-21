@@ -129,3 +129,15 @@ EditorGUIUtility.hierarchyMode = true;
 // code
 EditorGUIUtility.hierarchyMode = savedHierarchyMode;
 ```
+
+### Change Check
+
+Want to know when the edited type was modified? You can simply use `EditorGUI.changed` to monitor for this. For example,
+
+```c#
+EditorGUI.BeginChangeCheck();
+// run the FI editor
+if (EditorGUI.EndChangeCheck()) {
+  // The editor was modified - do something.
+}
+```
