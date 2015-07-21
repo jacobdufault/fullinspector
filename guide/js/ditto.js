@@ -137,7 +137,7 @@ function build_result_matches_html(matches) {
 
         if (url !== ditto.sidebar_file) {
             var hash = "#" + url.replace(".md", "");
-            var path = window.location.origin+ "/" + hash;
+            var path = window.location.origin + "/" + hash;
 
             //html += "<li class='link'>" + url + "</li>"
 
@@ -153,9 +153,11 @@ function build_result_matches_html(matches) {
             // /fullname/url
             toRemove = toRemove.substring(0, toRemove.length - 1);
 
-            var destination = "#" +  trim_start_with_end(file, toRemove);
+            var destination = trim_start_with_end(file, toRemove);
+            if (destination[0] == '/') destination = destination.slice(1);
+            destination = '#' + destination;
 
-            html += "<a href='" + destination +"'>" + url + "</a>";
+            html += "<a href='" + destination + "'>" + url + "</a>";
 
             var match = build_text_matches_html(matches[i].text_matches);
             html += match;
