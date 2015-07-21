@@ -30,6 +30,7 @@ Name  | Description
 `[InspectorOrder]` | Set the display order of an field or property of an object. A field or property without an [InspectorOrder] attribute defaults to order double.MaxValue (which will appear after any ordered properties). The lower the order value, the higher the field or property will appear in the inspector. Each inheritance level receives its own order group.
 `[InspectorShowIf]` | This allows a member to be conditionally hidden in the inspector depending upon the state of other variables in object. This does *not* change serialization behavior, only display behavior.
 `[InspectorTooltip]` | Adds a tooltip to an field or property that is viewable in the inspector.
+`[HideInInspector]` | Hides the given field or property in the inspector.
 `[ShowInInspector]` | The ShowInInspectorAttribute causes the given field or property to be shown in the inspector, even if it is not public. This is the inverse of Unity's [HideInInspector] attribute.
 
 <hr />
