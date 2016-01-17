@@ -1,5 +1,0 @@
-var class_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_unity_types =
-[
-    [ "UnityTypesContainer", "struct_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_unity_types_1_1_unity_types_container.html", "struct_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_unity_types_1_1_unity_types_container" ],
-    [ "UnityTypes", "class_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_unity_types.html#a02f5e613ce827a6dc6c709c481ea1cb3", null ]
-];

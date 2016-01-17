@@ -1,4 +1,0 @@
-var struct_full_inspector_1_1_samples_1_1_proto_buf_net_1_1_sample_proto_behavior_serialization_1_1_not_serializable_by_unity =
-[
-    [ "Value", "struct_full_inspector_1_1_samples_1_1_proto_buf_net_1_1_sample_proto_behavior_serialization_1_1_not_serializable_by_unity.html#a652244b4c4d678389df61380a9edee78", null ]
-];

@@ -1,4 +1,0 @@
-var class_full_inspector_1_1_samples_1_1_proto_buf_net_1_1_sample_proto_inheritance_1_1_derived_abstract_b =
-[
-    [ "B", "class_full_inspector_1_1_samples_1_1_proto_buf_net_1_1_sample_proto_inheritance_1_1_derived_abstract_b.html#abeffc706175e143922ff665b7b29ea4a", null ]
-];

@@ -1,4 +1,0 @@
-var class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_unity_object_surrogate_3_01_t_object_01_4 =
-[
-    [ "StorageId", "class_full_inspector_1_1_serializers_1_1_proto_buf_net_1_1_unity_object_surrogate_3_01_t_object_01_4.html#a9a54112a8568f57430864b43af1f2e3e", null ]
-];

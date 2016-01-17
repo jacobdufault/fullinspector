@@ -1,5 +1,0 @@
-var class_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_custom_f4efd4bf4f8ed492bf0c6a3086818f13 =
-[
-    [ "Edit", "class_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_custom_f4efd4bf4f8ed492bf0c6a3086818f13.html#ab9267a3fb0e5b1e180aaa2f435067101", null ],
-    [ "GetElementHeight", "class_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_custom_f4efd4bf4f8ed492bf0c6a3086818f13.html#a022f50fd09bf796fc899a08c0f97a0f9", null ]
-];

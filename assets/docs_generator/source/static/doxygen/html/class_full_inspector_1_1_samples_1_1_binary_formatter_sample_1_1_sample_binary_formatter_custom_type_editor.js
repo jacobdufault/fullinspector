@@ -1,8 +1,0 @@
-var class_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_custom_type_editor =
-[
-    [ "CustomTypeEditorFloatString", "class_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_custom_type_editor.html#a728a6d740e993393f3d026d401c21991", null ],
-    [ "CustomTypeEditorInheritedA", "class_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_custom_type_editor.html#a2ad152277f191dfe0d4f092b6635dd4a", null ],
-    [ "CustomTypeEditorInheritedB", "class_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_custom_type_editor.html#a0960138bdd7b03d7d89c31450be79017", null ],
-    [ "CustomTypeEditorNonGeneric", "class_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_custom_type_editor.html#a6f609c8dcbc15b0c7fe577cf2c139238", null ],
-    [ "ICustomTypeEditorInherited", "class_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_custom_type_editor.html#adf15c317f6f00fae915d9936a2e67f88", null ]
-];
