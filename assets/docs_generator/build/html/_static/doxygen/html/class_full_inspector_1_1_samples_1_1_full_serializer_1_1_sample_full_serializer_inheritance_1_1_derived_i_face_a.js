@@ -1,4 +1,0 @@
-var class_full_inspector_1_1_samples_1_1_full_serializer_1_1_sample_full_serializer_inheritance_1_1_derived_i_face_a =
-[
-    [ "A", "class_full_inspector_1_1_samples_1_1_full_serializer_1_1_sample_full_serializer_inheritance_1_1_derived_i_face_a.html#a2a30f0ed6410906d7eba197240c6a9a9", null ]
-];

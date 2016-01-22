@@ -9,10 +9,12 @@
 
     <!-- marked -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
-    
+
+    <!-- TODO: Swap out marked for https://cdn.jsdelivr.net/remarkable/1.6.1/remarkable.min.js -->
+
     <!-- lscache -->
     <script src="//cdn.rawgit.com/pamelafox/lscache/0860dc21d96ca1669a56259ad160e2e4c867d969/lscache.min.js"></script>
-    
+
     <!-- highlight.js -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
@@ -23,33 +25,22 @@
     <link rel="stylesheet" href="./css/ditto.css">
 </head>
 <body>
-    <!-- essential -->
-    
     <div id="sidebar"></div>
     <div id="content"></div>
-    
     <div id="edit">suggest an edit</div>
-    
     <div id="hide"></div>
-
-
-    <!-- optional -->
     <div id="loading">Loading ...</div>
     <div id="error"></div>
 
     <script>
-        // essential settings
         ditto.index = "index.md",
         ditto.sidebar_file = "sidebar.md",
-
-        // optional settings if you want github search
         ditto.github_username = "jacobdufault";
         ditto.github_repo = "fullinspector";
 
-        // where the docs are actually stored on github - so you can edit
+        // Where the docs are actually stored on github; this enables the edit button.
         ditto.base_url = "https://github.com/jacobdufault/fullinspector/edit/gh-pages/guide";
 
-        // run
         ditto.run();
     </script>
 </body>

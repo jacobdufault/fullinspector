@@ -1,8 +1,0 @@
-var struct_full_inspector_1_1_samples_1_1_full_serializer_1_1_sample_full_serializer_lists_1_1_container =
-[
-    [ "DerivedA", "class_full_inspector_1_1_samples_1_1_full_serializer_1_1_sample_full_serializer_lists_1_1_container_1_1_derived_a.html", "class_full_inspector_1_1_samples_1_1_full_serializer_1_1_sample_full_serializer_lists_1_1_container_1_1_derived_a" ],
-    [ "DerivedB", "class_full_inspector_1_1_samples_1_1_full_serializer_1_1_sample_full_serializer_lists_1_1_container_1_1_derived_b.html", "class_full_inspector_1_1_samples_1_1_full_serializer_1_1_sample_full_serializer_lists_1_1_container_1_1_derived_b" ],
-    [ "IFace", "interface_full_inspector_1_1_samples_1_1_full_serializer_1_1_sample_full_serializer_lists_1_1_container_1_1_i_face.html", null ],
-    [ "SubInterfaceList", "struct_full_inspector_1_1_samples_1_1_full_serializer_1_1_sample_full_serializer_lists_1_1_container.html#a22bbc386db3050e14a9cc75e562ae8eb", null ],
-    [ "SubTransformList", "struct_full_inspector_1_1_samples_1_1_full_serializer_1_1_sample_full_serializer_lists_1_1_container.html#a6c12bf34d3e1b1ce418969b8c6f3d6ec", null ]
-];

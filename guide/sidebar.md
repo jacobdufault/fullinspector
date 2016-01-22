@@ -7,10 +7,10 @@
 - [Overview]()
     - [Serializer Platform Support](#docs/platforms_serializers)
     - [Upgrading](#docs/upgrading)
-    - [DLLs](#docs/intro_dlls) **new**
+    - [DLLs](#docs/intro_dlls)
 - [Usage](#docs/usage)
 	- [fiValue&lt;T&gt;](#docs/usage_fivalue)
-	- [[fiInspectorOnly]](#docs/usage_fiinspectoronly) **new**
+	- [[fiInspectorOnly]](#docs/usage_fiinspectoronly)
 	- [Settings](#docs/usage_settings)
 	- [Attribute Customization](#docs/usage_attributes)
 	- [Serializer Manager](#docs/usage_serializer_manager)
@@ -27,7 +27,7 @@
 
 ## Extending Full Inspector
 
-- [Using the ToolKit](#docs/extending_toolkit) **new**
+- [Using the ToolKit](#docs/extending_toolkit)
 - [Adding a Serializer](#docs/extending_serializer)
 - [Writing a Behavior Editor](#docs/extending_behavior_editor)
 - [Writing a Property Editor](#docs/extending_property_editor)

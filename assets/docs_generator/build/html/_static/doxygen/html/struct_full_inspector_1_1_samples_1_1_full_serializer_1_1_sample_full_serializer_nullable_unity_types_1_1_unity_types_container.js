@@ -1,9 +1,0 @@
-var struct_full_inspector_1_1_samples_1_1_full_serializer_1_1_sample_full_serializer_nullable_unity_types_1_1_unity_types_container =
-[
-    [ "Bounds", "struct_full_inspector_1_1_samples_1_1_full_serializer_1_1_sample_full_serializer_nullable_unity_types_1_1_unity_types_container.html#ab33db40b3abaa4bb18bd17fe85defdf4", null ],
-    [ "Color", "struct_full_inspector_1_1_samples_1_1_full_serializer_1_1_sample_full_serializer_nullable_unity_types_1_1_unity_types_container.html#ad8b0a2e95a5d99902e42d7820a726d1f", null ],
-    [ "LayerMask", "struct_full_inspector_1_1_samples_1_1_full_serializer_1_1_sample_full_serializer_nullable_unity_types_1_1_unity_types_container.html#ac7f0fd2abd4cc60e9a4b6080004a7f12", null ],
-    [ "Vector2", "struct_full_inspector_1_1_samples_1_1_full_serializer_1_1_sample_full_serializer_nullable_unity_types_1_1_unity_types_container.html#ae99b362846e5c81f224021081026cc75", null ],
-    [ "Vector3", "struct_full_inspector_1_1_samples_1_1_full_serializer_1_1_sample_full_serializer_nullable_unity_types_1_1_unity_types_container.html#ae4d6c33877daccc0af1cdb99eb337dfe", null ],
-    [ "Vector4", "struct_full_inspector_1_1_samples_1_1_full_serializer_1_1_sample_full_serializer_nullable_unity_types_1_1_unity_types_container.html#a12cedfaedb5baf4355eb677571c0a21d", null ]
-];

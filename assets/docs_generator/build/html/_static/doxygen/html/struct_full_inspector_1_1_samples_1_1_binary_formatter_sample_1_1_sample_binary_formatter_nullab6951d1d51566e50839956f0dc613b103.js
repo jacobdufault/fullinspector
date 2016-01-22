@@ -1,9 +1,0 @@
-var struct_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_nullab6951d1d51566e50839956f0dc613b103 =
-[
-    [ "Bounds", "struct_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_nullab6951d1d51566e50839956f0dc613b103.html#a6e8b7289a7e5ce592acd4ca4872a6b9b", null ],
-    [ "Color", "struct_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_nullab6951d1d51566e50839956f0dc613b103.html#a3c7069273cd5085395cc795663439b96", null ],
-    [ "LayerMask", "struct_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_nullab6951d1d51566e50839956f0dc613b103.html#a17b33e3bcad1eec3d9f9f6cfff6359ce", null ],
-    [ "Vector2", "struct_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_nullab6951d1d51566e50839956f0dc613b103.html#a8c0fcc9119e5707ae0ed009e16049850", null ],
-    [ "Vector3", "struct_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_nullab6951d1d51566e50839956f0dc613b103.html#a75741297c8f039df62cb37a05e3b74d6", null ],
-    [ "Vector4", "struct_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_nullab6951d1d51566e50839956f0dc613b103.html#ab3109db9a9c5a435b437cbf25e78e9a0", null ]
-];

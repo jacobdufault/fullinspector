@@ -1,6 +1,0 @@
-var class_full_inspector_1_1_modules_1_1_shared_instance_1_1fi_shared_instance_property_editor_3_01_t_01_4 =
-[
-    [ "SharedInstanceMetadata", "class_full_inspector_1_1_modules_1_1_shared_instance_1_1fi_shared_instance_property_editor_3_01_2fd2414815f918ac41659a55857579dc.html", "class_full_inspector_1_1_modules_1_1_shared_instance_1_1fi_shared_instance_property_editor_3_01_2fd2414815f918ac41659a55857579dc" ],
-    [ "Edit", "class_full_inspector_1_1_modules_1_1_shared_instance_1_1fi_shared_instance_property_editor_3_01_t_01_4.html#a9506b0e0c65471c165d372c20b882a56", null ],
-    [ "GetElementHeight", "class_full_inspector_1_1_modules_1_1_shared_instance_1_1fi_shared_instance_property_editor_3_01_t_01_4.html#a26da21106ad7138200963e3c26393c8e", null ]
-];
