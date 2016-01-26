@@ -35,10 +35,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <iron-ajax id="xhr" url="http://fullinspector-api.azurewebsites.net/fullinspector/downloads?invoice_id=[[invoiceId]]" handleAs="json"></iron-ajax>
 
-    <paper-material elevation="1" style="height: 230px">
+    <paper-material elevation="1" style="height: 260px">
       <div class="headline">
         <p class="page-title header">Access</p>
-        <p>Enter your Full Inspector invoice number to receive access to this page. You will access to upcoming and previous releases of Full Inspector.</p>
+        <p>Enter your Full Inspector invoice number to receive access to this page. You can download previous and upcoming releases of Full Inspector.</p>
+
+        <p>You can find your invoice on your Unity Asset Store purchase confirmation email sent from Unity.</p>
       </div>
 
       <div id="inputContainer">
@@ -51,7 +53,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <paper-material hidden="[[!hasReleases]]" elevation="1">
       <div class="headline">
         <p class="page-title header">Releases</p>
-        <p>Click the package to download, then import it into Unity.</p>
+        <p>Click the package you would like to download (give it 5 - 10 seconds to start downloading), then extract the zip and import either the source code or DLL build into your Unity project.</p>
       </div>
 
       <iron-list id="downloadsList" style="height: 300px" as="blob_name">
@@ -83,9 +85,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.hasReleases = false;
 
           self.$.xhr.addEventListener('error', function() {
-            console.log('error !! ');
             self.$.invoiceId.invalid = true;
-
             self._hideSpinner();
           });
           self.$.xhr.addEventListener('response', function() {
