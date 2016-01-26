@@ -55,7 +55,7 @@ public class EmbedDemo : EditorWindow {
 
         // For convenience, FI defines an `EditWithGUILayout` method that just wraps
         //  the calls to `GetElementHeight` and `Edit`.
-        instance = editor.FirstEditor.EditWithGUILayout(null, instance, metadata.Enter("Hi"));
+        instance = editor.FirstEditor.EditWithGUILayout(new GUIContent("My Label"), instance, metadata.Enter("Hi"));
     }
 }
 ```
