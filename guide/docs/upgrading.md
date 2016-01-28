@@ -16,15 +16,15 @@ The `BaseBehavior` and `BaseScriptableObject` types  were removed in the default
 
 ## Q/A: No `BaseBehavior` or `BaseScriptableObject` type
 
-If you are getting error messages about no `BaseBehavior` \ `BaseScriptableObject` type, then there are a number of ways to solve this issue.
+If you are getting error messages about no `BaseBehavior` \ `BaseScriptableObject` type, then you are most likely missing the *FullInspector2_Generated* folder. Full Inspector will automatically create it, but there are some scenarios where that's not possible. Here are some solutions for those scenarios:
 
 #### Download Premade Generated Folder
 
 - Download one of the following generated folders for your selected serializer
-    - [BinaryFormatter](assets/FullInspector2_Generated-BinaryFormatter.unitypackage)
     - [FullSerializer](assets/FullInspector2_Generated-FullSerializer.unitypackage)
     - [Json.NET](assets/FullInspector2_Generated-JsonNet.unitypackage)
     - [protobuf-net](assets/FullInspector2_Generated-protobuf-net.unitypackage)
+    - [BinaryFormatter](assets/FullInspector2_Generated-BinaryFormatter.unitypackage)
 - Import the downloaded *unitypackage* file into your project.
 
 This will only work if you have not removed any of the serializers from a default installation. If you have, then you will have to hand-modify `FullInspector2_Generated/fiLoadedSerializers.cs` or use one of the following two methods.
