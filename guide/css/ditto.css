@@ -317,9 +317,7 @@ input[type=search] {
     text-align: left;
 }
 
-.search_results{
-
-
+.search_results {
 }
 
 .fragments {
@@ -360,7 +358,6 @@ input[type=search] {
     margin-top: 0;
     margin-bottom: 0;
 }
-
 
 #hide {
     display: none;
