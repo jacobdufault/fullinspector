@@ -139,7 +139,12 @@ function build_result_matches_html(matches) {
       if (destination[0] == '/') destination = destination.slice(1);
       destination = '#' + destination;
 
-      html += "<a href='" + destination + "'>" + url + "</a>";
+      var display_name = trim_start_with_end(file, toRemove);
+      if (display_name.startsWith("/docs/"))
+        display_name = display_name.substr("/docs/".length);
+      display_name = display_name.replace(/_/g, " ");
+
+      html += "<a href='" + destination + "'>" + display_name + "</a>";
 
       var match = build_text_matches_html(matches[i].text_matches);
       html += match;
