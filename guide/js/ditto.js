@@ -157,19 +157,6 @@ function build_result_matches_html(matches) {
   return html;
 }
 
-function display_search_results(data) {
-  var results_html = "<h1>Search Results</h1>";
-
-  if (data.items.length) {
-    hide_error();
-    results_html += build_result_matches_html(data.items);
-  } else {
-    show_error("Oops! No matches found");
-  }
-
-  $(ditto.content_id).html(results_html);
-}
-
 // Example input/output
 //  trim_start_with_end("aabccd", "foo/aab") -> "ccd"
 function trim_start_with_end(initial, ending) {
@@ -198,7 +185,16 @@ function github_search(query) {
   var accept_header = "application/vnd.github.v3.text-match+json";
 
   $.ajax(url, { headers: { Accept: accept_header } }).done(function (data) {
-    display_search_results(data);
+    var results_html = "<h1>Search Results</h1>";
+
+    if (data.items.length) {
+      hide_error();
+      results_html += build_result_matches_html(data.items);
+    } else {
+      show_error("Oops! No matches found");
+    }
+
+    $(ditto.content_id).html(results_html);
   });
 }
 
@@ -307,20 +303,24 @@ function hide_error() {
   $(ditto.error_id).hide();
 }
 
-function show_loading() {
-  $(ditto.loading_id).show();
-  $(ditto.content_id).html("");  // clear content
+function set_loading_visible(visible) {
+  // show
+  if (visible) {
+    $(ditto.loading_id).show();
+    $(ditto.content_id).html("");  // clear content
 
-  // infinite loop until clearInterval() is called on loading
-  ditto.loading = setInterval(function () {
-    $(ditto.loading_id).fadeIn(1000).fadeOut(1000);
-  }, 2000);
-}
+    // infinite loop until clearInterval() is called on loading
+    ditto.loading = setInterval(function () {
+      $(ditto.loading_id).fadeIn(1000).fadeOut(1000);
+    }, 2000);
+  }
 
-function hide_loading() {
-  clearInterval(ditto.loading);
-  delete ditto.loading;
-  $(ditto.loading_id).hide();
+  // hide
+  else {
+    clearInterval(ditto.loading);
+    delete ditto.loading;
+    $(ditto.loading_id).hide();
+  }
 }
 
 function get_file(path, processor, failed, always) {
@@ -381,7 +381,7 @@ function page_getter() {
 
   // otherwise get the markdown and render it
   hide_error();
-  show_loading();
+  set_loading_visible(true);
 
   get_file(request_path,
     /*processor:*/ function (data) {
@@ -408,14 +408,14 @@ function page_getter() {
       }
     },
     /*error:*/ function () {
-      show_error("Opps! ... File not found!");
+      show_error("Opps! File not found!");
     },
     /*always:*/ function () {
-      hide_loading();
+      set_loading_visible(false);
     });
 
   // hide loading after five seconds... sometimes the *always* function is not invoked
-  setTimeout(hide_loading, 5000);
+  setTimeout(function() { set_loading_visible(false); }, 5000);
 }
 
 function router() {
