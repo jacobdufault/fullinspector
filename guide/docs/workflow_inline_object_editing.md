@@ -10,7 +10,7 @@ The inline object editor requires that the object type have `BehaviorEditor` - a
 
 Inline object editing just works. It's like magic:
 
-![](images/inline_object_editing.gif)
+![](docs/images/inline_object_editing.gif)
 
 Here's the `InlineObjectEditing` script:
 

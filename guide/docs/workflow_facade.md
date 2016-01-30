@@ -41,4 +41,4 @@ public class DelayedProgram : BaseBehavior {
 
 Here is an example of the UI created by the facade
 
-![](images/facade_ux.png)
+![](docs/images/facade_ux.png)

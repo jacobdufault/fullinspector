@@ -51,8 +51,8 @@ If we think about it, the only data that is really shared across the three zombi
 
 Here we create a new `ZombieStats` instance for one of our zombies. We shall share this `ZombieStats` instance across our three prefabs.
 
-![](images/zombie_create_instance.gif)
+![](docs/images/zombie_create_instance.gif)
 
 Here we demonstrate that the `ZombieStats` instance is actually being shared, and how easy it is to find the instance you want and quickly view or make changes to it.
 
-![](images/zombie_instance_selection.gif)
+![](docs/images/zombie_instance_selection.gif)

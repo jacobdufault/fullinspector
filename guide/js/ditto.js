@@ -50,7 +50,6 @@ function init_sidebar() {
     });
 }
 
-
 function init_edit_button() {
   $(ditto.edit_id).show();
   $(ditto.edit_id).on("click", function () {
@@ -110,46 +109,48 @@ function build_result_matches_html(matches) {
   html += "<ul class='" + class_name + "'>";
   for (var i = 0; i < matches.length; i++) {
     var url = matches[i].path;
-    if (url.indexOf("sidebar.md") >= 0 ||
-      url.indexOf("index.md") >= 0) {
-
-      console.log("Search - ignoring " + url);
+    if (url.indexOf("sidebar.md") >= 0 || // Ignore sidebar markdown.
+      url.indexOf("index.md") >= 0 ||     // Ignore index markdown.
+      url.indexOf("guide/docs/") < 0) {   // Only include actual doc markdown files.
+      console.log("Search - ignoring file " + url);
       continue;
     }
 
-    if (url !== ditto.sidebar_file) {
-      var hash = "#" + url.replace(".md", "");
-      var path = window.location.origin + "/" + hash;
-
-      //html += "<li class='link'>" + url + "</li>"
-
-      // url/sidebar.md
-      // url/docs/sidebar.md
-      var file = url.replace(".md", "");
-
-      // /url/
-      // /fullname/url/
-      var toRemove = location.pathname;
-
-      // /url
-      // /fullname/url
-      toRemove = toRemove.substring(0, toRemove.length - 1);
-
-      var destination = trim_start_with_end(file, toRemove);
-      if (destination[0] == '/') destination = destination.slice(1);
-      destination = '#' + destination;
-
-      var display_name = trim_start_with_end(file, toRemove);
-      if (display_name.startsWith("/docs/"))
-        display_name = display_name.substr("/docs/".length);
-      display_name = display_name.replace(/_/g, " ");
-
-      html += "<a href='" + destination + "'>" + display_name + "</a>";
-
-      var match = build_text_matches_html(matches[i].text_matches);
-      html += match;
+    if (url == ditto.sidebar_file) {
+      console.log("Skipping " + url);
+      continue;
     }
 
+    var hash = "#" + url.replace(".md", "");
+    var path = window.location.origin + "/" + hash;
+
+    //html += "<li class='link'>" + url + "</li>"
+
+    // url/sidebar.md
+    // url/docs/sidebar.md
+    var file = url.replace(".md", "");
+
+    // /url/
+    // /fullname/url/
+    var toRemove = location.pathname;
+
+    // /url
+    // /fullname/url
+    toRemove = toRemove.substring(0, toRemove.length - 1);
+
+    var destination = trim_start_with_end(file, toRemove);
+    if (destination[0] == '/') destination = destination.slice(1);
+    destination = '#' + destination;
+
+    var display_name = trim_start_with_end(file, toRemove);
+    if (display_name.startsWith("/docs/"))
+      display_name = display_name.substr("/docs/".length);
+    display_name = display_name.replace(/_/g, " ");
+
+    html += "<a href='" + destination + "'>" + display_name + "</a>";
+
+    var match = build_text_matches_html(matches[i].text_matches);
+    html += match;
   }
   html += "</ul>";
 
@@ -297,27 +298,6 @@ function create_page_anchors() {
   }
 }
 
-function normalize_paths() {
-  // images
-  $(ditto.content_id + " img").map(function () {
-    var src = $(this).attr("src").replace("./", "");
-    if ($(this).attr("src").slice(0, 5) !== "http") {
-      var url = location.hash.replace("#", "");
-
-      // split and extract base dir
-      url = url.split("/");
-      var base_dir = url.slice(0, url.length - 1).join("/");
-
-      // normalize the path (i.e. make it absolute)
-      if (base_dir) {
-        $(this).attr("src", base_dir + "/" + src);
-      } else {
-        $(this).attr("src", src);
-      }
-    }
-  });
-}
-
 function show_error(err_msg) {
   $(ditto.error_id).html(err_msg);
   $(ditto.error_id).show();
@@ -343,25 +323,6 @@ function hide_loading() {
   $(ditto.loading_id).hide();
 }
 
-function escape_github_badges(data) {
-  $("img").map(function () {
-    var ignore_list = [
-      "travis-ci.org",
-      "coveralls.io"
-    ];
-    var src = $(this).attr("src");
-
-    var base_url = src.split("/");
-    var protocol = base_url[0];
-    var host = base_url[2];
-
-    if ($.inArray(host, ignore_list) >= 0) {
-      $(this).attr("class", "github_badges");
-    }
-  });
-  return data;
-}
-
 function get_file(path, processor, failed, always) {
   var CACHE_EXPIRATION_MINUTES = 5;
   lscache.enableWarnings(true);
@@ -381,7 +342,7 @@ function get_file(path, processor, failed, always) {
       lscache.set(path, data, CACHE_EXPIRATION_MINUTES);
       processor(data);
     }).fail(failed)
-      .always(always)
+      .always(always);
   }
 }
 
@@ -391,43 +352,48 @@ function page_getter() {
   // middle of an existing document.
   window.scrollTo(0, 0);
 
-  var path = location.hash.replace("#", "./");
-  var target = null;
+  var request_path = "";
+  var scroll_target = "";
 
-  var idx = path.indexOf("?");
-  if (idx >= 0) {
-    target = path.substring(idx + 1);
-    path = path.substring(0, idx);
+  // If we don't have a hash, then use the default page.
+  if (location.hash === "") {
+    request_path = ditto.index;
+    scroll_target = location.search.substr(1);
   }
 
-  // default page if hash is empty
-  var current_page = location.pathname.split("/").pop();
-  if (current_page === "index.html") {
-    path = location.pathname.replace("index.html", ditto.index);
-    normalize_paths();
+  // There's a hash.
+  else {
+    // Skip #
+    var query = location.hash.substr("#".length);
 
-  } else if (path === "") {
-    path = window.location + ditto.index;
-    normalize_paths();
+    // There is a ? in the query. Split it up.
+    if (query.indexOf("?") >= 0) {
+      request_path = query.substr(0, query.indexOf("?"));
+      scroll_target = query.substr(query.indexOf("?") + 1)
+    } else {
+      request_path = query;
+      scroll_target = "";
+    }
 
-  } else {
-    path = path + ".md";
+    // Add markdown extension.
+    request_path = request_path + ".md";
   }
 
   // otherwise get the markdown and render it
   hide_error();
   show_loading();
 
-  get_file(path,
+  get_file(request_path,
     /*processor:*/ function (data) {
       // compile the data
       data = marked(data);
       $(ditto.content_id).html(data);
 
-      escape_github_badges(data);
-      normalize_paths();
-      create_page_anchors();
+      // We do not create anchors on the main page. It breaks things.
+      if (request_path != ditto.index)
+        create_page_anchors();
 
+      // Highlight code.
       $('pre code').each(function (i, block) {
         if (typeof hljs !== "undefined") {
           hljs.highlightBlock(block);
@@ -435,8 +401,8 @@ function page_getter() {
       });
 
       // move to target
-      if (target) {
-        var header = find_header(target);
+      if (scroll_target) {
+        var header = find_header(scroll_target);
         if (header)
           scroll_to_header(header, /*animate:*/false);
       }

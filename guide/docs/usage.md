@@ -41,7 +41,7 @@ One potential gotcha with serialization: each `Base*` object instance has every 
 </important>
 
 <important>
-If you're modifying `Base*` type object instances that are not being inspected, then everything will work *unless* the object is a prefab. If it's a prefab, then you need to call `obj.SaveState()` after you're done editing it so that the changes will be serialized. 
+If you're modifying `Base*` type object instances that are not being inspected, then everything will work *unless* the object is a prefab. If it's a prefab, then you need to call `obj.SaveState()` after you're done editing it so that the changes will be serialized.
 <br /> <br />
 It's perfectly fine to call `obj.SaveState()` if the object is not a prefab. However, you do not need to as Full Inspector makes this call automatically for you so that you don't have to worry about it.
 </important>
@@ -80,7 +80,7 @@ public class BaseObjectDemo : MonoBehaviour {
 }
 ```
 
-![](images/baseobject_demo.png)
+![](docs/images/baseobject_demo.png)
 
 ## BaseBehavior examples with different serializers
 
@@ -97,7 +97,7 @@ public class FullDemo : BaseBehavior<FullSerializerSerializer> {
 }
 ```
 
-![](images/usage_fullserializer.png)
+![](docs/images/usage_fullserializer.png)
 
 Here’s an example of how to use Full Inspector with Json.NET:
 
@@ -117,7 +117,7 @@ public class JsonNetStructDemoBehavior :
 }
 ```
 
-![](images/usage_jsonnet.png)
+![](docs/images/usage_jsonnet.png)
 
 If you like annotations, you could have optionally written Struct as
 
@@ -162,7 +162,7 @@ public class InterfaceDemoBehavior :
 }
 ```
 
-![](images/usage_protobufnet.png)
+![](docs/images/usage_protobufnet.png)
 
 <important>
 There is experimental support for protobuf-net on AOT platforms such as iOS. Please use “Window/Full Inspector/Developer/Create protobuf-net precompiled serializer” before deploying to those targets.
@@ -191,4 +191,4 @@ public class BinaryFormatterStructDemoBehavior :
 }
 ```
 
-![](images/usage_binaryformatter.png)
+![](docs/images/usage_binaryformatter.png)

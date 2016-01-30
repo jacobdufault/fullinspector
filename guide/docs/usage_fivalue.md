@@ -28,4 +28,4 @@ public class fiValueDemo : MonoBehaviour {
 
 Here's how that code shows up in the inspector:
 
-![](images/fivalue_dictionary.png)
+![](docs/images/fivalue_dictionary.png)

@@ -10,10 +10,10 @@ Full Inspector has one of the most powerful object backup systems around. It all
 
 Want to see it in action? Check out the clip below:
 
-![](images/object_backup_demo.gif)
+![](docs/images/object_backup_demo.gif)
 
 ## Backup Window
 
 You can also use the object backup window to manage all of your backups.
 
-![](images/object_backup_window.png)
+![](docs/images/object_backup_window.png)

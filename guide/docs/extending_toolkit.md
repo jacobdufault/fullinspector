@@ -19,7 +19,7 @@ public class Minimal : MonoBehaviour, tkCustomEditor {
 }
 ```
 
-![](images/tk_minimal.png)
+![](docs/images/tk_minimal.png)
 
 Notice the `using tk = FullInspector.tk<Minimal>` statement. This line greatly reduces boilerplate - if we did not have this using statement, then
 
@@ -93,10 +93,10 @@ We have a few requirements for the inspector we want to display:
 - Show the runtime data to the user via the inspector
 
 Here is the inspector we will write while we *are not* in play-mode.
-![](images/tk_helloworld_editor.png)
+![](docs/images/tk_helloworld_editor.png)
 
 and here it is while we *are* in play-mode.
-![](images/tk_helloworld_play.png)
+![](docs/images/tk_helloworld_play.png)
 
 Luckily, with the toolkit this complex inspector is extremely easy to write.
 
@@ -129,17 +129,17 @@ public class HelloWorld : MonoBehaviour, tkCustomEditor {
                     new tk.VerticalGroup {
                         new tk.PropertyEditor("numberOfTiles"),
                         new tk.Slider(
-                            new fiGUIContent("Removal Percentage"), 
+                            new fiGUIContent("Removal Percentage"),
                             /*min*/0, /*max*/1,
                             (o,c) => o.removalPercentage,
                             (o,c,v) => o.removalPercentage = v)
                     }) {
-                        // disable configuration data in play-mode 
+                        // disable configuration data in play-mode
                         Style = new tk.ReadOnlyIf(o => Application.isPlaying)
                     },
 
                 // play-mode data
-                new tk.ShowIf(o => Application.isPlaying, 
+                new tk.ShowIf(o => Application.isPlaying,
                     new tk.Foldout("Runtime Data",
                         new tk.VerticalGroup {
                             tk.PropertyEditor.Create("Total Removed",
@@ -170,12 +170,12 @@ new tk.Foldout("Configuration",
     new tk.VerticalGroup {
         new tk.PropertyEditor("numberOfTiles"),
         new tk.Slider(
-            new fiGUIContent("Removal Percentage"), 
+            new fiGUIContent("Removal Percentage"),
             /*min*/0, /*max*/1,
             (o,c) => o.removalPercentage,
             (o,c,v) => o.removalPercentage = v)
     }) {
-        // disable configuration data in play-mode 
+        // disable configuration data in play-mode
         Style = new tk.ReadOnlyIf(o => Application.isPlaying)
     },
 ```
@@ -184,7 +184,7 @@ We have a foldout for all of the configuration data. The foldout takes a subcont
 
 ```c#
 new tk.Slider(
-    new fiGUIContent("Removal Percentage"), 
+    new fiGUIContent("Removal Percentage"),
     /*min*/0, /*max*/1,
     (o,c) => o.removalPercentage,
     (o,c,v) => o.removalPercentage = v)
@@ -198,7 +198,7 @@ We also have this strange `Style` parameter which is applied to the foldout, ie,
 
 ```c#
 new tk.Foldout("Configuration", /* ... */) {
-    // disable configuration data in play-mode 
+    // disable configuration data in play-mode
     Style = new tk.ReadOnlyIf(o => Application.isPlaying)
 },
 ```
@@ -209,7 +209,7 @@ Let's discuss the second layout control now.
 
 ```c#
 // play-mode data
-new tk.ShowIf(o => Application.isPlaying, 
+new tk.ShowIf(o => Application.isPlaying,
     new tk.Foldout("Runtime Data",
         new tk.VerticalGroup {
             tk.PropertyEditor.Create("Total Removed",

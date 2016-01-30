@@ -8,7 +8,7 @@ This feature can be a life-saver when trying to view the current value of a stat
 
 You can open the static inspector with `Alt-I` or `Window\Full Inspector\Static Inspector`.
 
-## Demo 
+## Demo
 
 ```c#
 using UnityEngine;
@@ -20,4 +20,4 @@ public class StaticContainer {
 }
 ```
 
-![](images/static_inspector_2.gif)
+![](docs/images/static_inspector_2.gif)

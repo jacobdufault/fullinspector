@@ -22,7 +22,7 @@ public class MyBehavior : MonoBehaviour {
 }
 ```
 
-![](images/fiinspectoronly_monobehaviour_before.png)
+![](docs/images/fiinspectoronly_monobehaviour_before.png)
 
 We can activate *only* the inspector for `MyBehavior` by adding a `[fiInspectorOnly]` annotation, ie,
 
@@ -37,7 +37,7 @@ public class MyBehavior : MonoBehaviour {
 }
 ```
 
-![](images/fiinspectoronly_monobehaviour_after.png)
+![](docs/images/fiinspectoronly_monobehaviour_after.png)
 
 ## Regular Objects
 
@@ -62,7 +62,7 @@ public class MyBehavior : MonoBehaviour {
 }
 ```
 
-![](images/fiinspectoronly_object.png)
+![](docs/images/fiinspectoronly_object.png)
 
 ## Serialized Fields
 
