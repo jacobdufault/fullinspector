@@ -23819,7 +23819,7 @@ module.exports = Array.isArray || function (arr) {
     </style>
 
 
-    <iron-ajax id="xhr" url="http://fullinspector-api.azurewebsites.net/fullinspector/downloads?invoice_id=[[invoiceId]]" handleas="json"></iron-ajax>
+    <iron-ajax id="xhr" url="//fullinspector-api.azurewebsites.net/fullinspector/downloads?invoice_id=[[invoiceId]]" handleas="json"></iron-ajax>
 
     <paper-material elevation="1" style="height: 260px">
       <div class="headline">
@@ -23845,7 +23845,7 @@ module.exports = Array.isArray || function (arr) {
       <iron-list id="downloadsList" style="height: 300px" as="blob_name">
         <template>
           <div>
-            <p><a href="http://fullinspector-api.azurewebsites.net/fullinspector/download?invoice_id=[[invoiceId]]&amp;blob_name=[[encode(blob_name)]]" download="">[[blob_name]]</a></p>
+            <p><a href="//fullinspector-api.azurewebsites.net/fullinspector/download?invoice_id=[[invoiceId]]&amp;blob_name=[[encode(blob_name)]]" download="">[[blob_name]]</a></p>
           </div>
         </template>
       </iron-list>

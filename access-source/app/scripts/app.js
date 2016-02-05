@@ -39,27 +39,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // See https://github.com/Polymer/polymer/issues/1381
   window.addEventListener('WebComponentsReady', function() {
     // imports are loaded and elements have been registered
-
-    // Scroll to help section when help button is clicked.
-    document.getElementById('helpButton').onclick = function() {
-      page.show('/#help');
-    };
-
-    var buyButton = document.getElementById('buyButton');
-    buyButton.onclick = function() {
-      window.location.href = 'https://www.assetstore.unity3d.com/en/#!/content/14913';
-    };
-
-    document.getElementById('docsButton').onclick = function() {
-      //window.location.href = app.baseUrl + 'docs';
-      //page.show('/docs');
-      window.location.href = 'http://jacobdufault.github.io/fullinspector/guide/';
-    };
-
-    document.getElementById('accessButton').onclick = function() {
-      page.show('/access');
-      //window.location.href = app.baseUrl + 'access';
-    };
   });
 
   // Main area's paper-scroll-header-panel custom condensing transformation of
