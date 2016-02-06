@@ -2,9 +2,13 @@
 
 The toolkit is designed to make writing entirely custom editors extremely easy. It allows for quick, seamless editor customization to the most powerful degree - with far more flexibility than attribute based customization solutions. You write custom editors directly inside of the object that the editor applies - no more creating editor scripts.
 
+<note>
+The toolkit feels different from a writing a normal Unity editor script. It might take some time to get used to it.
+</note>
+
 ## Example: A Minimal Editor
 
-Here is a minimal example of how to use the toolkit with any type that derives from `MonoBehaviour` or `ScriptableObject` (including `BaseBehavior` and `BaseScriptableObject`).
+Here is a minimal example of how to use the toolkit with any type deriving from `UnityEngine.Object`. You just need to derive from `tkCustomEditor`.
 
 ```c#
 using FullInspector;
@@ -21,44 +25,69 @@ public class Minimal : MonoBehaviour, tkCustomEditor {
 
 ![](docs/images/tk_minimal.png)
 
-Notice the `using tk = FullInspector.tk<Minimal>` statement. This line greatly reduces boilerplate - if we did not have this using statement, then
-
-```c#
-new tk.Label("Hello World from the toolkit!"));
-```
-
-would expand to
-
-```c#
-new tk<Minimal, tkEmptyContext>.Label("Hello World from the toolkit!"));
-```
-
-If you're writing a complex editor, this simplification to only `tk` significantly enhances readability.
-
-### Outside of MonoBehaviour
-
-You can also use the toolkit on non-MonoBehaviour types via [fiInspectorOnly](#docs/usage_fiinspectoronly). However, this is currently more experimental and the APIs may change in future releases so that, ie, labels can be displayed.
+We can use the toolkit on regular objects too. Make sure to derive from either `BaseObject` or `fiInspectorOnly` to enable Full Inspector, then additionally derive and implement `tkCustomEditor`. For example,
 
 ```c#
 using System;
 using FullInspector;
-using UnityEngine;
 using tk = FullInspector.tk<RegularObject>;
 
 [Serializable]
 public class RegularObject : fiInspectorOnly, tkCustomEditor {
     tkControlEditor tkCustomEditor.GetEditor() {
         return new tkControlEditor(
-            new tk.Label("Hello World from the toolkit!"));
+            new tk.Label((_, context) => context.Label));
     }
-}
-
-public class Minimal : MonoBehaviour {
-    public RegularObject obj;
 }
 ```
 
-## Example: Runtime Data
+
+<important>
+Notice the `using tk = FullInspector.tk<Minimal>` statement. This line greatly reduces boilerplate - if we did not have this using statement, then any statement with `tk` would expand into either `tk<Minimal>` or `tk<Minimal, tkEmptyContext>`. This using statement *signicantly* enhances readability.
+</important>
+
+## Example: Coloring a Button
+
+We want to display a button in the editor, but we want to color it differently depending on the state of the object.
+
+If `Color Button` is not checked, then we will not color the button.
+![](docs/images/tk_color_button_normal.png)
+
+But if it is checked, we want to make the button red.
+
+![](docs/images/tk_color_button_colored.png)
+
+How do we do this? It's pretty simple.
+
+```c#
+using FullInspector;
+using UnityEngine;
+using tk = FullInspector.tk<ChangeColor>;
+
+public class ChangeColor : MonoBehaviour, tkCustomEditor {
+    public bool colorButton;
+
+    [InspectorName("Hello")]
+    public void onClicked() {
+        Debug.Log("Clicked");
+    }
+
+    tkControlEditor tkCustomEditor.GetEditor() {
+        return new tkControlEditor(new tk.VerticalGroup {
+            new tk.PropertyEditor("colorButton"),
+            new tk.Button("onClicked") {
+                Style = new tk.ColorIf(obj => obj.colorButton, tk.Val(Color.red))
+            }
+        });
+    }
+}
+```
+
+<note>
+We can still use attributes with the toolkit - look at how we used `InspectorName` in this example.
+</note>
+
+## Advanced Example: Runtime Data
 
 We want to write an editor for this behavior:
 
@@ -152,15 +181,13 @@ public class HelloWorld : MonoBehaviour, tkCustomEditor {
 }
 ```
 
-First, we have to write `using tk = FullInspector.tk<HelloWorld, FullInspector.tkEmptyContext>` to reduce boilerplate. We could have simplified this statement to `using tk = FullInspector.tk<HelloWorld>` which will use  `tkEmptyContext` for the second generic parameter.
-
 One of the layout items is the following:
 
 ```c#
 new tk.VerticalGroup { /* ... */ }
 ```
 
-This means that every `tkControl` inside of the group will at the same x-coordinate but increasing y-coordinates - akin to `GUILayout.BeginVertical`. There is a simpler `tk.HorizontalGroup` which mirrors `GUILayout.BeginHorizontal`.
+This means that every `tkControl` inside of the group will be at the same x-coordinate but increasing y-coordinates - akin to `GUILayout.BeginVertical`. There is also `tk.HorizontalGroup` which mirrors `GUILayout.BeginHorizontal`.
 
 After that, we have this block:
 
