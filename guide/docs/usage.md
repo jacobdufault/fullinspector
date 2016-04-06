@@ -61,6 +61,8 @@ If you need performance, you can easily switch to protobuf-net for one specific 
 
 <note>`BaseObject` will use Full Serializer for serialization because it relies on Unity's serialization callbacks. These callbacks are sometimes executed off of the main thread which will cause every other serializer to throw exceptions when they invoke Unity APIs.</note>
 
+<important>Make sure that the `BaseObject` type is annotated with `[Serializable]`, otherwise nothing will be saved when recompiling or entering play mode. `BaseObject` relies on Unity serialization callbacks which will not get invoked if `[Serializable]` is not present.</important>
+
 Here's how you use `BaseObject`:
 
 ```c#
