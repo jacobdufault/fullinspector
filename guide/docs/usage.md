@@ -41,9 +41,9 @@ One potential gotcha with serialization: each `Base*` object instance has every 
 </important>
 
 <important>
-If you're modifying `Base*` type object instances that are not being inspected, then everything will work *unless* the object is a prefab. If it's a prefab, then you need to call `obj.SaveState()` after you're done editing it so that the changes will be serialized.
+If you're modifying a `BaseBehavior` or `BaseScriptableObject` prefab instance from a script, and the prefab instance is not being shown in the inspector, then you will need to call the `SaveState` method. Full Inspector is unable to do dirty-tracking unless the object is being actively inspected.
 <br /> <br />
-It's perfectly fine to call `obj.SaveState()` if the object is not a prefab. However, you do not need to as Full Inspector makes this call automatically for you so that you don't have to worry about it.
+It's perfectly fine to call `obj.SaveState()` whenever you want to make sure the object state is serialized. Outside of the unusual scenario described above, Full Inspector automatically makes this call for you.
 </important>
 
 When you first install Full Inspector you'll see the [serializer manager](#docs/usage_serializer_manager) popup which will let you pick the default serializer. Full Serializer is recommended for default usage; it works well without annotations and supports every major Unity platform.
