@@ -1,0 +1,423 @@
+For v2.6.4
+
+New:
+- [InspectorShowIf] and [InspectorHideIf] now support multiple fields/properties.
+- Decreased initialization time with some reflection optimizations.
+- Added Lines helper to [InspectorTextArea].
+- Experimental multi-object editing. There are major known issues.
+- Added fiSettings.EnableGlobalOrdering to make [InspectorOrder] global.
+- [InspectorTooltip] can now be added to a class. The tooltip will be shown on the "Name" property that every inspector starts with.
+
+Changes:
+- Don't auto-serialize prefabs while playing.
+- Better logic to destroy old fiBackupSceneStorage instances that have been corrupted.
+- The serializer manager will no longer automatically show itself.
+- fiInspectorOnly for ScriptableObjects is now a fallback editor.
+- Fixed issue where adding more than 20 items to a dictionary caused an exception.
+
+Fixes:
+- Fixed property drawer integration reallocating drawer instance.
+- Fixed metadata not properly getting updated for collection property editors.
+- Fixed Full Serializer exception being thrown for Window Store non-il2cpp builds.
+- Fixed existing prefab instance members being overriden when changing a MonoBehaviour type to a BaseBehavior type.
+- Fixed occasional null deref from OnSceneGUI.
+
+
+For v2.6.3
+
+New:
+- InspectorCategory now works at a class level. You can use this behavior to set the default category for items without an [InspectorCategory] annotation.
+- Added new option, fiSettings.DisplaySingleCategory, which hides the category UI if there is only one category (off by default).
+- Added new option to disable internal logging.
+- [internal]: Reworked serialization to support new Unity 5.4 restrictions. Everything should continue to "just work".
+- Object reference fields now display the type of component they are referencing.
+
+Changes:
+- The char editor now mirrors Unity's default behavior.
+- Adding a derived-type which extends Component no longer implicity adds an instance of that Component to the GameObject.
+- [InspectorSkipInheritance] will now also skip inheritance for null objects.
+- Added support for Stack<T>.
+- Fix compilation warnings introduced in new versions of Unity.
+- Fixed issue where ISerializationCallbacks.OnAfterDeserialized would not always be called.
+- Fixed Windows platform compilations (8.1, Phone 8.1, Universal 8.1, Universal 10).
+- Updated DLL reflection blacklist. This should make Full Inspector load a bit faster.
+- The script reference is now disabled, mirroring a Unity inspector change.
+
+Fixes:
+- Fixed regression where [InspectorDropnameName] stopped working.
+- Fixed bad warning message when editing Gradient types.
+- Fixed issue where the first edit to a BaseBehavior would not be saved.
+- Fixed issue where metadata would not be properly migrated (in say, a dictionary).
+- You can no longer drag scene references to persistent (prefab, etc) assets.
+- Reverted undo optimization that would sometimes break undo.
+- Various SharedInstance fixes.
+- Added a check that ensures that destroyed objects will not be serialized.
+- Fixed issue where an object without changes would still get written to disk, causing issues with some SCM solutions.
+- Fixed rare issue when reordering items in a list where the structural metadata would not get properly reassociated.
+- UnityObject picker now always allows scene objects.
+- Fixed Unity 5.3 compilation error for BaseNetworkBehavior. BaseNetworkBehavior now only supports FullSerializer.
+- Fixed EditorSceneManager API call.
+- Better error message when adding null key to dictionary.
+- Entirely rewrote LayerMask property editor; this fixes code modifications to LayerMask fields not being applied.
+- Fix warning message about a missing reference (introduced by a Unity regression).
+
+
+For v2.6.2
+
+New:
+- Added IsCollapsedByDefault to InspectorCollectionShowItemDropdownAttribute.
+- Added InspectorKeyWidthAttribute, which (for example), allows you to modify the width of the keys inside of a dictionary.
+- Added Insert button to [InspectorDatabaseEditor] (thanks to psxcode!)
+- Added drag&drop support for UnityObject derive types on reorderable lists.
+- Added BaseNetworkBehavior (you will have to regenerate FullInspector2_Generated to use the non-generic version).
+- Added OnEditorActivate and OnEditorDeactivate callbacks to BehaviorEditors.
+- Added [InspectorHideIf], which is the opposite of [InspectorShowIf].
+
+Changes:
+- IPropertyEditor type cast failures are easier to read.
+- KeyedCollection{T} is now properly supported.
+- Added a warning message when a PropertyDrawer integration fails because the type is not marked [Serializable].
+
+Fixes:
+- Fixed visual glitch when inserting an element above/below another element in an array or a list.
+- Fixed prefab utility in certain scenarios.
+- Fixed IsUnity4 returning true for Unity 5 (fixes multithreaded serialization).
+- Fixed large performance regression in editors (only for Unity 5).
+- Fixed EditorWindow.title deprecation warning in Unity 5.
+- Record undo states less often, which leads to better in-editor perf.
+- Fixed nested BaseObject instances not showing up in the inspector.
+- Fixed using an array of BaseObject instances.
+- Cleaned up import warnings from Visual Studio Code.
+- Fixed WinRT builds.
+- Fixed protobuf serializer.
+- Fixed type property editor in Unity 5.
+
+
+For v2.6.1 (4/13/2015)
+
+New:
+- Added [InspectorCollapsedFoldout] to collapse a field or property by default in the inspector.
+- Added [InspectorCollectionItemAttributes] and [InspectorCollectionAddItemAttributes] which allow you to specify which attributes to use when rendering collection items.
+- Added fiSettings.PrettyPrintSerializedJson to serialize pretty JSON, which may assist teams when merging assets that contain FI serialized data.
+- You can now change the default comment type for [InspectorComment] via fiSettings.DefaultCommentType.
+- Added fiSettings.ForceDisplayInlineObjectEditor which will force the inline object editor to always appear.
+- Editor serialization logic has been completely rewritten. It should now just work in every scenario.
+
+Changes:
+- Full Inspector windows will now be centered on the screen.
+- The JSON editor is now disabled by default (as it makes the default TextAsset editor unusable).
+- Labels are now aligned in the inspector.
+- Optimized initialization time in deployed players.
+- [InspectorShowIf] now works on methods.
+- Many Full Serializer updates.
+
+Fixes:
+- Fixed rendering glitch with attribute editors and foldouts being rendered at the same time.
+- Fixed scriptable object manager when there are no derived ScriptableObject types.
+- Fixed [fiInspectorOnly] and tkCustomEditor for ScriptableObjects.
+- Fixed [ShowInInspector] not working when [NotSerialized] was also present.
+- The JSON inspector will only activate when the JSON is successfully parsed.
+- Fixes for Unity 4.3 build
+- Fixed issue on Windows editor where large editors that scrolled with lists would act strangely
+- Various other fixes
+
+
+For v2.6 (3/5/2015)
+
+New:
+- Added `BaseObject`, which is like `BaseBehavior` and `BaseScriptableObject` except it derives from `System.Object` and can be used in MonoBehaviours or anywhere else.
+- Added `tkCustomEditor` interface for new, easy, but extremely powerful way to customize your inspectors. You don't have to create an editor script!
+- Added `[fiInspectorOnly]` which will activate Full Inspector for any class/struct (without serialization support).
+- Dropdowns are now persistent!
+- [InspectorTooltip] can now be used with methods annotated with [InspectorButton]
+- Added DefaultBehaviorEditor{TBehavior}, which easily allows you to create custom behavior editors with a custom editor below/above the default editor.
+- [InspectorRange] now supports a step value with [InspectorRange(Step=3)]
+- You can now fetch the protobuf-net schema used for serialization with `ProtoBufNetSerializer.GetSchema` [from Jacob Liechty].
+- Added `fiSettings.SerializeAutoProperties` which will disable serializing and inspecting auto-properties by default [from Jacob Liechty].
+- Added a `WeakReference` property editor (and serialization with Full Serializer)
+- [NotSerialize], [fsIgnore], etc now will cause members to be hidden in the inspector on non-UnityEngine.Object types
+- Added a viewer for JSON files - simply click a json file in your assets directory and the inspector will display a nice UI for it (read-only).
+- Static fields/properties can now be displayed in the inspector with [ShowInInspector]. Note: static fields will not be serialized - as a result, [SerializeField], [fsProperty], etc are prevented from acting like [ShowInInspector] when the member is static.
+- Full Serializer now supports partial deserialization
+- Various performance improvements for Full Serializer
+- Readded Unity 4.3 support so that console exports (ie, PS4) work
+- Added the scriptable object manager window (Alt-O or "Window/Full Inspector/Scriptable Object Manager"). This allows you to easily locate and create scriptable objects of any type.
+- Added support for `UnityEvent{...}`.
+- PropertyDrawers will automatically be used for types which have them.
+- Add support for [FormerlySerializedAs] on BaseBehavior/BaseScriptableObject types.
+- Better support for dropdown hierarchy mode - dropdown arrows align more nicely now.
+- Added [InspectorCategory] which lets you create categories in the inspector.
+
+Changes:
+- [InspectorRange] will now entirely replace the existing editor.
+- Serialized data can now be viewed by pressing `Alt-D`.
+- T can now be generic in SharedInstance{T} [from Jacob Liechty].
+- OnValidate is now a virtual method; please call base.OnValidate() if you override it (fixes issues where the data inside of OnValidate would not be deserialized)
+- Renamed [InspectorNotDefaultConstructed] to [InspectorNullable].
+- Fixed rect property editor w/o label
+
+Fixes:
+- Fixed paged collection editor not showing the last element.
+- Serialized content will only be written to the behavior if it is actually different. This improves compatibility with certain source control systems (preventing a checkout of a large number of file)
+- Use CSharpName for a type when displayed in the abstract type dropdown and an instance cannot be constructed.
+- Reworked CSharpName logic to better handle nested types.
+- Various internal changes to support third-party extensions
+- Fixed the Apply button in prefab instances.
+- Fixed prefab instances values marking themselves as overrides after a script reload if the prefab itself was not loaded into memory.
+- Added error recovery when deserializing the wrong object type.
+- Call OnValidate in play-mode when the inspector has been modified by the user.
+- Corrected generated script when FI2 root directory changes
+- Interfaces/abstract types which derive from IList{T} are now supported in the inspector
+
+
+For v2.5 (1/6/2015, commit hash 933817e02bebe11ed023f5988a1cbcb6c91ae70d)
+
+** Important **
+- Only auto-properties are displayed and serialized by default now
+
+New:
+- Added fiValue{T}, which allows perfect Full Inspector integration into any project *without* deriving from BaseBehavior.
+- Added serializer migration utility which assists with changing serialization data between serializers.
+- Animation support can now be toggled in fiSettings (with EnableAnimation).
+- Full Inspector now tracks versions and will prompt you to do a clean import from 2.4.
+- Added an "About Window" with quick links to some common Full Inspector utilities.
+- Added [InspectorShowIf], which allows for conditional field/property/button display in the inspector.
+- Added [InspectorDropdownName], which allows you to customize the name a type appears as in the abstract type dropdown selector.
+- Added [InspectorCollectionRotorzFlags], which allows complete customization of the flags that are sent to Rotorz for list editing.
+- Added [InspectorNotDefaultConstructed], which prevents default construction of the given field/property.
+- Support treating methods with all default parameters as no parameter methods.
+- Collections are now paged when they have more than a certain number of elements. This can be customized with the [InspectorCollectionPager] attribute.
+- You can now easily customize settings by writing a class that extends from `fiSettingsProcessor`.
+
+Changes:
+- Default label width now matches Unity.
+- Edit/GetHeight are now statically exposed on DefaultBehaviorEditor.
+- Reset is no longer automatically invoked when adding a behavior to an object.
+- Add support for runtime types in SerializationHelpers.
+- Full Inspector generated code will now be placed in a directory named `fiSettings.RootDirectory + "_Generated"`.
+- [Limits] has been promoted to the core namespace as [InspectorRange]
+- SharedInstance can now take an extra generic argument for the serializer to use.
+- [InspectorDatabaseEditor] now works with arrays.
+- Exceptions are now logged using Debug.LogException, which makes it much easier to navigate to the exception source.
+- Added exception logging for BehaviorEditor and PropertyEditor constructors.
+- Removed all default parameters so that MonoDevelop correctly builds Full Inspector
+- Made serializer detection significantly more robust
+- You no longer need to mark modified objects with SetDirty; they will be automatically serialized (assuming they were initially serialized).
+- The static inspector can now be opened with `Alt-I`.
+
+Fixes:
+- Fixed internal exception when a property accessor with a struct return type threw an exception.
+- Correctly set GUI.changed when creating new object instances.
+- Fixed return type for OnWillDeleteAsset callback.
+- Fixed a Unity deserialization race when entering play mode in the editor.
+- Fixed Rotorz rendering when Unity is in a Linear colorspace
+- Fixed serialization on BaseBehavior for unsigned types and signed shorts.
+- Fixed saving in Unity 4.6.1+ versions.
+- Fixed metadata leak causing an excessive number of metadata objects to exist in a long-running scene (though they are cleaned up after entering/exiting Unity)
+- Fixed fiRuntimeReflectionUtility.GetRuntimeAssemblies() in WebPlayer
+
+
+For v2.4
+
+New:
+- Full Inspector now includes an object backup system for the Unity Editor. Just right-click a behavior and click "Backup". It even works across play mode! Each scene has it's own set of backup data.
+- The ObjectPropertyEditor now has a toggle that allows for an inline view of the selected object.
+- Introduce "BehaviorEditor" as a mirror to PropertyEditor system. BehaviorEditors are used for creating editors for types which derive from BaseBehavior or from BaseScriptableObject. This fixes a critical bug where object references were not displayed properly when BaseBehavior/BaseScriptableObject types had a custom property editor.
+- Introduce LayoutToolkit, which makes it easy to create declarative UI's using Unity's immediate mode GUI. It's an allocation free alternative to GUILayout that also works in GUILayout restricted areas.
+- Introduce serialize selector, which makes it easy to select which serializer you want to use as the default.
+- Add support for Full Serializer, an automated serializer that just works with the same serialization interface that Unity uses -- this is a free serializer that works on all of the Unity export platforms.
+- You can now use [JsonProperty], [JsonIgnore], [ProtoMember], etc, on BaseBehavior/ScriptableObject members!
+- Foldouts are now animated
+- Introdue the Facade{T}, which allows for editing, say, a BaseBehavior type in the inspector *without* creating an instance of it.
+- A new metadata engine (fiGraphMetadata) has been introduced. It stores metadata based on the structure of the object/property editor graph. The IPropertyEditor API has changed slightly to accommodate it. Additionally, ObjectMetadata has been renamed to fiGlobalMetadata.
+- Added serialization callbacks on BaseBehavior/BaseScriptableObject types with the ISerializationCallbacks interface.
+- protobuf-net serializer can now ignore selected assemblies. See TypeModelCreator.AssemblyIgnoreList.
+- Gradients are now fully supported.
+- Added a NullSerializer that bypasses all serialization. This is useful if you wish to just use Unity serialization but want to utilize the Full Inspector inspector interface.
+- Added [InspectorHeader], an analog to Unity's new [Header] attribute
+- Added [InspectorCollectionShowItemDropdown] to show dropdown arrows on collection items.
+- Added [InspectorTextArea], to show a text-area instead of a text-field for string types.
+- Added [InspectorName] to set the name to use for a field, property, or method in the inspector.
+- Read-only properties will now be displayed by default.
+- Serialized fields are now displayed by default. This means that for private fields, adding [SerializeField] is enough -- no need to also add [ShowInInspector].
+- Introduce SharedInstance<T>, which makes it easy to share object instances across serialization contexts.
+- Introduce TypeSpecifier<TBaseType>, which makes using Types in the Inspector even easier! Only types that are assignable to TBaseType will be pickable in the inspector.
+
+Fixes:
+- Fixed inspector rendering issues for object graphs with cycles.
+- Fixed inspector rendering issues for recursive type definitions.
+- Fix LayerMask editor when the layer is set to a negative value.
+- Read-only properties will now be displayed with a disabled GUI.
+- Fixed issue where DateTime editor would change the value in the DateTime.
+- Fix private fields on a BaseBehavior/BaseScriptableObject with a [SerializedField] annotation not being serialized.
+- Foldouts are now displayed whenever a sub-item is above a certain height, regardless of the type being edited.
+- If a foldout was displayed for an item before and the item shrinks in height, the foldout will now continue to be displayed.
+- Selected a type that derives from BaseBehavior in the abstract type drop-down will no longer emit a warning about component construction.
+- OnValidate will now be called whenever the inspector has changed.
+- Dropdown states and the like will now be saved across play-mode.
+- Fix protobuf-net serialization issue where only the first UnityObject reference was restored.
+- The Rect property editor will now display less information.
+- Fix issue where overriding a property would display it in the inspector twice.
+- Fix deserialization issue with nullable Vector types in Json.NET
+- Moving the base FI2 directory around is now fully supported.
+
+Misc:
+- Optimization pass over the memory allocation profile for Full Inspector (approx 5x reduction, so 100kb -> 20kb).
+- Optimization pass over startup time - first inspector views should now be nearly instant.
+- Removed warnings from the static inspector.
+- Assembly filtering has been improved, hopefully leading to faster reload times.
+- Full Inspector will now only scan editor assemblies for custom property editors.
+- Abstract type selection dropdown is now sorted by name.
+- Parent members will now be displayed before derived members in the inspector.
+- Added missing DateTimeOffset editor.
+- Minor polish: variable names like "ID" will now be displayed as "ID" instead of "I D"
+- Renamed MarginAttribute to InspectorMarginAttribute
+- Renamed TooltipAttribute to InspectorTooltipAttribute
+- Renamed SingleItemListEditorAttribute to InspectorDatabaseEditorAttribute
+- FullInspectorSettings has been renamed to fiSettings and has been moved out of Core/ into the top-level Full Inspector directory.
+- Fields/properties are now lazily written. This means that property set methods will be invoked only when the value has actually changed in the case of value-types.
+- API NOTICE: GetElementHeight is now automatically cached. Calling it from an Edit function will return a cached value instead of recomputing it.
+
+
+For v2.3 (5/14/2014, commit hash 006b660f0539f495995c9c66bb6cb9d019f83eab)
+
+New:
+- Added the static inspector, which allows easy inspecting of static/global variables directly from within Unity
+- Added a generic SerializableAction and SerializableFunc as equivalents to System.Action and System.Func, except they can be serialized (but require a UnityEngine.Object function source). These are extremely powerful and support full type safety with contra/covariance.
+- Methods can now be easily displayed in the inspector using the [InspectorButton] attribute
+- Inspector attribute property editors can now explicitly state what order they should appear in via extending IInspectorAttributeOrder
+- Added [InspectorHidePrimary] property attribute that hides the primary inspector. This is extremely useful for displaying a comment inside of an inspector that is not associated with any editor.
+- Added new [InspectorDivider] attribute that draws a divider in the inspector
+- Introduced PropertyEditorChain abstraction for those writing custom property editors; see docs.
+- Add EditWithGUILayout extension method to IPropertyEditor that makes a property editor easily usable within a GUILayout section (note: this is *not* GUILayout support within property editors -- sorry!)
+- Added a property editor for System.Type
+- Added a very basic property editor for System.ICustomAttributeProvider
+- Added property editors for System.DateTime and System.TimeSpan
+- Added a new CommentType enum to the CommentAttribute, allowing an info, warning, or error image to be displayed with the comment
+- Added a custom property editor for nullable types
+
+Fixes:
+- The reflected property editor will now correctly handle cyclic object graphs
+- The reflected property editor will no longer infinitely allocate objects to an unlimited depth (allows for recursive type definitions)
+- Fix issue where Unity would draw highly indented EditorGUI methods incorrectly
+- Reflection-based allocation code will now instantiate ScriptableObjects correctly
+- Fix null dereference in object modification detector
+- Corrected issue where when disabling warnings caused the editor to incorrectly handle null inspector targets
+- Fix issue where too much data was being serialized for the base FI types
+- The inspected object's state will not be serialized during play mode
+- Fix spelling error in IAttributePropertyEditor.Attribute
+- LayerMaskEditor previously generated invalid LayerMasks
+- Fixed serialization of Color?, Vector2?, Vector3?, Vector4? in Json.NET
+- protobuf-net will now serialize default values by default (fixes nullable type serialization)
+
+Deprecations:
+- [Order] has been deprecated; use [InspectorOrder] instead
+
+Misc:
+- Performance improvements for ICollection and IDictionary property editors
+- Code reorganization and cleanup
+
+
+
+For v2.2 (4/11/2014)
+
+New:
+- Easily serialize and deserialize structs/etc to files
+- Mimick the "open script" button present on MonoBehaviors/ScriptableObjects. This can be disabled via the fiSettings.ShowOpenScriptButton setting
+- Editor support for all ICollection<T> derived types, such as HashSet<T>
+- Support new Order attribute, which allows for custom ordering of fields/properties in the inspector (even across partial types)
+- Add setting to disable warnings that Full Inspector emits
+
+Fixes:
+- Fix issue where non-prefab override properties would be shown in bold
+- Fix issue where inspected object would be deserialized during gameplay from old data
+- Inspector is now redrawn constantly while in play mode
+- Comments will now display with minimal height
+- Updated EasySave2 serializer
+- The inspector can now utilize every bit for long/ulong/decimal/double types
+- Array/List/ICollection/IDictionary editors now have a minimum height for, say, an empty class
+- ICollection and IDictionary now reset the next insertion object to the default value after an insertion
+- Fix issue where [NonSerialized] attribute would be ignored if a [SerializeField] property was also present
+
+Misc:
+- Json.NET error message has been improved
+
+
+
+
+For v2.1 (3/31/2014)
+
+New:
+- Full Inspector now supports property editors that are activated via attributes
+- Full Inspector now has undo/redo support!
+- Prefab override properties will now be displayed in bold
+- Support OnSceneGUI for IPropertyEditors or IAttributePropertyEditor types
+- A collapsed interface/abstract/inherited type will now display the current type in the foldout header
+- A collapsed array/list/dictionary will now show the number of elements in the collapsed container
+
+Samples:
+- Added two simple sample games (platformer and arena)
+
+API:
+- Default implementations are now provided for all (Attribute)PropertyEditor<TElement> methods, which simplifies implementing, for example, just an OnSceneGUI method.
+
+Fixes:
+- Vector2 and Vector3 now display properly in non-wide inspectors
+- Added a PropertyEditor and serialization support for LayerMasks
+- Fixed foldouts for interfaces
+- Fixed issue where prefab children would sometimes not properly display their serialized state
+- Fixed issue where [ShowInInspector] fields/properties could not be displayed if they were not also serialized.
+
+Misc:
+- CommentAttribute and MarginAttribute no longer have any special support within Full Inspector
+- [JsonObject(MemberSerialization.OptIn)] is no longer required for the Json.NET serializer
+- Replaced SurrogateSelector with custom implementation; SurrogateSelector could not disambiguate between two types with the same name but in different assemblies.
+- BinaryFormatter is now using a custom SerializationBinder that is more robust to type changes
+
+
+For v2.0 (3/13/2014)
+
+- Ref has been removed!
+- You no longer have to annotate your BaseBehavior derived type. In BaseBehaviors, public fields / properties are serialized by default. You can also serialize private fields by annotating them with [SerializeField]. - Fields / properties will not be serialized if they are annotated with [NonSerialized] or [NotSerialized].
+- A (beta) BinaryFormatter serializer has been added
+- An experimental EasySave2 serializer has been added
+- Full Inspector now resides inside a “FullInspector2” folder due to a directory reorganization. Please make sure to delete your “FullInspector” directory if upgrading.
+- Added a setting to disable automatic display of public properties in the inspector (fiSettings.InspectorAutomaticallyShowPublicPropertie)
+- Added a setting to automatically restore all assets on recompilation (fiSettings.ForceRestoreAllAssetsOnRecompilation)
+- Json.NET compatibility fixes for Json.NET from the Asset Store.
+- Better prefab revert support
+- (beta) protobuf-net one-click precompilation support
+- Namespace changes, most things moved into FullInspector.Internal
+- Foldouts are no longer displayed for structs – sorry! Hopefully this will get reenabled in the future, but it the current solution doesn’t support it.
+- SaveState now marks an object as dirty if running in the editor
+- The samples have been redesigned and sample scenes are now included.
+
+
+
+For v1.2.2 (2/27/2014)
+
+- Use AbstractPropertyEditor if the inspected type has any derived types
+- Support generic derived types in the AbstractPropertyEditor
+- Support object instantiation in the inspector for types without default constructors
+- Full Inspector now only shows public variables by default in the inspector. Non-public properties / fields can be shown by adding a [ShowInInspector] attribute
+- Deprecate [Hidden] in favor of [HideInInspector]
+- Json.NET modified to support compilation with UnityVS
+- Correct foldout width so that the header element is usable when foldout is active
+- The enum property editor now identifies [Flags] enums and shows a mask popup
+- Support custom editors for enum types
+- Allow inherited property editors to be overridden
+- Added button sample
+- Make it obvious in the inspector when a UnityEngine.Object is not wrapped in a Ref<>
+
+
+
+For v1.10 (2/20/2014)
+
+- Better deserialization error recovery, particularly if the variable type has changed.
+- Added support for arbitrary serialization framework support; Full Inspector now ships with serializers for protobuf-net and Json.NET.
+- ScriptableObjects are now fully supported.
+- Added implicit conversions for Ref, simplifying its usage.
+- The reflected property editor will now automatically display a fold-out for child PropertyEditors that are relatively tall.
+- Added user setting to automatically instantiate all references (even private ones) in objects when the object has no deserialization data (fiSettings.AutomaticReferenceInstantation).
+- Added user setting to disable automatic object instantiation in the inspector (fiSettings.InspectorAutomaticReferenceInstantation).
+- Added more content to the manual, added a QA section.

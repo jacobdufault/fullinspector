@@ -1,0 +1,3 @@
+[submodule "Assets/FullSerializer"]
+	path = Assets/FullSerializer
+	url = https://github.com/jacobdufault/FullSerializer
