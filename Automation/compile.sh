@@ -2,9 +2,6 @@ ROOT_DIR=$(pwd)
 mkdir "AutomationOutput"
 cd "AutomationOutput"
 
-# Make sure the compiler is installed.
-sudo apt-get install mcs-mono --fix-missing
-
 # Output DLL names.
 OUTPUT_RUNTIME_NAME=FullInspector
 OUTPUT_EDITOR_NAME=FullInspector-Editor
@@ -16,12 +13,12 @@ EDITOR_SOURCES=$(echo "$ALL_SOURCES" | grep 'Editor')
 UNITY_DLL_FOLDER="$ROOT_DIR/Automation"
 
 # Common compilation settings.
-COMPILER=mcs \
-  /lib:"$UNITY_DLL_FOLDER" \
-  /reference:UnityEngine.dll \
-  /reference:UnityEngine.Networking.dll \
-  /nowarn:1591 \
-  /target:library /debug /sdk:2
+COMPILER="mcs
+  /lib:'$UNITY_DLL_FOLDER'
+  /reference:UnityEngine.dll
+  /reference:UnityEngine.Networking.dll
+  /nowarn:1591
+  /target:library /debug /sdk:2"
 
 # Compile runtime and editor DLLs.
 $COMPILER \
