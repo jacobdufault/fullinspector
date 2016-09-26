@@ -1,0 +1,15 @@
+language: objective-c
+before_install:
+- git submodule update --init --recursive
+script:
+- ./Automation/build.sh
+deploy:
+  provider: releases
+  api_key:
+    secure: an+6enV+WSmFH3JPhUiMtmHrL3qJAFDRFsZpbDrA3p0cIy5MV+br/LCL92jLTz8I38Ns5tl5b9P/xXex3BGWi20p6C9PUv3eoStbrxDoppYlrH56rOFKEutd2tDY+f1Izc1LPayLN10g1RhULdZQXC9GPW1EwRlYC0iKJL4evgytc/uNlGqjLe7SKnMdbz8LIO1fecx/oVMRSzzpFHyfI7zDRFSEfdi8gNQOvxcGQCvsYM/0FykBZEugl8sVcOc6VJEJy7a49C7KeSUJMLNwKftdKFZje7GBFdRYngKzQY6pIWkb29B8TmopmWWS1h4TesTvpumcfJTLxtOvlkfj8gHlSc4ZxT23bsIIsy0PnPPbKzNrFEJdJWkU2QKaMxDxMh41nABfZI8f5wpxwNEWh7tpxv5GREYtXaTAB3qW+zdKMxM19HLZY3cVnlnTaD+jb8xPwrnb8ip5fdPHEvqwQnOacWvSCWRv5jN/9DHPKXzGQLtxlXoBJhbLE1pkDENgQm5to2tXB4wirnriqtdLgWu6DJ5unIJkx42Qcghvb4XT6XyyUtjLIQ78IIt7zMJGRGSN433HtQQi+oz29Jn8R5qeQP94d+hFflxzNiQHIfz5uSv+ZRIlfVCfLcs7LAfoJc9sWY6Y9VDK2Oz0xplyeXphKPFSTnhnnxDKReiDXFA=
+  file:
+  - FullInspector-Latest.zip
+  on:
+    repo: jacobdufault/fullinspector
+    tags: true
+  skip_cleanup: true
