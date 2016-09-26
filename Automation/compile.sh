@@ -33,7 +33,7 @@ $COMPILER \
 
 # Put editor files into editor folder.
 mkdir Editor
-mv "$OUTPUT_EDITOR_NAME.*" Editor
+mv "$OUTPUT_EDITOR_NAME".* Editor/
+zip -r "$ROOT_DIR/FullInspector-DLLs.zip" $(find . -type f)
 cd $ROOT_DIR
-zip --junk-paths -r "FullInspector-DLLs.zip" $(find $WORK_DIR)
 rm -rf "$WORK_DIR"
