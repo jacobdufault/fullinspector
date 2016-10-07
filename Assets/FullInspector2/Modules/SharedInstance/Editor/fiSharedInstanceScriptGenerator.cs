@@ -35,19 +35,18 @@ namespace FullInspector.Modules {
                 serializerName = serializerType.CSharpName(includeNamespace: true);
             }
 
-            Emit(fileName, className, genericType, serializerName);
+            Emit(className, genericType, serializerName);
         }
 
-        /// <param name="fileName">The name of the file to emit. This should be the normalized class name.</param>
         /// <param name="className">The name of the class in the file, ie, class {className} {}</param>
         /// <param name="genericType">The value for the generic type, ie, class foo : parent{genericType} {}</param>
         /// <param name="serializerName">The value for the serializer type, optional. It will also go in a generic type argument.</param>
-        private static void Emit(string fileName, string className, string genericType, string serializerName) {
+        private static void Emit(string className, string genericType, string serializerName) {
             // Get the file path we will generate. If there is already a file there, it is assumed that
             // we are the ones who generated it and so we don't need to do anything.
             String directory = fiUtility.CombinePaths(fiSettings.RootGeneratedDirectory, "SharedInstance");
             Directory.CreateDirectory(directory);
-            String path = fiUtility.CombinePaths(directory, fileName + ".cs");
+            String path = fiUtility.CombinePaths(directory, className + ".cs");
             if (File.Exists(path)) return;
 
             string script = "";
