@@ -45,8 +45,6 @@ namespace FullInspector.Modules {
                 public GUIStyleState active { get; set; }
                 public TextAnchor alignment { get; set; }
                 public RectOffset border { get; set; }
-                [Obsolete("warning Don't use clipOffset - put things inside BeginGroup instead. This functionality will be removed in a later version.")]
-                public Vector2 clipOffset { get; set; }
                 public TextClipping clipping { get; set; }
                 public Vector2 contentOffset { get; set; }
                 public float fixedHeight { get; set; }
