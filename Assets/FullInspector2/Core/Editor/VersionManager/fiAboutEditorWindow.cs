@@ -1,5 +1,4 @@
-﻿using FullInspector.Internal.Versioning;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 namespace FullInspector.Internal {
@@ -43,14 +42,6 @@ namespace FullInspector.Internal {
 
             GUILayout.FlexibleSpace();
             EditorGUILayout.EndHorizontal();
-
-            GUILayout.FlexibleSpace();
-
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("Full Inspector is property of Jacob Dufault");
-            GUILayout.FlexibleSpace();
-            GUILayout.Label("Current Version: " + fiVersionManager.CurrentVersion);
-            GUILayout.EndHorizontal();
         }
     }
 }
