@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace FullInspector.Tests {
@@ -11,7 +12,12 @@ namespace FullInspector.Tests {
         /// If a test needs to run across more than one update, then this can yield any value. The
         /// yielded value is ignored.
         /// </summary>
-        public abstract IEnumerable ExecuteTest();
+        public abstract IEnumerable ExecuteTest(MonoBehaviour target);
+
+        /// <summary>
+        /// Run any logic to cleanup any state. Run even if the test failed.
+        /// </summary>
+        public virtual void Cleanup(MonoBehaviour target) {}
 
         /// <summary>
         /// Return true if the test was ExecuteTest to run for the given EventType.

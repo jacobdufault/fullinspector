@@ -8,7 +8,7 @@ namespace FullInspector.Tests {
             public LayerMask mask;
         }
 
-        public override IEnumerable ExecuteTest() {
+        public override IEnumerable ExecuteTest(MonoBehaviour target) {
             var metadata = new fiGraphMetadata();
 
             LayerMask expectedValue = ~(1 << LayerMask.NameToLayer("Water"));

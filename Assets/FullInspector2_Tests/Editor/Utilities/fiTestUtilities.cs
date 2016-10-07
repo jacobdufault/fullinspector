@@ -1,7 +1,14 @@
+using UnityEditor;
 using UnityEngine;
+using UnityObject = UnityEngine.Object;
 
 namespace FullInspector.Tests {
     public class fiTestUtilities {
+        public static object Serialize(UnityObject target) {
+            EditorUtility.SetDirty(target);
+            return null;
+        }
+
         public static T DrawPropertyEditor<T>(T obj, fiGraphMetadata metadata) {
             var label = GUIContent.none;
 

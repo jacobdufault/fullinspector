@@ -12,9 +12,6 @@ namespace FullInspector.Modules {
     /// </summary>
     public static class fiSharedInstanceScriptGenerator {
         public static void GenerateScript(Type instanceType, Type serializerType) {
-            // The name of the file, without the .cs at the end.
-            string fileName = instanceType.CSharpName(/*includeNamespace:*/true, /*ensureSafeDeclarationName:*/true);
-
             // The name of the class, ie, SharedInstance_SystemInt32
             string className = instanceType.CSharpName(/*includeNamespace:*/ true, /*ensureSafeDeclarationName:*/ true);
             if (instanceType.Namespace != null && instanceType.Namespace != "System") {

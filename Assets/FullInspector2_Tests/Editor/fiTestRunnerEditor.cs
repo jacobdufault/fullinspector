@@ -38,13 +38,14 @@ namespace FullInspector.Tests {
                     foreach (fiBaseEditorTest test in fiRuntimeReflectionUtility.GetAssemblyInstances<fiBaseEditorTest>()) {
                         target.RunningTests.Add(new fiTestRunner.RunningTest {
                             Test = test,
-                            Progress = test.ExecuteTest().GetEnumerator()
+                            Progress = test.ExecuteTest(target).GetEnumerator()
                         });
                     }
                 }
 
                 if (target.RunningTests.Count > 0) {
                     if (RunTest(target.RunningTests[0]) == TestStatus.Done) {
+                        target.RunningTests[0].Test.Cleanup(target);
                         target.RunningTests.RemoveAt(0);
                     }
 
