@@ -10,7 +10,14 @@ namespace FullInspector {
         /// </summary>
         public class DefaultInspector : tkControl<T, TContext> {
             private readonly Type type_fitkControlPropertyEditor = fsTypeCache.GetType("FullInspector.Internal.tkControlPropertyEditor");
-            private readonly Type type_IObjectPropertyEditor = fsTypeCache.GetType("FullInspector.Modules.Common.IObjectPropertyEditor");
+            private readonly Type type_IObjectPropertyEditor = fsTypeCache.GetType("FullInspector.Modules.IObjectPropertyEditor");
+
+            public DefaultInspector() {
+                if (type_fitkControlPropertyEditor == null)
+                    Debug.LogError("Unable to find tkControlPropertyEditor");
+                if (type_IObjectPropertyEditor == null)
+                    Debug.LogError("Unable to find IObjectPropertyEditor");
+            }
 
             protected override T DoEdit(Rect rect, T obj, TContext context, fiGraphMetadata metadata) {
                 return (T)fiLateBindings.PropertyEditor.EditSkipUntilNot(new [] {
