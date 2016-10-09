@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FullInspector.Internal;
 using UnityEngine;
 using UnityObject = UnityEngine.Object;
@@ -48,6 +49,40 @@ namespace FullInspector {
                 RestoreState();
             }
         }
+
+        /// <summary>
+        /// If true, when an object is cloned via an Instantiate call a fast
+        /// path will get used, where the cloned object will use the same
+        /// values as the original object. **This means that object references
+        /// will be shared between the prefab and the instance, such as
+        /// dictionaries.**
+        ///
+        /// **WARNING**: This feature is risky! You may get unexpected results.
+        ///
+        /// You should only use this feature if you find object cloning is a
+        /// performance problem. Enabling this will almost certainly cause
+        /// headache if it is not done carefully.
+        ///
+        /// This value can only be set to true while in play-mode or in a
+        /// player.
+        /// </summary>
+        public bool SharedStatePrefabInstantiation {
+            get {
+                return !string.IsNullOrEmpty(_sharedStateGuid);
+            }
+            set {
+                if (Application.isPlaying && value) {
+                    _sharedStateGuid = Guid.NewGuid().ToString();
+                } else {
+                    _sharedStateGuid = string.Empty;
+                }
+            }
+        }
+        string ISerializedObject.SharedStateGuid {
+            get { return _sharedStateGuid; }
+        }
+        [SerializeField, HideInInspector]
+        private string _sharedStateGuid;
 
         /// <summary>
         /// Save the state of component so that it can go through Unity serialization correctly.

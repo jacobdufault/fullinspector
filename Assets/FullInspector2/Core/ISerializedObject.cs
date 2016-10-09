@@ -23,6 +23,11 @@ namespace FullInspector {
         bool IsRestored { get; set; }
 
         /// <summary>
+        /// Shared-state guid using for faster prefab instantiation.
+        /// </summary>
+        string SharedStateGuid { get; }
+
+        /// <summary>
         /// This list contains a set of object references that were encountered during the
         /// serialization process in this object graph. These need to persist through a Unity
         /// serialization cycle.

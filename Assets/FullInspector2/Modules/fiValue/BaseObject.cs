@@ -12,6 +12,10 @@ namespace FullInspector {
     /// <remarks>Because BaseObject requires Unity's ISerializationCallbackReceiver for serialization support, only Full Serializer
     /// is supported for the serialization engine (it is the only serializer to support serialization off of the main thread).</remarks>
     public abstract class BaseObject : fiValueProxyEditor, fiIValueProxyAPI, ISerializedObject, ISerializationCallbackReceiver {
+        string ISerializedObject.SharedStateGuid {
+            get { return string.Empty; }
+        }
+
         /// <summary>
         /// Serializing references derived from UnityObject is tricky for a number of reasons, so we
         /// just let Unity handle it. The object can be modified in the inspector and be deleted, or

@@ -55,6 +55,10 @@ namespace FullInspector {
             fiISerializedObjectUtility.RestoreState<FullSerializerSerializer>(this);
         }
 
+        string ISerializedObject.SharedStateGuid {
+            get { return string.Empty; }
+        }
+
         /// <summary>
         /// Serializing references derived from UnityObject is tricky for a number of reasons, so we
         /// just let Unity handle it. The object can be modified in the inspector and be deleted, or

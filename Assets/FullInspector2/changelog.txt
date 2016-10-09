@@ -7,6 +7,7 @@ New:
 - Experimental multi-object editing. There are major known issues.
 - Added fiSettings.EnableGlobalOrdering to make [InspectorOrder] global.
 - [InspectorTooltip] can now be added to a class. The tooltip will be shown on the "Name" property that every inspector starts with.
+- Added BaseBehavior.SharedStatePrefabInstantiation, which allows a behavior to skip serialization cloning when being cloned as part of an UnityObject.Instantiate call. This can significantly speedup object duplication, but state is now shared between the instances.
 
 Changes:
 - Don't auto-serialize prefabs while playing.

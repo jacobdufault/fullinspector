@@ -1,6 +1,7 @@
-﻿using FullSerializer.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using FullSerializer;
+using FullSerializer.Internal;
 using UnityEngine;
 using UnityObject = UnityEngine.Object;
 
@@ -9,6 +10,45 @@ namespace FullInspector.Internal {
     /// Helper methods for actually serializing objects that extend ISerializedObject. This works via reflection.
     /// </summary>
     public static class fiISerializedObjectUtility {
+        private static Dictionary<string, ISerializedObject> _skipSerializationQueue = new Dictionary<string, ISerializedObject>();
+
+        private static void SkipCloningValues(ISerializedObject obj) {
+            lock (_skipSerializationQueue) {
+                if (_skipSerializationQueue.ContainsKey(obj.SharedStateGuid))
+                    return;
+
+                _skipSerializationQueue[obj.SharedStateGuid] = obj;
+            }
+        }
+
+        private static bool TryToCopyValues(ISerializedObject newInstance) {
+            if (string.IsNullOrEmpty(newInstance.SharedStateGuid))
+                return false;
+
+            ISerializedObject originalInstance = null;
+            lock (_skipSerializationQueue) {
+                if (!_skipSerializationQueue.TryGetValue(newInstance.SharedStateGuid, out originalInstance))
+                    return false;
+                _skipSerializationQueue.Remove(newInstance.SharedStateGuid);
+            }
+
+            // After a prefab is instantiated Unity will call a full
+            // serialize/deserialize cycle on the object. We don't need to copy
+            // values if the object references are the same.
+            if (ReferenceEquals(newInstance, originalInstance)) {
+                return true;
+            }
+
+            var inspectedType = InspectedType.Get(originalInstance.GetType());
+            for (int i = 0; i < originalInstance.SerializedStateKeys.Count; ++i) {
+                InspectedProperty property =
+                    inspectedType.GetPropertyByName(originalInstance.SerializedStateKeys[i]) ??
+                    inspectedType.GetPropertyByFormerlySerializedName(originalInstance.SerializedStateKeys[i]);
+                property.Write(newInstance, property.Read(originalInstance));
+            }
+            return true;
+        }
+
         private static bool SaveStateForProperty(ISerializedObject obj, InspectedProperty property, BaseSerializer serializer, ISerializationOperator serializationOperator, out string serializedValue, ref bool success) {
             object currentValue = property.Read(obj);
 
@@ -48,6 +88,13 @@ namespace FullInspector.Internal {
 
             var callbacks = obj as ISerializationCallbacks;
             if (callbacks != null) callbacks.OnBeforeSerialize();
+
+            // Skip serialization entirely if requested.
+            if (!string.IsNullOrEmpty(obj.SharedStateGuid)) {
+                SkipCloningValues(obj);
+                if (callbacks != null) callbacks.OnAfterSerialize();
+                return true;
+            }
 
             // fetch the selected serializer
             var serializer = fiSingletons.Get<TSerializer>();
@@ -169,6 +216,25 @@ namespace FullInspector.Internal {
             var callbacks = obj as ISerializationCallbacks;
             try {
                 if (callbacks != null) callbacks.OnBeforeDeserialize();
+
+                // Use fast-path that does not do object serialization if the
+                // user requested it.
+                if (!string.IsNullOrEmpty(obj.SharedStateGuid)) {
+                    if (obj.IsRestored)
+                        return true;
+
+                    if (TryToCopyValues(obj)) {
+                        fiLog.Log(typeof(fiISerializedObjectUtility),
+                                  "-- note: Used fast path when deserializing object of type {0}", obj.GetType());
+                        obj.IsRestored = true;
+                        if (callbacks != null) callbacks.OnAfterDeserialize();
+                        return true;
+                    }
+                    else {
+                        Debug.LogError("Shared state deserialization failed for object of type " + obj.GetType().CSharpName(),
+                                       obj as UnityObject);
+                    }
+                }
 
                 // ensure references are initialized
                 if (obj.SerializedStateKeys == null) obj.SerializedStateKeys = new List<string>();
