@@ -45,7 +45,7 @@ namespace FullInspector.Tests {
 
                 if (target.RunningTests.Count > 0) {
                     if (RunTest(target.RunningTests[0]) == TestStatus.Done) {
-                        target.RunningTests[0].Test.Cleanup(target);
+                        target.RunningTests[0].Test.Cleanup();
                         target.RunningTests.RemoveAt(0);
                     }
 

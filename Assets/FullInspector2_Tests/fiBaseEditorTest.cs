@@ -14,10 +14,15 @@ namespace FullInspector.Tests {
         /// </summary>
         public abstract IEnumerable ExecuteTest(MonoBehaviour target);
 
+        public event Action OnCleanup;
+
         /// <summary>
         /// Run any logic to cleanup any state. Run even if the test failed.
         /// </summary>
-        public virtual void Cleanup(MonoBehaviour target) {}
+        public void Cleanup() {
+            if (OnCleanup != null)
+                OnCleanup();
+        }
 
         /// <summary>
         /// Return true if the test was ExecuteTest to run for the given EventType.

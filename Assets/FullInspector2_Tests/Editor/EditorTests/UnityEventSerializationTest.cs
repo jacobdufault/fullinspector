@@ -9,7 +9,7 @@ namespace FullInspector.Tests {
         public override IEnumerable ExecuteTest(MonoBehaviour target) {
             var go = new GameObject();
             go.hideFlags = HideFlags.DontSave;
-
+            OnCleanup += () => UnityObject.DestroyImmediate(go);
             var model = go.AddComponent<UnityEventContainer>();
 
             UnityEventTools.AddPersistentListener(model.unityEvent, model.EventAction);
@@ -17,10 +17,6 @@ namespace FullInspector.Tests {
 
             for (int i = 0; i < 50; ++i)
                 yield return null;
-        }
-
-        public override void Cleanup(MonoBehaviour target) {
-            //UnityObject.DestroyImmediate(target.GetComponent<UnityEventContainer>());
         }
     }
 }
