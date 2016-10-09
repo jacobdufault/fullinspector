@@ -1,11 +1,10 @@
-﻿using FullInspector.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FullInspector.Internal;
 using FullSerializer.Internal;
 
 namespace FullInspector {
-
     public sealed class BehaviorEditor {
         /// <summary>
         /// A list of all types that have a CustomBehaviorEditorAttribute attribute.

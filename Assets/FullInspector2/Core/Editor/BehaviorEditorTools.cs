@@ -1,6 +1,6 @@
-﻿using FullSerializer.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using FullSerializer.Internal;
 using UnityEngine;
 
 namespace FullInspector.Internal {
