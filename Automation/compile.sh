@@ -8,7 +8,7 @@ OUTPUT_RUNTIME_NAME=FullInspector
 OUTPUT_EDITOR_NAME=FullInspector-Editor
 
 # Fetch sources to use.
-ALL_SOURCES=$(find "$ROOT_DIR" -name *.cs | grep -v 'Test\|Generated\|JsonNet')
+ALL_SOURCES=$(find "$ROOT_DIR" -name *.cs | grep -v 'Test\|Generated\|JsonNet\|Samples')
 RUNTIME_SOURCES=$(echo "$ALL_SOURCES" | grep -v 'Editor/')
 EDITOR_SOURCES=$(echo "$ALL_SOURCES" | grep 'Editor/')
 UNITY_DLL_FOLDER="$ROOT_DIR/Automation"
