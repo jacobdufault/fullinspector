@@ -38,6 +38,33 @@ namespace FullInspector.Internal {
                 _messages.Add(msg);
             }
         }
+        public static void Log(object tag, string format, object arg0) {
+            if (fiSettings.EnableLogs == false)
+                return;
+
+            string msg = GetTag(tag) + string.Format(format, arg0);
+            lock (typeof(fiLog)) {
+                _messages.Add(msg);
+            }
+        }
+        public static void Log(object tag, string format, object arg0, object arg1) {
+            if (fiSettings.EnableLogs == false)
+                return;
+
+            string msg = GetTag(tag) + string.Format(format, arg0, arg1);
+            lock (typeof(fiLog)) {
+                _messages.Add(msg);
+            }
+        }
+        public static void Log(object tag, string format, object arg0, object arg1, object arg2) {
+            if (fiSettings.EnableLogs == false)
+                return;
+
+            string msg = GetTag(tag) + string.Format(format, arg0, arg1, arg2);
+            lock (typeof(fiLog)) {
+                _messages.Add(msg);
+            }
+        }
         public static void Log(object tag, string format, params object[] args) {
             if (fiSettings.EnableLogs == false)
                 return;
