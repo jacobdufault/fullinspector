@@ -3,6 +3,6 @@
 namespace FullInspector.Internal {
     [CustomEditor(typeof(CommonBaseBehavior), /*editorForChildClasses:*/ true)]
     [CanEditMultipleObjects]
-    public class CommonBaseBehaviorEditor : FullInspectorCommonSerializedObjectEditor {
+    public class CommonBaseBehaviorEditor : fiCommonSerializedObjectEditor {
     }
 }

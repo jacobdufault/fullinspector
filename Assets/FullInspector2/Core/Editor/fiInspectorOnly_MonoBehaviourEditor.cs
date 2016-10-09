@@ -11,7 +11,7 @@ namespace FullInspector.Internal {
     public class fiInspectorOnly_MonoBehaviourEditor : Editor {
         public override void OnInspectorGUI() {
             if (fsPortableReflection.HasAttribute<fiInspectorOnlyAttribute>(target.GetType()) || target is tkCustomEditor) {
-                FullInspectorCommonSerializedObjectEditor.ShowInspectorForSerializedObject(target);
+                fiCommonSerializedObjectEditor.ShowInspectorForSerializedObject(target);
             }
 
             else {

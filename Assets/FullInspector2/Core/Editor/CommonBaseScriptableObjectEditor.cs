@@ -2,6 +2,6 @@
 
 namespace FullInspector.Internal {
     [CustomEditor(typeof(CommonBaseScriptableObject), editorForChildClasses: true)]
-    public class CommonBaseScriptableObjectEditor : FullInspectorCommonSerializedObjectEditor {
+    public class CommonBaseScriptableObjectEditor : fiCommonSerializedObjectEditor {
     }
 }

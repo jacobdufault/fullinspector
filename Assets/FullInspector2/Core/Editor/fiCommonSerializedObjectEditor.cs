@@ -10,11 +10,14 @@ using UnityEngine;
 using UnityObject = UnityEngine.Object;
 
 namespace FullInspector {
+    [Obsolete("Please use fiCommonSerializedObjectEditor instead", true)]
+    public class FullInspectorCommonSerializedObjectEditor : Editor { }
+
     /// <summary>
     /// An editor that provides a good inspector experience for types which derive from
     /// ISerializedObject.
     /// </summary>
-    public class FullInspectorCommonSerializedObjectEditor : Editor {
+    public class fiCommonSerializedObjectEditor : Editor {
         private static Dictionary<Type, string> s_cachedTypeTooltips = new Dictionary<Type, string>();
         private static string GetTooltipText(Type type) {
             string tooltip;
@@ -213,7 +216,7 @@ namespace FullInspector {
                 return;
 
             if (fiPrefabManager.Storage.SeenBaseBehaviors.Contains(type.CSharpName()) == false) {
-                fiLog.Log(typeof(FullInspectorCommonSerializedObjectEditor),
+                fiLog.Log(typeof(fiCommonSerializedObjectEditor),
                          "Saving all BaseBehaviors of type " + type.CSharpName());
 
                 fiPrefabManager.Storage.SeenBaseBehaviors.Add(type.CSharpName());
