@@ -1,5 +1,4 @@
-﻿#if !UNITY_4_3
-using System;
+﻿using System;
 using FullSerializer;
 using FullSerializer.Internal;
 using UnityEngine;
@@ -35,4 +34,3 @@ namespace FullInspector.Serializers.FullSerializer {
         }
     }
 }
-#endif

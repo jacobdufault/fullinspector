@@ -1,5 +1,4 @@
-﻿#if !UNITY_4_3
-using System;
+﻿using System;
 using System.Collections.Generic;
 using FullInspector.Internal;
 using FullSerializer.Internal;
@@ -74,4 +73,3 @@ namespace FullInspector {
         #endregion
     }
 }
-#endif

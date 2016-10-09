@@ -4,10 +4,7 @@ using UnityEngine;
 
 namespace FullInspector {
     [Serializable]
-    public class fiDropdownMetadata : IGraphMetadataItemPersistent
-#if !UNITY_4_3
-        , ISerializationCallbackReceiver
-#endif
+    public class fiDropdownMetadata : IGraphMetadataItemPersistent, ISerializationCallbackReceiver
         {
         /// <summary>
         /// Is the foldout currently active, ie, is the rendered item being displayed or is the
@@ -90,7 +87,6 @@ namespace FullInspector {
         private bool _forceDisable;
 
 
-#if !UNITY_4_3
         [SerializeField]
         private bool _serializedIsActive;
         void ISerializationCallbackReceiver.OnBeforeSerialize() {
@@ -100,7 +96,6 @@ namespace FullInspector {
         void ISerializationCallbackReceiver.OnAfterDeserialize() {
             _isActive = new fiAnimBool(_serializedIsActive);
         }
-#endif
 
         bool IGraphMetadataItemPersistent.ShouldSerialize() {
             if (_invertedDefaultState) return IsActive;

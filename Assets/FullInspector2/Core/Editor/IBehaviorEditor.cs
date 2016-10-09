@@ -55,13 +55,6 @@ namespace FullInspector {
 
                 if (EditorApplication.isPlaying == false) {
                     fiLateBindings.EditorUtility.SetDirty(behavior);
-
-                    var serializedObj = behavior as ISerializedObject;
-                    if (serializedObj != null) {
-#if UNITY_4_3
-                        serializedObj.SaveState();
-#endif
-                    }
                 }
             }
         }
@@ -94,13 +87,6 @@ namespace FullInspector {
 
                 if (EditorApplication.isPlaying == false) {
                     fiLateBindings.EditorUtility.SetDirty(behavior);
-
-                    var serializedObj = behavior as ISerializedObject;
-                    if (serializedObj != null) {
-#if UNITY_4_3
-                        serializedObj.SaveState();
-#endif
-                    }
                 }
             }
         }

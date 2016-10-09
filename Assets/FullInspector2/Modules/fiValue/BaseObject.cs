@@ -1,5 +1,3 @@
-#if !UNITY_4_3
-
 using System.Collections.Generic;
 using FullInspector.Internal;
 using UnityEngine;
@@ -105,5 +103,3 @@ namespace FullInspector {
         }
     }
 }
-
-#endif

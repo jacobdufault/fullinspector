@@ -13,10 +13,7 @@ namespace FullInspector.Internal {
 
 namespace FullInspector {
     public abstract class BaseScriptableObject<TSerializer> :
-        CommonBaseScriptableObject, ISerializedObject
-#if !UNITY_4_3
-        , ISerializationCallbackReceiver
-#endif
+        CommonBaseScriptableObject, ISerializedObject, ISerializationCallbackReceiver
         where TSerializer : BaseSerializer {
 
         static BaseScriptableObject() {
@@ -113,7 +110,6 @@ namespace FullInspector {
 
         bool ISerializedObject.IsRestored { get; set; }
 
-#if !UNITY_4_3
         void ISerializationCallbackReceiver.OnAfterDeserialize() {
             ((ISerializedObject)this).IsRestored = false;
             fiSerializationManager.OnUnityObjectDeserialize<TSerializer>(this);
@@ -122,6 +118,5 @@ namespace FullInspector {
         void ISerializationCallbackReceiver.OnBeforeSerialize() {
             fiSerializationManager.OnUnityObjectSerialize<TSerializer>(this);
         }
-#endif
     }
 }

@@ -1,5 +1,4 @@
-﻿#if !(UNITY_4_3 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0)
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using FullInspector.Internal;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -128,4 +127,3 @@ namespace FullInspector {
         }
     }
 }
-#endif

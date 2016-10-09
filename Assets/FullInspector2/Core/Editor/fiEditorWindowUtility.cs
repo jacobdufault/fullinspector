@@ -38,7 +38,7 @@ namespace FullInspector.Internal {
 
         private static void InitializeWindow(EditorWindow window, string title, float windowWidth, float windowHeight) {
             // Unity deprecated window.title in 5.1
-#if UNITY_4_3 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0
+#if UNITY_5_0
             window.title = title;
 #else
             window.titleContent = new GUIContent(title);

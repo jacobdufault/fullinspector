@@ -51,11 +51,7 @@ namespace FullInspector.Internal {
             fiLateBindings._Bindings._EditorGUI_Slider = EditorGUI.Slider;
 
 
-#if UNITY_4_3
-            fiLateBindings.EditorGUIUtility.standardVerticalSpacing = 2f;
-#else
             fiLateBindings.EditorGUIUtility.standardVerticalSpacing = EditorGUIUtility.standardVerticalSpacing;
-#endif
             fiLateBindings.EditorGUIUtility.singleLineHeight = EditorGUIUtility.singleLineHeight;
 
 

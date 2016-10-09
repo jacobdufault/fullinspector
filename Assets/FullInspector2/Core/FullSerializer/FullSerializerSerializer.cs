@@ -67,9 +67,7 @@ namespace FullInspector {
 
         static FullSerializerSerializer() {
             AddConverter<UnityObjectConverter>();
-#if !UNITY_4_3
             AddProcessor<SerializationCallbackReceiverObjectProcessor>();
-#endif
         }
 
         public override string Serialize(MemberInfo storageType, object value,

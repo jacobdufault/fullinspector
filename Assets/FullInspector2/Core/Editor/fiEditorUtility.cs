@@ -30,7 +30,7 @@ namespace FullInspector.Internal {
 
     public static class fiEditorUtility {
         public static void OpenScene(string scene) {
-#if UNITY_4 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2
+#if UNITY_5_0 || UNITY_5_1 || UNITY_5_2
             EditorApplication.OpenScene(scene);
 #else
             UnityEditor.SceneManagement.EditorSceneManager.OpenScene(scene, UnityEditor.SceneManagement.OpenSceneMode.Single);
@@ -39,7 +39,7 @@ namespace FullInspector.Internal {
 
         public static string CurrentScene {
             get {
-#if UNITY_4 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2
+#if UNITY_5_0 || UNITY_5_1 || UNITY_5_2
                 return EditorApplication.currentScene;
 #else
                 return UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene().name;
