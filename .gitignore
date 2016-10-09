@@ -10,6 +10,7 @@ ProjectSettings/
  
 # IDE / Tooling
 .vs/
+GlobalSuppressions*.cs
 /*.userprefs
 /*.csproj
 /*.pidb
