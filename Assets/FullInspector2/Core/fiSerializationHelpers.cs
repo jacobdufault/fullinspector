@@ -1,11 +1,14 @@
-﻿using FullInspector.Internal;
-using FullSerializer.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using FullInspector.Internal;
+using FullSerializer.Internal;
 using UnityObject = UnityEngine.Object;
 
 namespace FullInspector {
-    public static class SerializationHelpers {
+    [Obsolete("Use fiSerializationHelpers instead", true)]
+    public class SerializationHelpers { }
+
+    public static class fiSerializationHelpers {
         /// <summary>
         /// Deserialize a value from the given content.
         /// </summary>

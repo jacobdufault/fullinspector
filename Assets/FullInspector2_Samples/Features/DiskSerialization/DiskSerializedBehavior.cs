@@ -40,7 +40,7 @@ namespace FullInspector.Samples.Other.DiskSerialization {
             string content = File.ReadAllText(Path);
 
             // Restore the value
-            Value = SerializationHelpers.DeserializeFromContent<SerializedStruct, FullSerializerSerializer>(content);
+            Value = fiSerializationHelpers.DeserializeFromContent<SerializedStruct, FullSerializerSerializer>(content);
             Debug.Log("Object state has been restored from " + Path);
 #endif
         }
@@ -49,7 +49,7 @@ namespace FullInspector.Samples.Other.DiskSerialization {
         private void SerializeToPath() {
 #if (!UNITY_EDITOR && UNITY_WINRT) == false
             // Get the serialized state of the object
-            string content = SerializationHelpers.SerializeToContent<SerializedStruct, FullSerializerSerializer>(Value);
+            string content = fiSerializationHelpers.SerializeToContent<SerializedStruct, FullSerializerSerializer>(Value);
 
             // Write it out to disk
             File.WriteAllText(Path, content);
@@ -60,7 +60,7 @@ namespace FullInspector.Samples.Other.DiskSerialization {
         [InspectorButton]
         private void SerializeToConsole() {
             // Get the serialized state of the object
-            string content = SerializationHelpers.SerializeToContent<SerializedStruct, FullSerializerSerializer>(Value);
+            string content = fiSerializationHelpers.SerializeToContent<SerializedStruct, FullSerializerSerializer>(Value);
 
             // Write it out to the console
             Debug.Log(content);
