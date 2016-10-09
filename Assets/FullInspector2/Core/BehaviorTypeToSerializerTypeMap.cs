@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FullSerializer;
 using FullSerializer.Internal;
 
 namespace FullInspector.Internal {
@@ -36,8 +37,7 @@ namespace FullInspector.Internal {
                 }
             }
 
-            // No custom serializer, use the default one
-            return fiInstalledSerializerManager.DefaultMetadata.SerializerType;
+            throw new InvalidOperationException("Unable to determine serializer for " + behaviorType.CSharpName());
         }
     }
 }

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using FullInspector.Internal;
 using UnityEngine;
-using tk = FullInspector.tk<System.Collections.IList, FullInspector.Modules.Collections.tkDatabaseContext>;
+using tk = FullInspector.tk<System.Collections.IList, FullInspector.Modules.tkDatabaseContext>;
 
-namespace FullInspector.Modules.Collections {
+namespace FullInspector.Modules {
     class tkDatabaseContext {
         public GUIContent label;
         public IList editedList;

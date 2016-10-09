@@ -49,7 +49,8 @@ namespace FullInspector.Internal {
 
             }
 
-            foreach (var providerType in fiRuntimeReflectionUtility.AllSimpleTypesDerivingFrom(typeof(fiISerializerMetadata))) {
+            foreach (var providerType in
+                     fiRuntimeReflectionUtility.AllSimpleTypesDerivingFrom(typeof(fiISerializerMetadata))) {
                 fiISerializerMetadata metadata = GetProvider(providerType);
 
                 LoadedMetadata.Add(metadata);

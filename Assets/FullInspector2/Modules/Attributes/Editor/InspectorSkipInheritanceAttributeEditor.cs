@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace FullInspector.Modules.Attributes {
+namespace FullInspector.Modules {
     [CustomAttributePropertyEditor(typeof(InspectorSkipInheritanceAttribute), ReplaceOthers = true)]
     public class InspectorSkipInheritanceAttributeEditor<T> : AttributePropertyEditor<T, InspectorSkipInheritanceAttribute> {
 

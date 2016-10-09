@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace FullInspector.Modules.Attributes {
+namespace FullInspector.Modules {
     [CustomAttributePropertyEditor(typeof(InspectorHidePrimaryAttribute), ReplaceOthers = true)]
     public class InspectorHidePrimaryAttributeEditor<T> :
         AttributePropertyEditor<T, InspectorHidePrimaryAttribute> {

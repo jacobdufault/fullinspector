@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace FullInspector.Modules.Attributes {
+namespace FullInspector.Modules {
     [CustomAttributePropertyEditor(typeof(InspectorMarginAttribute), ReplaceOthers = false)]
     public class InspectorMarginAttributeEditor<T> : AttributePropertyEditor<T, InspectorMarginAttribute> {
         protected override T Edit(Rect region, GUIContent label, T element, InspectorMarginAttribute attribute, fiGraphMetadata metadata) {

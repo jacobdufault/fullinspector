@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace FullInspector.Modules.Common {
+namespace FullInspector.Modules {
     [CustomAttributePropertyEditor(typeof(InspectorTextAreaAttribute), ReplaceOthers = true)]
     public class InspectorTextAreaAttributeEditor : AttributePropertyEditor<string, InspectorTextAreaAttribute> {
         protected override string Edit(Rect region, GUIContent label, string element, InspectorTextAreaAttribute attribute, fiGraphMetadata metadata) {

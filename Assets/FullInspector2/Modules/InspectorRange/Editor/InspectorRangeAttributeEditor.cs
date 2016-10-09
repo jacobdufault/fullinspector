@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace FullInspector.Modules.InspectorRange {
+namespace FullInspector.Modules {
     [CustomAttributePropertyEditor(typeof(InspectorRangeAttribute), ReplaceOthers = true)]
     public class InspectorRangeAttributeEditor<TElement> : AttributePropertyEditor<TElement, InspectorRangeAttribute> {
         private static T Cast<T>(object o) {

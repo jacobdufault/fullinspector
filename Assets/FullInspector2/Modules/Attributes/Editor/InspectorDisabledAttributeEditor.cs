@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace FullInspector.Modules.Attributes {
+namespace FullInspector.Modules {
     [CustomAttributePropertyEditor(typeof(InspectorDisabledAttribute), ReplaceOthers = true)]
     public class InspectorDisabledAttributeEditor<T> : AttributePropertyEditor<T, InspectorDisabledAttribute> {
         protected override T Edit(Rect region, GUIContent label, T element, InspectorDisabledAttribute attribute, fiGraphMetadata metadata) {

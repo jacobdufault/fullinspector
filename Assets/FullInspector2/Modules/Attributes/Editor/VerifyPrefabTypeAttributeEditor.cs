@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityObject = UnityEngine.Object;
 
-namespace FullInspector.Modules.Attributes {
+namespace FullInspector.Modules {
     [CustomAttributePropertyEditor(typeof(VerifyPrefabTypeAttribute), ReplaceOthers = false)]
     public class VerifyPrefabTypeAttributeEditor<T> : AttributePropertyEditor<T, VerifyPrefabTypeAttribute>
         where T : UnityObject {

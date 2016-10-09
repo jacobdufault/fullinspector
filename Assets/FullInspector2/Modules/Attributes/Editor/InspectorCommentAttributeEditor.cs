@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace FullInspector.Modules.Attributes {
+namespace FullInspector.Modules {
     [CustomAttributePropertyEditor(typeof(InspectorCommentAttribute), ReplaceOthers = false)]
     public class InspectorCommentAttributeEditor<T> : AttributePropertyEditor<T, InspectorCommentAttribute> {
         private const float Margin = 2f;

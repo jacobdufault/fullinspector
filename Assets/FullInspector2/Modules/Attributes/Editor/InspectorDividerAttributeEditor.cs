@@ -1,7 +1,7 @@
 ﻿using FullInspector.Internal;
 using UnityEngine;
 
-namespace FullInspector.Modules.Attributes {
+namespace FullInspector.Modules {
     [CustomAttributePropertyEditor(typeof(InspectorDividerAttribute), ReplaceOthers = false)]
     public class InspectorDividerAttributeEditor<T> : AttributePropertyEditor<T, InspectorDividerAttribute> {
         protected override T Edit(Rect region, GUIContent label, T element, InspectorDividerAttribute attribute, fiGraphMetadata metadata) {
