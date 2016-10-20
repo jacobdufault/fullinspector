@@ -1,6 +1,5 @@
 ﻿using FullInspector.Internal;
 using FullInspector.LayoutToolkit;
-using FullSerializer;
 using FullSerializer.Internal;
 using UnityEditor;
 using UnityEngine;

@@ -1,6 +1,5 @@
 ﻿using UnityEditor;
 using UnityEngine;
-using UnityObject = UnityEngine.Object;
 
 namespace FullInspector.Internal {
     /// <summary>

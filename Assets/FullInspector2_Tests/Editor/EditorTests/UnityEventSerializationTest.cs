@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using UnityEditor.Events;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityObject = UnityEngine.Object;
 
 namespace FullInspector.Tests {

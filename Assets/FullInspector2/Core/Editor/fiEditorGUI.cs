@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using FullSerializer;
-using FullSerializer.Internal;
 using UnityEditor;
 using UnityEngine;
 using UnityObject = UnityEngine.Object;

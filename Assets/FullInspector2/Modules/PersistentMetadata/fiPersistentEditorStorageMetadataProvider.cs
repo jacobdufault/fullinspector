@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityObject = UnityEngine.Object;
 
 namespace FullInspector.Internal {
     public interface fiIGraphMetadataStorage {
