@@ -13,7 +13,7 @@ namespace FullInspector {
     /// serialized data via Unity serialization
     /// </remarks>
     public abstract class BaseNetworkBehavior :
-        MonoBehaviour, ISerializedObject, ISerializationCallbackReceiver {
+        NetworkBehaviour, ISerializedObject, ISerializationCallbackReceiver {
 
         static BaseNetworkBehavior() {
             BehaviorTypeToSerializerTypeMap.Register(typeof(BaseBehavior<FullSerializerSerializer>), typeof(FullSerializerSerializer));
