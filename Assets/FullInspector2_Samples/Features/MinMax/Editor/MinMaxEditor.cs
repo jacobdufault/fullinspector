@@ -35,7 +35,11 @@ namespace FullInspector.Samples.MinMaxSample {
                 FormatFloat(minLimit), FormatFloat(maxLimit));
             var updatedLabel = new GUIContent(labelText, label.image, label.tooltip);
 
+#if UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4
+            EditorGUI.MinMaxSlider(updatedLabel, region, ref min, ref max, minLimit, maxLimit);
+#else
             EditorGUI.MinMaxSlider(region, updatedLabel, ref min, ref max, minLimit, maxLimit);
+#endif
 
             return new MinMax<TElement>() {
                 Min = FromFloat(min),
