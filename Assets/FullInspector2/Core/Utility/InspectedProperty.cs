@@ -126,8 +126,9 @@ namespace FullInspector {
             }
 
             catch (Exception e) {
-                Debug.LogWarning("Caught exception when writing property " + Name +
-                    " with context=" + context + " and value=" + value);
+                Debug.LogWarning("Caught exception when writing property " +
+                    Name + " with context=" + fiUtility.ToString(context) +
+                    " and value=" + fiUtility.ToString(value));
                 Debug.LogException(e);
             }
         }

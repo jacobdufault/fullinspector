@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
+using FullSerializer;
 using UnityEngine;
 using UnityObject = UnityEngine.Object;
 
@@ -160,6 +161,19 @@ namespace FullInspector.Internal {
             T tmp = a;
             a = b;
             b = tmp;
+        }
+
+        /// <summary>
+        /// Performs a thread-safe ToString operation. If the type derives from
+        /// UnityObject, a generic string is used instead of calling ToString.
+        /// </summary>
+        public static string ToString<T>(T obj) {
+            if (ReferenceEquals(obj, null))
+                return "[Instance with type " + typeof(T).CSharpName() + "]";
+            if (obj is UnityObject)
+                return "[Instance with type " + obj.GetType().CSharpName() + "]";
+
+            return obj.ToString();
         }
     }
 }
