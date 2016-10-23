@@ -5,6 +5,7 @@ using FullSerializer.Internal;
 using UnityEngine;
 
 namespace FullInspector {
+    // See the tkControl class for docs.
     public interface tkIControl {
         object Edit(Rect rect, object obj, object context, fiGraphMetadata metadata);
 
@@ -96,25 +97,26 @@ namespace FullInspector {
         /// <remarks>
         /// Something very interesting in .NET: You can invoke the collection initializer via an object
         /// initializer. ie,
-        /// 
+        ///
         /// class Obj { public List<int> coll; }
         /// void NullRefException() {
         ///     var o = new Obj { coll = { 1, 2, 3 } }
         /// }
-        /// 
+        ///
         /// This code is equivalent to
-        /// 
+        ///
         /// var o = new Obj();
         /// o.coll.Add(1);
         /// ...
-        /// 
+        ///
         /// Now the exception is obvious (o.coll is null in o.coll.Add).
-        /// 
+        ///
         /// This means that we *must* allocate an object to Styles to prevent accidental null-ptr bugs
         /// </remarks>
         public List<tkStyle<T, TContext>> Styles {
             get {
-                if (_styles == null) _styles = new List<tkStyle<T, TContext>>();
+                if (_styles == null)
+                    _styles = new List<tkStyle<T, TContext>>();
                 return _styles;
             }
             set {
@@ -205,9 +207,7 @@ namespace FullInspector {
         /// then this function should return those controls.
         /// </summary>
         protected virtual IEnumerable<tkIControl> NonMemberChildControls {
-            get {
-                yield break;
-            }
+            get { yield break; }
         }
 
         private static bool TryReadValue<TValue>(MemberInfo member, object context, out TValue value) {
