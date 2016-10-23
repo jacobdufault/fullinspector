@@ -7,7 +7,6 @@ using UnityEngine;
 
 namespace FullInspector.Internal {
     public class AttributePropertyEditor : IPropertyEditor, IPropertyEditorEditAPI, IPropertyEditorDefaultFoldoutState {
-
         public bool DisplaysStandardLabel {
             get { return false || (_showPrimary && _editors.Count == 0); }
         }
@@ -23,7 +22,9 @@ namespace FullInspector.Internal {
         private bool _indent;
         private bool _defaultFoldoutState;
 
-        private AttributePropertyEditor(List<IAttributePropertyEditor> editors, bool showPrimary, bool showTopLevelFoldout, bool indent, bool defaultFoldoutState) {
+        private AttributePropertyEditor(List<IAttributePropertyEditor> editors,
+            bool showPrimary, bool showTopLevelFoldout, bool indent,
+            bool defaultFoldoutState) {
             _editors = editors;
             _showPrimary = showPrimary;
             _showTopLevelFoldout = showTopLevelFoldout;
@@ -122,14 +123,15 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// A map of attribute type to the IPropertyEditor type that is associated with that
-        /// attribute (via the CustomAttributePropertyEditorAttribute annotation).
+        /// A map of attribute type to the IPropertyEditor type that is
+        /// associated with that attribute (via the
+        /// CustomAttributePropertyEditorAttribute annotation).
         /// </summary>
         private static Dictionary<Type, Type> _attributeEditorMappings = new Dictionary<Type, Type>();
 
         /// <summary>
-        /// A map of attribute type to if that property editor should replace all other editors
-        /// after it.
+        /// A map of attribute type to if that property editor should replace all
+        /// other editors after it.
         /// </summary>
         private static Dictionary<Type, bool> _attributeReplaceMappings = new Dictionary<Type, bool>();
 
@@ -148,7 +150,6 @@ namespace FullInspector.Internal {
                 where fsPortableReflection.HasAttribute<CustomAttributePropertyEditorAttribute>(type)
 
                 select type) {
-
                 if (typeof(IAttributePropertyEditor).IsAssignableFrom(attributeHolder) == false) {
                     Debug.LogWarning(string.Format("{0} has a {1} attribute but does not extend {2}",
                         attributeHolder, typeof(CustomAttributePropertyEditorAttribute).Name,
@@ -168,7 +169,7 @@ namespace FullInspector.Internal {
                 return null;
             }
 
-            List<IAttributePropertyEditor> editors = new List<IAttributePropertyEditor>();
+            var editors = new List<IAttributePropertyEditor>();
             bool replace = false;
             bool showTopLevelFoldout = false;
             bool indent = false;
@@ -177,7 +178,6 @@ namespace FullInspector.Internal {
 
             foreach (object attribute in
                 editedAttributes.GetCustomAttributes(/*inherit:*/ true)) {
-
                 if (attribute is InspectorIndentAttribute) {
                     indent = true;
                     hasAttribute = true;
@@ -203,11 +203,13 @@ namespace FullInspector.Internal {
                     bool replacePrimary = _attributeReplaceMappings[attribute.GetType()];
                     replace = replace || replacePrimary;
 
-                    // HACK: We hard-code support for disabling drop-downs for fields that only
-                    //       serve as white-space between other fields (ie, they are annotated with
-                    //       [InspectorMargin, InspectorHidePrimary]). This could be generalized
-                    //       pretty easily, but I don't see the need, as it should only ever be
-                    //       needed for InspectorMarginAttribute.
+                    // HACK: We hard-code support for disabling drop-downs for
+                    //       fields that only serve as white-space between other
+                    //       fields (ie, they are annotated with
+                    //       [InspectorMargin, InspectorHidePrimary]). This could
+                    //       be generalized pretty easily, but I don't see the
+                    //       need, as it should only ever be needed for
+                    //       InspectorMarginAttribute.
                     if (attribute.GetType() != typeof(InspectorMarginAttribute) && replacePrimary == false) {
                         showTopLevelFoldout = true;
                     }
