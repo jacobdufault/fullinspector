@@ -1,15 +1,15 @@
-﻿using FullInspector.Internal;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using FullInspector.Internal;
 using UnityEditor;
 using UnityEngine;
 using UnityObject = UnityEngine.Object;
 
 namespace FullInspector.BackupService {
     /// <summary>
-    /// Contains editing logic common to the backup window and the inline backup viewer.
+    /// Contains editing logic common to the backup window and the inline backup
+    /// viewer.
     /// </summary>
     public class fiBackupEditorGUILayout {
-
         public static void DrawBackupsFor(UnityObject target, List<fiSerializedObject> toRemove) {
             bool showSpace = false;
 
@@ -56,9 +56,9 @@ namespace FullInspector.BackupService {
                     backup.DeserializedState = null;
                 }
 
-                // In what has to be an extremely annoying GUILayout issue, the indentation changes
-                // when you have a Begin/End Horizontal after the End/Begin horizontal for the
-                // previous horizontal.
+                // In what has to be an extremely annoying GUILayout issue, the
+                // indentation changes when you have a Begin/End Horizontal after
+                // the End/Begin horizontal for the previous horizontal.
                 if (backup.ShowDeserialized == false) {
                     EditorGUILayout.BeginHorizontal();
                     EditorGUILayout.EndHorizontal();

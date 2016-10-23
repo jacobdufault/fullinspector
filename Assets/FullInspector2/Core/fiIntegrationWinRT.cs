@@ -21,7 +21,7 @@ namespace FullInspector.Internal {
         public static IEnumerable<string> GetDirectories(string path) {
 #if UNITY_EDITOR || !UNITY_WINRT
             return System.IO.Directory.GetDirectories(path);
-#else      
+#else
             throw new System.NotSupportedException();
 #endif
         }

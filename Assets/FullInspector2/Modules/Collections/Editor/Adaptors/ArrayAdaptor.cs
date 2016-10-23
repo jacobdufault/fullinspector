@@ -1,5 +1,5 @@
-﻿using FullInspector.Rotorz.ReorderableList;
-using System;
+﻿using System;
+using FullInspector.Rotorz.ReorderableList;
 using UnityEngine;
 
 namespace FullInspector.Internal {

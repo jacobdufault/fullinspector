@@ -15,7 +15,8 @@ namespace FullInspector.Internal {
         private static List<SerializationMapping> _mappings = new List<SerializationMapping>();
 
         /// <summary>
-        /// Register a mapping for a particular behavior type to a given serializer type.
+        /// Register a mapping for a particular behavior type to a given
+        /// serializer type.
         /// </summary>
         /// <param name="behaviorType"></param>
         /// <param name="serializerType"></param>

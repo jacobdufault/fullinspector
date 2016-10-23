@@ -1,18 +1,16 @@
-// Copyright (c) 2012-2013 Rotorz Limited. All rights reserved. Use of this source code is governed
-// by a BSD-style license that can be found in the LICENSE file.
-
-using UnityEngine;
-using UnityEditor;
+// Copyright (c) 2012-2013 Rotorz Limited. All rights reserved. Use of this
+// source code is governed by a BSD-style license that can be found in the
+// LICENSE file.
 
 using System;
+using UnityEditor;
+using UnityEngine;
 
 namespace FullInspector.Rotorz.ReorderableList.Internal {
-
     /// <summary>
     /// Resources to assist with reorderable list control.
     /// </summary>
     internal static class ReorderableListResources {
-
         static ReorderableListResources() {
             GenerateSpecialTextures();
             LoadResourceAssets();
@@ -35,40 +33,44 @@ namespace FullInspector.Rotorz.ReorderableList.Internal {
         /// Resource assets for light skin.
         /// </summary>
         /// <remarks>
-        /// <para>Resource assets are PNG images which have been encoded using a base-64 string so
-        /// that actual asset files are not necessary.</para>
+        /// <para>
+        /// Resource assets are PNG images which have been encoded using a
+        /// base-64 string so that actual asset files are not necessary.
+        /// </para>
         /// </remarks>
         private static string[] s_LightSkin = {
-			"iVBORw0KGgoAAAANSUhEUgAAAB4AAAAQCAYAAAABOs/SAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAZdEVYdFNvZnR3YXJlAEFkb2JlIEltYWdlUmVhZHlxyWU8AAAAW0lEQVRIS+3NywnAQAhF0anI4mzVCmzBBl7QEBgGE5JFhBAXd+OHM5gZZgYRKcktNxu+HRFF2e6qhtOjtQM7K/tZ+xY89wSbazg9eqOfw6oag4rcChjY8coAjA2l1RxFDY8IFAAAAABJRU5ErkJggg==",
+            "iVBORw0KGgoAAAANSUhEUgAAAB4AAAAQCAYAAAABOs/SAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAZdEVYdFNvZnR3YXJlAEFkb2JlIEltYWdlUmVhZHlxyWU8AAAAW0lEQVRIS+3NywnAQAhF0anI4mzVCmzBBl7QEBgGE5JFhBAXd+OHM5gZZgYRKcktNxu+HRFF2e6qhtOjtQM7K/tZ+xY89wSbazg9eqOfw6oag4rcChjY8coAjA2l1RxFDY8IFAAAAABJRU5ErkJggg==",
             "iVBORw0KGgoAAAANSUhEUgAAAB4AAAASCAYAAABM8m7ZAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuNWWFMmUAAABkSURBVEhL7dXBCcAgDIVhJ8pwWTUTZIUs8EosLSJpwUNTSiN8HjTyH22+mBmZzqiqwsxSeKvHffMDEUnhrQovIaIuurtT4XBodsSuRG9m3wqPVmKjCodDT/h5+JVvEdjjmQC0DQcAzSE/W4DdAAAAAElFTkSuQmCC",
-            
+
             //"iVBORw0KGgoAAAANSUhEUgAAAB4AAAAQCAYAAAABOs/SAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuNWWFMmUAAABJSURBVEhLY/z//z/DQAAmKE13MGox3QDZFuvr6/8HYSiXZDDygpqkfEwoaC9evMgIZRIEQ8PHyADme1J8iQxGExfdwEgLagYGAMvqFynVEgM9AAAAAElFTkSuQmCC",
 			"iVBORw0KGgoAAAANSUhEUgAAAB4AAAAQCAIAAACOWFiFAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuNWWFMmUAAABESURBVDhPYxQSEmKgDWCC0jQAo0ajARKMPgUGUA4RYGgGCOF0jSsQzMzMoCwcYEBdDQcQ5xN0LBwM12gkGwzFAGFgAABuGwuxlT4SZwAAAABJRU5ErkJggg==",
-			"iVBORw0KGgoAAAANSUhEUgAAAAUAAAAECAYAAABGM/VAAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAZdEVYdFNvZnR3YXJlAEFkb2JlIEltYWdlUmVhZHlxyWU8AAAAMElEQVQYV2P4//8/Q1FR0X8YBvHBAp8+ffp/+fJlMA3igwUfPnwIFgDRYEFM7f8ZAG1EOYL9INrfAAAAAElFTkSuQmCC",
-			"iVBORw0KGgoAAAANSUhEUgAAAAkAAAAFCAYAAACXU8ZrAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAZdEVYdFNvZnR3YXJlAEFkb2JlIEltYWdlUmVhZHlxyWU8AAAAIElEQVQYV2P49OnTf0KYobCw8D8hzPD/P2FMLesK/wMAs5yJpK+6aN4AAAAASUVORK5CYII=",
-			"iVBORw0KGgoAAAANSUhEUgAAAAgAAAACCAIAAADq9gq6AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABVJREFUeNpiVFZWZsAGmBhwAIAAAwAURgBt4C03ZwAAAABJRU5ErkJggg==",
-			"iVBORw0KGgoAAAANSUhEUgAAAAgAAAACCAIAAADq9gq6AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABVJREFUeNpivHPnDgM2wMSAAwAEGAB8VgKYlvqkBwAAAABJRU5ErkJggg==",
-			"iVBORw0KGgoAAAANSUhEUgAAAAUAAAAECAYAAABGM/VAAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAEFJREFUeNpi/P//P0NxcfF/BgRgZP78+fN/VVVVhpCQEAZjY2OGs2fPNrCApBwdHRkePHgAVwoWnDVrFgMyAAgwAAt4E1dCq1obAAAAAElFTkSuQmCC"
-		};
+            "iVBORw0KGgoAAAANSUhEUgAAAAUAAAAECAYAAABGM/VAAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAZdEVYdFNvZnR3YXJlAEFkb2JlIEltYWdlUmVhZHlxyWU8AAAAMElEQVQYV2P4//8/Q1FR0X8YBvHBAp8+ffp/+fJlMA3igwUfPnwIFgDRYEFM7f8ZAG1EOYL9INrfAAAAAElFTkSuQmCC",
+            "iVBORw0KGgoAAAANSUhEUgAAAAkAAAAFCAYAAACXU8ZrAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAZdEVYdFNvZnR3YXJlAEFkb2JlIEltYWdlUmVhZHlxyWU8AAAAIElEQVQYV2P49OnTf0KYobCw8D8hzPD/P2FMLesK/wMAs5yJpK+6aN4AAAAASUVORK5CYII=",
+            "iVBORw0KGgoAAAANSUhEUgAAAAgAAAACCAIAAADq9gq6AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABVJREFUeNpiVFZWZsAGmBhwAIAAAwAURgBt4C03ZwAAAABJRU5ErkJggg==",
+            "iVBORw0KGgoAAAANSUhEUgAAAAgAAAACCAIAAADq9gq6AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABVJREFUeNpivHPnDgM2wMSAAwAEGAB8VgKYlvqkBwAAAABJRU5ErkJggg==",
+            "iVBORw0KGgoAAAANSUhEUgAAAAUAAAAECAYAAABGM/VAAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAEFJREFUeNpi/P//P0NxcfF/BgRgZP78+fN/VVVVhpCQEAZjY2OGs2fPNrCApBwdHRkePHgAVwoWnDVrFgMyAAgwAAt4E1dCq1obAAAAAElFTkSuQmCC"
+        };
         /// <summary>
         /// Resource assets for dark skin.
         /// </summary>
         /// <remarks>
-        /// <para>Resource assets are PNG images which have been encoded using a base-64 string so
-        /// that actual asset files are not necessary.</para>
+        /// <para>
+        /// Resource assets are PNG images which have been encoded using a
+        /// base-64 string so that actual asset files are not necessary.
+        /// </para>
         /// </remarks>
         private static string[] s_DarkSkin = {
 			//"iVBORw0KGgoAAAANSUhEUgAAAB4AAAAQCAYAAAABOs/SAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwgAADsIBFShKgAAAABh0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC41ZYUyZQAAAGhJREFUSEvl0LEJwDAMRFHv4v230F4KLgRCfJsjIUqR4jUfwYGGu38CYweMHTB2wKiYc/pSuwqjwsx8qV2FUdE6HO9dYji3en+CcSfGdur9CcYdGsvq/QlGxZ2xDKPif8NPYeyA8X0+LmbWloxfLb/cAAAAAElFTkSuQmCC",
 			"iVBORw0KGgoAAAANSUhEUgAAAB4AAAAQCAYAAAABOs/SAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAIBJREFUeNpiVFZW/u/i4sLw4sULBnoACQkJhj179jAwMQwQGHoWl5aWgvHI8TGlgIXU4MUn1t3dPcx8HB8fD2cvXLgQQ0xHR4c2FmMzmBTLhl5QYwt2cn1MtsXkWjg4gvrt27fgWoMeAGQXCDD+//+fQUVF5T89fXvnzh1GgAADAFmSI1Ed3FqgAAAAAElFTkSuQmCC",
             "iVBORw0KGgoAAAANSUhEUgAAAB4AAAASCAYAAABM8m7ZAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuNWWFMmUAAAB0SURBVEhL7dXBCcAgEERRe7EgL9uDjdrXhDEYRFZBA5sICs+DunxyiuPy3sPSExURxBhNsJXj3HgQQjDB1glPSSll2t3ICauPWiXWo8209grzbVFi9Zk201oK12a+srZvmHOk3Y28Dq/6R/iT3yJwxy0BcBc62Bf3vCf8egAAAABJRU5ErkJggg==",
-            
+
             "iVBORw0KGgoAAAANSUhEUgAAAB4AAAAQCAIAAACOWFiFAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwgAADsIBFShKgAAAABh0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC41ZYUyZQAAAEpJREFUOE9jEKIZGDUaDZBgNAcYQDlEABKM/gcGUA4RYECNhoQDEECMhnKICBnCRkNMxARQadxgQI2GAyJNhINhbzSpYCgaLSQEAKovscEijBkeAAAAAElFTkSuQmCC",
-			"iVBORw0KGgoAAAANSUhEUgAAAAUAAAAECAYAAABGM/VAAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAD1JREFUeNpi/P//P4OKisp/Bii4c+cOIwtIwMXFheHFixcMEhISYAVMINm3b9+CBUA0CDCiazc0NGQECDAAdH0YelA27kgAAAAASUVORK5CYII=",
-			"iVBORw0KGgoAAAANSUhEUgAAAAkAAAAFCAYAAACXU8ZrAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACRJREFUeNpizM3N/c9AADAqKysTVMTi5eXFSFAREFPHOoAAAwBCfwcAO8g48QAAAABJRU5ErkJggg==",
-			"iVBORw0KGgoAAAANSUhEUgAAAAgAAAAECAYAAACzzX7wAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACJJREFUeNpi/P//PwM+wHL06FG8KpgYCABGZWVlvCYABBgA7/sHvGw+cz8AAAAASUVORK5CYII=",
-			"iVBORw0KGgoAAAANSUhEUgAAAAgAAAAECAYAAACzzX7wAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACBJREFUeNpi/P//PwM+wPKfgAomBgKAhYuLC68CgAADAAxjByOjCHIRAAAAAElFTkSuQmCC",
-			"iVBORw0KGgoAAAANSUhEUgAAAAUAAAAECAYAAABGM/VAAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADtJREFUeNpi/P//P4OKisp/Bii4c+cOIwtIQE9Pj+HLly9gQRCfBcQACbx69QqmmAEseO/ePQZkABBgAD04FXsmmijSAAAAAElFTkSuQmCC"
-		};
+            "iVBORw0KGgoAAAANSUhEUgAAAAUAAAAECAYAAABGM/VAAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAD1JREFUeNpi/P//P4OKisp/Bii4c+cOIwtIwMXFheHFixcMEhISYAVMINm3b9+CBUA0CDCiazc0NGQECDAAdH0YelA27kgAAAAASUVORK5CYII=",
+            "iVBORw0KGgoAAAANSUhEUgAAAAkAAAAFCAYAAACXU8ZrAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACRJREFUeNpizM3N/c9AADAqKysTVMTi5eXFSFAREFPHOoAAAwBCfwcAO8g48QAAAABJRU5ErkJggg==",
+            "iVBORw0KGgoAAAANSUhEUgAAAAgAAAAECAYAAACzzX7wAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACJJREFUeNpi/P//PwM+wHL06FG8KpgYCABGZWVlvCYABBgA7/sHvGw+cz8AAAAASUVORK5CYII=",
+            "iVBORw0KGgoAAAANSUhEUgAAAAgAAAAECAYAAACzzX7wAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAACBJREFUeNpi/P//PwM+wPKfgAomBgKAhYuLC68CgAADAAxjByOjCHIRAAAAAElFTkSuQmCC",
+            "iVBORw0KGgoAAAANSUhEUgAAAAUAAAAECAYAAABGM/VAAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAADtJREFUeNpi/P//P4OKisp/Bii4c+cOIwtIQE9Pj+HLly9gQRCfBcQACbx69QqmmAEseO/ePQZkABBgAD04FXsmmijSAAAAAElFTkSuQmCC"
+        };
 
         /// <summary>
         /// Gets light or dark texture "add_button.png".
@@ -80,7 +82,7 @@ namespace FullInspector.Rotorz.ReorderableList.Internal {
         public static Texture2D texAddButtonFlipped;
 
         public static Texture2D texAddButtonIndependent {
-            get { return s_Cached[(int) ResourceName.add_button_independent]; }
+            get { return s_Cached[(int)ResourceName.add_button_independent]; }
         }
 
         /// <summary>
@@ -123,7 +125,7 @@ namespace FullInspector.Rotorz.ReorderableList.Internal {
             get { return s_Cached[(int)ResourceName.title_background]; }
         }
 
-        #endregion
+        #endregion Texture Resources
 
         #region Generated Resources
 
@@ -156,15 +158,15 @@ namespace FullInspector.Rotorz.ReorderableList.Internal {
             return tex;
         }
 
-        #endregion
+        #endregion Generated Resources
 
         #region Load PNG from Base-64 Encoded String
 
         private static Texture2D[] s_Cached;
 
         /// <summary>
-        /// Read textures from base-64 encoded strings. Automatically selects assets based upon
-        /// whether the light or dark (pro) skin is active.
+        /// Read textures from base-64 encoded strings. Automatically selects
+        /// assets based upon whether the light or dark (pro) skin is active.
         /// </summary>
         private static void LoadResourceAssets() {
             var skin = EditorGUIUtility.isProSkin ? s_DarkSkin : s_LightSkin;
@@ -194,7 +196,6 @@ namespace FullInspector.Rotorz.ReorderableList.Internal {
             s_LightSkin = null;
             s_DarkSkin = null;
         }
-
 
         private static Texture2D FlipTexture(Texture2D texture) {
             Color[] pixels = texture.GetPixels();
@@ -229,8 +230,6 @@ namespace FullInspector.Rotorz.ReorderableList.Internal {
             return (imageData[offset] << 8) | imageData[offset + 1];
         }
 
-        #endregion
-
+        #endregion Load PNG from Base-64 Encoded String
     }
-
 }

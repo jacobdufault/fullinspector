@@ -6,7 +6,6 @@ namespace FullInspector.Modules {
     [CustomAttributePropertyEditor(typeof(VerifyPrefabTypeAttribute), ReplaceOthers = false)]
     public class VerifyPrefabTypeAttributeEditor<T> : AttributePropertyEditor<T, VerifyPrefabTypeAttribute>
         where T : UnityObject {
-
         private static bool IsFlagSet(VerifyPrefabTypeFlags flags, VerifyPrefabTypeFlags setFlag) {
             if ((flags & setFlag) == 0) {
                 return false;
@@ -19,7 +18,6 @@ namespace FullInspector.Modules {
             if (element == null) {
                 return true;
             }
-
 
             PrefabType prefabType = PrefabUtility.GetPrefabType(element);
             switch (prefabType) {

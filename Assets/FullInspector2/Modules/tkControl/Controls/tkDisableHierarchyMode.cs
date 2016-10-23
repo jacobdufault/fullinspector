@@ -4,8 +4,9 @@ using UnityEngine;
 namespace FullInspector {
     partial class tk<T, TContext> {
         /// <summary>
-        /// Disables hierarchy mode for the given subcontrol. You can use this if you need foldouts to be
-        /// not move to the left of the labels and instead go inside of the controls they represent.
+        /// Disables hierarchy mode for the given subcontrol. You can use this if
+        /// you need foldouts to be not move to the left of the labels and
+        /// instead go inside of the controls they represent.
         /// </summary>
         public class DisableHierarchyMode : tkControl<T, TContext> {
             private tkControl<T, TContext> _childControl;

@@ -76,7 +76,8 @@ namespace FullInspector.Internal {
         public object byDictKey;
 
         /// <summary>
-        /// Special marker object used to notify Write to write the default/null value.
+        /// Special marker object used to notify Write to write the default/null
+        /// value.
         /// </summary>
         private static object s_RemoveObject = new object();
 
@@ -90,15 +91,17 @@ namespace FullInspector.Internal {
                 return true;
             }
 
-            // The property was potentially found on a different type. We need to update it
-            // to associate with this type. It's very possible the property will not even
-            // apply to context, in which case Write becomes a no-op.
+            // The property was potentially found on a different type. We need to
+            // update it to associate with this type. It's very possible the
+            // property will not even apply to context, in which case Write
+            // becomes a no-op.
             InspectedProperty propertyToUse = byProperty;
             if (byProperty.MemberInfo.DeclaringType != obj.GetType()) {
                 var childProp = InspectedType.Get(obj.GetType()).GetPropertyByName(byProperty.Name);
                 if (childProp != null) {
                     propertyToUse = childProp;
-                } else {
+                }
+                else {
                     result = null;
                     return false;
                 }
@@ -131,15 +134,17 @@ namespace FullInspector.Internal {
                 return;
             }
 
-            // The property was potentially found on a different type. We need to update it
-            // to associate with this type. It's very possible the property will not even
-            // apply to context, in which case Write becomes a no-op.
+            // The property was potentially found on a different type. We need to
+            // update it to associate with this type. It's very possible the
+            // property will not even apply to context, in which case Write
+            // becomes a no-op.
             InspectedProperty propertyToUse = byProperty;
             if (byProperty.MemberInfo.DeclaringType != context.GetType()) {
                 var childProp = InspectedType.Get(context.GetType()).GetPropertyByName(byProperty.Name);
                 if (childProp != null) {
                     propertyToUse = childProp;
-                } else {
+                }
+                else {
                     return;
                 }
             }
@@ -160,8 +165,8 @@ namespace FullInspector.Internal {
                     list[byListIndex] = value;
                 }
 
-                // Changing list will not update the actual array reference, so we have
-                // to write back to the stored object.
+                // Changing list will not update the actual array reference, so
+                // we have to write back to the stored object.
                 if (list is Array)
                     propertyToUse.Write(context, list);
 
@@ -172,7 +177,8 @@ namespace FullInspector.Internal {
                 var read = propertyToUse.Read(context);
                 var dict = (IDictionary)read;
 
-                // TODO: Have a separate Write/Remove command, since you might want to set a dict field to null.
+                // TODO: Have a separate Write/Remove command, since you might
+                //       want to set a dict field to null.
                 if (value == s_RemoveObject)
                     dict.Remove(byDictKey);
                 else
@@ -183,7 +189,8 @@ namespace FullInspector.Internal {
 
             if (value != s_RemoveObject) {
                 propertyToUse.Write(context, value);
-            } else {
+            }
+            else {
                 propertyToUse.Write(context, null);
             }
         }
@@ -202,13 +209,13 @@ namespace FullInspector.Internal {
             return string.Join(":", navs.Select(n => n.ToString()).ToArray());
         }
 
-        public static bool operator==(ObjectDataPath a, ObjectDataPath b) {
+        public static bool operator ==(ObjectDataPath a, ObjectDataPath b) {
             return a.byProperty == b.byProperty &&
                 a.byListIndex == b.byListIndex &&
                 a.byDictKey == b.byDictKey;
         }
 
-        public static bool operator!=(ObjectDataPath a, ObjectDataPath b) {
+        public static bool operator !=(ObjectDataPath a, ObjectDataPath b) {
             return !(a == b);
         }
 

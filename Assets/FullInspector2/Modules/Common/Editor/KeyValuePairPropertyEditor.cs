@@ -23,8 +23,12 @@ namespace FullInspector.Modules {
         /// Splits the given rect into two rects that are divided horizontally.
         /// </summary>
         /// <param name="rect">The rect to split</param>
-        /// <param name="percentage">The horizontal percentage that the rects are split at</param>
-        /// <param name="margin">How much space that should be between the two rects</param>
+        /// <param name="percentage">
+        /// The horizontal percentage that the rects are split at
+        /// </param>
+        /// <param name="margin">
+        /// How much space that should be between the two rects
+        /// </param>
         /// <param name="left">The output left-hand side rect</param>
         /// <param name="right">The output right-hand side rect</param>
         private static void SplitRect(Rect rect, float percentage, float margin, out Rect left, out Rect right) {
@@ -35,7 +39,6 @@ namespace FullInspector.Modules {
             right.x += left.width + margin;
             right.width -= left.width + margin;
         }
-
 
         public override KeyValuePair<TKey, TValue> Edit(Rect region, GUIContent label, KeyValuePair<TKey, TValue> element, fiGraphMetadata metadata) {
             Rect keyRect, valueRect;

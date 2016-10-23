@@ -6,7 +6,8 @@ namespace FullInspector.Samples.MinMaxSample {
     [CustomPropertyEditor(typeof(MinMax<>))]
     public class MinMaxEditor<TElement> : PropertyEditor<MinMax<TElement>> {
         /// <summary>
-        /// Formats a float so that it shows up to two decimal places if they are non-zero.
+        /// Formats a float so that it shows up to two decimal places if they are
+        /// non-zero.
         /// </summary>
         public static string FormatFloat(float num) {
             var s = string.Format("{0:0.00}", num).TrimEnd('0');

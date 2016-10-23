@@ -4,8 +4,8 @@ using UnityObject = UnityEngine.Object;
 
 namespace FullInspector.Internal {
     /// <summary>
-    /// A reference to a Component that tries really hard to not go away, even if it's stored
-    /// inside of a ScriptableObject.
+    /// A reference to a Component that tries really hard to not go away, even if
+    /// it's stored inside of a ScriptableObject.
     /// </summary>
     [Serializable]
     public class fiUnityObjectReference {
@@ -40,7 +40,8 @@ namespace FullInspector.Internal {
         public UnityObject Target;
 
         /// <summary>
-        /// Restores the object (if fake null) to an actual object instance via its instance id.
+        /// Restores the object (if fake null) to an actual object instance via
+        /// its instance id.
         /// </summary>
         private void TryRestoreFromInstanceId() {
             if (_target == null && ReferenceEquals(_target, null) == false) {

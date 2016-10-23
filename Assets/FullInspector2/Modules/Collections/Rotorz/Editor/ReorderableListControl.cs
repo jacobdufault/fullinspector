@@ -1,22 +1,19 @@
-// Copyright (c) 2012-2013 Rotorz Limited. All rights reserved. Use of this source code is governed
-// by a BSD-style license that can be found in the LICENSE file.
-
-using UnityEngine;
-using UnityEditor;
+// Copyright (c) 2012-2013 Rotorz Limited. All rights reserved. Use of this
+// source code is governed by a BSD-style license that can be found in the
+// LICENSE file.
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-
 using FullInspector.Rotorz.ReorderableList.Internal;
+using UnityEditor;
+using UnityEngine;
 
 namespace FullInspector.Rotorz.ReorderableList {
-
     /// <summary>
     /// Arguments which are passed to <see cref="ItemInsertedEventHandler"/>.
     /// </summary>
     public sealed class ItemInsertedEventArgs : EventArgs {
-
         /// <summary>
         /// Gets adaptor to reorderable list container which contains element.
         /// </summary>
@@ -36,14 +33,14 @@ namespace FullInspector.Rotorz.ReorderableList {
         /// </summary>
         /// <param name="adaptor">Reorderable list adaptor.</param>
         /// <param name="itemIndex">Zero-based index of item.</param>
-        /// <param name="wasDuplicated">Indicates if inserted item was duplicated from another
-        /// item.</param>
+        /// <param name="wasDuplicated">
+        /// Indicates if inserted item was duplicated from another item.
+        /// </param>
         public ItemInsertedEventArgs(IReorderableListAdaptor adaptor, int itemIndex, bool wasDuplicated) {
             this.adaptor = adaptor;
             this.itemIndex = itemIndex;
             this.wasDuplicated = wasDuplicated;
         }
-
     }
 
     /// <summary>
@@ -57,7 +54,6 @@ namespace FullInspector.Rotorz.ReorderableList {
     /// Arguments which are passed to <see cref="ItemRemovingEventHandler"/>.
     /// </summary>
     public sealed class ItemRemovingEventArgs : CancelEventArgs {
-
         /// <summary>
         /// Gets adaptor to reorderable list container which contains element.
         /// </summary>
@@ -76,15 +72,16 @@ namespace FullInspector.Rotorz.ReorderableList {
             this.adaptor = adaptor;
             this.itemIndex = itemIndex;
         }
-
     }
 
     /// <summary>
     /// An event handler which is invoked before a list item is removed.
     /// </summary>
     /// <remarks>
-    /// <para>Item removal can be cancelled by setting <see cref="CancelEventArgs.Cancel"/> to
-    /// <c>true</c>.</para>
+    /// <para>
+    /// Item removal can be cancelled by setting <see
+    /// cref="CancelEventArgs.Cancel"/> to <c>true</c>.
+    /// </para>
     /// </remarks>
     /// <param name="sender">Object which raised event.</param>
     /// <param name="args">Event arguments.</param>
@@ -95,17 +92,21 @@ namespace FullInspector.Rotorz.ReorderableList {
     /// </summary>
     [Serializable]
     public class ReorderableListControl {
-
         /// <summary>
         /// Invoked to draw list item.
         /// </summary>
         /// <remarks>
-        /// <para>GUI controls must be positioned absolutely within the given rectangle since list
-        /// items must be sized consistently.</para>
+        /// <para>
+        /// GUI controls must be positioned absolutely within the given rectangle
+        /// since list items must be sized consistently.
+        /// </para>
         /// </remarks>
         /// <example>
-        /// <para>The following listing presents a text field for each list item:</para>
-        /// <code language="csharp"><![CDATA[ using UnityEngine; using UnityEditor;
+        /// <para>
+        /// The following listing presents a text field for each list item:
+        /// </para>
+        /// <code language="csharp">
+        /// <![CDATA[ using UnityEngine; using UnityEditor;
         ///
         /// using System.Collections.Generic;
         ///
@@ -116,7 +117,10 @@ namespace FullInspector.Rotorz.ReorderableList {
         ///
         /// private string DrawListItem(Rect position, string value) { // Text fields do not like
         /// `null` values! if (value == null) value = ""; return EditorGUI.TextField(position,
-        /// value) ; } } ]]></code> <code language="unityscript"><![CDATA[ import
+        /// value) ; } } ]]>
+        /// </code>
+        /// <code language="unityscript">
+        /// <![CDATA[ import
         /// System.Collections.Generic;
         ///
         /// class ExampleWindow extends EditorWindow { var wishlist:List.<String>;
@@ -125,7 +129,8 @@ namespace FullInspector.Rotorz.ReorderableList {
         ///
         /// function DrawListItem(position:Rect, value:String):String { // Text fields do not like
         /// `null` values! if (value == null) value = ''; return EditorGUI.TextField(position,
-        /// value) ; } } ]]></code>
+        /// value) ; } } ]]>
+        /// </code>
         /// </example>
         /// <typeparam name="T">Type of item list.</typeparam>
         /// <param name="position">Position of list item.</param>
@@ -137,11 +142,16 @@ namespace FullInspector.Rotorz.ReorderableList {
         /// Invoked to draw content for empty list.
         /// </summary>
         /// <remarks>
-        /// <para>Callback should make use of <c>GUILayout</c> to present controls.</para>
+        /// <para>
+        /// Callback should make use of <c>GUILayout</c> to present controls.
+        /// </para>
         /// </remarks>
         /// <example>
-        /// <para>The following listing displays a label for empty list control:</para>
-        /// <code language="csharp"><![CDATA[ using UnityEngine; using UnityEditor;
+        /// <para>
+        /// The following listing displays a label for empty list control:
+        /// </para>
+        /// <code language="csharp">
+        /// <![CDATA[ using UnityEngine; using UnityEditor;
         ///
         /// using System.Collections.Generic;
         ///
@@ -152,7 +162,10 @@ namespace FullInspector.Rotorz.ReorderableList {
         /// DrawEmptyMessage) ; }
         ///
         /// private string DrawEmptyMessage() { GUILayout.Label("List is empty!",
-        /// EditorStyles.miniLabel); } } ]]></code> <code language="unityscript"><![CDATA[ import
+        /// EditorStyles.miniLabel); } } ]]>
+        /// </code>
+        /// <code language="unityscript">
+        /// <![CDATA[ import
         /// System.Collections.Generic;
         ///
         /// class ExampleWindow extends EditorWindow { private var _list:List.<String>;
@@ -162,7 +175,8 @@ namespace FullInspector.Rotorz.ReorderableList {
         /// DrawEmptyMessage) ; }
         ///
         /// function DrawEmptyMessage() { GUILayout.Label('List is empty!', EditorStyles.miniLabel);
-        /// } } ]]></code>
+        /// } } ]]>
+        /// </code>
         /// </example>
         public delegate void DrawEmpty();
         /// <summary>
@@ -207,7 +221,7 @@ namespace FullInspector.Rotorz.ReorderableList {
             s_RemoveButtonActiveContent = new GUIContent(ReorderableListResources.texRemoveButtonActive);
         }
 
-        #endregion
+        #endregion Custom Styles
 
         #region Utility
 
@@ -240,7 +254,7 @@ namespace FullInspector.Rotorz.ReorderableList {
             control.Draw(position, controlID, adaptor, drawEmpty);
         }
 
-        #endregion
+        #endregion Utility
 
         /// <summary>
         /// Position of mouse upon anchoring item for drag.
@@ -256,8 +270,8 @@ namespace FullInspector.Rotorz.ReorderableList {
         private static int s_TargetIndex = -1;
 
         /// <summary>
-        /// Unique ID of list control which should be automatically focused. A value of zero
-        /// indicates that no control is to be focused.
+        /// Unique ID of list control which should be automatically focused. A
+        /// value of zero indicates that no control is to be focused.
         /// </summary>
         private static int s_AutoFocusControlID = 0;
         /// <summary>
@@ -271,11 +285,13 @@ namespace FullInspector.Rotorz.ReorderableList {
         private static Stack<int> s_CurrentItemIndex;
 
         /// <summary>
-        /// Gets zero-based index of list item which is currently being drawn; or a value of -1 if
-        /// no item is currently being drawn.
+        /// Gets zero-based index of list item which is currently being drawn; or
+        /// a value of -1 if no item is currently being drawn.
         /// </summary>
         /// <remarks>
-        /// <para>Use <see cref="ReorderableListGUI.currentItemIndex"/> instead.</para>
+        /// <para>
+        /// Use <see cref="ReorderableListGUI.currentItemIndex"/> instead.
+        /// </para>
         /// </remarks>
         internal static int currentItemIndex {
             get { return s_CurrentItemIndex.Peek(); }
@@ -316,7 +332,7 @@ namespace FullInspector.Rotorz.ReorderableList {
         public GUIStyle addButtonStyle;
         public GUIStyle removeButtonStyle;
 
-        #endregion
+        #endregion Properties
 
         #region Events
 
@@ -335,12 +351,14 @@ namespace FullInspector.Rotorz.ReorderableList {
         }
 
         /// <summary>
-        /// Occurs before list item is removed and allows removal to be cancelled.
+        /// Occurs before list item is removed and allows removal to be
+        /// cancelled.
         /// </summary>
         public event ItemRemovingEventHandler ItemRemoving;
 
         /// <summary>
-        /// Raises event before list item is removed and provides oppertunity to cancel.
+        /// Raises event before list item is removed and provides oppertunity to
+        /// cancel.
         /// </summary>
         /// <param name="args">Event arguments.</param>
         protected virtual void OnItemRemoving(ItemRemovingEventArgs args) {
@@ -348,7 +366,7 @@ namespace FullInspector.Rotorz.ReorderableList {
                 ItemRemoving(this, args);
         }
 
-        #endregion
+        #endregion Events
 
         #region Construction
 
@@ -363,13 +381,15 @@ namespace FullInspector.Rotorz.ReorderableList {
         /// <summary>
         /// Initializes a new instance of <see cref="ReorderableListControl"/>.
         /// </summary>
-        /// <param name="flags">Optional flags which affect behavior of control.</param>
+        /// <param name="flags">
+        /// Optional flags which affect behavior of control.
+        /// </param>
         public ReorderableListControl(ReorderableListFlags flags)
             : this() {
             this.flags = flags;
         }
 
-        #endregion
+        #endregion Construction
 
         #region Control State
 
@@ -418,7 +438,7 @@ namespace FullInspector.Rotorz.ReorderableList {
             _allowReordering = (flags & ReorderableListFlags.DisableReordering) == 0;
         }
 
-        #endregion
+        #endregion Control State
 
         #region Event Handling
 
@@ -426,7 +446,8 @@ namespace FullInspector.Rotorz.ReorderableList {
         private static Vector2 s_MousePosition;
 
         /// <summary>
-        /// Indicate that first control of list item should be automatically focused if possible.
+        /// Indicate that first control of list item should be automatically
+        /// focused if possible.
         /// </summary>
         /// <param name="controlID">Unique ID of list control.</param>
         /// <param name="itemIndex">Zero-based index of list item.</param>
@@ -458,16 +479,20 @@ namespace FullInspector.Rotorz.ReorderableList {
         /// Draw remove button.
         /// </summary>
         /// <param name="position">Position of button.</param>
-        /// <param name="visible">Indicates if control is visible within GUI.</param>
-        /// <returns>A value of <c>true</c> if clicked; otherwise /c>.</returns>
+        /// <param name="visible">
+        /// Indicates if control is visible within GUI.
+        /// </param>
+        /// <returns>
+        /// A value of <c>true</c> if clicked; otherwise /c&gt;.
+        /// </returns>
         private bool DoRemoveButton(Rect position, bool visible) {
             int controlID = GUIUtility.GetControlID(FocusType.Passive);
             Vector2 mousePosition = GUIUtility.ScreenToGUIPoint(s_MousePosition);
 
             switch (Event.current.GetTypeForControl(controlID)) {
                 case EventType.MouseDown:
-                    // Do not allow button to be pressed using right mouse button since context menu
-                    // should be shown instead!
+                    // Do not allow button to be pressed using right mouse button
+                    // since context menu should be shown instead!
                     if (GUI.enabled && Event.current.button != 1 && position.Contains(mousePosition)) {
                         GUIUtility.hotControl = controlID;
                         GUIUtility.keyboardControl = 0;
@@ -514,7 +539,9 @@ namespace FullInspector.Rotorz.ReorderableList {
         /// Begin tracking drag and drop within list.
         /// </summary>
         /// <param name="controlID">Unique ID of list control.</param>
-        /// <param name="itemIndex">Zero-based index of item which is going to be dragged.</param>
+        /// <param name="itemIndex">
+        /// Zero-based index of item which is going to be dragged.
+        /// </param>
         private static void BeginTrackingReorderDrag(int controlID, int itemIndex) {
             GUIUtility.hotControl = controlID;
             GUIUtility.keyboardControl = 0;
@@ -533,10 +560,13 @@ namespace FullInspector.Rotorz.ReorderableList {
         }
 
         /// <summary>
-        /// Gets a value indicating whether item in current list is currently being tracked.
+        /// Gets a value indicating whether item in current list is currently
+        /// being tracked.
         /// </summary>
         /// <param name="controlID">Unique ID of list control.</param>
-        /// <returns>A value of <c>true</c> if item is being tracked; otherwise /c>.</returns>
+        /// <returns>
+        /// A value of <c>true</c> if item is being tracked; otherwise /c&gt;.
+        /// </returns>
         private static bool IsTrackingControl(int controlID) {
             return !s_TrackingCancelBlockContext && GUIUtility.hotControl == controlID;
         }
@@ -600,8 +630,9 @@ namespace FullInspector.Rotorz.ReorderableList {
                 if (draggable)
                     GUI.DrawTexture(new Rect(position.x + 6, position.y + position.height / 2f - 3, 9, 5), ReorderableListResources.texGrabHandle);
 
-                // Draw splitter between list items (but not above the first item)
-                if (itemIndex != 0 && 
+                // Draw splitter between list items (but not above the first
+                // item)
+                if (itemIndex != 0 &&
                     (!_tracking || itemIndex != s_AnchorIndex))
                     GUI.DrawTexture(new Rect(position.x, position.y - 1, position.width, 1), ReorderableListResources.texItemSplitter);
             }
@@ -716,7 +747,8 @@ namespace FullInspector.Rotorz.ReorderableList {
 
                 case EventType.MouseDrag:
                     if (_tracking) {
-                        // Reset target index and adjust when looping through list items.
+                        // Reset target index and adjust when looping through
+                        // list items.
                         if (mousePosition.y < firstItemY)
                             newTargetIndex = 0;
                         else if (mousePosition.y >= position.yMax)
@@ -728,7 +760,8 @@ namespace FullInspector.Rotorz.ReorderableList {
 
                 case EventType.MouseUp:
                     if (controlID == GUIUtility.hotControl) {
-                        // Allow user code to change control over reordering during drag.
+                        // Allow user code to change control over reordering
+                        // during drag.
                         if (!s_TrackingCancelBlockContext && _allowReordering)
                             AcceptReorderDrag(adaptor);
                         else
@@ -785,8 +818,8 @@ namespace FullInspector.Rotorz.ReorderableList {
                         itemPosition.y += s_DragItemPosition.height;
                     }
 
-                    // Do not draw item if it is currently being dragged. Draw later so that it is
-                    // shown in front of other controls.
+                    // Do not draw item if it is currently being dragged. Draw
+                    // later so that it is shown in front of other controls.
                     if (i == s_AnchorIndex)
                         continue;
 
@@ -815,11 +848,13 @@ namespace FullInspector.Rotorz.ReorderableList {
                         newTargetIndex = i + 1;*/
                 }
 
-                // The following may break use of tab key to navigate through controls :/
+                // The following may break use of tab key to navigate through
+                // controls :/
                 if ((flags & ReorderableListFlags.DisableClipping) == 0) {
                     // Clip list item? Performance boost!
                     if (itemPosition.yMax < _visibleRect.y - itemPosition.height) {
-                        // Let's try and trick Unity into maintaining tab key support...
+                        // Let's try and trick Unity into maintaining tab key
+                        // support...
                         GUIUtility.GetControlID(FocusType.Keyboard, itemPosition);
                         continue;
                     }
@@ -832,8 +867,8 @@ namespace FullInspector.Rotorz.ReorderableList {
 
                 // Did list count change (i.e. item removed)?
                 if (adaptor.Count < count) {
-                    // We assume that it was this item which was removed, so --i allows us to
-                    // process the next item as usual.
+                    // We assume that it was this item which was removed, so --i
+                    // allows us to process the next item as usual.
                     count = adaptor.Count;
                     --i;
                     continue;
@@ -844,8 +879,8 @@ namespace FullInspector.Rotorz.ReorderableList {
                     switch (eventType) {
                         case EventType.MouseDown:
                             if (GUI.enabled && itemPosition.Contains(mousePosition)) {
-                                // Remove input focus from control before attempting a context click
-                                // or drag.
+                                // Remove input focus from control before
+                                // attempting a context click or drag.
                                 GUIUtility.keyboardControl = 0;
 
                                 if (_allowReordering && adaptor.CanDrag(i) && Event.current.button == 0) {
@@ -859,20 +894,21 @@ namespace FullInspector.Rotorz.ReorderableList {
                                 }
                             }
                             break;
-                        /* DEBUG
-                                                case EventType.Repaint:
-                                                    GUI.color = Color.red;
-                                                    GUI.DrawTexture(new Rect(0, lastMidPoint, 10, 1), EditorGUIUtility.whiteTexture);
-                                                    GUI.color = Color.yellow;
-                                                    GUI.DrawTexture(new Rect(5, itemPosition.y + itemPosition.height / 2f, 10, 1), EditorGUIUtility.whiteTexture);
-                                                    GUI.color = Color.white;
-                                                    break;
-                        //*/
+                            /* DEBUG
+                                                    case EventType.Repaint:
+                                                        GUI.color = Color.red;
+                                                        GUI.DrawTexture(new Rect(0, lastMidPoint, 10, 1), EditorGUIUtility.whiteTexture);
+                                                        GUI.color = Color.yellow;
+                                                        GUI.DrawTexture(new Rect(5, itemPosition.y + itemPosition.height / 2f, 10, 1), EditorGUIUtility.whiteTexture);
+                                                        GUI.color = Color.white;
+                                                        break;
+                            //*/
                     }
                 }
             }
 
-            // Item which is being dragged should be shown on top of other controls!
+            // Item which is being dragged should be shown on top of other
+            // controls!
             if (IsTrackingControl(controlID)) {
                 lastMidPoint = position.yMax - lastHeight / 2f;
 
@@ -880,7 +916,8 @@ namespace FullInspector.Rotorz.ReorderableList {
                     if (s_DragItemPosition.yMax >= lastMidPoint)
                         newTargetIndex = count;
 
-                    // Force repaint to occur so that dragging rectangle is visible.
+                    // Force repaint to occur so that dragging rectangle is
+                    // visible.
                     s_TargetIndex = newTargetIndex;
                     Event.current.Use();
                 }
@@ -916,7 +953,8 @@ namespace FullInspector.Rotorz.ReorderableList {
         }
 
         /// <summary>
-        /// Draw additional controls below list control and highlight drop target.
+        /// Draw additional controls below list control and highlight drop
+        /// target.
         /// </summary>
         /// <param name="position">Position of list control in GUI.</param>
         /// <param name="controlID">Unique ID of list control.</param>
@@ -943,7 +981,9 @@ namespace FullInspector.Rotorz.ReorderableList {
         /// </summary>
         /// <param name="controlID">Unique ID of list control.</param>
         /// <param name="adaptor">Reorderable list adaptor.</param>
-        /// <returns>Position of list container area in GUI (excludes footer area).</returns>
+        /// <returns>
+        /// Position of list container area in GUI (excludes footer area).
+        /// </returns>
         private Rect DrawLayoutListField(int controlID, IReorderableListAdaptor adaptor) {
             float totalHeight;
 
@@ -976,7 +1016,9 @@ namespace FullInspector.Rotorz.ReorderableList {
         /// Draw content for empty list (layout version).
         /// </summary>
         /// <param name="drawEmpty">Callback to draw empty content.</param>
-        /// <returns>Position of list container area in GUI (excludes footer area).</returns>
+        /// <returns>
+        /// Position of list container area in GUI (excludes footer area).
+        /// </returns>
         private Rect DrawLayoutEmptyList(DrawEmpty drawEmpty) {
             Rect r = EditorGUILayout.BeginVertical(containerStyle);
             {
@@ -1000,7 +1042,7 @@ namespace FullInspector.Rotorz.ReorderableList {
         /// <param name="drawEmpty">Callback to draw empty content.</param>
         private void DrawEmptyListControl(Rect position, DrawEmptyAbsolute drawEmpty) {
             //if (Event.current.type == EventType.Repaint)
-                //containerStyle.Draw(position, GUIContent.none, false, false, false, false);
+            //containerStyle.Draw(position, GUIContent.none, false, false, false, false);
 
             // Take padding into consideration when drawing empty content.
             position.x += containerStyle.padding.left;
@@ -1072,7 +1114,7 @@ namespace FullInspector.Rotorz.ReorderableList {
 
             // Allow for footer area.
             //if (hasAddButton)
-                //position.height -= addButtonStyle.fixedHeight;
+            //position.height -= addButtonStyle.fixedHeight;
 
             if (adaptor.Count > 0) {
                 DrawListContainerAndItems(position, controlID, adaptor);
@@ -1102,7 +1144,7 @@ namespace FullInspector.Rotorz.ReorderableList {
             Draw(position, controlID, adaptor, null);
         }
 
-        #endregion
+        #endregion Event Handling
 
         #region Context Menu
 
@@ -1135,7 +1177,8 @@ namespace FullInspector.Rotorz.ReorderableList {
         /// </summary>
         protected static readonly GUIContent commandClearAll = new GUIContent("Clear All");
 
-        // Command control id and item index are assigned when context menu is shown.
+        // Command control id and item index are assigned when context menu is
+        // shown.
         private static int s_ContextControlID;
         private static int s_ContextItemIndex;
 
@@ -1158,7 +1201,15 @@ namespace FullInspector.Rotorz.ReorderableList {
         /// Default functionality to handle context command.
         /// </summary>
         /// <example>
-        /// <para>Can be used when adding custom items to the context menu:</para> <code language="csharp"><![CDATA[ protected override void AddItemsToMenu(GenericMenu menu, int itemIndex, IReorderableListAdaptor adaptor) { var specialCommand = new GUIContent("Special Command"); menu.AddItem(specialCommand, false, defaultContextHandler, specialCommand); } ]]></code> <code language="unityscript"><![CDATA[ function AddItemsToMenu(menu:GenericMenu, itemIndex:int, list:IReorderableListAdaptor) { var specialCommand = new GUIContent('Special Command'); menu.AddItem(specialCommand, false, defaultContextHandler, specialCommand); } ]]></code>
+        /// <para>
+        /// Can be used when adding custom items to the context menu:
+        /// </para>
+        /// <code language="csharp">
+        /// <![CDATA[ protected override void AddItemsToMenu(GenericMenu menu, int itemIndex, IReorderableListAdaptor adaptor) { var specialCommand = new GUIContent("Special Command"); menu.AddItem(specialCommand, false, defaultContextHandler, specialCommand); } ]]>
+        /// </code>
+        /// <code language="unityscript">
+        /// <![CDATA[ function AddItemsToMenu(menu:GenericMenu, itemIndex:int, list:IReorderableListAdaptor) { var specialCommand = new GUIContent('Special Command'); menu.AddItem(specialCommand, false, defaultContextHandler, specialCommand); } ]]>
+        /// </code>
         /// </example>
         /// <seealso cref="AddItemsToMenu"/>
         protected static readonly GenericMenu.MenuFunction2 defaultContextHandler = DefaultContextMenuHandler;
@@ -1178,7 +1229,9 @@ namespace FullInspector.Rotorz.ReorderableList {
         /// Invoked to generate context menu for list item.
         /// </summary>
         /// <param name="menu">Menu which can be populated.</param>
-        /// <param name="itemIndex">Zero-based index of item which was right-clicked.</param>
+        /// <param name="itemIndex">
+        /// Zero-based index of item which was right-clicked.
+        /// </param>
         /// <param name="adaptor">Reorderable list adaptor.</param>
         protected virtual void AddItemsToMenu(GenericMenu menu, int itemIndex, IReorderableListAdaptor adaptor) {
             if ((flags & ReorderableListFlags.DisableReordering) == 0) {
@@ -1213,7 +1266,7 @@ namespace FullInspector.Rotorz.ReorderableList {
             }
         }
 
-        #endregion
+        #endregion Context Menu
 
         #region Command Handling
 
@@ -1221,14 +1274,21 @@ namespace FullInspector.Rotorz.ReorderableList {
         /// Invoked to handle context command.
         /// </summary>
         /// <remarks>
-        /// <para>It is important to set the value of <c>GUI.changed</c> to <c>true</c> if any
-        /// changes are made by command handler.</para> <para>Default command handling functionality
-        /// can be inherited:</para> <code language="csharp"><![CDATA[ protected override bool HandleCommand(string commandName, int itemIndex, IReorderableListAdaptor adaptor) { if (base.HandleCommand(itemIndex, adaptor)) return true;
+        /// <para>
+        /// It is important to set the value of <c>GUI.changed</c> to <c>true</c>
+        /// if any changes are made by command handler.
+        /// </para>
+        /// <para>Default command handling functionality can be inherited:</para>
+        /// <code language="csharp">
+        /// <![CDATA[ protected override bool HandleCommand(string commandName, int itemIndex, IReorderableListAdaptor adaptor) { if (base.HandleCommand(itemIndex, adaptor)) return true;
         ///
         /// // Place custom command handling code here... switch (commandName) { case "Your
         /// Command": return true; }
         ///
-        /// return false; } ]]></code> <code language="unityscript"><![CDATA[ function
+        /// return false; } ]]>
+        /// </code>
+        /// <code language="unityscript">
+        /// <![CDATA[ function
         /// HandleCommand(commandName:String, itemIndex:int,
         /// adaptor: IReorderableListAdaptor):boolean { if (base.HandleCommand(itemIndex, adaptor))
         /// return true;
@@ -1236,13 +1296,19 @@ namespace FullInspector.Rotorz.ReorderableList {
         /// // Place custom command handling code here... switch (commandName) { case 'Your
         /// Command': return true; }
         ///
-        /// return false; } ]]></code>
+        /// return false; } ]]>
+        /// </code>
         /// </remarks>
-        /// <param name="commandName">Name of command. This is the text shown in the context
-        /// menu.</param>
-        /// <param name="itemIndex">Zero-based index of item which was right-clicked.</param>
+        /// <param name="commandName">
+        /// Name of command. This is the text shown in the context menu.
+        /// </param>
+        /// <param name="itemIndex">
+        /// Zero-based index of item which was right-clicked.
+        /// </param>
         /// <param name="adaptor">Reorderable list adaptor.</param>
-        /// <returns>A value of <c>true</c> if command was known; otherwise /c>.</returns>
+        /// <returns>
+        /// A value of <c>true</c> if command was known; otherwise /c&gt;.
+        /// </returns>
         protected virtual bool HandleCommand(string commandName, int itemIndex, IReorderableListAdaptor adaptor) {
             switch (commandName) {
                 case "Move to Top":
@@ -1278,14 +1344,21 @@ namespace FullInspector.Rotorz.ReorderableList {
         /// Call to manually perform command.
         /// </summary>
         /// <remarks>
-        /// <para>Warning message is logged to console if attempted to execute unknown
-        /// command.</para>
+        /// <para>
+        /// Warning message is logged to console if attempted to execute unknown
+        /// command.
+        /// </para>
         /// </remarks>
-        /// <param name="commandName">Name of command. This is the text shown in the context
-        /// menu.</param>
-        /// <param name="itemIndex">Zero-based index of item which was right-clicked.</param>
+        /// <param name="commandName">
+        /// Name of command. This is the text shown in the context menu.
+        /// </param>
+        /// <param name="itemIndex">
+        /// Zero-based index of item which was right-clicked.
+        /// </param>
         /// <param name="adaptor">Reorderable list adaptor.</param>
-        /// <returns>A value of <c>true</c> if command was known; otherwise /c>.</returns>
+        /// <returns>
+        /// A value of <c>true</c> if command was known; otherwise /c&gt;.
+        /// </returns>
         public bool DoCommand(string commandName, int itemIndex, IReorderableListAdaptor adaptor) {
             if (!HandleCommand(s_ContextCommandName, itemIndex, adaptor)) {
                 Debug.LogWarning("Unknown context command.");
@@ -1298,18 +1371,24 @@ namespace FullInspector.Rotorz.ReorderableList {
         /// Call to manually perform command.
         /// </summary>
         /// <remarks>
-        /// <para>Warning message is logged to console if attempted to execute unknown
-        /// command.</para>
+        /// <para>
+        /// Warning message is logged to console if attempted to execute unknown
+        /// command.
+        /// </para>
         /// </remarks>
         /// <param name="command">Content representing command.</param>
-        /// <param name="itemIndex">Zero-based index of item which was right-clicked.</param>
+        /// <param name="itemIndex">
+        /// Zero-based index of item which was right-clicked.
+        /// </param>
         /// <param name="adaptor">Reorderable list adaptor.</param>
-        /// <returns>A value of <c>true</c> if command was known; otherwise /c>.</returns>
+        /// <returns>
+        /// A value of <c>true</c> if command was known; otherwise /c&gt;.
+        /// </returns>
         public bool DoCommand(GUIContent command, int itemIndex, IReorderableListAdaptor adaptor) {
             return DoCommand(command.text, itemIndex, adaptor);
         }
 
-        #endregion
+        #endregion Command Handling
 
         #region Methods
 
@@ -1363,7 +1442,9 @@ namespace FullInspector.Rotorz.ReorderableList {
         /// </summary>
         /// <param name="adaptor">Reorderable list adaptor.</param>
         /// <param name="sourceIndex">Zero-based index of source item.</param>
-        /// <param name="destIndex">Zero-based index of destination index.</param>
+        /// <param name="destIndex">
+        /// Zero-based index of destination index.
+        /// </param>
         protected void MoveItem(IReorderableListAdaptor adaptor, int sourceIndex, int destIndex) {
             adaptor.Move(sourceIndex, destIndex);
 
@@ -1372,7 +1453,8 @@ namespace FullInspector.Rotorz.ReorderableList {
         }
 
         /// <summary>
-        /// Add item at end of list and raises the event <see cref="ItemInserted"/>.
+        /// Add item at end of list and raises the event <see
+        /// cref="ItemInserted"/>.
         /// </summary>
         /// <param name="adaptor">Reorderable list adaptor.</param>
         protected void AddItem(IReorderableListAdaptor adaptor) {
@@ -1387,7 +1469,8 @@ namespace FullInspector.Rotorz.ReorderableList {
         }
 
         /// <summary>
-        /// Insert item at specified index and raises the event <see cref="ItemInserted"/>.
+        /// Insert item at specified index and raises the event <see
+        /// cref="ItemInserted"/>.
         /// </summary>
         /// <param name="adaptor">Reorderable list adaptor.</param>
         /// <param name="itemIndex">Zero-based index of item.</param>
@@ -1403,7 +1486,8 @@ namespace FullInspector.Rotorz.ReorderableList {
         }
 
         /// <summary>
-        /// Duplicate specified item and raises the event <see cref="ItemInserted"/>.
+        /// Duplicate specified item and raises the event <see
+        /// cref="ItemInserted"/>.
         /// </summary>
         /// <param name="adaptor">Reorderable list adaptor.</param>
         /// <param name="itemIndex">Zero-based index of item.</param>
@@ -1422,12 +1506,16 @@ namespace FullInspector.Rotorz.ReorderableList {
         /// Remove specified item.
         /// </summary>
         /// <remarks>
-        /// <para>The event <see cref="ItemRemoving"/> is raised prior to removing item and allows
-        /// removal to be cancelled.</para>
+        /// <para>
+        /// The event <see cref="ItemRemoving"/> is raised prior to removing item
+        /// and allows removal to be cancelled.
+        /// </para>
         /// </remarks>
         /// <param name="adaptor">Reorderable list adaptor.</param>
         /// <param name="itemIndex">Zero-based index of item.</param>
-        /// <returns>Returns a value of <c>false</c> if operation was cancelled.</returns>
+        /// <returns>
+        /// Returns a value of <c>false</c> if operation was cancelled.
+        /// </returns>
         protected bool RemoveItem(IReorderableListAdaptor adaptor, int itemIndex) {
             var args = new ItemRemovingEventArgs(adaptor, itemIndex);
             OnItemRemoving(args);
@@ -1446,11 +1534,15 @@ namespace FullInspector.Rotorz.ReorderableList {
         /// Remove all items from list.
         /// </summary>
         /// <remarks>
-        /// <para>The event <see cref="ItemRemoving"/> is raised for each item prior to clearing
-        /// array and allows entire operation to be cancelled.</para>
+        /// <para>
+        /// The event <see cref="ItemRemoving"/> is raised for each item prior to
+        /// clearing array and allows entire operation to be cancelled.
+        /// </para>
         /// </remarks>
         /// <param name="adaptor">Reorderable list adaptor.</param>
-        /// <returns>Returns a value of <c>false</c> if operation was cancelled.</returns>
+        /// <returns>
+        /// Returns a value of <c>false</c> if operation was cancelled.
+        /// </returns>
         protected bool ClearAll(IReorderableListAdaptor adaptor) {
             if (adaptor.Count == 0)
                 return true;
@@ -1472,8 +1564,6 @@ namespace FullInspector.Rotorz.ReorderableList {
             return true;
         }
 
-        #endregion
-
+        #endregion Methods
     }
-
 }

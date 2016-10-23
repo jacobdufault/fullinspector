@@ -30,7 +30,8 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Returns an instance of the given type. Recycles an old type if possible.
+        /// Returns an instance of the given type. Recycles an old type if
+        /// possible.
         /// </summary>
         public T GetInstance() {
             if (_reusable.Count == 0) {

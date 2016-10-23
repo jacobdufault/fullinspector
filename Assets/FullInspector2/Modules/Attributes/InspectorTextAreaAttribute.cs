@@ -15,7 +15,8 @@ namespace FullInspector {
             set { Height = value * 17; }
         }
 
-        public InspectorTextAreaAttribute() : this(250) { }
+        public InspectorTextAreaAttribute() : this(250) {
+        }
 
         public InspectorTextAreaAttribute(float height) {
             Height = height;

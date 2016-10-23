@@ -1,7 +1,7 @@
 ﻿namespace FullInspector {
     /// <summary>
-    /// A comment can have an associated message box info header associated with it. This enum
-    /// describes the header options.
+    /// A comment can have an associated message box info header associated with
+    /// it. This enum describes the header options.
     /// </summary>
     public enum CommentType {
         /// <summary>

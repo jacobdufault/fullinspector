@@ -1,14 +1,14 @@
-﻿using FullInspector.Internal;
-using FullSerializer.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using FullInspector.Internal;
+using FullSerializer.Internal;
 using UnityEngine;
 using UnityObject = UnityEngine.Object;
 
 namespace FullInspector.Internal {
     /// <summary>
-    /// Used by the fiValue property drawer to get a common editing API for all of
-    /// the fiValue values.
+    /// Used by the fiValue property drawer to get a common editing API for all
+    /// of the fiValue values.
     /// </summary>
     public interface fiIValueProxyAPI {
         object Value { get; set; }
@@ -25,8 +25,8 @@ namespace FullInspector.Internal {
 
 namespace FullInspector {
     /// <summary>
-    /// An fiValue type that does not do any serialization. Use this if you're just
-    /// interested in getting the inspector.
+    /// An fiValue type that does not do any serialization. Use this if you're
+    /// just interested in getting the inspector.
     /// </summary>
     public abstract class fiValueNullSerializer<T> : fiValueProxyEditor, fiIValueProxyAPI {
         public T Value;
@@ -46,25 +46,27 @@ namespace FullInspector {
 
         void fiIValueProxyAPI.LoadState() {
         }
-        #endregion
+        #endregion fiIValueProxyAPI
     }
 
     /// <summary>
-    /// fiValue allows you to use the Full Inspector inspecting and serialization engine on a MonoBehaviour derived type,
-    /// which allows for seamless compability with other assets. Usage of this type is easy; simply derive a serializable
-    /// custom class with the generic parameter instantiated.
+    /// fiValue allows you to use the Full Inspector inspecting and serialization
+    /// engine on a MonoBehaviour derived type, which allows for seamless
+    /// compability with other assets. Usage of this type is easy; simply derive
+    /// a serializable custom class with the generic parameter instantiated.
     ///
-    /// **IMPORTANT**: Due to limitations/a bug within Unity's serializedProperty API, the derived fiValue type cannot be
-    /// in a namespace.  Sorry :(
+    /// **IMPORTANT**: Due to limitations/a bug within Unity's serializedProperty
+    ///   API, the derived fiValue type cannot be in a namespace. Sorry :(
     /// </summary>
     /// <remarks>
-    /// Because fiValue is deserialized using ISerializationCallbackReceiver which operates off the main thread, only
-    /// Full Serializer can be used as the active serialization engine -- none of the other ones are thread-safe w.r.t.
-    /// Unity's requirements (for example, you cannot call operator== off the main thread).
+    /// Because fiValue is deserialized using ISerializationCallbackReceiver
+    /// which operates off the main thread, only Full Serializer can be used as
+    /// the active serialization engine -- none of the other ones are thread-safe
+    /// w.r.t. Unity's requirements (for example, you cannot call operator== off
+    /// the main thread).
     /// </remarks>
     /// <typeparam name="T">The type of value to serialize.</typeparam>
     public abstract class fiValue<T> : fiValueProxyEditor, fiIValueProxyAPI, ISerializationCallbackReceiver {
-
         /// <summary>
         /// The value that can be manipulated.
         /// </summary>
@@ -80,11 +82,10 @@ namespace FullInspector {
             Serialize();
         }
 
-
         void ISerializationCallbackReceiver.OnAfterDeserialize() {
             Deserialize();
         }
-        #endregion
+        #endregion ISerializationCallbackReceiver
 
         #region fiIValueProxyAPI
         object fiIValueProxyAPI.Value {
@@ -96,7 +97,6 @@ namespace FullInspector {
             }
         }
 
-
         void fiIValueProxyAPI.SaveState() {
             Serialize();
         }
@@ -104,7 +104,7 @@ namespace FullInspector {
         void fiIValueProxyAPI.LoadState() {
             Deserialize();
         }
-        #endregion
+        #endregion fiIValueProxyAPI
 
         #region Serialization
         private void Serialize() {
@@ -144,6 +144,6 @@ namespace FullInspector {
                 }
             }
         }
-        #endregion
+        #endregion Serialization
     }
 }

@@ -9,7 +9,8 @@ namespace FullInspector.LayoutToolkit {
     /// </summary>
     public enum fiExpandMode {
         /// <summary>
-        /// The item does not have a fixed with and should expand to fill extra space.
+        /// The item does not have a fixed with and should expand to fill extra
+        /// space.
         /// </summary>
         Expand,
 
@@ -34,7 +35,8 @@ namespace FullInspector.LayoutToolkit {
         private List<SectionItem> _items = new List<SectionItem>();
         private fiLayout _defaultRule = new fiVerticalLayout();
 
-        public fiHorizontalLayout() { }
+        public fiHorizontalLayout() {
+        }
         public fiHorizontalLayout(fiLayout defaultRule) {
             _defaultRule = defaultRule;
         }

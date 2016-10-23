@@ -1,19 +1,17 @@
-// Copyright (c) 2012-2013 Rotorz Limited. All rights reserved. Use of this source code is governed
-// by a BSD-style license that can be found in the LICENSE file.
-
-using UnityEngine;
-using UnityEditor;
+// Copyright (c) 2012-2013 Rotorz Limited. All rights reserved. Use of this
+// source code is governed by a BSD-style license that can be found in the
+// LICENSE file.
 
 using System;
 using System.Reflection;
+using UnityEditor;
+using UnityEngine;
 
 namespace FullInspector.Rotorz.ReorderableList.Internal {
-
     /// <summary>
     /// Utility functions to assist with GUIs.
     /// </summary>
     internal static class RotorzGUIHelper {
-
         static RotorzGUIHelper() {
             var tyGUIClip = typeof(GUI).Assembly.GetType("UnityEngine.GUIClip");
             if (tyGUIClip != null) {
@@ -41,8 +39,10 @@ namespace FullInspector.Rotorz.ReorderableList.Internal {
 
         public static bool VisibleRectEnabled {
             get {
-                // TODO: Rotorz clipping appears to be broken at the moment. Since we have the large-collection editor,
-                //       we can likely get away with not supporting it, but we really should at some-point in the future.
+                // TODO: Rotorz clipping appears to be broken at the moment.
+                //       Since we have the large-collection editor, we can likely
+                //       get away with not supporting it, but we really should at
+                //       some-point in the future.
                 return false;
 
 #if false
@@ -80,7 +80,5 @@ namespace FullInspector.Rotorz.ReorderableList.Internal {
         /// Focus control and text editor where applicable.
         /// </summary>
         public static Action<string> FocusTextInControl;
-
     }
-
 }

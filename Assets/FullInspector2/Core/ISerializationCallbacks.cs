@@ -1,12 +1,13 @@
 ﻿namespace FullInspector {
     /// <summary>
-    /// Extend this interface on any BaseBehavior or BaseScriptableObject type to receive callbacks
-    /// for when Full Inspector runs serialization. These callbacks may or may not get invoked on
-    /// the main Unity thread.
+    /// Extend this interface on any BaseBehavior or BaseScriptableObject type to
+    /// receive callbacks for when Full Inspector runs serialization. These
+    /// callbacks may or may not get invoked on the main Unity thread.
     /// </summary>
     /// <remarks>
-    /// These functions will *not* get invoked if the type does not extend ISerializedObject (either
-    /// BaseScriptableObject, BaseBehavior, or BaseObject). Use the serializer-specific callbacks for that.
+    /// These functions will *not* get invoked if the type does not extend
+    /// ISerializedObject (either BaseScriptableObject, BaseBehavior, or
+    /// BaseObject). Use the serializer-specific callbacks for that.
     /// </remarks>
     public interface ISerializationCallbacks {
         /// <summary>

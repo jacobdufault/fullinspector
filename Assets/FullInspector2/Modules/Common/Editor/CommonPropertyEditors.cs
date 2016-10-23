@@ -6,14 +6,14 @@ using UnityEngine;
 
 namespace FullInspector.Modules {
     /// <summary>
-    /// Provides an Edit field that uses a string so that types of varying bit width (greater than
-    /// 32 bits, which is what IntField/FloatField is limited to) can be represented properly in the
-    /// editor without losing data.
+    /// Provides an Edit field that uses a string so that types of varying bit
+    /// width (greater than 32 bits, which is what IntField/FloatField is limited
+    /// to) can be represented properly in the editor without losing data.
     /// </summary>
     internal static class NumericTypeEditorHelper {
         /// <summary>
-        /// Edit the given type using a TextField. Convert.ChangeType will be used to convert the
-        /// given type T to and from a string.
+        /// Edit the given type using a TextField. Convert.ChangeType will be
+        /// used to convert the given type T to and from a string.
         /// </summary>
         public static T Edit<T>(Rect region, GUIContent label, T instance) {
             var asString = (string)Convert.ChangeType(instance, typeof(string));
@@ -204,8 +204,8 @@ namespace FullInspector.Modules {
         }
 
         public override float GetElementHeight(GUIContent label, Vector4 element, fiGraphMetadata metadata) {
-            // Even if the label is empty, the Vector4Field will refuse to display one just one
-            // line.
+            // Even if the label is empty, the Vector4Field will refuse to
+            // display one just one line.
             return EditorStyles.numberField.CalcHeight(GUIContent.none, 1000) +
                 EditorStyles.label.CalcHeight(label, 1000);
         }
@@ -213,7 +213,6 @@ namespace FullInspector.Modules {
 
     [CustomPropertyEditor(typeof(Bounds))]
     public class BoundsPropertyEditor : PropertyEditor<Bounds> {
-
         public override Bounds Edit(Rect region, GUIContent label, Bounds element, fiGraphMetadata metadata) {
             return EditorGUI.BoundsField(region, label, element);
         }
@@ -228,7 +227,6 @@ namespace FullInspector.Modules {
 
     [CustomPropertyEditor(typeof(Color))]
     public class ColorPropertyEditor : PropertyEditor<Color> {
-
         public override Color Edit(Rect region, GUIContent label, Color element, fiGraphMetadata metadata) {
             return EditorGUI.ColorField(region, label, element);
         }
@@ -240,7 +238,6 @@ namespace FullInspector.Modules {
 
     [CustomPropertyEditor(typeof(AnimationCurve))]
     public class AnimationCurvePropertyEditor : PropertyEditor<AnimationCurve> {
-
         public override AnimationCurve Edit(Rect region, GUIContent label, AnimationCurve element, fiGraphMetadata metadata) {
             if (element == null) {
                 element = new AnimationCurve();

@@ -1,5 +1,5 @@
-﻿using FullSerializer.Internal;
-using System.Collections;
+﻿using System.Collections;
+using FullSerializer.Internal;
 using UnityEditor;
 using UnityEngine;
 

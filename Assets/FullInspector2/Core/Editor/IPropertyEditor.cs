@@ -7,17 +7,17 @@ namespace FullInspector {
     /// Marks an object as a property editor.
     /// </summary>
     /// <remarks>
-    /// This interface is split up into two parts, the core one that user's typically access,
-    /// IPropertyEditor, and one that implements the actual editing API, IPropertyEditorEditAPI.
-    /// <br />
-    /// You almost certainly want to extend PropertyEditor{T} instead of this
-    /// interface. It provides an automatic implementation for all methods and gives type-safety to
-    /// your editor.
+    /// This interface is split up into two parts, the core one that user's
+    /// typically access, IPropertyEditor, and one that implements the actual
+    /// editing API, IPropertyEditorEditAPI. <br/> You almost certainly want to
+    /// extend PropertyEditor{T} instead of this interface. It provides an
+    /// automatic implementation for all methods and gives type-safety to your
+    /// editor.
     /// </remarks>
     public interface IPropertyEditor {
         /// <summary>
-        /// The editing chain that this editor is within. This can be used to fetch the next editor
-        /// to use and the like.
+        /// The editing chain that this editor is within. This can be used to
+        /// fetch the next editor to use and the like.
         /// </summary>
         PropertyEditorChain EditorChain {
             get;
@@ -31,31 +31,35 @@ namespace FullInspector {
     }
 
     /// <summary>
-    /// An optional annotation for a property editor to specify its default foldout state.
+    /// An optional annotation for a property editor to specify its default
+    /// foldout state.
     /// </summary>
     public interface IPropertyEditorDefaultFoldoutState {
         /// <summary>
-        /// The default foldout state for the property editor. If set to false, then the editor
-        /// will be collapsed immediately.
+        /// The default foldout state for the property editor. If set to false,
+        /// then the editor will be collapsed immediately.
         /// </summary>
         bool DefaultFoldoutState { get; }
     }
 
     /// <summary>
-    /// A property editor is the core editing abstraction used within FI. This allows for overriding
-    /// of the default inspector logic for elements of a custom type. PropertyEditors are extremely
-    /// similar to Unity's PropertyDrawers, except that they support generics and are fully
+    /// A property editor is the core editing abstraction used within FI. This
+    /// allows for overriding of the default inspector logic for elements of a
+    /// custom type. PropertyEditors are extremely similar to Unity's
+    /// PropertyDrawers, except that they support generics and are fully
     /// type-safe.
     /// </summary>
     /// <remarks>
-    /// Recall that to get FI to actually use the property editor, you need to add the
-    /// [CustomPropertyEditor] attribute to the type with appropriate parameters.
+    /// Recall that to get FI to actually use the property editor, you need to
+    /// add the [CustomPropertyEditor] attribute to the type with appropriate
+    /// parameters.
     /// </remarks>
-    /// <typeparam name="TElement">The element type that the editor will edit</typeparam>
+    /// <typeparam name="TElement">
+    /// The element type that the editor will edit
+    /// </typeparam>
     public abstract class PropertyEditor<TElement> : IPropertyEditor, IPropertyEditorEditAPI {
-
-        // Use the magic of explicit interfaces to provide an Edit function that both accepts and
-        // returns the proper type.
+        // Use the magic of explicit interfaces to provide an Edit function that
+        // both accepts and returns the proper type.
 
         // See parent interface types for comments.
 
@@ -95,7 +99,7 @@ namespace FullInspector {
         public virtual bool DisplaysStandardLabel {
             get { return true; }
         }
-        #endregion
+        #endregion IPropertyEditorEditAPI
 
         #region Virtual Methods
         public virtual TElement Edit(Rect region, GUIContent label, TElement element, fiGraphMetadata metadata) {
@@ -115,6 +119,6 @@ namespace FullInspector {
         public virtual bool CanEdit(Type type) {
             return typeof(TElement).IsAssignableFrom(type);
         }
-        #endregion
+        #endregion Virtual Methods
     }
 }

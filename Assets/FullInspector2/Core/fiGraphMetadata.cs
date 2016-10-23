@@ -5,9 +5,10 @@ using UnityObject = UnityEngine.Object;
 
 namespace FullInspector {
     /// <summary>
-    /// A simple wrapper tye for fiGraphMetadata so that we can have a different API signature
-    /// when calling IPropertyEditor.Edit/GetHeight so that it is obvious that you need to call
-    /// metadata.Enter(identifier) instead of passing in metadata.
+    /// A simple wrapper tye for fiGraphMetadata so that we can have a different
+    /// API signature when calling IPropertyEditor.Edit/GetHeight so that it is
+    /// obvious that you need to call metadata.Enter(identifier) instead of
+    /// passing in metadata.
     /// </summary>
     public struct fiGraphMetadataChild {
         public fiGraphMetadata Metadata;
@@ -19,27 +20,31 @@ namespace FullInspector {
     public interface IGraphMetadataItemNotPersistent { }
     public interface IGraphMetadataItemPersistent {
         /// <summary>
-        /// Should this metadata item be serialized? If it is in the default state, then there
-        /// is no need to serialize it as it can just be recreated next time.
+        /// Should this metadata item be serialized? If it is in the default
+        /// state, then there is no need to serialize it as it can just be
+        /// recreated next time.
         /// </summary>
         bool ShouldSerialize();
     }
 
     /// <summary>
-    /// The graph metadata system allows for metadata storage based on the location of an item in
-    /// the inspector, regardless of the actual object instance. The graph metadata system requires
-    /// minor user support -- you simply have to pass an associated key when entering into
-    /// child metadata items.
+    /// The graph metadata system allows for metadata storage based on the
+    /// location of an item in the inspector, regardless of the actual object
+    /// instance. The graph metadata system requires minor user support -- you
+    /// simply have to pass an associated key when entering into child metadata
+    /// items.
     /// </summary>
     public class fiGraphMetadata {
         #region Serialization
         /// <summary>
-        /// Returns true if the metadata should be reserialized. Because metadata restoration is lazy, we
-        /// only want to reserialize metadata if we have restored the actual metadata structure. Otherwise,
-        /// if we serialize before restoring we will lose all of the persistent metadata.
+        /// Returns true if the metadata should be reserialized. Because metadata
+        /// restoration is lazy, we only want to reserialize metadata if we have
+        /// restored the actual metadata structure. Otherwise, if we serialize
+        /// before restoring we will lose all of the persistent metadata.
         /// </summary>
         public bool ShouldSerialize() {
-            // we can check to see if we restored by checking if we have any children
+            // we can check to see if we restored by checking if we have any
+            // children
             return
                 _childrenInt.IsEmpty == false ||
                 _childrenString.IsEmpty == false;
@@ -47,7 +52,6 @@ namespace FullInspector {
 
         public void Serialize<TPersistentData>(out string[] keys_, out TPersistentData[] values_)
             where TPersistentData : IGraphMetadataItemPersistent {
-
             var keys = new List<string>();
             var values = new List<TPersistentData>();
 
@@ -58,7 +62,6 @@ namespace FullInspector {
         }
         private void AddSerializeData<TPersistentData>(List<string> keys, List<TPersistentData> values)
             where TPersistentData : IGraphMetadataItemPersistent {
-
             foreach (var item in _metadata.Items) {
                 if (item.Key == typeof(TPersistentData)) {
                     if (((IGraphMetadataItemPersistent)item.Value).ShouldSerialize()) {
@@ -90,24 +93,26 @@ namespace FullInspector {
                 allValues.Add(values[i]);
             }
         }
-        #endregion
+        #endregion Serialization
 
         #region Culling
         /// <summary>
-        /// In order to avoid accumulating large amounts of metadata that is no longer useful or
-        /// used, the graph metadata system supports automatic culling of unused metadata. If you
-        /// wrap a set of code in a Begin/EndCullZone function calls, then any metadata that is
-        /// not used between the Begin/End calls will be automatically released. This includes
-        /// child metadata items.
+        /// In order to avoid accumulating large amounts of metadata that is no
+        /// longer useful or used, the graph metadata system supports automatic
+        /// culling of unused metadata. If you wrap a set of code in a
+        /// Begin/EndCullZone function calls, then any metadata that is not used
+        /// between the Begin/End calls will be automatically released. This
+        /// includes child metadata items.
         /// </summary>
         /// <remarks>
-        /// Note that BeginCullZone() and EndCullZone() do *not* stack. Calling BeginCullZone()
-        /// multiple times is like calling it only once. Calling EndCullZone() without having first
-        /// called BeginCullZone() will do nothing.
+        /// Note that BeginCullZone() and EndCullZone() do *not* stack. Calling
+        /// BeginCullZone() multiple times is like calling it only once. Calling
+        /// EndCullZone() without having first called BeginCullZone() will do
+        /// nothing.
         /// </remarks>
         /// <remarks>
-        /// You almost certainly will not need to use this function. The IPropertyEditorExtensions
-        /// engine handles it automatically.
+        /// You almost certainly will not need to use this function. The
+        /// IPropertyEditorExtensions engine handles it automatically.
         /// </remarks>
         public void BeginCullZone() {
             _childrenInt.BeginCullZone();
@@ -119,26 +124,28 @@ namespace FullInspector {
         /// This ends a culling zone. See docs on BeginCullZone.
         /// </summary>
         /// <remarks>
-        /// You should not need to use this function -- it is for internal purposes. The
-        /// IPropertyEditorExtensions engine handles it automatically.
+        /// You should not need to use this function -- it is for internal
+        /// purposes. The IPropertyEditorExtensions engine handles it
+        /// automatically.
         /// </remarks>
         public void EndCullZone() {
             _childrenInt.EndCullZone();
             _childrenString.EndCullZone();
             _metadata.EndCullZone();
         }
-        #endregion
+        #endregion Culling
 
         /// <summary>
         /// The child metadata objects (at construction time).
         /// </summary>
         /// <remarks>
-        /// This can go out of date if the metadata graph is adjusted by property editors! It's
-        /// useful for debugging purposes, but don't rely on it for the actual edit graph.
+        /// This can go out of date if the metadata graph is adjusted by property
+        /// editors! It's useful for debugging purposes, but don't rely on it for
+        /// the actual edit graph.
         /// </remarks>
         /// <remarks>
-        /// We use two dictionaries instead of just one (that takes an object key) to avoid boxing
-        /// ints.
+        /// We use two dictionaries instead of just one (that takes an object
+        /// key) to avoid boxing ints.
         /// </remarks>
         [ShowInInspector]
         private CullableDictionary<int, fiGraphMetadata, IntDictionary<fiGraphMetadata>> _childrenInt;
@@ -169,16 +176,15 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// The metadata context is simply the parent object which generated
-        /// this metadata. For example, if there is a struct |S| with members
-        /// |a|, |b|, |c|, then the context for the metadata on |a|, |b|, and
-        /// |c| is the instance of |S| that owns them.
-        /// 
+        /// The metadata context is simply the parent object which generated this
+        /// metadata. For example, if there is a struct |S| with members |a|,
+        /// |b|, |c|, then the context for the metadata on |a|, |b|, and |c| is
+        /// the instance of |S| that owns them.
+        ///
         /// Context can be gathered recursively by examining the |Parent|
         /// metadata instance.
         /// </summary>
         public object Context;
-
 
         private string _accessPath;
         public string Path {
@@ -221,28 +227,30 @@ namespace FullInspector {
 
         #region Metadata Migration APIs
         /// <summary>
-        /// Forcibly change the metadata that the given identifier points to to the specified
-        /// instance. This is extremely useful if the inspector graph has been modified and the
-        /// editor needs to make an adjustment to the metadata so that the metadata graph remains
-        /// consistent with the actual inspector graph.
+        /// Forcibly change the metadata that the given identifier points to to
+        /// the specified instance. This is extremely useful if the inspector
+        /// graph has been modified and the editor needs to make an adjustment to
+        /// the metadata so that the metadata graph remains consistent with the
+        /// actual inspector graph.
         /// </summary>
         /// <remarks>
-        /// You do not need to worry about removing child metadata -- they will be automatically
-        /// removed.
+        /// You do not need to worry about removing child metadata -- they will
+        /// be automatically removed.
         /// </remarks>
         public void SetChild(int identifier, fiGraphMetadata metadata) {
             _childrenInt[identifier] = metadata;
             metadata.RebuildAccessPath(identifier.ToString());
         }
         /// <summary>
-        /// Forcibly change the metadata that the given identifier points to to the specified
-        /// instance. This is extremely useful if the inspector graph has been modified and the
-        /// editor needs to make an adjustment to the metadata so that the metadata graph remains
-        /// consistent with the actual inspector graph.
+        /// Forcibly change the metadata that the given identifier points to to
+        /// the specified instance. This is extremely useful if the inspector
+        /// graph has been modified and the editor needs to make an adjustment to
+        /// the metadata so that the metadata graph remains consistent with the
+        /// actual inspector graph.
         /// </summary>
         /// <remarks>
-        /// You do not need to worry about removing child metadata -- they will be automatically
-        /// removed.
+        /// You do not need to worry about removing child metadata -- they will
+        /// be automatically removed.
         /// </remarks>
         public void SetChild(string identifier, fiGraphMetadata metadata) {
             _childrenString[identifier] = metadata;
@@ -258,7 +266,8 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// Helper method that automates metadata migration for array based graph reorders.
+        /// Helper method that automates metadata migration for array based graph
+        /// reorders.
         /// </summary>
         public static void MigrateMetadata<T>(fiGraphMetadata metadata, T[] previous, T[] updated) {
             var migrations = ComputeNeededMigrations(previous, updated);
@@ -271,7 +280,8 @@ namespace FullInspector {
                 fromKeys[i] = metadata.Enter(migrations[i].OldIndex).Metadata._accessPath;
                 toKeys[i] = metadata.Enter(migrations[i].NewIndex).Metadata._accessPath;
             }*/
-            // fiPersistentMetadata.Migrate(metadata.TargetObject, fromKeys, toKeys);
+            // fiPersistentMetadata.Migrate(metadata.TargetObject, fromKeys,
+            // toKeys);
 
             // migrate the graph items
             List<fiGraphMetadata> copiedGraphs = new List<fiGraphMetadata>(migrations.Count);
@@ -285,7 +295,8 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// Helper method that automates metadata migration for array based graph reorders.
+        /// Helper method that automates metadata migration for array based graph
+        /// reorders.
         /// </summary>
         public static List<MetadataMigration> ComputeNeededMigrations<T>(T[] previous, T[] updated) {
             var migrations = new List<MetadataMigration>();
@@ -303,10 +314,10 @@ namespace FullInspector {
 
             return migrations;
         }
-        #endregion
+        #endregion Metadata Migration APIs
         /// <summary>
-        /// Get a child metadata instance for the given identifier. This is useful for collections
-        /// where each item maps to a unique index.
+        /// Get a child metadata instance for the given identifier. This is
+        /// useful for collections where each item maps to a unique index.
         /// </summary>
         public fiGraphMetadataChild Enter(int childIdentifier, object context) {
             fiGraphMetadata metadata;
@@ -321,8 +332,9 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// Get a child metadata instance for the given identifier. This is useful for general
-        /// classes and structs where an object has a set of discrete named fields or properties.
+        /// Get a child metadata instance for the given identifier. This is
+        /// useful for general classes and structs where an object has a set of
+        /// discrete named fields or properties.
         /// </summary>
         public fiGraphMetadataChild Enter(string childIdentifier, object context) {
             fiGraphMetadata metadata;
@@ -342,14 +354,12 @@ namespace FullInspector {
 
         public T GetPersistentMetadata<T>()
             where T : IGraphMetadataItemPersistent, new() {
-
             bool wasCreated;
             return GetPersistentMetadata<T>(out wasCreated);
         }
 
         public T GetPersistentMetadata<T>(out bool wasCreated)
             where T : IGraphMetadataItemPersistent, new() {
-
             return GetCommonMetadata<T>(out wasCreated);
         }
 
@@ -368,7 +378,6 @@ namespace FullInspector {
 
         private T GetCommonMetadata<T>(out bool wasCreated)
             where T : new() {
-
             object val;
             if (_metadata.TryGetValue(typeof(T), out val) == false) {
                 val = new T();
@@ -383,7 +392,8 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// Get a metadata instance for an object, searching up through parent chain
+        /// Get a metadata instance for an object, searching up through parent
+        /// chain
         /// </summary>
         /// <typeparam name="T">The type of metadata instance.</typeparam>
         public T GetInheritedMetadata<T>() where T : IGraphMetadataItemNotPersistent, new() {
@@ -405,7 +415,9 @@ namespace FullInspector {
         /// </summary>
         /// <typeparam name="T">The type of metadata instance.</typeparam>
         /// <param name="metadata">The metadata instance.</param>
-        /// <returns>True if a metadata instance was found, false otherwise.</returns>
+        /// <returns>
+        /// True if a metadata instance was found, false otherwise.
+        /// </returns>
         public bool TryGetMetadata<T>(out T metadata) where T : IGraphMetadataItemNotPersistent, new() {
             object item;
             bool result = _metadata.TryGetValue(typeof(T), out item);
@@ -415,11 +427,16 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// Attempts to fetch a pre-existing metadata instance for an object, searching up through the parent chain
+        /// Attempts to fetch a pre-existing metadata instance for an object,
+        /// searching up through the parent chain
         /// </summary>
         /// <typeparam name="T">The type of metadata instance.</typeparam>
-        /// <param name="metadata">The found metadata instance. Undefined if there was no metadata.</param>
-        /// <returns>True if a metadata instance was found, false otherwise.</returns>
+        /// <param name="metadata">
+        /// The found metadata instance. Undefined if there was no metadata.
+        /// </param>
+        /// <returns>
+        /// True if a metadata instance was found, false otherwise.
+        /// </returns>
         public bool TryGetInheritedMetadata<T>(out T metadata) where T : IGraphMetadataItemNotPersistent, new() {
             object item;
             if (_metadata.TryGetValue(typeof(T), out item)) {
@@ -437,7 +454,8 @@ namespace FullInspector {
     }
 
     /// <summary>
-    /// A (partial) dictionary implementation that has been optimized for fast >= 0 int access.
+    /// A (partial) dictionary implementation that has been optimized for fast
+    /// &gt;= 0 int access.
     /// </summary>
     internal class IntDictionary<TValue> : IDictionary<int, TValue> {
         private List<fiOption<TValue>> _positives = new List<fiOption<TValue>>();

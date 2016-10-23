@@ -7,7 +7,8 @@ using FullSerializer.Internal;
 namespace FullInspector {
     public sealed class BehaviorEditor {
         /// <summary>
-        /// A list of all types that have a CustomBehaviorEditorAttribute attribute.
+        /// A list of all types that have a CustomBehaviorEditorAttribute
+        /// attribute.
         /// </summary>
         private static List<Type> _editorTypes;
 
@@ -31,15 +32,15 @@ namespace FullInspector {
                 where fsPortableReflection.HasAttribute<CustomBehaviorEditorAttribute>(type)
 
                 select type) {
-
                 _editorTypes.Add(editorType);
             }
         }
 
         /// <summary>
-        /// If there are multiple user-defined property editors that report that they can edit a
-        /// specific type, we sort the applicability of the property editor based on how close it's
-        /// reported edited type is to the actual property type. This allows for, say, the
+        /// If there are multiple user-defined property editors that report that
+        /// they can edit a specific type, we sort the applicability of the
+        /// property editor based on how close it's reported edited type is to
+        /// the actual property type. This allows for, say, the
         /// IListPropertyEditor to override the ICollectionPropertyEditor.
         /// </summary>
         private static void SortByPropertyTypeRelevance(List<IBehaviorEditor> editors) {
@@ -56,7 +57,8 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// Returns a set of property editors that can be used to edit the given property type.
+        /// Returns a set of property editors that can be used to edit the given
+        /// property type.
         /// </summary>
         private static IBehaviorEditor CreateEditor(Type behaviorType) {
             // user-defined behavior editors
@@ -78,10 +80,12 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// Returns a behavior editor that can be used to edit the given behavior type.
+        /// Returns a behavior editor that can be used to edit the given behavior
+        /// type.
         /// </summary>
-        /// <param name="behaviorType">The type of behavior to edit. This should derive from
-        /// BaseBehavior.</param>
+        /// <param name="behaviorType">
+        /// The type of behavior to edit. This should derive from BaseBehavior.
+        /// </param>
         public static IBehaviorEditor Get(Type behaviorType) {
             IBehaviorEditor editor;
             if (_cachedBehaviorEditors.TryGetValue(behaviorType, out editor) == false) {
@@ -91,5 +95,4 @@ namespace FullInspector {
             return editor;
         }
     }
-
 }

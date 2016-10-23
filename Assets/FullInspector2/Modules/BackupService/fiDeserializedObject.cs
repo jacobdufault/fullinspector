@@ -1,13 +1,14 @@
-﻿using FullInspector.Internal;
-using FullSerializer.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using FullInspector.Internal;
+using FullSerializer.Internal;
 
 namespace FullInspector.BackupService {
     /// <summary>
-    /// Marks if a property should be restored when restoring a backup. This is shared as a
-    /// reference across fiSerializedProperty and fiDeserializedProperty, so modifying it in
-    /// one location also modifies it in the other.
+    /// Marks if a property should be restored when restoring a backup. This is
+    /// shared as a reference across fiSerializedProperty and
+    /// fiDeserializedProperty, so modifying it in one location also modifies it
+    /// in the other.
     /// </summary>
     [Serializable]
     public class fiEnableRestore {
@@ -15,8 +16,8 @@ namespace FullInspector.BackupService {
     }
 
     /// <summary>
-    /// A serialized object that has been deserialized. This is used to show the user the current
-    /// deserialized value.
+    /// A serialized object that has been deserialized. This is used to show the
+    /// user the current deserialized value.
     /// </summary>
     public class fiDeserializedObject {
         public fiDeserializedObject(fiSerializedObject serializedState) {

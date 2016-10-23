@@ -1,7 +1,7 @@
-﻿using FullInspector.Rotorz.ReorderableList;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FullInspector.Rotorz.ReorderableList;
 using UnityEngine;
 
 namespace FullInspector.Internal {
@@ -38,10 +38,11 @@ namespace FullInspector.Internal {
         private T[] _collectionCache;
 
         /// <summary>
-        /// For performance reasons, the CollectionAdaptor stores an array version of the
-        /// collection. If the adapted collection has been structurally modified, for example, an
-        /// item has been added, then the local cache is invalid. Calling this method updates the
-        /// cache, which will restore proper adapter semantics.
+        /// For performance reasons, the CollectionAdaptor stores an array
+        /// version of the collection. If the adapted collection has been
+        /// structurally modified, for example, an item has been added, then the
+        /// local cache is invalid. Calling this method updates the cache, which
+        /// will restore proper adapter semantics.
         /// </summary>
         public void InvalidateCache(bool migrateMetadata) {
             T[] oldCache = _collectionCache;
@@ -56,7 +57,6 @@ namespace FullInspector.Internal {
 
         public CollectionAdaptor(ICollection<T> collection, ItemDrawer drawer, ItemHeight height,
             fiGraphMetadata metadata) {
-
             _metadata = metadata;
             _collection = collection;
             _drawer = drawer;
@@ -121,15 +121,15 @@ namespace FullInspector.Internal {
             T element = _collectionCache[index];
             T updated = _drawer(position, element, _metadata.Enter(index, _collection));
 
-            // If the modified item is equal to the updated item, then we don't have to replace it
-            // in the collection.
+            // If the modified item is equal to the updated item, then we don't
+            // have to replace it in the collection.
             if (EqualityComparer<T>.Default.Equals(element, updated) == false) {
                 fiLog.Log(GetType(), "Removing old element " + element + " (at index " + index + ") and adding new element " + updated);
-                
-                // Removing/adding the item is considered an atomic operation; if any
-                // part of it fails then we do not want to modify the collection (ie, if
-                // adding the updated element fails in a dictionary because the key already
-                // exists).
+
+                // Removing/adding the item is considered an atomic operation; if
+                // any part of it fails then we do not want to modify the
+                // collection (ie, if adding the updated element fails in a
+                // dictionary because the key already exists).
 
                 bool didRemove = false;
                 try {
@@ -138,10 +138,11 @@ namespace FullInspector.Internal {
                     _collection.Add(updated);
                 }
                 catch (Exception) {
-                    // Swallow the exception - usually it will be stating that an existing entry
-                    // already exists in, say, the dictionary
+                    // Swallow the exception - usually it will be stating that an
+                    // existing entry already exists in, say, the dictionary
 
-                    // Treat the entire operation as atomic; undo previous work if anything failed
+                    // Treat the entire operation as atomic; undo previous work
+                    // if anything failed
                     if (didRemove) _collection.Add(element);
                 }
 

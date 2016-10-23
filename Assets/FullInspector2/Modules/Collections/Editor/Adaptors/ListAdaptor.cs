@@ -7,9 +7,11 @@ namespace FullInspector.Internal {
     /// Reorderable list adapter for generic list.
     /// </summary>
     /// <remarks>
-    /// <para>This adapter can be subclassed to add special logic to item height calculation. You
-    /// may want to implement a custom adapter class where specialized functionality is
-    /// needed.</para>
+    /// <para>
+    /// This adapter can be subclassed to add special logic to item height
+    /// calculation. You may want to implement a custom adapter class where
+    /// specialized functionality is needed.
+    /// </para>
     /// </remarks>
     public class ListAdaptor<T> : IReorderableListAdaptor {
         public delegate float ItemHeight(T item, fiGraphMetadataChild metadata);

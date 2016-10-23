@@ -2,7 +2,8 @@
 
 namespace FullInspector {
     /// <summary>
-    /// A simple verification attribute that ensures the UnityObject derived target is a prefab.
+    /// A simple verification attribute that ensures the UnityObject derived
+    /// target is a prefab.
     /// </summary>
     // TODO: rename to InspectorVerifyPrefabType
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]

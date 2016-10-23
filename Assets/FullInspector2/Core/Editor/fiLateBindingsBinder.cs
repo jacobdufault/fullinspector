@@ -1,19 +1,17 @@
-﻿using UnityEngine;
-using UnityEditor;
+﻿using UnityEditor;
+using UnityEngine;
 
 namespace FullInspector.Internal {
-
-    // note: See the docs on fiLateBindings
-    //       This is just the actual injection code which only gets run if we're in an editor
+    // note: See the docs on fiLateBindings This is just the actual injection
+    //       code which only gets run if we're in an editor
     //
-    // note: If there is ever a binding that doesn't occur quickly enough, then we can use
-    //       reflection to discover it immediately
+    // note: If there is ever a binding that doesn't occur quickly enough, then
+    //       we can use reflection to discover it immediately
 
     [InitializeOnLoad]
     public class fiLateBindingsBinder {
         static fiLateBindingsBinder() {
             fiLateBindings._Bindings._AssetDatabase_LoadAssetAtPath = AssetDatabase.LoadAssetAtPath;
-
 
             fiLateBindings._Bindings._EditorApplication_isPlaying = () => EditorApplication.isPlaying;
             fiLateBindings._Bindings._EditorApplication_isCompilingOrChangingToPlayMode = () => EditorApplication.isCompiling || EditorApplication.isPlayingOrWillChangePlaymode;
@@ -29,16 +27,13 @@ namespace FullInspector.Internal {
             fiLateBindings._Bindings._EditorApplication_RemUpdateAction = a => EditorApplication.update -= new EditorApplication.CallbackFunction(a);
             fiLateBindings._Bindings._EditorApplication_timeSinceStartup = () => EditorApplication.timeSinceStartup;
 
-
             fiLateBindings._Bindings._EditorPrefs_GetString = EditorPrefs.GetString;
             fiLateBindings._Bindings._EditorPrefs_SetString = EditorPrefs.SetString;
-
 
             fiLateBindings._Bindings._EditorUtility_SetDirty = EditorUtility.SetDirty;
             fiLateBindings._Bindings._EditorUtility_InstanceIdToObject = EditorUtility.InstanceIDToObject;
             fiLateBindings._Bindings._EditorUtility_IsPersistent = EditorUtility.IsPersistent;
             fiLateBindings._Bindings._EditorUtility_CreateGameObjectWithHideFlags = (name, flags) => EditorUtility.CreateGameObjectWithHideFlags(name, flags);
-
 
             fiLateBindings._Bindings._EditorGUI_BeginChangeCheck = EditorGUI.BeginChangeCheck;
             fiLateBindings._Bindings._EditorGUI_EndChangeCheck = EditorGUI.EndChangeCheck;
@@ -50,23 +45,18 @@ namespace FullInspector.Internal {
             fiLateBindings._Bindings._EditorGUI_Popup = EditorGUI.Popup;
             fiLateBindings._Bindings._EditorGUI_Slider = EditorGUI.Slider;
 
-
             fiLateBindings.EditorGUIUtility.standardVerticalSpacing = EditorGUIUtility.standardVerticalSpacing;
             fiLateBindings.EditorGUIUtility.singleLineHeight = EditorGUIUtility.singleLineHeight;
-
 
             fiLateBindings._Bindings._EditorStyles_label = () => EditorStyles.label;
             fiLateBindings._Bindings._EditorStyles_foldout = () => EditorStyles.foldout;
 
-
             fiLateBindings._Bindings._fiEditorGUI_PushHierarchyMode = state => fiEditorGUI.PushHierarchyMode(state);
             fiLateBindings._Bindings._fiEditorGUI_PopHierarchyMode = () => fiEditorGUI.PopHierarchyMode();
-
 
             fiLateBindings._Bindings._PrefabUtility_CreatePrefab = (string path, GameObject template) => PrefabUtility.CreatePrefab(path, template);
             fiLateBindings._Bindings._PrefabUtility_IsPrefab = unityObj => PrefabUtility.GetPrefabType(unityObj) == PrefabType.Prefab;
             fiLateBindings._Bindings._PrefabUtility_IsPrefabInstance = unityObj => PrefabUtility.GetPrefabType(unityObj) == PrefabType.PrefabInstance;
-
 
             fiLateBindings._Bindings._PropertyEditor_Edit =
                 (objType, attrs, rect, label, obj, metadata, skippedEditors) =>
@@ -75,14 +65,12 @@ namespace FullInspector.Internal {
                 (objType, attrs, label, obj, metadata, skippedEditors) =>
                     PropertyEditor.Get(objType, attrs).SkipUntilNot(skippedEditors).GetElementHeight(label, obj, metadata);
 
-
             fiLateBindings._Bindings._PropertyEditor_EditSkipUntilNot =
                 (skipUntilNot, objType, attrs, rect, label, obj, metadata) =>
                     PropertyEditor.Get(objType, attrs).SkipUntilNot(skipUntilNot).Edit(rect, label, obj, metadata);
             fiLateBindings._Bindings._PropertyEditor_GetElementHeightSkipUntilNot =
                 (skipUntilNot, objType, attrs, label, obj, metadata) =>
                     PropertyEditor.Get(objType, attrs).SkipUntilNot(skipUntilNot).GetElementHeight(label, obj, metadata);
-
 
             fiLateBindings._Bindings._Selection_activeObject = () => Selection.activeObject;
             fiLateBindings._Bindings._Selection_activeSelection = () => {

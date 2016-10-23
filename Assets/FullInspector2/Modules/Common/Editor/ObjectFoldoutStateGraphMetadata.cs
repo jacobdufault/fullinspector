@@ -5,8 +5,8 @@ namespace FullInspector.Modules {
     // TODO: make this persistent
     public class ObjectFoldoutStateGraphMetadata : IGraphMetadataItemNotPersistent {
         /// <summary>
-        /// Is the foldout currently active, ie, is the rendered item being displayed or is the
-        /// short-form foldout being displayed?
+        /// Is the foldout currently active, ie, is the rendered item being
+        /// displayed or is the short-form foldout being displayed?
         /// </summary>
         public bool IsActive {
             get {

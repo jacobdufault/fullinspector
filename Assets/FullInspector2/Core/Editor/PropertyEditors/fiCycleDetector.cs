@@ -7,7 +7,8 @@ namespace FullInspector.Internal {
     /// This class assists with cycle detection in an object graph.
     /// </summary>
     public class fiCycleDetector {
-        // From http://stackoverflow.com/questions/4901320/is-there-any-kind-of-referencecomparer-in-net
+        // From
+        // http://stackoverflow.com/questions/4901320/is-there-any-kind-of-referencecomparer-in-net
         class ReferenceComparer : IEqualityComparer<object> {
             private static ReferenceComparer _instance;
             public static ReferenceComparer Instance {
@@ -90,8 +91,9 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Tries to mark an object. Returns false if the object is already in the cycle detector,
-        /// ie, it has already been encountered (which implies that it's part of a cycle).
+        /// Tries to mark an object. Returns false if the object is already in
+        /// the cycle detector, ie, it has already been encountered (which
+        /// implies that it's part of a cycle).
         /// </summary>
         public bool TryMark(object obj) {
             if (obj == null) return true;
@@ -111,7 +113,8 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Returns true if the object is in the cycle detector, ie, the object is part of a cycle.
+        /// Returns true if the object is in the cycle detector, ie, the object
+        /// is part of a cycle.
         /// </summary>
         public bool IsCycle(object obj) {
             if (_objects.IsEmpty) {
@@ -133,5 +136,4 @@ namespace FullInspector.Internal {
             return false;
         }
     }
-
 }

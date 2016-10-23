@@ -6,9 +6,10 @@ using UnityEngine;
 namespace FullInspector.Internal {
     public static class BehaviorEditorTools {
         /// <summary>
-        /// Returns true if the given dataType matches the given behaviorType. If the dataType is
-        /// generic and the behaviorType is a generic definition, then the behaviorType will be
-        /// instantiated with the same generic arguments as dataType.
+        /// Returns true if the given dataType matches the given behaviorType. If
+        /// the dataType is generic and the behaviorType is a generic definition,
+        /// then the behaviorType will be instantiated with the same generic
+        /// arguments as dataType.
         /// </summary>
         private static bool CanEdit(Type dataType, CustomBehaviorEditorAttribute behaviorTypeAttribute) {
             if (behaviorTypeAttribute == null) {
@@ -17,8 +18,8 @@ namespace FullInspector.Internal {
 
             Type behaviorType = behaviorTypeAttribute.BehaviorType;
             if (dataType.IsGenericType && behaviorType.IsGenericTypeDefinition) {
-                // I don't believe this will ever throw, but just in case we wrap it in a try/catch
-                // block.
+                // I don't believe this will ever throw, but just in case we wrap
+                // it in a try/catch block.
                 try {
                     behaviorType = behaviorType.MakeGenericType(dataType.GetGenericArguments());
                 }
@@ -30,12 +31,11 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Creates a new instance of the given editorType. It is assumed that editorType extends
-        /// IBehaviorEditor.
+        /// Creates a new instance of the given editorType. It is assumed that
+        /// editorType extends IBehaviorEditor.
         /// </summary>
         private static bool TryCreateInstance(Type editorType, Type usedEditedType,
             Type actualEditedType, out IBehaviorEditor editor) {
-
             if (editorType.GetConstructor(fsPortableReflection.EmptyTypes) == null) {
                 Debug.LogWarning("Type " + editorType + " can serve as a behavior editor if it " +
                     "has a default constructor");
@@ -45,7 +45,6 @@ namespace FullInspector.Internal {
 
             if (CanEdit(usedEditedType,
                 fsPortableReflection.GetAttribute<CustomBehaviorEditorAttribute>(editorType)) == false) {
-
                 editor = null;
                 return false;
             }
@@ -65,11 +64,15 @@ namespace FullInspector.Internal {
         /// <summary>
         /// Attempt to create a new IBehaviorEditor instance.
         /// </summary>
-        /// <param name="usedEditedType">The data type that is used for comparison with the behavior
-        /// editor.</param>
-        /// <param name="actualEditedType">The actual data type that that usedEditedType was derived
-        /// from.</param>
-        /// <param name="editorType">The type of editor we are trying to create.</param>
+        /// <param name="usedEditedType">
+        /// The data type that is used for comparison with the behavior editor.
+        /// </param>
+        /// <param name="actualEditedType">
+        /// The actual data type that that usedEditedType was derived from.
+        /// </param>
+        /// <param name="editorType">
+        /// The type of editor we are trying to create.
+        /// </param>
         /// <returns></returns>
         private static IBehaviorEditor TryCreateSpecificEditor(Type usedEditedType, Type actualEditedType, Type editorType) {
             //-
@@ -136,21 +139,24 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Attempts to create a behavior editor for the given edited data type from the given
-        /// editor type.
+        /// Attempts to create a behavior editor for the given edited data type
+        /// from the given editor type.
         /// </summary>
         /// <param name="editedType">The type that is being edited.</param>
         /// <param name="editorType">The editor type.</param>
-        /// <returns>A behavior editor that can edit the given edited type.</returns>
+        /// <returns>
+        /// A behavior editor that can edit the given edited type.
+        /// </returns>
         public static IBehaviorEditor TryCreateEditor(Type editedType, Type editorType) {
-            // If our editor isn't inherited, then we only want to create a specific editor
+            // If our editor isn't inherited, then we only want to create a
+            // specific editor
             var customBehaviorEditorAttribute = fsPortableReflection.GetAttribute<CustomBehaviorEditorAttribute>(editorType);
             if (customBehaviorEditorAttribute == null || customBehaviorEditorAttribute.Inherit == false) {
                 return TryCreateSpecificEditor(editedType, editedType, editorType);
             }
 
-            // Otherwise we want to try to create a behavior editor from any of the edited type's
-            // associated types.
+            // Otherwise we want to try to create a behavior editor from any of
+            // the edited type's associated types.
             Type baseType = editedType;
 
             while (baseType != null) {

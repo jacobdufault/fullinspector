@@ -44,8 +44,8 @@ namespace FullInspector.Internal {
                 return true;
             }
             else if (a == 0 || b == 0 || diff < float.MinValue) {
-                // a or b is zero or both are extremely close to it
-                // relative error is less meaningful here
+                // a or b is zero or both are extremely close to it relative
+                // error is less meaningful here
                 return diff < (epsilon * Double.MinValue);
             }
             else { // use relative error
@@ -54,8 +54,9 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Destroys the given object using the proper destroy function. If the game is in edit
-        /// mode, then DestroyImmedate is used. Otherwise, Destroy is used.
+        /// Destroys the given object using the proper destroy function. If the
+        /// game is in edit mode, then DestroyImmedate is used. Otherwise,
+        /// Destroy is used.
         /// </summary>
         public static void DestroyObject(UnityObject obj) {
             if (Application.isPlaying) {
@@ -71,14 +72,13 @@ namespace FullInspector.Internal {
         /// </summary>
         public static void DestroyObject<T>(ref T obj)
             where T : UnityObject {
-
             DestroyObject(obj);
             obj = null;
         }
 
         /// <summary>
-        /// Removes leading whitespace after newlines from a string. This is extremely useful when
-        /// using the C# multiline @ string.
+        /// Removes leading whitespace after newlines from a string. This is
+        /// extremely useful when using the C# multiline @ string.
         /// </summary>
         public static string StripLeadingWhitespace(this string s) {
             // source: http://stackoverflow.com/a/7178336
@@ -102,7 +102,8 @@ namespace FullInspector.Internal {
         private static bool? _cachedIsEditor;
 
         /// <summary>
-        /// Returns true if the current thread is the main Unity thread - ie, Unity API calls will not throw exceptions.
+        /// Returns true if the current thread is the main Unity thread - ie,
+        /// Unity API calls will not throw exceptions.
         /// </summary>
         public static bool IsMainThread {
             get {
@@ -122,8 +123,10 @@ namespace FullInspector.Internal {
         public static bool IsUnity4 {
             get {
                 if (_isUnity4.HasValue == false) {
-                    // UnityEngine.RuntimeInitializeOnLoadMethod was introduced in Unity 5. If it isn't available, then we are
-                    // in a version below Unity 5. We don't support Unity 3, so we will just assume Unity 4.
+                    // UnityEngine.RuntimeInitializeOnLoadMethod was introduced
+                    // in Unity 5. If it isn't available, then we are in a
+                    // version below Unity 5. We don't support Unity 3, so we
+                    // will just assume Unity 4.
                     _isUnity4 = Type.GetType("UnityEngine.RuntimeInitializeOnLoadMethodAttribute, UnityEngine", /*throwOnError:*/false) == null;
                 }
 
@@ -136,10 +139,16 @@ namespace FullInspector.Internal {
         /// Creates a dictionary from the given keys and given values.
         /// </summary>
         /// <typeparam name="TKey">The key type of the dictionary.</typeparam>
-        /// <typeparam name="TValue">The value type of the dictionary.</typeparam>
-        /// <param name="keys">The keys in the dictionary. A null key will be skipped.</param>
+        /// <typeparam name="TValue">
+        /// The value type of the dictionary.
+        /// </typeparam>
+        /// <param name="keys">
+        /// The keys in the dictionary. A null key will be skipped.
+        /// </param>
         /// <param name="values">The values in the dictionary.</param>
-        /// <returns>A dictionary that contains the given key to value mappings.</returns>
+        /// <returns>
+        /// A dictionary that contains the given key to value mappings.
+        /// </returns>
         public static Dictionary<TKey, TValue> CreateDictionary<TKey, TValue>(IList<TKey> keys, IList<TValue> values) {
             var dict = new Dictionary<TKey, TValue>();
 

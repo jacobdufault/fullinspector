@@ -18,7 +18,6 @@ namespace FullInspector.Internal {
         private static readonly Color splitterColor = EditorGUIUtility.isProSkin ?
             new Color(0.157f, 0.157f, 0.157f) : new Color(0.5f, 0.5f, 0.5f);
 
-
         public static void Splitter(Color rgb, float thickness) {
             Rect position = GUILayoutUtility.GetRect(GUIContent.none, splitter,
                 GUILayout.Height(thickness));
@@ -46,7 +45,6 @@ namespace FullInspector.Internal {
         public static void Splitter(float thickness) {
             Splitter(thickness, splitter);
         }
-
 
         public static void WithIndent(float pixels, Action code) {
             GUILayout.BeginHorizontal();

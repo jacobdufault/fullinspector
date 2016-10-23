@@ -7,7 +7,6 @@ using UnityObject = UnityEngine.Object;
 namespace FullInspector {
     [AddComponentMenu("")]
     public abstract class fiBaseStorageComponent<T> : MonoBehaviour, fiIEditorOnlyTag, ISerializationCallbackReceiver {
-
         [SerializeField]
         private List<UnityObject> _keys;
         [SerializeField]

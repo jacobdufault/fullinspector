@@ -3,7 +3,8 @@ using UnityEngine;
 
 namespace FullInspector.Internal {
     /// <summary>
-    /// Contains some utility functions that are useful when drawing the GUI for CommentAttributes.
+    /// Contains some utility functions that are useful when drawing the GUI for
+    /// CommentAttributes.
     /// </summary>
     public static class fiCommentUtility {
         /// <summary>

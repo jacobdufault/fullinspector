@@ -20,8 +20,9 @@ namespace FullInspector {
             if (holderType == null) {
                 var fieldType = fieldInfo.FieldType;
 
-                // Unity isn't terribly consistent. The field type can be an array/list even though the
-                // element it sends to us is an element inside of the list.
+                // Unity isn't terribly consistent. The field type can be an
+                // array/list even though the element it sends to us is an
+                // element inside of the list.
                 if (fieldType.IsArray)
                     return fieldType.GetElementType();
                 if (fieldType.IsGenericType && fieldType.GetGenericTypeDefinition() == typeof(List<>))
@@ -31,7 +32,7 @@ namespace FullInspector {
             }
             return holderType.GetGenericArguments()[0];
         }
-        #endregion
+        #endregion Reflection
 
         #region GUI
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
@@ -70,6 +71,6 @@ namespace FullInspector {
 
             return editor.GetElementHeight(label, target.Value, metadata);
         }
-        #endregion
+        #endregion GUI
     }
 }

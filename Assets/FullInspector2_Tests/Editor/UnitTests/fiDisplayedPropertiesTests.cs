@@ -24,7 +24,6 @@ namespace FullInspector.Tests {
             [ShowInInspector]
             public int ForceShow_ManualPropertyPublicGet { get { return 0; } }
 
-
             [SerializeField]
             public int ForceSerialized_AutoPropertyPublicGetPublicSet { get; set; }
             [SerializeField]
@@ -44,7 +43,6 @@ namespace FullInspector.Tests {
                 fiSettings.SerializeAutoProperties = val;
                 InspectedType.ResetCacheForTesting();
             })) {
-
                 var displayedProperties = InspectedType.Get(typeof(ModelType)).GetProperties(
                         InspectedMemberFilters.InspectableMembers).Select(t => t.Name).ToArray();
                 var serializedProperties = InspectedType.Get(typeof(ModelType)).GetProperties(
@@ -76,7 +74,6 @@ namespace FullInspector.Tests {
                 fiSettings.SerializeAutoProperties = val;
                 InspectedType.ResetCacheForTesting();
             })) {
-
                 var displayedProperties = InspectedType.Get(typeof(ModelType)).GetProperties(
                         InspectedMemberFilters.InspectableMembers).Select(t => t.Name).ToArray();
                 var serializedProperties = InspectedType.Get(typeof(ModelType)).GetProperties(

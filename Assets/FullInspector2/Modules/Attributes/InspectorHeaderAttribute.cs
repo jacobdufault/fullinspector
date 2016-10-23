@@ -2,14 +2,14 @@
 
 namespace FullInspector {
     /// <summary>
-    /// Draws a header above a property, with some nice text to go along with it. This is an
-    /// analog to Unity's [Header] attribute.
+    /// Draws a header above a property, with some nice text to go along with it.
+    /// This is an analog to Unity's [Header] attribute.
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class InspectorHeaderAttribute : Attribute, IInspectorAttributeOrder {
         /// <summary>
-        /// The ordering of this item in the set of attributes. A low number will display before
-        /// (above) a higher number.
+        /// The ordering of this item in the set of attributes. A low number will
+        /// display before (above) a higher number.
         /// </summary>
         public double Order = 75;
 

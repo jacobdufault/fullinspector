@@ -3,7 +3,8 @@
 namespace FullInspector {
     public partial class tk<T, TContext> {
         /// <summary>
-        /// The control will be drawn with a read-only UI if the predicate returns true.
+        /// The control will be drawn with a read-only UI if the predicate
+        /// returns true.
         /// </summary>
         public class ReadOnlyIf : ConditionalStyle {
             public ReadOnlyIf(Value<bool> isReadOnly) :
@@ -23,7 +24,6 @@ namespace FullInspector {
             public ReadOnlyIf(Value<bool>.GeneratorNoContext isReadOnly)
                 : this(Val(isReadOnly)) {
             }
-
         }
     }
 }

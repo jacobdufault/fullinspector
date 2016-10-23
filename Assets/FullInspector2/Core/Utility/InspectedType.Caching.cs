@@ -24,8 +24,8 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// Reset the cached set of metadata. Should only be used in tests, as this will
-        /// significantly impact performance.
+        /// Reset the cached set of metadata. Should only be used in tests, as
+        /// this will significantly impact performance.
         /// </summary>
         public static void ResetCacheForTesting() {
             _cachedMetadata = new Dictionary<Type, InspectedType>();

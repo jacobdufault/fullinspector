@@ -31,7 +31,8 @@ namespace FullInspector.Modules {
                 Debug.LogError("Bad GUID format; " + e);
             }
 
-            // failed to create a new GUID for some reason; return the original one
+            // failed to create a new GUID for some reason; return the original
+            // one
             return element;
         }
 

@@ -1,6 +1,6 @@
-﻿using FullInspector.Rotorz.ReorderableList;
-using System;
+﻿using System;
 using System.Reflection;
+using FullInspector.Rotorz.ReorderableList;
 
 namespace FullInspector.Internal {
     public class ArrayPropertyEditor<T> : BaseCollectionPropertyEditor<T[], T[], T, T> {

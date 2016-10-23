@@ -23,7 +23,6 @@ namespace FullInspector {
             public EnabledIf(Value<bool>.GeneratorNoContext isEnabled)
                 : this(Val(isEnabled)) {
             }
-
         }
     }
 }

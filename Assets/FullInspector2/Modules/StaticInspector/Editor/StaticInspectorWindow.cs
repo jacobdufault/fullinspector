@@ -25,9 +25,10 @@ namespace FullInspector.Modules {
         private Vector2 _inspectorScrollPosition;
 
         /// <summary>
-        /// The type that we are currently viewing the statics for. Unfortunately, we have to store
-        /// this type as a string so that Unity can serialize it. It would be awesome to have FI
-        /// serialization on EditorWindows, but oh well :P.
+        /// The type that we are currently viewing the statics for.
+        /// Unfortunately, we have to store this type as a string so that Unity
+        /// can serialize it. It would be awesome to have FI serialization on
+        /// EditorWindows, but oh well :P.
         /// </summary>
         private string _serializedInspectedType;
         private Type _inspectedType {
@@ -90,9 +91,10 @@ namespace FullInspector.Modules {
                     EditorGUILayout.EndScrollView();
                 }
 
-                // For some reason, the type selection popup window cannot force the rest of the
-                // Unity GUI to redraw. We do it here instead -- this removes any delay after
-                // selecting the type in the popup window and the type actually being displayed.
+                // For some reason, the type selection popup window cannot force
+                // the rest of the Unity GUI to redraw. We do it here instead --
+                // this removes any delay after selecting the type in the popup
+                // window and the type actually being displayed.
                 if (fiEditorUtility.ShouldInspectorRedraw.Enabled) {
                     Repaint();
                 }

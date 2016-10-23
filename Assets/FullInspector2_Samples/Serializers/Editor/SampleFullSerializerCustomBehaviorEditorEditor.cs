@@ -5,7 +5,6 @@ namespace FullInspector.Samples.FullSerializer {
     [CustomBehaviorEditor(typeof(SampleFullSerializerCustomBehaviorEditor))]
     public class SampleFullSerializerCustomBehaviorEditorEditor :
         BehaviorEditor<SampleFullSerializerCustomBehaviorEditor> {
-
         protected override void OnEdit(Rect rect, SampleFullSerializerCustomBehaviorEditor behavior, fiGraphMetadata metadata) {
             EditorGUI.HelpBox(rect, "This is the custom editor for SampleFullSerializerCustomBehaviorEditor", MessageType.Info);
         }
@@ -17,5 +16,4 @@ namespace FullInspector.Samples.FullSerializer {
         protected override void OnSceneGUI(SampleFullSerializerCustomBehaviorEditor behavior) {
         }
     }
-
 }

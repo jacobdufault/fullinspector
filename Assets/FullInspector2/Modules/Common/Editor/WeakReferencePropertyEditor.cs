@@ -7,7 +7,8 @@ using tk = FullInspector.tk<System.WeakReference>;
 namespace FullInspector.Modules {
     [CustomPropertyEditor(typeof(WeakReference))]
     public class WeakReferencePropertyEditor : tkControlPropertyEditor<WeakReference> {
-        public WeakReferencePropertyEditor(Type dataType, ICustomAttributeProvider attrs) : base(dataType) { }
+        public WeakReferencePropertyEditor(Type dataType, ICustomAttributeProvider attrs) : base(dataType) {
+        }
 
         protected override object CreateInstance() {
             return new WeakReference(null);
@@ -37,5 +38,4 @@ namespace FullInspector.Modules {
             return Editor;
         }
     }
-
 }

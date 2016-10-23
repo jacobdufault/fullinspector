@@ -18,7 +18,7 @@ namespace FullInspector.Internal {
         public static void PopHierarchyMode() {
             EditorGUIUtility.hierarchyMode = _hierarchyMode.Pop();
         }
-        #endregion
+        #endregion Hierarchy Mode Utilities
 
         #region Splitters
         // see http://answers.unity3d.com/questions/216584/horizontal-line.html
@@ -44,10 +44,11 @@ namespace FullInspector.Internal {
                 GUI.color = restoreColor;
             }
         }
-        #endregion
+        #endregion Splitters
 
         /// <summary>
-        /// Draws a normal EditorGUI.ObjectField, except it includes the component type.
+        /// Draws a normal EditorGUI.ObjectField, except it includes the
+        /// component type.
         /// </summary>
         public static UnityObject ObjectField(Rect rect, GUIContent label, UnityObject element, Type objectType, bool allowSceneObjects) {
             if (label != null && !string.IsNullOrEmpty(label.text))
@@ -102,7 +103,7 @@ namespace FullInspector.Internal {
         public static void EndFadeGroup() {
             GUI.EndGroup();
         }
-        #endregion
+        #endregion Fade Groups
 
         #region Drag and Drop
         public static bool TryDragAndDropArea(Rect dropArea, Predicate<UnityObject> filter, out UnityObject[] droppedObjects) {
@@ -110,7 +111,6 @@ namespace FullInspector.Internal {
                 case EventType.DragUpdated:
                 case EventType.DragPerform:
                     if (dropArea.Contains(Event.current.mousePosition)) {
-
                         bool allow = true;
 
                         foreach (UnityObject obj in DragAndDrop.objectReferences) {
@@ -119,7 +119,6 @@ namespace FullInspector.Internal {
                                 break;
                             }
                         }
-
 
                         if (allow) {
                             DragAndDrop.visualMode = DragAndDropVisualMode.Copy;
@@ -130,7 +129,6 @@ namespace FullInspector.Internal {
                                 return true;
                             }
                         }
-
                         else {
                             DragAndDrop.visualMode = DragAndDropVisualMode.Rejected;
                         }
@@ -141,7 +139,7 @@ namespace FullInspector.Internal {
             droppedObjects = null;
             return false;
         }
-        #endregion
+        #endregion Drag and Drop
 
         #region Fade Groups - Automatic Helpers
         public static void AnimatedBegin(ref Rect rect, fiGraphMetadata metadata) {
@@ -170,7 +168,7 @@ namespace FullInspector.Internal {
             return currentHeight;
         }
 
-        #endregion
+        #endregion Fade Groups - Automatic Helpers
 
         #region Labeled Buttons
         /// <summary>
@@ -197,7 +195,7 @@ namespace FullInspector.Internal {
 
             return true;
         }
-        #endregion
+        #endregion Labeled Buttons
 
         #region Toolkit Editing
         private static readonly GUIContent tkControl_DebugControl_Label = new GUIContent("Control");
@@ -215,7 +213,9 @@ namespace FullInspector.Internal {
         /// <param name="label">The label for the edited control.</param>
         /// <param name="element">The element to edit.</param>
         /// <param name="metadata">The metadata to use when editing.</param>
-        /// <param name="control">The actual control that will be used for the editor.</param>
+        /// <param name="control">
+        /// The actual control that will be used for the editor.
+        /// </param>
         /// <returns>The updated element instance.</returns>
         public static object tkControl(Rect rect, GUIContent label, object element, fiGraphMetadata metadata, tkControlEditor control) {
             fiLateBindingsBinder.EnsureLoaded();
@@ -256,8 +256,12 @@ namespace FullInspector.Internal {
         /// <param name="element">The element to edit.</param>
         /// <param name="label">The label for the edited control.</param>
         /// <param name="metadata">The metadata to use when editing.</param>
-        /// <param name="control">The actual control that will be used for the editor.</param>
-        /// <returns>The height that is needed to fully display this control.</returns>
+        /// <param name="control">
+        /// The actual control that will be used for the editor.
+        /// </param>
+        /// <returns>
+        /// The height that is needed to fully display this control.
+        /// </returns>
         public static float tkControlHeight(GUIContent label, object element, fiGraphMetadata metadata, tkControlEditor control) {
             fiLateBindingsBinder.EnsureLoaded();
 
@@ -279,18 +283,18 @@ namespace FullInspector.Internal {
                 ((tkContextLabelRequest)control.Context).Label = label;
             }
         }
-        #endregion
+        #endregion Toolkit Editing
 
         #region Property Editing
         private static void RevertPrefabContextMenu(Rect region, object context, InspectedProperty property) {
             if (Event.current.type == EventType.ContextClick &&
                 region.Contains(Event.current.mousePosition) &&
 
-                // This can be a relatively heavy function call, so we check it last. If the rect bounds
-                // check ends up consuming lots of time, then HasPrefabDiff has a small fast-path section
-                // that can short-circuit the bounds check.
+                // This can be a relatively heavy function call, so we check it
+                // last. If the rect bounds check ends up consuming lots of time,
+                // then HasPrefabDiff has a small fast-path section that can
+                // short-circuit the bounds check.
                 fiPrefabTools.HasPrefabDiff(context, property)) {
-
                 Event.current.Use();
 
                 var content = new GUIContent("Revert " + property.DisplayName + " to Prefab Value");
@@ -304,7 +308,8 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Draws a GUI for editing the given property and returns the updated value. This does
+        /// Draws a GUI for editing the given property and returns the updated
+        /// value. This does
         /// *not* write the updated value to a container.
         /// </summary>
         public static object EditPropertyDirect(Rect region, InspectedProperty property, object propertyValue, fiGraphMetadataChild metadataChild) {
@@ -312,10 +317,14 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Draws a GUI for editing the given property and returns the updated value. This does
+        /// Draws a GUI for editing the given property and returns the updated
+        /// value. This does
         /// *not* write the updated value to a container.
         /// </summary>
-        /// <param name="context">An optional context that the property value came from. If this is not given, then a prefab context menu will not be displayable.</param>
+        /// <param name="context">
+        /// An optional context that the property value came from. If this is not
+        /// given, then a prefab context menu will not be displayable.
+        /// </param>
         public static object EditPropertyDirect(Rect region, InspectedProperty property, object propertyValue, fiGraphMetadataChild metadataChild, object context) {
             fiGraphMetadata metadata = metadataChild.Metadata;
 
@@ -347,9 +356,10 @@ namespace FullInspector.Internal {
             if (EditorGUI.EndChangeCheck()) {
                 property.Write(container, updatedValue);
 
-                // Make sure we propagate the changes up the edit stack. For example, if this property
-                // is on a struct on a struct, then the top-level struct will not get modified without
-                // propagation of the change check.
+                // Make sure we propagate the changes up the edit stack. For
+                // example, if this property is on a struct on a struct, then the
+                // top-level struct will not get modified without propagation of
+                // the change check.
                 GUI.changed = true;
             }
         }
@@ -361,8 +371,8 @@ namespace FullInspector.Internal {
 
             GUIContent propertyLabel = new GUIContent(property.DisplayName);
 
-            // Either the foldout is active or we are not displaying a foldout. Either way, we want
-            // to report the full height of the property.
+            // Either the foldout is active or we are not displaying a foldout.
+            // Either way, we want to report the full height of the property.
             return editor.GetElementHeight(propertyLabel, propertyValue, metadata.Enter("EditProperty", metadata.Context));
         }
 
@@ -370,6 +380,6 @@ namespace FullInspector.Internal {
             object propertyValue = property.Read(container);
             return EditPropertyHeightDirect(property, propertyValue, metadata);
         }
-        #endregion
+        #endregion Property Editing
     }
 }

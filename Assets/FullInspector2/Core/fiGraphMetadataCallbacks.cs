@@ -4,17 +4,15 @@ using System.Collections.Generic;
 
 namespace FullInspector {
     public static class fiGraphMetadataCallbacks {
-
         public static IList Cast<T>(IList<T> list) {
             if (list is IList) return (IList)list;
             return new ListWrapper<T>(list);
         }
 
-        // IList<T> does not extend from IList but we need to
-        // cast from IList<T> types to IList. If the IList<T>
-        // does not extend IList, then we just use a proxy
-        // object instead that forwards all of the IList
-        // calls directly to the IList<T> instance.
+        // IList<T> does not extend from IList but we need to cast from IList<T>
+        // types to IList. If the IList<T> does not extend IList, then we just
+        // use a proxy object instead that forwards all of the IList calls
+        // directly to the IList<T> instance.
         private sealed class ListWrapper<T> : IList {
             private readonly IList<T> _list;
 

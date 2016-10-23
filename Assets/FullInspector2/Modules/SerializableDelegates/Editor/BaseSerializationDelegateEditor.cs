@@ -1,7 +1,7 @@
-﻿using FullInspector.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using FullInspector.Internal;
 using UnityEditor;
 using UnityEngine;
 using UnityObject = UnityEngine.Object;
@@ -9,20 +9,21 @@ using UnityObject = UnityEngine.Object;
 namespace FullInspector.Modules {
     public abstract class BaseSerialiationInvokableEditor<TSerializationDelegate> : PropertyEditor<TSerializationDelegate>
         where TSerializationDelegate : BaseSerializationDelegate, new() {
-
         /// <summary>
-        /// The amount of space between the object selector and the method selection popup.
+        /// The amount of space between the object selector and the method
+        /// selection popup.
         /// </summary>
         private const float DividerHeight = 1f;
 
         /// <summary>
-        /// Amount of space after the method selection popup that will separate this element from
-        /// the next one.
+        /// Amount of space after the method selection popup that will separate
+        /// this element from the next one.
         /// </summary>
         private const float EndSeparatorHeight = 2f;
 
         /// <summary>
-        /// Adaptor method to determine if the given method should be shown in the method dropdown.
+        /// Adaptor method to determine if the given method should be shown in
+        /// the method dropdown.
         /// </summary>
         protected abstract bool IsValidMethod(MethodInfo method);
 
@@ -50,8 +51,8 @@ namespace FullInspector.Modules {
         }
 
         /// <summary>
-        /// Returns the methods that should be shown in the dropdown, and returns the active method
-        /// in that list.
+        /// Returns the methods that should be shown in the dropdown, and returns
+        /// the active method in that list.
         /// </summary>
         private void GetMethodOptions(TSerializationDelegate action, out int selectedIndex, out string[] displayedOptions) {
             selectedIndex = -1;
@@ -78,7 +79,8 @@ namespace FullInspector.Modules {
         }
 
         /// <summary>
-        /// Returns either the container type, or if the contaier is null, then typeof(UnityObject).
+        /// Returns either the container type, or if the contaier is null, then
+        /// typeof(UnityObject).
         /// </summary>
         private Type GetContainerTypeOrUnityObject(TSerializationDelegate element) {
             if (element.MethodContainer == null) {

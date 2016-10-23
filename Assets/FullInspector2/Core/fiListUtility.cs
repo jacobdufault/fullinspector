@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 namespace FullInspector {
     /// <summary>
-    /// Helper functions that unify IList operations across arrays and "actual" lists.
+    /// Helper functions that unify IList operations across arrays and "actual"
+    /// lists.
     /// </summary>
     public static class fiListUtility {
         private static T GetDefault<T>() {

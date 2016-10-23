@@ -1,14 +1,14 @@
-﻿using FullSerializer;
+﻿using System;
+using System.Reflection;
+using FullSerializer;
 using UnityEditor;
 using UnityEngine;
-using UnityObject = UnityEngine.Object;
 using tk = FullInspector.tk<FullSerializer.fsData, FullInspector.tkDefaultContext>;
-using System;
-using System.Reflection;
+using UnityObject = UnityEngine.Object;
 
 namespace FullInspector.Internal {
-    // TODO: This is disabled as it currently breaks TextAsset handling for, ie, text files
-    // [CustomEditor(typeof(TextAsset))]
+    // TODO: This is disabled as it currently breaks TextAsset handling for, ie,
+    //       text files [CustomEditor(typeof(TextAsset))]
     public class fiJsonFileEditor : Editor {
         private static bool IsJsonAsset(UnityObject asset) {
             string path = AssetDatabase.GetAssetPath(asset);
@@ -38,7 +38,8 @@ namespace FullInspector.Internal {
 
     [CustomPropertyEditor(typeof(fsData))]
     public class fsDataPropertyEditor : tkControlPropertyEditor<fsData> {
-        public fsDataPropertyEditor(Type dataType, ICustomAttributeProvider attrs) : base(dataType) { }
+        public fsDataPropertyEditor(Type dataType, ICustomAttributeProvider attrs) : base(dataType) {
+        }
 
         private static readonly tkControlEditor Editor = new tkControlEditor(
             new tk.StyleProxy {
@@ -69,8 +70,9 @@ namespace FullInspector.Internal {
     }
 }
 
-// The following is an alternative editor approach. Saved for investigation later. Probably very useful
-// if we want to try and write out an actual editor so the content can be edited.
+// The following is an alternative editor approach. Saved for investigation
+// later. Probably very useful if we want to try and write out an actual editor
+// so the content can be edited.
 /*
 public abstract class JsonValue {
     public static JsonValue Create(fsData data) {

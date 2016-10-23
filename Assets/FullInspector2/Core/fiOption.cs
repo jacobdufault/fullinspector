@@ -6,7 +6,8 @@ namespace FullInspector.Internal {
     /// </summary>
     public static class fiOption {
         /// <summary>
-        /// Create an option containing the value. Generic arguments can be omitted.
+        /// Create an option containing the value. Generic arguments can be
+        /// omitted.
         /// </summary>
         public static fiOption<T> Just<T>(T value) {
             return new fiOption<T>(value);
@@ -31,9 +32,9 @@ namespace FullInspector.Internal {
         private T _value;
 
         /// <summary>
-        /// Create a new option instance containing the given value. An option constructed using
-        /// this method will *never* be empty. If you want an empty option, make sure to use
-        /// fiOption{T}.Empty.
+        /// Create a new option instance containing the given value. An option
+        /// constructed using this method will *never* be empty. If you want an
+        /// empty option, make sure to use fiOption{T}.Empty.
         /// </summary>
         /// <param name="value">The value to store.</param>
         public fiOption(T value) {
@@ -68,8 +69,8 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Fetch the value stored in the option. This will throw an exception if the option is
-        /// empty.
+        /// Fetch the value stored in the option. This will throw an exception if
+        /// the option is empty.
         /// </summary>
         public T Value {
             get {

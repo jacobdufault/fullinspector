@@ -49,7 +49,6 @@ namespace FullInspector.Modules {
         private Vector2 _scrollPosition;
         private string _searchString = string.Empty;
 
-
         private bool PassesSearchFilter(Type type) {
             string typeName = type != null ? type.FullName : "null";
             return typeName.IndexOf(_searchString, StringComparison.OrdinalIgnoreCase) >= 0;
@@ -58,7 +57,6 @@ namespace FullInspector.Modules {
         private string _customTypeName = string.Empty;
 
         public void OnGUI() {
-
             EditorGUILayout.LabelField("Manually Locate Type", EditorStyles.boldLabel);
 
             GUILayout.BeginHorizontal();
@@ -113,11 +111,9 @@ namespace FullInspector.Modules {
             foreach (Type type in _allTypesWithStatics) {
                 if (PassesSearchFilter(type)) {
                     if (lastNamespace != type.Namespace) {
-
                         lastNamespace = type.Namespace;
                         GUILayout.Label(type.Namespace ?? "<no namespace>", EditorStyles.boldLabel);
                     }
-
 
                     GUILayout.BeginHorizontal();
                     GUILayout.Space(35);
@@ -141,7 +137,6 @@ namespace FullInspector.Modules {
                     EditorGUI.EndDisabledGroup();
 
                     GUILayout.EndHorizontal();
-
                 }
             }
 

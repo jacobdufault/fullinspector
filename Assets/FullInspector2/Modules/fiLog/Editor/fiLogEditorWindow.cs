@@ -23,7 +23,7 @@ namespace FullInspector.Internal {
         private IEnumerable<string> FilteredMessages {
             get {
                 return from message in _messages
-                       where string.IsNullOrEmpty(_filter) || 
+                       where string.IsNullOrEmpty(_filter) ||
                              message.IndexOf(_filter, StringComparison.OrdinalIgnoreCase) >= 0
                        select message;
             }
@@ -44,7 +44,7 @@ namespace FullInspector.Internal {
             EditorGUILayout.EndHorizontal();
 
             _scroll = EditorGUILayout.BeginScrollView(_scroll);
-            foreach (var message in FilteredMessages) { 
+            foreach (var message in FilteredMessages) {
                 int controlId = GUIUtility.GetControlID(FocusType.Passive) + 1;
                 EditorGUILayout.TextArea(message, EditorStyles.label);
                 if (GUIUtility.hotControl == controlId) {

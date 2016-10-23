@@ -24,8 +24,8 @@ namespace FullInspector {
     }
 
     /// <summary>
-    /// Extend this interface on the context object to receive the current label used
-    /// in the inspector for the object.
+    /// Extend this interface on the context object to receive the current label
+    /// used in the inspector for the object.
     /// </summary>
     public interface tkContextLabelRequest {
         GUIContent Label { get; set; }
@@ -45,26 +45,27 @@ namespace FullInspector {
     }
 
     /// <summary>
-    /// A control defines some abstract operation. Some rules define layout operations for a
-    /// set of sub-controls while other controls do the actual editing.
+    /// A control defines some abstract operation. Some rules define layout
+    /// operations for a set of sub-controls while other controls do the actual
+    /// editing.
     /// </summary>
     public abstract class tkControl<T, TContext> : tkIControl {
         private int _uniqueId;
 
         /// <summary>
-        /// This will return metadata that will be unique for this control. The metadata
-        /// object that is passed down to each control is shared among every control -- if
-        /// a control needs to store metadata, then it should fetch the instance metadata to
-        /// do so, otherwise the metadata will be shared among every instance of that control
-        /// for each object.
+        /// This will return metadata that will be unique for this control. The
+        /// metadata object that is passed down to each control is shared among
+        /// every control -- if a control needs to store metadata, then it should
+        /// fetch the instance metadata to do so, otherwise the metadata will be
+        /// shared among every instance of that control for each object.
         /// </summary>
         protected fiGraphMetadata GetInstanceMetadata(fiGraphMetadata metadata) {
             return metadata.Enter(_uniqueId, metadata.Context).Metadata;
         }
 
         /// <summary>
-        /// Returns the context type that this object uses. This could be alternatively fetched using reflection,
-        /// but for now this is easier.
+        /// Returns the context type that this object uses. This could be
+        /// alternatively fetched using reflection, but for now this is easier.
         /// </summary>
         public Type ContextType {
             get { return typeof(TContext); }
@@ -75,8 +76,8 @@ namespace FullInspector {
         protected abstract float DoGetHeight(T obj, TContext context, fiGraphMetadata metadata);
 
         /// <summary>
-        /// Should this control be displayed? When this is false then the parent control should
-        /// act as if this control does not exist.
+        /// Should this control be displayed? When this is false then the parent
+        /// control should act as if this control does not exist.
         /// </summary>
         public virtual bool ShouldShow(T obj, TContext context, fiGraphMetadata metadata) {
             return true;
@@ -91,28 +92,22 @@ namespace FullInspector {
             }
         }
 
-        /// <summary>
-        /// The list of styles that will be applied to the control before/after editing.
-        /// </summary>
-        /// <remarks>
-        /// Something very interesting in .NET: You can invoke the collection initializer via an object
+        /// <summary> The list of styles that will be applied to the control
+        /// before/after editing. </summary> <remarks> Something very interesting
+        /// in .NET: You can invoke the collection initializer via an object
         /// initializer. ie,
         ///
-        /// class Obj { public List<int> coll; }
-        /// void NullRefException() {
-        ///     var o = new Obj { coll = { 1, 2, 3 } }
-        /// }
+        /// class Obj { public List<int> coll; } void NullRefException() { var o
+        /// = new Obj { coll = { 1, 2, 3 } } }
         ///
         /// This code is equivalent to
         ///
-        /// var o = new Obj();
-        /// o.coll.Add(1);
-        /// ...
+        /// var o = new Obj(); o.coll.Add(1); ...
         ///
         /// Now the exception is obvious (o.coll is null in o.coll.Add).
         ///
-        /// This means that we *must* allocate an object to Styles to prevent accidental null-ptr bugs
-        /// </remarks>
+        /// This means that we *must* allocate an object to Styles to prevent
+        /// accidental null-ptr bugs </remarks>
         public List<tkStyle<T, TContext>> Styles {
             get {
                 if (_styles == null)
@@ -151,7 +146,6 @@ namespace FullInspector {
                 return DoGetHeight(obj, context, metadata);
             }
 
-
             for (int i = 0; i < Styles.Count; ++i) {
                 Styles[i].Activate(obj, context);
             }
@@ -188,7 +182,6 @@ namespace FullInspector {
 
                         control.InitializeId(ref nextId);
                     }
-
                     else if (typeof(IEnumerable<tkIControl>).IsAssignableFrom(memberType)) {
                         IEnumerable<tkIControl> controls;
                         if (TryReadValue(member, this, out controls) == false) continue;
@@ -203,8 +196,9 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// If this control stores tkIControl instances outside of tkIControl members or IEnumerable{tkIControl} members,
-        /// then this function should return those controls.
+        /// If this control stores tkIControl instances outside of tkIControl
+        /// members or IEnumerable{tkIControl} members, then this function should
+        /// return those controls.
         /// </summary>
         protected virtual IEnumerable<tkIControl> NonMemberChildControls {
             get { yield break; }

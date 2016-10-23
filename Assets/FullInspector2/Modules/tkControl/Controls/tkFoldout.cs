@@ -29,11 +29,14 @@ namespace FullInspector {
             private bool _doNotIndentChildControl;
 
             /// <summary>
-            /// Should we force a setting for hierarchy mode? If this is not set, then the existing
-            /// value for hierarchy mode will be used.
+            /// Should we force a setting for hierarchy mode? If this is not set,
+            /// then the existing value for hierarchy mode will be used.
             /// </summary>
-            /// <remarks>The hierarchy mode determines if the foldout is indented or not. If hierarchy
-            /// mode is true, then we will *not* indent the label next to the foldout dropdown button.</remarks>
+            /// <remarks>
+            /// The hierarchy mode determines if the foldout is indented or not.
+            /// If hierarchy mode is true, then we will *not* indent the label
+            /// next to the foldout dropdown button.
+            /// </remarks>
             public bool? HierarchyMode;
 
             public Foldout(fiGUIContent label, tkControl<T, TContext> control)
@@ -46,8 +49,7 @@ namespace FullInspector {
 
             public Foldout(fiGUIContent label, FontStyle fontStyle, bool defaultToExpanded, tkControl<T, TContext> control) {
                 _label = label;
-                _foldoutStyle = new GUIStyle(fiLateBindings.EditorStyles.foldout)
-                {
+                _foldoutStyle = new GUIStyle(fiLateBindings.EditorStyles.foldout) {
                     fontStyle = fontStyle
                 };
                 _defaultToExpanded = defaultToExpanded;

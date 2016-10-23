@@ -1,7 +1,7 @@
-﻿using FullInspector.Rotorz.ReorderableList;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using FullInspector.Rotorz.ReorderableList;
 
 namespace FullInspector.Internal {
     [CustomPropertyEditor(typeof(ICollection<>), Inherit = true)]

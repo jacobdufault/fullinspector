@@ -3,7 +3,6 @@ using UnityEditor;
 using UnityEngine;
 
 namespace FullInspector.Modules {
-
     /*
     public class BaseUnityBehaviorEditor<TBehavior> : BehaviorEditor<TBehavior> where TBehavior : UnityObject {
         private static ReflectedPropertyEditor _reflectedEditor = new ReflectedPropertyEditor(InspectedType.Get(typeof(TBehavior)));

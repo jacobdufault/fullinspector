@@ -1,10 +1,10 @@
-// Copyright (c) 2012-2013 Rotorz Limited. All rights reserved. Use of this source code is governed
-// by a BSD-style license that can be found in the LICENSE file.
+// Copyright (c) 2012-2013 Rotorz Limited. All rights reserved. Use of this
+// source code is governed by a BSD-style license that can be found in the
+// LICENSE file.
 
 using System;
 
 namespace FullInspector.Rotorz.ReorderableList {
-
     /// <summary>
     /// Additional flags which can be passed into reorderable list field.
     /// </summary>
@@ -42,10 +42,11 @@ namespace FullInspector.Rotorz.ReorderableList {
         /// Do not attempt to clip items which are out of view.
         /// </summary>
         /// <remarks>
-        /// <para>Clipping helps to boost performance, though may lead to issues on some
-        /// interfaces.</para>
+        /// <para>
+        /// Clipping helps to boost performance, though may lead to issues on
+        /// some interfaces.
+        /// </para>
         /// </remarks>
         DisableClipping = 0x80,
     }
-
 }

@@ -3,7 +3,8 @@ using UnityObject = UnityEngine.Object;
 
 namespace FullInspector.Internal {
     /// <summary>
-    /// Stores the state of a serialized object (but only the Full Inspector data).
+    /// Stores the state of a serialized object (but only the Full Inspector
+    /// data).
     /// </summary>
     public class fiSerializedObjectSnapshot {
         private readonly List<string> _keys;

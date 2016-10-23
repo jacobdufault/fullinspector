@@ -11,26 +11,36 @@ using UnityObject = UnityEngine.Object;
 
 namespace FullInspector.Internal {
     /// <summary>
-    /// This is the base collection property editor with a set of extension points for the other
-    /// property editors. All Rotorz-style collection editors use this as the base editor. It
-    /// provides automatic support for paging.
+    /// This is the base collection property editor with a set of extension
+    /// points for the other property editors. All Rotorz-style collection
+    /// editors use this as the base editor. It provides automatic support for
+    /// paging.
     /// </summary>
-    /// <typeparam name="TActual">The actual type of the collection, ie, List{T}. This is used for instance creation.</typeparam>
-    /// <typeparam name="TCollection">The collection interface, ie, IList{T}, or List{T}. The property editor 
-    /// selection logic will choose the most associated editor using this type.</typeparam>
-    /// <typeparam name="TItem">The type of items stored inside of the collection, ie, {T} in List{T}.</typeparam>
-    /// <typeparam name="TAddItem">The type of item that is added to a collection, ie,
-    /// TAddItem = {K} in TActual = Dictionary{K, V} where TItem = KeyValuePair{K, V}</typeparam>
+    /// <typeparam name="TActual">
+    /// The actual type of the collection, ie, List{T}. This is used for instance
+    /// creation.
+    /// </typeparam>
+    /// <typeparam name="TCollection">
+    /// The collection interface, ie, IList{T}, or List{T}. The property editor
+    /// selection logic will choose the most associated editor using this type.
+    /// </typeparam>
+    /// <typeparam name="TItem">
+    /// The type of items stored inside of the collection, ie, {T} in List{T}.
+    /// </typeparam>
+    /// <typeparam name="TAddItem">
+    /// The type of item that is added to a collection, ie, TAddItem = {K} in
+    /// TActual = Dictionary{K, V} where TItem = KeyValuePair{K, V}
+    /// </typeparam>
     public abstract class BaseCollectionPropertyEditor<TActual, TCollection, TItem, TAddItem> : PropertyEditor<TCollection>
         where TCollection : ICollection<TItem> {
-
         /// <summary>
         /// Fetch an adaptor for the collection.
         /// </summary>
         protected abstract IReorderableListAdaptor GetAdaptor(TCollection collection, fiGraphMetadata metadata);
 
         /// <summary>
-        /// Called after an edit cycle is done if the collection needs to be updated from the adaptor.
+        /// Called after an edit cycle is done if the collection needs to be
+        /// updated from the adaptor.
         /// </summary>
         protected virtual void OnPostEdit(ref TCollection collection, IReorderableListAdaptor adaptor) {
         }
@@ -57,8 +67,9 @@ namespace FullInspector.Internal {
             }
 
             if (collection.GetType().IsArray) {
-                // TODO: This is a hack. We should remove it. We update the array reference in OnPostEdit, so we have to
-                //       add the item to the actual array we will later update.
+                // TODO: This is a hack. We should remove it. We update the array
+                //       reference in OnPostEdit, so we have to add the item to
+                //       the actual array we will later update.
                 ArrayAdaptor<TItem> arrayAdaptor = adaptor as ArrayAdaptor<TItem>;
                 if (arrayAdaptor == null || adaptor is PageAdaptor) {
                     var pageAdaptor = (PageAdaptor)adaptor;
@@ -74,7 +85,8 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Should the item added to the collection be customized *before* adding it?
+        /// Should the item added to the collection be customized *before* adding
+        /// it?
         /// </summary>
         protected virtual bool DisplayAddItemPreview {
             get { return true; }
@@ -182,7 +194,6 @@ namespace FullInspector.Internal {
 
         public void DoEdit(Rect initialRegion, Rect region, GUIContent label, ref TCollection collection, fiGraphMetadata metadata,
             IReorderableListAdaptor adaptor) {
-
             Rect bodyRect = new Rect(region);
             bodyRect.height -= GetAddRegionHeightWithMargin(metadata);
 
@@ -258,8 +269,7 @@ namespace FullInspector.Internal {
         private void AcceptDragAndDrop(Rect region, ref TCollection collection, IReorderableListAdaptor adaptor) {
             if (region.Contains(Event.current.mousePosition)) {
                 switch (Event.current.type) {
-                    case EventType.DragUpdated:
-                        {
+                    case EventType.DragUpdated: {
                             bool canDragDrop = false;
                             for (int i = 0; i < DragAndDrop.objectReferences.Length; ++i) {
                                 if (typeof(TAddItem).IsAssignableFrom(GetBestDragAndDropObject(DragAndDrop.objectReferences[i]).GetType())) {
@@ -274,8 +284,7 @@ namespace FullInspector.Internal {
                             break;
                         }
 
-                    case EventType.DragPerform:
-                        {
+                    case EventType.DragPerform: {
                             bool canDragDrop = false;
                             for (int i = 0; i < DragAndDrop.objectReferences.Length; ++i) {
                                 if (typeof(TAddItem).IsAssignableFrom(GetBestDragAndDropObject(DragAndDrop.objectReferences[i]).GetType())) {
@@ -304,9 +313,9 @@ namespace FullInspector.Internal {
         }
 
         private bool ShouldDisplayTitleRegion(GUIContent label) {
-            // If we are not displaying an add item preview, then we have an add button
-            // above the list which means we always have a title region. Otherwise, we
-            // have a title region if we have a title label.
+            // If we are not displaying an add item preview, then we have an add
+            // button above the list which means we always have a title region.
+            // Otherwise, we have a title region if we have a title label.
             return
                 !DisplayAddItemPreview ||
                 !string.IsNullOrEmpty(label.text);
@@ -314,7 +323,6 @@ namespace FullInspector.Internal {
 
         protected float DoGetElementHeight(GUIContent label, TCollection collection, fiGraphMetadata metadata,
             IReorderableListAdaptor adaptor) {
-
             // height of the title
             float titleHeight = 0;
             if (ShouldDisplayTitleRegion(label)) {
@@ -414,11 +422,9 @@ namespace FullInspector.Internal {
                 const float regionIncDecWidth =
                     width_DecButton + margin_DecButton_IncButton + width_IncButton + margin_IncButton_Empty;
 
-
                 Rect rect_RegionIndexSelector, rect_RegionIncDec, rectDummy;
                 fiRectUtility.SplitHorizontalFlexibleMiddle(pagedRect, regionIndexSelectorWidth, regionIncDecWidth,
                     out rect_RegionIndexSelector, out rectDummy, out rect_RegionIncDec);
-
 
                 fiRectUtility.CenterRect(rect_RegionIndexSelector, EditorGUIUtility.singleLineHeight,
                     out rect_RegionIndexSelector);
@@ -452,7 +458,6 @@ namespace FullInspector.Internal {
                     rect_OfCountLabel.x = startX;
                     rect_OfCountLabel.width = width_OfCountLabel;
                 }
-
 
                 Rect rect_IncButton, rect_DecButton;
                 {
@@ -488,11 +493,11 @@ namespace FullInspector.Internal {
                     EditorGUI.BeginChangeCheck();
                     int newEndIndex = EditorGUI.IntField(rect_EndIndex, pageMetadata.PageEndIndex);
                     if (EditorGUI.EndChangeCheck()) {
-
-                        // we could do the auto shifting going backwards, but it is
-                        // easy to accidentaly trigger when typing, say, 150, as Unity
-                        // will give us an assigned value of 1 which causes a shift
-                        // to 1 length making it annoying, so we disable it
+                        // we could do the auto shifting going backwards, but it
+                        // is easy to accidentaly trigger when typing, say, 150,
+                        // as Unity will give us an assigned value of 1 which
+                        // causes a shift to 1 length making it annoying, so we
+                        // disable it
 
                         /*
                         EnsureWithinLimits(ref newEndIndex, 0, collection.Count);
@@ -503,7 +508,6 @@ namespace FullInspector.Internal {
                             _pageEndIndex = newEndIndex;
                         }*/
 
-
                         if (newEndIndex < pageMetadata.PageStartIndex) newEndIndex = pageMetadata.PageStartIndex;
                         EnsureWithinLimits(ref newEndIndex, 0, collection.Count);
                         pageMetadata.PageEndIndex = newEndIndex;
@@ -513,10 +517,6 @@ namespace FullInspector.Internal {
                 else {
                     GUI.Label(rect_StartLabel, "Empty collection");
                 }
-
-
-
-
 
                 EditorGUI.BeginDisabledGroup(!(pageMetadata.PageStartIndex > 0));
                 if (GUI.Button(rect_DecButton, "<<")) {
@@ -539,8 +539,8 @@ namespace FullInspector.Internal {
 
             OnPostEdit(ref collection, unpagedAdaptor);
 
-            // Keyed collections are wonky. The keys easily go stale. We rebuild the entire
-            // collection if anything inside of it has changed.
+            // Keyed collections are wonky. The keys easily go stale. We rebuild
+            // the entire collection if anything inside of it has changed.
             if (GUI.changed && IsKeyedCollection) {
                 try {
                     var newInstance = default(TCollection);
@@ -549,7 +549,8 @@ namespace FullInspector.Internal {
                         newInstance.Add(node);
                     }
                     collection = newInstance;
-                } catch (Exception) {
+                }
+                catch (Exception) {
                     Debug.LogError("This was an error when rebuilding the keyed collection. Undo the last edit or the collection will not deserialize.");
                 }
             }
@@ -661,7 +662,8 @@ namespace FullInspector.Internal {
                 if (wasCreated) {
                     if (_itemDefaultFoldoutState == CollectionItemDefaultFoldoutState.Expanded) {
                         dropdown.IsActive = true;
-                    } else {
+                    }
+                    else {
                         dropdown.ForceHideWithoutAnimation();
                     }
                 }
@@ -675,5 +677,4 @@ namespace FullInspector.Internal {
             return height;
         }
     }
-
 }

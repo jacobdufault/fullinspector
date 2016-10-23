@@ -50,7 +50,7 @@ public class DeltaTests {
 
         public CollectionHolder nested;
     }
-    
+
     [Test]
     public static void ApplyEnum() {
         var before = new EnumHolder { enumValue = EnumHolder.EnumValue.A };
@@ -107,7 +107,8 @@ public class DeltaTests {
 
     [Test]
     public static void CycleTest() {
-        // TODO: This needs to be fixed. The cyclic object should appear in the dict.
+        // TODO: This needs to be fixed. The cyclic object should appear in the
+        //       dict.
         Debug.LogError("Fix CycleTest to include cycled object");
 
         var obj = new SimpleObject();
@@ -123,7 +124,6 @@ public class DeltaTests {
         Assert.AreEqual(obj.a, readableModel["a"]);
         Assert.AreEqual(obj.b, readableModel["b"]);
         //Assert.AreEqual(obj.nested, readableModel["nested"]);
-
 
         // Also test vectors, which are cyclic on normalized
         new SavedObject(new Vector3(1, 1, 1));
@@ -144,7 +144,8 @@ public class DeltaTests {
         Dictionary<ObjectDataPath[], object> model = new SavedObject(obj).state;
         Dictionary<string, object> readableModel = SavedObjectDelta.ReadableModel(model);
 
-        // TODO: If list is null, we will include it, but if it is empty we will not
+        // TODO: If list is null, we will include it, but if it is empty we will
+        //       not
 
         Assert.AreEqual(11, readableModel.Count);
         Assert.AreEqual(obj.GetType(), readableModel["GetType()"]);
@@ -194,7 +195,7 @@ public class DeltaTests {
         var end = new CollectionHolder();
         end.dict["foo1"] = "baz";
         end.list = new List<int> { 1, 3, 4 };
-        end.arr = new bool[] {};
+        end.arr = new bool[] { };
 
         // Compute in-memory representation.
         var startModel = new SavedObject(start);
@@ -333,5 +334,4 @@ public class DeltaTests {
         Assert.AreEqual(5, hello.a);
         Assert.AreEqual(0, hello.b);
     }
-
 }

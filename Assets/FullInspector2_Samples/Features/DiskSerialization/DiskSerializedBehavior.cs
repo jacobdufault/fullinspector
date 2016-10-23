@@ -3,11 +3,11 @@
 using System.IO;
 using UnityEngine;
 
-// NOTE: Because we're using NotSupportedSerializationOperator(), if we try to serialize a
-//       UnityEngine.Object reference a NotSupportedException will be thrown. If you know of a good
-//       way to serialize UnityEngine.Object references to disk, please submit a bug report
-//       detailing the process and I'll be happy to add a DiskSerializationOperator to Full
-//       Inspector.
+// NOTE: Because we're using NotSupportedSerializationOperator(), if we try to
+//       serialize a UnityEngine.Object reference a NotSupportedException will be
+//       thrown. If you know of a good way to serialize UnityEngine.Object
+//       references to disk, please submit a bug report detailing the process and
+//       I'll be happy to add a DiskSerializationOperator to Full Inspector.
 
 namespace FullInspector.Samples.Other.DiskSerialization {
     /// <summary>

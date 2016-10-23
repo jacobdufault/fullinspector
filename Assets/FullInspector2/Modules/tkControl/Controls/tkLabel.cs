@@ -14,9 +14,10 @@ namespace FullInspector {
             private readonly tkControl<T, TContext> _control;
 
             /// <summary>
-            /// If this label has an associated control, should it be rendered immediately
-            /// next to the control? If this is the default value (false), then the control
-            /// will be rendered *below* the existing label with an indent.
+            /// If this label has an associated control, should it be rendered
+            /// immediately next to the control? If this is the default value
+            /// (false), then the control will be rendered *below* the existing
+            /// label with an indent.
             /// </summary>
             public bool InlineControl;
 

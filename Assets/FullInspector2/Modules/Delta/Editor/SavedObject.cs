@@ -30,12 +30,14 @@ namespace FullInspector.Internal {
         }
 
         public static Dictionary<ObjectDataPath[], object> Create(object obj) {
-            // TODO: Use ObjectReferenceEqualityComparator.Instance when it works with structs
+            // TODO: Use ObjectReferenceEqualityComparator.Instance when it works
+            //       with structs
             var seenObjects = new HashSet<object>();
             return Create(new List<ObjectDataPath>(), obj, seenObjects);
         }
 
-        // TODO: Fix transform.position.normalized.normalized.normalized.normalized.normalized...
+        // TODO: Fix
+        //       transform.position.normalized.normalized.normalized.normalized.normalized...
         public static Dictionary<ObjectDataPath[], object> CreateWithPath(List<ObjectDataPath> toUs, ObjectDataPath nav, object obj, HashSet<object> seenObjects) {
             toUs.Add(nav);
             var result = Create(toUs, obj, seenObjects);
@@ -107,7 +109,6 @@ namespace FullInspector.Internal {
                                 thisLevel.Add(entry.Key, entry.Value);
                         }
                     }
-
                     else if (valueForProperty is IDictionary) {
                         var dictForProperty = (IDictionary)valueForProperty;
                         IDictionaryEnumerator enumerator = dictForProperty.GetEnumerator();
@@ -127,7 +128,6 @@ namespace FullInspector.Internal {
                             }
                         }
                     }
-
                     else {
                         Debug.LogError("Please file a bug (with an example) requesting multiedit support for " + valueForProperty.GetType().CSharpName());
                     }
@@ -140,9 +140,7 @@ namespace FullInspector.Internal {
                     thisLevel.Add(entry.Key, entry.Value);
             }
 
-
             return thisLevel;
         }
-
     }
 }

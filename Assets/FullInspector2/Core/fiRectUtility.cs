@@ -17,7 +17,8 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Moves the rect down (vertically) by the given amount. Returns an updated rect.
+        /// Moves the rect down (vertically) by the given amount. Returns an
+        /// updated rect.
         /// </summary>
         public static Rect MoveDown(Rect rect, float amount) {
             rect.y += amount;
@@ -27,16 +28,18 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Splits the rect into two horizontal ones, with the left rect set to an exact width.
+        /// Splits the rect into two horizontal ones, with the left rect set to
+        /// an exact width.
         /// </summary>
         /// <param name="rect">The rect to split.</param>
         /// <param name="rightWidth">The width of the left rect.</param>
-        /// <param name="margin">The amount of space between the two rects.</param>
+        /// <param name="margin">
+        /// The amount of space between the two rects.
+        /// </param>
         /// <param name="left">The new left rect.</param>
         /// <param name="right">The new right rect.</param>
         public static void SplitLeftHorizontalExact(Rect rect, float leftWidth, float margin,
             out Rect left, out Rect right) {
-
             left = rect;
             right = rect;
 
@@ -56,8 +59,8 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Splits a rect into two, with the split occurring at a certain percentage of the rect's
-        /// width.
+        /// Splits a rect into two, with the split occurring at a certain
+        /// percentage of the rect's width.
         /// </summary>
         /// <param name="rect">The rect to split.</param>
         /// <param name="percentage">The percentage to split the rect at.</param>
@@ -66,7 +69,6 @@ namespace FullInspector.Internal {
         /// <param name="right">The new right rect.</param>
         public static void SplitHorizontalPercentage(Rect rect, float percentage, float margin,
             out Rect left, out Rect right) {
-
             left = new Rect(rect);
             left.width *= percentage;
 
@@ -77,7 +79,6 @@ namespace FullInspector.Internal {
 
         public static void SplitHorizontalMiddleExact(Rect rect, float middleWidth, float margin, out Rect left,
             out Rect middle, out Rect right) {
-
             left = new Rect(rect);
             left.width = (rect.width - (2 * margin) - middleWidth) / 2;
 
@@ -92,7 +93,6 @@ namespace FullInspector.Internal {
 
         public static void SplitHorizontalFlexibleMiddle(Rect rect, float leftWidth, float rightWidth, out Rect left,
             out Rect middle, out Rect right) {
-
             left = new Rect(rect);
             left.width = leftWidth;
 
@@ -121,8 +121,8 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Splits a rect into two, with the split occurring at a certain percentage of the rect's
-        /// height.
+        /// Splits a rect into two, with the split occurring at a certain
+        /// percentage of the rect's height.
         /// </summary>
         /// <param name="rect">The rect to split.</param>
         /// <param name="percentage">The percentage to split the rect at.</param>
@@ -131,7 +131,6 @@ namespace FullInspector.Internal {
         /// <param name="bottom">The new bottom rect.</param>
         public static void SplitVerticalPercentage(Rect rect, float percentage, float margin,
             out Rect top, out Rect bottom) {
-
             top = new Rect(rect);
             top.height *= percentage;
 

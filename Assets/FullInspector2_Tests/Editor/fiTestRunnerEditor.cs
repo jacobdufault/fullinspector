@@ -14,7 +14,8 @@ namespace FullInspector.Tests {
         }
 
         private static TestStatus RunTest(fiTestRunner.RunningTest test) {
-            // Skip test for now if it isn't interested in the current event type.
+            // Skip test for now if it isn't interested in the current event
+            // type.
             if (!test.Test.WantsEvent(Event.current.type))
                 return TestStatus.InProgress;
 
@@ -53,7 +54,6 @@ namespace FullInspector.Tests {
                     if (target.RunningTests.Count > 0)
                         Repaint();
                 }
-
             }
         }
     }

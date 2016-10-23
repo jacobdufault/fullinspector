@@ -6,14 +6,16 @@ using UnityObject = UnityEngine.Object;
 namespace FullInspector {
     public partial class InspectedType {
         private static void InitializePropertyRemoval() {
-            // We need to remove some properties that when viewed using reflection either
+            // We need to remove some properties that when viewed using
+            // reflection either
             // a) are not pretty/necessary
             // b) hard-crash Unity
 
-            // NOTE: Because of the way the property resolution system works, we have to make sure
-            //       that we remove properties from the highest level items in the inheritance
-            //       hierarchy first. Otherwise, the property will show up in derived types that
-            //       have already had their properties resolved.
+            // NOTE: Because of the way the property resolution system works, we
+            //       have to make sure that we remove properties from the highest
+            //       level items in the inheritance hierarchy first. Otherwise,
+            //       the property will show up in derived types that have already
+            //       had their properties resolved.
 
             RemoveProperty<IntPtr>("m_value");
 
@@ -33,7 +35,9 @@ namespace FullInspector {
         /// <summary>
         /// Attempts to remove the property with the given name.
         /// </summary>
-        /// <param name="propertyName">The name of the property to remove.</param>
+        /// <param name="propertyName">
+        /// The name of the property to remove.
+        /// </param>
         public static void RemoveProperty<T>(string propertyName) {
             var type = InspectedType.Get(typeof(T));
 

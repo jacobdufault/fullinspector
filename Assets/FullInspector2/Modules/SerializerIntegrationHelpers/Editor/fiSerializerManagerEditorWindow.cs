@@ -108,8 +108,8 @@ namespace FullInspector.Internal {
         }
 
         public void Update() {
-            // [DidReloadScripts] isn't very reliable, so we are just going to have to repaint
-            // constantly :(
+            // [DidReloadScripts] isn't very reliable, so we are just going to
+            // have to repaint constantly :(
             Repaint();
         }
 
@@ -117,9 +117,10 @@ namespace FullInspector.Internal {
             amount = Math.Min(amount, 1);
             EditorUtility.DisplayProgressBar(header, "Please wait for recompilation to finish.", amount);
 
-            // A script reload might not occur after a recompile if there is a compile error. In
-            // that case, we should just give the script reload notification ourselves, so that we
-            // do a repaint and so that we clear the progress bar.
+            // A script reload might not occur after a recompile if there is a
+            // compile error. In that case, we should just give the script reload
+            // notification ourselves, so that we do a repaint and so that we
+            // clear the progress bar.
             if (EditorApplication.isCompiling == false) {
                 RepaintOnScriptReload();
             }
@@ -137,14 +138,16 @@ namespace FullInspector.Internal {
                 isDefault = package.SerializerGuid == fiInstalledSerializerManager.DefaultMetadata.SerializerGuid;
             }
 
-            // show the remove/import button, depending on if the serializer is loaded
+            // show the remove/import button, depending on if the serializer is
+            // loaded
             if (fiInstalledSerializerManager.IsLoaded(package.SerializerGuid)) {
                 EditorGUI.BeginDisabledGroup(package.CanRemove == false);
 
                 GUI.color = Color.red;
 
                 if (package.CanRemove == false) {
-                    // tooltips don't work on buttons, so just gray the remove button out
+                    // tooltips don't work on buttons, so just gray the remove
+                    // button out
                     GUI.color = Color.gray;
                 }
 
@@ -157,8 +160,8 @@ namespace FullInspector.Internal {
                         Debug.LogWarning("When deleting " + package.PackageDirectory + ", caught exception\n" + e);
                     }
 
-                    // The user might not be using .meta files, so we will silently ignore the meta
-                    // delete request
+                    // The user might not be using .meta files, so we will
+                    // silently ignore the meta delete request
                     try {
                         File.Delete(package.PackageDirectory + ".meta");
                     }
@@ -222,7 +225,6 @@ namespace FullInspector.Internal {
             }
 
             GUILayout.FlexibleSpace();
-
 
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();

@@ -4,7 +4,6 @@ namespace FullInspector.Modules {
     [CustomAttributePropertyEditor(typeof(InspectorHidePrimaryAttribute), ReplaceOthers = true)]
     public class InspectorHidePrimaryAttributeEditor<T> :
         AttributePropertyEditor<T, InspectorHidePrimaryAttribute> {
-
         protected override T Edit(Rect region, GUIContent label, T element, InspectorHidePrimaryAttribute attribute, fiGraphMetadata metadata) {
             return element;
         }

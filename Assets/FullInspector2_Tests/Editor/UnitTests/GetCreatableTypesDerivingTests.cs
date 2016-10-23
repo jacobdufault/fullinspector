@@ -1,8 +1,8 @@
-﻿using System.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using FullInspector.Internal;
-using NUnit.Framework;
 using FullSerializer;
+using NUnit.Framework;
 
 namespace FullInspector.Tests {
     public class GetCreatableTypesDerivingTests {

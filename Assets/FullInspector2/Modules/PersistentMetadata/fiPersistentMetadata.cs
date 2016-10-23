@@ -6,7 +6,8 @@ using UnityObject = UnityEngine.Object;
 
 namespace FullInspector {
     /// <summary>
-    /// Interface for a type that is able to provide a persistent metadata instance.
+    /// Interface for a type that is able to provide a persistent metadata
+    /// instance.
     /// </summary>
     public interface fiIPersistentMetadataProvider {
         /// <summary>
@@ -50,9 +51,10 @@ namespace FullInspector {
         public static fiGraphMetadata GetMetadataFor(fiUnityObjectReference target) {
             fiGraphMetadata metadata;
             if (s_metadata.TryGetValue(target, out metadata) == false) {
-                // Make sure that we update the s_metadata instance for target before initializing all of the providers,
-                // as some of the providers may recurisvely call into this method to fetch the actual fiGraphMetadata
-                // instance during initialization.
+                // Make sure that we update the s_metadata instance for target
+                // before initializing all of the providers, as some of the
+                // providers may recurisvely call into this method to fetch the
+                // actual fiGraphMetadata instance during initialization.
                 metadata = new fiGraphMetadata(target);
                 s_metadata[target] = metadata;
                 for (int i = 0; i < s_providers.Length; ++i) {

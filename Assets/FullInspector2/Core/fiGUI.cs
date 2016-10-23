@@ -10,8 +10,13 @@ namespace FullInspector.Internal {
         /// <summary>
         /// Computes the new width that labels should be.
         /// </summary>
-        /// <param name="controlLabel">The label for the control. The width will be able to contain the label.</param>
-        /// <param name="controlWidth">The total width available to the control.</param>
+        /// <param name="controlLabel">
+        /// The label for the control. The width will be able to contain the
+        /// label.
+        /// </param>
+        /// <param name="controlWidth">
+        /// The total width available to the control.
+        /// </param>
         /// <returns>The width for the controlLabel.</returns>
         public static float PushLabelWidth(GUIContent controlLabel, float controlWidth) {
             s_regionWidths.Add(controlWidth);
@@ -33,9 +38,17 @@ namespace FullInspector.Internal {
         /// Gets the width of a label.
         /// </summary>
         /// <param name="inspectorWidth">The total width of the inspector</param>
-        /// <param name="controlLabel">The label for the control. This will ensure that the returned width can contain the entire label.</param>
-        /// <param name="controlWidth">The total width available to the control.</param>
-        /// <returns>The width of the label, with respect to the available width in the control.</returns>
+        /// <param name="controlLabel">
+        /// The label for the control. This will ensure that the returned width
+        /// can contain the entire label.
+        /// </param>
+        /// <param name="controlWidth">
+        /// The total width available to the control.
+        /// </param>
+        /// <returns>
+        /// The width of the label, with respect to the available width in the
+        /// control.
+        /// </returns>
         public static float ComputeActualLabelWidth(float inspectorWidth, GUIContent controlLabel, float controlWidth) {
             float deadSpace = inspectorWidth - controlWidth;
             float targetLabelWidth = Mathf.Max(inspectorWidth * fiSettings.LabelWidthPercentage - fiSettings.LabelWidthOffset, 120);
@@ -45,6 +58,6 @@ namespace FullInspector.Internal {
             labelWidth = Mathf.Clamp(labelWidth, minLabelWidth, fiSettings.LabelWidthMax);
             return labelWidth;
         }
-        #endregion
+        #endregion Label Width Utilities
     }
 }

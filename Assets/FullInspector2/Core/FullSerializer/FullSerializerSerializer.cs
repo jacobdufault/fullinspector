@@ -10,13 +10,16 @@ using UnityEngine;
 
 namespace FullInspector {
     /// <summary>
-    /// Implements Full Inspector integration with Full Serializer, a .NET serializer that just
-    /// works. Use Unity style annotations (such as [SerializeField]) to serialize your types.
+    /// Implements Full Inspector integration with Full Serializer, a .NET
+    /// serializer that just works. Use Unity style annotations (such as
+    /// [SerializeField]) to serialize your types.
     /// </summary>
     [Preserve]
     public class FullSerializerSerializer : BaseSerializer {
-        // Since we have a _serializer.Context object that we use during serialization, each thread needs its own fsSerializer
-        // instance. This makes adding custom converters/processors a bit tricky, as we have to readd them for each thread.
+        // Since we have a _serializer.Context object that we use during
+        // serialization, each thread needs its own fsSerializer instance. This
+        // makes adding custom converters/processors a bit tricky, as we have to
+        // readd them for each thread.
         [ThreadStatic]
         private static fsSerializer _serializer;
         private static readonly List<fsSerializer> _serializers = new List<fsSerializer>();
@@ -72,7 +75,6 @@ namespace FullInspector {
 
         public override string Serialize(MemberInfo storageType, object value,
             ISerializationOperator serializationOperator) {
-
             Serializer.Context.Set(serializationOperator);
 
             fsData data;
@@ -85,7 +87,6 @@ namespace FullInspector {
 
         public override object Deserialize(MemberInfo storageType, string serializedState,
             ISerializationOperator serializationOperator) {
-
             fsData data;
             var result = fsJsonParser.Parse(serializedState, out data);
             if (EmitFailWarning(result)) return null;

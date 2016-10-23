@@ -4,8 +4,8 @@ using UnityObject = UnityEngine.Object;
 
 namespace FullInspector {
     /// <summary>
-    /// Helper class you can derive from to write a custom tk control for a behavior. This wraps
-    /// some of the boilerplate.
+    /// Helper class you can derive from to write a custom tk control for a
+    /// behavior. This wraps some of the boilerplate.
     /// </summary>
     public abstract class tkCustomBehaviorEditor<T> : BehaviorEditor<T> where T : UnityObject {
         private tkControlEditor GetControlEditor(T element, fiGraphMetadata graphMetadata) {
@@ -27,7 +27,6 @@ namespace FullInspector {
         }
 
         protected override void OnSceneGUI(T behavior) {
-
         }
 
         protected abstract tkControlEditor GetEditor(T behavior);

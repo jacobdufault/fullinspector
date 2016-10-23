@@ -6,8 +6,8 @@
     /// may be interested in at InspectedMemberFilters.
     /// </summary>
     /// <remarks>
-    /// Filters are an important performance abstraction. The results are
-    /// cached and then reused hundreds of times over.
+    /// Filters are an important performance abstraction. The results are cached
+    /// and then reused hundreds of times over.
     /// </remarks>
     public interface IInspectedMemberFilter {
         /// <summary>

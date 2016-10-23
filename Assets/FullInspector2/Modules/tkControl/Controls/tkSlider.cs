@@ -24,7 +24,6 @@ namespace FullInspector {
                 Value<fiGUIContent> label,
                 Value<float> min, Value<float> max,
                 Func<T, TContext, float> getValue, Action<T, TContext, float> setValue) {
-
                 _label = label;
                 _min = min;
                 _max = max;

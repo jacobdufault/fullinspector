@@ -9,28 +9,28 @@ namespace FullInspector {
     /// Provides a better inspector and serialization experience in Unity.
     /// </summary>
     /// <remarks>
-    /// We don't serialize anything in this type through Json.NET, as we recover the Json.NET
-    /// serialized data via Unity serialization
+    /// We don't serialize anything in this type through Json.NET, as we recover
+    /// the Json.NET serialized data via Unity serialization
     /// </remarks>
     public abstract class BaseNetworkBehavior :
         NetworkBehaviour, ISerializedObject, ISerializationCallbackReceiver {
-
         static BaseNetworkBehavior() {
             BehaviorTypeToSerializerTypeMap.Register(typeof(BaseBehavior<FullSerializerSerializer>), typeof(FullSerializerSerializer));
         }
 
         /// <summary>
-        /// This awake base method calls RestoreState() by default. If you override this method, it
-        /// is *critically* important that this be the first call made in your Awake method. If it
-        /// is not, then your component may not be deserialized when you go to access values.
+        /// This awake base method calls RestoreState() by default. If you
+        /// override this method, it is *critically* important that this be the
+        /// first call made in your Awake method. If it is not, then your
+        /// component may not be deserialized when you go to access values.
         /// </summary>
         protected virtual void Awake() {
             fiSerializationManager.OnUnityObjectAwake(this);
         }
 
         /// <summary>
-        /// This base method ensures that the object is fully deserialized before running actual
-        /// validation code.
+        /// This base method ensures that the object is fully deserialized before
+        /// running actual validation code.
         /// </summary>
         protected virtual void OnValidate() {
             if (Application.isPlaying == false && ((ISerializedObject)this).IsRestored == false) {
@@ -39,7 +39,8 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// Save the state of component so that it can go through Unity serialization correctly.
+        /// Save the state of component so that it can go through Unity
+        /// serialization correctly.
         /// </summary>
         [ContextMenu("Save Current State")]
         public void SaveState() {
@@ -47,8 +48,9 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// Restore the state of the component after it has gone through Unity serialization. If the
-        /// component has already been restored, it will be reset to its last saved state.
+        /// Restore the state of the component after it has gone through Unity
+        /// serialization. If the component has already been restored, it will be
+        /// reset to its last saved state.
         /// </summary>
         [ContextMenu("Restore Saved State")]
         public void RestoreState() {
@@ -60,14 +62,16 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// Serializing references derived from UnityObject is tricky for a number of reasons, so we
-        /// just let Unity handle it. The object can be modified in the inspector and be deleted, or
-        /// it can become a prefab. Further, there is no good way to uniquely identify components
-        /// and game objects that handle prefabs and instantiation well. We therefore just let Unity
-        /// serialize our references for us.
+        /// Serializing references derived from UnityObject is tricky for a
+        /// number of reasons, so we just let Unity handle it. The object can be
+        /// modified in the inspector and be deleted, or it can become a prefab.
+        /// Further, there is no good way to uniquely identify components and
+        /// game objects that handle prefabs and instantiation well. We therefore
+        /// just let Unity serialize our references for us.
         /// </summary>
         /// <remarks>
-        /// We add a NotSerialized annotation to this item so that FI will not serialize it
+        /// We add a NotSerialized annotation to this item so that FI will not
+        /// serialize it
         /// </remarks>
         [SerializeField, NotSerialized, HideInInspector]
         private List<UnityObject> _objectReferences;
@@ -81,12 +85,14 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// The key fields that are serialized. These map to the properties/fields that Full
-        /// Inspector has discovered in the behavior type that need to be serialized. This value
-        /// needs to be serialized by Unity and therefore cannot be auto-implemented by a property.
+        /// The key fields that are serialized. These map to the
+        /// properties/fields that Full Inspector has discovered in the behavior
+        /// type that need to be serialized. This value needs to be serialized by
+        /// Unity and therefore cannot be auto-implemented by a property.
         /// </summary>
         /// <remarks>
-        /// We add a NotSerialized annotation to this item so that FI will not serialize it
+        /// We add a NotSerialized annotation to this item so that FI will not
+        /// serialize it
         /// </remarks>
         [SerializeField, NotSerialized, HideInInspector]
         private List<string> _serializedStateKeys;
@@ -100,12 +106,14 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// The value fields that are serialized. These correspond to the key fields that Full
-        /// Inspector has discovered in the behavior type that need to be serialized. This value
-        /// needs to be serialized by Unity and therefore cannot be auto-implemented by a property.
+        /// The value fields that are serialized. These correspond to the key
+        /// fields that Full Inspector has discovered in the behavior type that
+        /// need to be serialized. This value needs to be serialized by Unity and
+        /// therefore cannot be auto-implemented by a property.
         /// </summary>
         /// <remarks>
-        /// We add a NotSerialized annotation to this item so that FI will not serialize it
+        /// We add a NotSerialized annotation to this item so that FI will not
+        /// serialize it
         /// </remarks>
         [SerializeField, NotSerialized, HideInInspector]
         private List<string> _serializedStateValues;

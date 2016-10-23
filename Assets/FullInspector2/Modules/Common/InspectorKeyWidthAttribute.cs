@@ -2,13 +2,15 @@
 
 namespace FullInspector {
     /// <summary>
-    /// Allows the width of a KeyValuePair to be modified. If you wish to use this inside of a
-    /// collection/dictionary, please see InspectorCollectionItemAttributes to activate it.
+    /// Allows the width of a KeyValuePair to be modified. If you wish to use
+    /// this inside of a collection/dictionary, please see
+    /// InspectorCollectionItemAttributes to activate it.
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class InspectorKeyWidthAttribute : Attribute {
         /// <summary>
-        /// The percentage of available width that the key will use in the KeyValuePair.
+        /// The percentage of available width that the key will use in the
+        /// KeyValuePair.
         /// </summary>
         public float WidthPercentage;
 

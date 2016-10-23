@@ -1,5 +1,5 @@
-﻿using FullSerializer;
-using System;
+﻿using System;
+using FullSerializer;
 using UnityEngine;
 
 namespace FullInspector.Serializers.FullSerializer {

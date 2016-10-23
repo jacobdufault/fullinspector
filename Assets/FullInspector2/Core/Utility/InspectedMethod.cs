@@ -1,6 +1,6 @@
-﻿using FullInspector.Internal;
-using System;
+﻿using System;
 using System.Reflection;
+using FullInspector.Internal;
 using FullSerializer.Internal;
 using UnityEngine;
 
@@ -12,7 +12,8 @@ namespace FullInspector {
         public InspectedMethod(MethodInfo method) {
             Method = method;
 
-            // We can consider methods with all-default parameters as no parameter methods
+            // We can consider methods with all-default parameters as no
+            // parameter methods
             foreach (var param in method.GetParameters()) {
                 if (param.IsOptional) continue;
                 HasArguments = true;
@@ -40,8 +41,6 @@ namespace FullInspector {
                     DisplayLabel.tooltip = attr.Tooltip;
                 }
             }
-
-
         }
 
         /// <summary>
@@ -53,8 +52,9 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// The name that should be used when displaying the method. This value defaults to
-        /// Method.Name but can be overridden with a InspectorButtonAttribute.
+        /// The name that should be used when displaying the method. This value
+        /// defaults to Method.Name but can be overridden with a
+        /// InspectorButtonAttribute.
         /// </summary>
         public GUIContent DisplayLabel {
             get;
@@ -81,10 +81,11 @@ namespace FullInspector {
                 if (methodParams.Length != 0) {
                     args = new object[methodParams.Length];
 
-                    // NOTE: Based on documentation, it looks like the value you're actually
-                    // supposed to use to get default arguments is Type.Missing, but
-                    // there appears to be an issue in mono where that is not supported. Instead
-                    // we will just fetch the default parameter values and send them.
+                    // NOTE: Based on documentation, it looks like the value
+                    //       you're actually supposed to use to get default
+                    // arguments is Type.Missing, but there appears to be an
+                    // issue in mono where that is not supported. Instead we will
+                    // just fetch the default parameter values and send them.
                     for (int i = 0; i < args.Length; ++i) {
                         args[i] = methodParams[i].DefaultValue;
                     }

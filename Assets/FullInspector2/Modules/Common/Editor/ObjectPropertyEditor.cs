@@ -7,8 +7,8 @@ using UnityObject = UnityEngine.Object;
 
 namespace FullInspector.Modules {
     /// <summary>
-    /// Used to remove the generic arguments from ObjectPropertyEditor so that it can be used as a
-    /// "banned" argument for PropertyEditor.Get
+    /// Used to remove the generic arguments from ObjectPropertyEditor so that it
+    /// can be used as a "banned" argument for PropertyEditor.Get
     /// </summary>
     public interface IObjectPropertyEditor {
     }
@@ -16,11 +16,12 @@ namespace FullInspector.Modules {
     /// <summary>
     /// Provides an ObjectField for every type which derives from Object.
     /// </summary>
-    /// <typeparam name="ObjectType">The actual type of the derived parameter</typeparam>
+    /// <typeparam name="ObjectType">
+    /// The actual type of the derived parameter
+    /// </typeparam>
     [CustomPropertyEditor(typeof(UnityObject), Inherit = true, DisableErrorOnUnityObject = true)]
     public class ObjectPropertyEditor<ObjectType> : PropertyEditor<UnityObject>, IObjectPropertyEditor
         where ObjectType : UnityObject {
-
         private static float FoldoutHeight = EditorStyles.foldout.CalcHeight(GUIContent.none, 100);
 
         private static void DisableFoldoutByDefault(object obj, fiGraphMetadata metadata) {
@@ -100,9 +101,9 @@ namespace FullInspector.Modules {
 
                 fiEditorGUI.BeginFadeGroup(0, ref subRect, foldoutState.AnimPercentage);
 
-                // Reuse the height calculation from GetHeight from the BehaviorEditor by
-                // calculating the base height of the layout when the dynamic item does not
-                // contribute.
+                // Reuse the height calculation from GetHeight from the
+                // BehaviorEditor by calculating the base height of the layout
+                // when the dynamic item does not contribute.
                 DynamicItemHeight.SetHeight(0);
                 DynamicItemHeight.SetHeight(subRect.height - DisplayedItemLayout.Height);
 

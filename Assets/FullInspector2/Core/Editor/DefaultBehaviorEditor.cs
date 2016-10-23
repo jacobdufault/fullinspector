@@ -5,8 +5,8 @@ using UnityObject = UnityEngine.Object;
 
 namespace FullInspector {
     /// <summary>
-    /// The default behavior editor is used whenever there is not a user-defined one that should be
-    /// used instead.
+    /// The default behavior editor is used whenever there is not a user-defined
+    /// one that should be used instead.
     /// </summary>
     public class DefaultBehaviorEditor : BehaviorEditor<UnityObject> {
         protected override void OnSceneGUI(UnityObject behavior) {
@@ -16,14 +16,15 @@ namespace FullInspector {
             fiGraphMetadataChild childMetadata = metadata.Enter("DefaultBehaviorEditor", null);
             childMetadata.Metadata.GetPersistentMetadata<fiDropdownMetadata>().ForceDisable();
 
-            // We don't want to get the IObjectPropertyEditor for the given target, which extends
-            // UnityObject, so that we can actually edit the property instead of getting a Unity
-            // reference field. We also don't want the AbstractTypePropertyEditor, which we will get
-            // if the behavior has any derived types.
+            // We don't want to get the IObjectPropertyEditor for the given
+            // target, which extends UnityObject, so that we can actually edit
+            // the property instead of getting a Unity reference field. We also
+            // don't want the AbstractTypePropertyEditor, which we will get if
+            // the behavior has any derived types.
             PropertyEditorChain editorChain = PropertyEditor.Get(behavior.GetType(), null);
             IPropertyEditor editor = editorChain.SkipUntilNot(
-                typeof (IObjectPropertyEditor),
-                typeof (AbstractTypePropertyEditor));
+                typeof(IObjectPropertyEditor),
+                typeof(AbstractTypePropertyEditor));
 
             // Run the editor
             editor.Edit(rect, GUIContent.none, behavior, childMetadata);
@@ -35,14 +36,15 @@ namespace FullInspector {
 
             float height = 0;
 
-            // We don't want to get the IObjectPropertyEditor for the given target, which extends
-            // UnityObject, so that we can actually edit the property instead of getting a Unity
-            // reference field. We also don't want the AbstractTypePropertyEditor, which we will get
-            // if the behavior has any derived types.
+            // We don't want to get the IObjectPropertyEditor for the given
+            // target, which extends UnityObject, so that we can actually edit
+            // the property instead of getting a Unity reference field. We also
+            // don't want the AbstractTypePropertyEditor, which we will get if
+            // the behavior has any derived types.
             PropertyEditorChain editorChain = PropertyEditor.Get(behavior.GetType(), null);
             IPropertyEditor editor = editorChain.SkipUntilNot(
-                typeof (IObjectPropertyEditor),
-                typeof (AbstractTypePropertyEditor));
+                typeof(IObjectPropertyEditor),
+                typeof(AbstractTypePropertyEditor));
 
             height += editor.GetElementHeight(GUIContent.none, behavior, childMetadata);
 
@@ -64,8 +66,9 @@ namespace FullInspector {
     }
 
     /// <summary>
-    /// If you wish to just extend the default behavior editor by adding a section before/after it, you
-    /// can just extend this class and override the appropriate methods.
+    /// If you wish to just extend the default behavior editor by adding a
+    /// section before/after it, you can just extend this class and override the
+    /// appropriate methods.
     /// </summary>
     public class DefaultBehaviorEditor<TBehavior> : BehaviorEditor<TBehavior>
         where TBehavior : UnityObject {

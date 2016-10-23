@@ -10,11 +10,10 @@ using UnityObject = UnityEngine.Object;
 namespace FullInspector.Modules {
     public class fiSerializerMigrationUtilityEditorWindow : EditorWindow {
         /// <summary>
-        /// This is a utility class that wraps the UX that lets the user pick which UnityObjects they
-        /// want to process.
+        /// This is a utility class that wraps the UX that lets the user pick
+        /// which UnityObjects they want to process.
         /// </summary>
         private class UnityObjectSelectionGroup {
-
             private class EnabledObject {
                 public UnityObject Object;
                 public bool Enabled;
@@ -53,8 +52,6 @@ namespace FullInspector.Modules {
             }
         }
 
-
-
         [MenuItem("Window/Full Inspector/Serializer Migration Utility")]
         public static void ShowWindow() {
             fiEditorWindowUtility.ShowUtility<fiSerializerMigrationUtilityEditorWindow>("Serializer Migration Utility");
@@ -71,9 +68,6 @@ namespace FullInspector.Modules {
 
         private int _selectedMode = 1;
         private bool _disablePopups = false;
-
-
-
 
         private static GUIStyle RichLabel;
         private static void EnsureResources() {
@@ -102,7 +96,8 @@ namespace FullInspector.Modules {
         }
 
         public void OnEnable() {
-            // UX: Set the current serializer to the default serializer if we have a default serializer
+            // UX: Set the current serializer to the default serializer if we
+            //     have a default serializer
             if (fiInstalledSerializerManager.HasDefault) {
                 _currentSerializer.Type = fiInstalledSerializerManager.DefaultMetadata.SerializerType;
             }
@@ -156,7 +151,6 @@ namespace FullInspector.Modules {
                     DisplayPostSerializeMessage();
                 }
             }
-
             else if (_selectedMode == 1) {
                 DisplayScenesGUI();
 
@@ -177,7 +171,6 @@ namespace FullInspector.Modules {
                     DisplayPostSerializeMessage();
                 }
             }
-
             else if (_selectedMode == 2) {
                 if (PersistentObjectSelections == null) {
                     PersistentObjectSelections = new UnityObjectSelectionGroup(fiSerializerMigrationUtility.GetPersistentObjects());
@@ -195,8 +188,6 @@ namespace FullInspector.Modules {
                 }
             }
         }
-
-
 
         private Vector2 _selectionScroll;
         private GameObject[] DisplaySelection() {
@@ -225,7 +216,6 @@ namespace FullInspector.Modules {
             _sceneListScroll = GUILayout.BeginScrollView(_sceneListScroll);
             fiEditorGUILayout.WithIndent(25, () => {
                 foreach (var scene in _scenes) {
-
                     float buttonWidth = 50;
 
                     var rect = EditorGUILayout.GetControlRect(false, EditorGUIUtility.singleLineHeight);
@@ -240,7 +230,6 @@ namespace FullInspector.Modules {
                     if (fiEditorUtility.CurrentScene == scene) {
                         EditorGUI.LabelField(labelRect, "<b>" + scene + "</b>", RichLabel);
                     }
-
                     else {
                         EditorGUI.LabelField(labelRect, scene);
                     }
@@ -258,7 +247,6 @@ namespace FullInspector.Modules {
             right.x += left.width + margin;
             right.width -= left.width + margin;
         }
-
 
         private static void WithTemporaryLabelWidth(float width, Action code) {
             float saved = fiSettings.LabelWidthMax;

@@ -12,9 +12,10 @@ namespace FullInspector.BackupService {
             }
         }
 
-        // We have to white-list other components, to verify that they work with the default
-        // serializer. Some will cause it to break, etc. To get better support in the future for
-        // more components, we might need to introduction an abstraction into CreateBackup.
+        // We have to white-list other components, to verify that they work with
+        // the default serializer. Some will cause it to break, etc. To get
+        // better support in the future for more components, we might need to
+        // introduction an abstraction into CreateBackup.
 
         [MenuItem("CONTEXT/Transform/Backup")]
         public static void BackupTransform(MenuCommand command) {

@@ -23,8 +23,9 @@ namespace FullInspector.BackupService {
                     _storage = GameObject.FindObjectOfType<fiStorageComponent>();
 
                     if (_storage == null) {
-                        // If we use new GameObject(), then for a split second Unity will show the
-                        // game object in the hierarchy, which is bad UX.
+                        // If we use new GameObject(), then for a split second
+                        // Unity will show the game object in the hierarchy,
+                        // which is bad UX.
                         var obj = EditorUtility.CreateGameObjectWithHideFlags(SceneStorageName,
                             HideFlags.HideInHierarchy);
                         _storage = obj.AddComponent<fiStorageComponent>();

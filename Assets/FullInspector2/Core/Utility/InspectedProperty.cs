@@ -8,7 +8,8 @@ using UnityEngine;
 
 namespace FullInspector {
     /// <summary>
-    /// A PropertyMetadata describes a discovered property or field in a TypeMetadata.
+    /// A PropertyMetadata describes a discovered property or field in a
+    /// TypeMetadata.
     /// </summary>
     public sealed class InspectedProperty {
         /// <summary>
@@ -59,8 +60,8 @@ namespace FullInspector {
         private bool? _isPublicCache;
 
         /// <summary>
-        /// Returns true if this InspectedProperty is both a *property* and an *auto-property*. Otherwise
-        /// this will return false.
+        /// Returns true if this InspectedProperty is both a *property* and an
+        /// *auto-property*. Otherwise this will return false.
         /// </summary>
         public bool IsAutoProperty {
             get {
@@ -90,9 +91,9 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// Returns true if it looks like the property can be written to. This does *not* guarantee
-        /// that a write will actually be successful (for example, a property can throw a
-        /// NotImplementedException()).
+        /// Returns true if it looks like the property can be written to. This
+        /// does *not* guarantee that a write will actually be successful (for
+        /// example, a property can throw a NotImplementedException()).
         /// </summary>
         public bool CanWrite {
             get;
@@ -100,8 +101,8 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// Writes a value to the property that this property metadata represents, using given
-        /// object instance as the context.
+        /// Writes a value to the property that this property metadata
+        /// represents, using given object instance as the context.
         /// </summary>
         public void Write(object context, object value) {
             try {
@@ -116,7 +117,6 @@ namespace FullInspector {
 
                     field.SetValue(context, value);
                 }
-
                 else if (property != null) {
                     MethodInfo setMethod = property.GetSetMethod(/*nonPublic:*/ true);
                     if (setMethod != null) {
@@ -124,7 +124,6 @@ namespace FullInspector {
                     }
                 }
             }
-
             catch (Exception e) {
                 Debug.LogWarning("Caught exception when writing property " +
                     Name + " with context=" + fiUtility.ToString(context) +
@@ -134,15 +133,14 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// Reads a value from the property that this property metadata represents, using the given
-        /// object instance as the context.
+        /// Reads a value from the property that this property metadata
+        /// represents, using the given object instance as the context.
         /// </summary>
         public object Read(object context) {
             try {
                 if (MemberInfo is PropertyInfo) {
                     return ((PropertyInfo)MemberInfo).GetValue(context, new object[] { });
                 }
-
                 else {
                     return ((FieldInfo)MemberInfo).GetValue(context);
                 }
@@ -158,7 +156,8 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// The default value for the storage type. The default value is not always null as structs need special support.
+        /// The default value for the storage type. The default value is not
+        /// always null as structs need special support.
         /// </summary>
         public object DefaultValue {
             get {
@@ -171,13 +170,14 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// The type of value that is stored inside of the property. For example, for an int field,
-        /// StorageType will be typeof(int).
+        /// The type of value that is stored inside of the property. For example,
+        /// for an int field, StorageType will be typeof(int).
         /// </summary>
         public Type StorageType;
 
         /// <summary>
-        /// Initializes a new instance of the PropertyMetadata class from a property member.
+        /// Initializes a new instance of the PropertyMetadata class from a
+        /// property member.
         /// </summary>
         public InspectedProperty(PropertyInfo property) {
             MemberInfo = property;
@@ -189,7 +189,8 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// Initializes a new instance of the PropertyMetadata class from a field member.
+        /// Initializes a new instance of the PropertyMetadata class from a field
+        /// member.
         /// </summary>
         public InspectedProperty(FieldInfo field) {
             MemberInfo = field;
@@ -248,8 +249,10 @@ namespace FullInspector {
         /// <summary>
         /// Returns a hash code for this instance.
         /// </summary>
-        /// <returns>A hash code for this instance, suitable for use in hashing algorithms and data
-        /// structures like a hash table.</returns>
+        /// <returns>
+        /// A hash code for this instance, suitable for use in hashing algorithms
+        /// and data structures like a hash table.
+        /// </returns>
         public override int GetHashCode() {
             return StorageType.GetHashCode() ^ Name.GetHashCode();
         }

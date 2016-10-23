@@ -16,7 +16,8 @@ namespace FullInspector.Internal {
     public class tkFoldoutMetadataStorageComponent : fiBaseStorageComponent<tkFoldoutGraphMetadataSerializer> { }
 
     // To serialize the graph metadata
-    [Serializable] public class tkFoldoutGraphMetadataSerializer : fiGraphMetadataSerializer<tkFoldoutMetadata> { }
+    [Serializable]
+    public class tkFoldoutGraphMetadataSerializer : fiGraphMetadataSerializer<tkFoldoutMetadata> { }
 
     // To provide the presistent metadata system information about our types
     public class tkFoldoutMetadataProvider : fiPersistentEditorStorageMetadataProvider<tkFoldoutMetadata, tkFoldoutGraphMetadataSerializer> { }

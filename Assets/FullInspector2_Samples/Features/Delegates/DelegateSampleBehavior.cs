@@ -25,7 +25,6 @@ namespace FullInspector.Samples.Other.Delegates {
 
         public void MyIntMonoBehaviourConsumer(int a, MonoBehaviour b) {
             Debug.Log(string.Format("MyIntMonoBehaviourConsumer({0}, {1}) called", a, b));
-
         }
 
         public void MyIntBaseBehaviorConsumer(int a, BaseBehavior<FullSerializerSerializer> b) {

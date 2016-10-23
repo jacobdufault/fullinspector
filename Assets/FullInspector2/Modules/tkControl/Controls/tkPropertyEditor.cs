@@ -52,7 +52,6 @@ namespace FullInspector {
                 fiGUIContent label,
                 Type fieldType, MemberInfo attributes,
                 Func<T, TContext, object> getValue, Action<T, TContext, object> setValue) {
-
                 _label = label;
                 _fieldType = fieldType;
                 _attributes = attributes;
@@ -62,7 +61,6 @@ namespace FullInspector {
 
             public static PropertyEditor Create<TEdited>(fiGUIContent label, MemberInfo attributes,
                 Func<T, TContext, TEdited> getValue, Action<T, TContext, TEdited> setValue) {
-
                 return new PropertyEditor(label, typeof(TEdited), attributes, (o, c) => getValue(o, c), (o, c, v) => setValue(o, c, (TEdited)v));
             }
 
@@ -79,7 +77,6 @@ namespace FullInspector {
                     fiLateBindings.EditorGUI.HelpBox(rect, _errorMessage, CommentType.Error);
                     return obj;
                 }
-
 
                 fiLateBindings.EditorGUI.BeginChangeCheck();
 

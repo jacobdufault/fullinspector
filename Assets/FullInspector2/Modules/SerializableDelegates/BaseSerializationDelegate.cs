@@ -1,12 +1,13 @@
-﻿using FullSerializer.Internal;
-using System;
+﻿using System;
 using System.Reflection;
+using FullSerializer.Internal;
 using UnityObject = UnityEngine.Object;
 
 namespace FullInspector.Modules {
     public class BaseSerializationDelegate {
         /// <summary>
-        /// The container that will be used as a context when invoking the method.
+        /// The container that will be used as a context when invoking the
+        /// method.
         /// </summary>
         public UnityObject MethodContainer;
 
@@ -23,7 +24,8 @@ namespace FullInspector.Modules {
         }
 
         /// <summary>
-        /// Construct a delegate that will target the given container with the specified method.
+        /// Construct a delegate that will target the given container with the
+        /// specified method.
         /// </summary>
         public BaseSerializationDelegate(UnityObject methodContainer, string methodName) {
             MethodContainer = methodContainer;
@@ -43,7 +45,8 @@ namespace FullInspector.Modules {
         }
 
         /// <summary>
-        /// Internal helper method to invoke the delegate with the given parameters.
+        /// Internal helper method to invoke the delegate with the given
+        /// parameters.
         /// </summary>
         protected object DoInvoke(params object[] parameters) {
             if (MethodContainer == null) {

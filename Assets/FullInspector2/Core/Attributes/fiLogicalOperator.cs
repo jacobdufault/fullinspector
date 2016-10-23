@@ -40,6 +40,5 @@ namespace FullInspector {
             }
             throw new NotImplementedException();
         }
-
     }
 }

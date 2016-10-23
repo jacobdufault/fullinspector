@@ -92,8 +92,7 @@ namespace FullInspector.Internal {
             foreach (var field in typeof(fiEditorImages).GetDeclaredFields()) {
                 if (typeof(fiEditorImage).IsAssignableFrom(field.FieldType) == false) continue;
 
-                yield return new DiscoveredResource
-                {
+                yield return new DiscoveredResource {
                     Name = field.Name,
                     LightSkin = fiImageUtility.Decode(((fiEditorImage)field.GetValue(null)).EncodedLightSkin),
                     DarkSkin = fiImageUtility.Decode(((fiEditorImage)field.GetValue(null)).EncodedDarkSkin),

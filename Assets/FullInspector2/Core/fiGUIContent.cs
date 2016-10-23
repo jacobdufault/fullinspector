@@ -2,9 +2,9 @@
 
 namespace FullInspector {
     /// <summary>
-    /// This is a wrapper that will generate Unity GUIContent instances. This class has
-    /// an implicit conversion from a string so that it is easy to easily construct
-    /// GUIContents that just have a label.
+    /// This is a wrapper that will generate Unity GUIContent instances. This
+    /// class has an implicit conversion from a string so that it is easy to
+    /// easily construct GUIContents that just have a label.
     /// </summary>
     public class fiGUIContent {
         public static fiGUIContent Empty = new fiGUIContent();
@@ -74,5 +74,4 @@ namespace FullInspector {
             };
         }
     }
-
 }

@@ -9,7 +9,6 @@ using UnityEngine;
 namespace FullInspector.Internal {
     public class fiGenericPropertyDrawerPropertyEditor<TContainer, T> : PropertyEditor<T>
         where TContainer : fiPropertyDrawerMonoBehaviorContainer<T> {
-
         public override bool DisplaysStandardLabel {
             get {
                 // We have no way of knowing what type of label will be rendered
@@ -37,7 +36,8 @@ namespace FullInspector.Internal {
         private static GameObject MetadataObject {
             get {
                 if (s_metadataObject == null) {
-                    // note: using HideFlags.HideAndDontSave includes HideFlags.NotEditable
+                    // note: using HideFlags.HideAndDontSave includes
+                    //       HideFlags.NotEditable
                     s_metadataObject = EditorUtility.CreateGameObjectWithHideFlags(
                         "Proxy editor for " + typeof(T).CSharpName(),
                         HideFlags.HideInHierarchy | HideFlags.DontSave);
@@ -47,7 +47,8 @@ namespace FullInspector.Internal {
             }
         }
 
-        // see http://answers.unity3d.com/questions/436295/how-to-have-a-gradient-editor-in-an-editor-script.html
+        // see
+        // http://answers.unity3d.com/questions/436295/how-to-have-a-gradient-editor-in-an-editor-script.html
         // for the inspiration behind this approach
         private ItemMetadata GetMetadata(fiGraphMetadata graphMetadata, T element) {
             var metadata = graphMetadata.GetMetadata<ItemMetadata>();
@@ -90,7 +91,8 @@ namespace FullInspector.Internal {
 
     public class fiGenericPropertyDrawerPropertyEditorManager {
         /// <summary>
-        /// An editor that is displayed while we are generating the PropertyDrawer bindings.
+        /// An editor that is displayed while we are generating the
+        /// PropertyDrawer bindings.
         /// </summary>
         private class TemporaryEditor : IPropertyEditor, IPropertyEditorEditAPI {
             public PropertyEditorChain EditorChain {
@@ -131,7 +133,6 @@ namespace FullInspector.Internal {
             }
         }
 
-
         public struct PropertyDrawerContainer {
             public bool IsInherited;
             public Type PropertyType;
@@ -156,7 +157,8 @@ namespace FullInspector.Internal {
                  let attrs = type.GetCustomAttributes(typeof(CustomPropertyDrawer), true)
                  where attrs != null
 
-                 // Do not generate bindings for various the PropertyDrawer binders
+                 // Do not generate bindings for various the PropertyDrawer
+                 // binders
                  where type != typeof(fiInspectorOnly_PropertyDrawer)
                  where type != typeof(fiValuePropertyDrawer)
 
@@ -208,7 +210,6 @@ namespace FullInspector.Internal {
             editorOutput += "    }" + Environment.NewLine;
             editorOutput += "}" + Environment.NewLine;
 
-
             Directory.CreateDirectory(fiUtility.CombinePaths(fiSettings.RootGeneratedDirectory, "PropertyDrawerIntegration"));
             Directory.CreateDirectory(fiUtility.CombinePaths(fiSettings.RootGeneratedDirectory, "PropertyDrawerIntegration", "Editor"));
 
@@ -223,7 +224,8 @@ namespace FullInspector.Internal {
 
         public static IPropertyEditor TryCreate(Type type) {
             if (HasPropertyDrawer(type)) {
-                // Don't recreate the same editor multiple times if we're called twice in a row.
+                // Don't recreate the same editor multiple times if we're called
+                // twice in a row.
                 if (_created.Add(type) == false) return new TemporaryEditor(type);
 
                 Debug.Log("Generating PropertyDrawer integration bindings for "
@@ -235,8 +237,8 @@ namespace FullInspector.Internal {
             return null;
         }
 
-        // A set of types that we are currently generating editors for. This is used so that
-        // we do not accidently recreate the same editor twice.
+        // A set of types that we are currently generating editors for. This is
+        // used so that we do not accidently recreate the same editor twice.
         private static readonly HashSet<Type> _created = new HashSet<Type>();
     }
 }

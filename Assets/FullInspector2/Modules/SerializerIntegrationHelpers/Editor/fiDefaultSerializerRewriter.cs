@@ -8,7 +8,8 @@ using UnityEngine;
 
 namespace FullInspector.Internal {
     /// <summary>
-    /// Helper to write the C# file containing the selected serializer information.
+    /// Helper to write the C# file containing the selected serializer
+    /// information.
     /// </summary>
     public static class fiDefaultSerializerRewriter {
         private static string OutputFilePath = fiUtility.CombinePaths(fiSettings.RootGeneratedDirectory, fiInstalledSerializerManager.GeneratedTypeName + ".cs");
@@ -189,7 +190,6 @@ namespace FullInspector.Internal {
             Append(builder, "}");
             File.WriteAllText(OutputSharedInstancePath, builder.ToString());
         }
-
 
         private static void GenerateFileInternal(string defaultProvider, List<string> allProviders) {
             string param0 = defaultProvider;

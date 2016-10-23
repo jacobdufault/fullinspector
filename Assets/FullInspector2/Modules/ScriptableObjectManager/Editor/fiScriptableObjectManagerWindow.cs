@@ -2,16 +2,16 @@
 using System.IO;
 using System.Linq;
 using FullSerializer;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 using tk = FullInspector.tk<FullInspector.Internal.fiScriptableObjectManagerWindow, FullInspector.tkDefaultContext>;
 
 namespace FullInspector.Internal {
     /// <summary>
-    /// Provides a nice interface for interacting with and managing scriptable object instances
+    /// Provides a nice interface for interacting with and managing scriptable
+    /// object instances
     /// </summary>
     public class fiScriptableObjectManagerWindow : EditorWindow {
-
         [MenuItem("Window/Full Inspector/Scriptable Object Manager &o")]
         public static void ShowWindow() {
             fiEditorWindowUtility.Show<fiScriptableObjectManagerWindow>("Scriptable Object Manager");

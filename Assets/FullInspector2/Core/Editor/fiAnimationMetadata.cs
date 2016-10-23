@@ -13,10 +13,15 @@ namespace FullInspector.Internal {
         /// Update the height of the editor.
         /// </summary>
         /// <param name="height">The new height.</param>
-        /// <param name="allowAnimation">Should animation be allowed? Sometimes animation is not
-        /// desired if a sub-item is animation. If this item animations when a sub-item is
-        /// animating, then there will be visible UX jerk.</param>
-        /// <returns>If true, then a transition is occurring and the animation is rendering.</returns>
+        /// <param name="allowAnimation">
+        /// Should animation be allowed? Sometimes animation is not desired if a
+        /// sub-item is animation. If this item animations when a sub-item is
+        /// animating, then there will be visible UX jerk.
+        /// </param>
+        /// <returns>
+        /// If true, then a transition is occurring and the animation is
+        /// rendering.
+        /// </returns>
         public bool UpdateHeight(float height) {
             if (_animator == null) {
                 _animator = new AnimFloat(height);

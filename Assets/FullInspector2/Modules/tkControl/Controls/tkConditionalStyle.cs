@@ -4,9 +4,10 @@ using FullInspector.Internal;
 namespace FullInspector {
     public partial class tk<T, TContext> {
         /// <summary>
-        /// This enables running code before/after running the actual control editing logic assuming some
-        /// predicate first passes the test. Typically you'll want to use classes derived from this one,
-        /// like ColorIf, instead of this.
+        /// This enables running code before/after running the actual control
+        /// editing logic assuming some predicate first passes the test.
+        /// Typically you'll want to use classes derived from this one, like
+        /// ColorIf, instead of this.
         /// </summary>
         public class ConditionalStyle : tkStyle<T, TContext> {
             private readonly Func<T, TContext, bool> _shouldActivate;
@@ -18,14 +19,18 @@ namespace FullInspector {
             /// <summary>
             /// Create a new conditional style.
             /// </summary>
-            /// <param name="shouldActivate">Used to determine if the modifier should activate.</param>
-            /// <param name="activate">This is the activation logic. The return value will be passed into deactivate.</param>
+            /// <param name="shouldActivate">
+            /// Used to determine if the modifier should activate.
+            /// </param>
+            /// <param name="activate">
+            /// This is the activation logic. The return value will be passed
+            /// into deactivate.
+            /// </param>
             /// <param name="deactivate">The deactivate function.</param>
             public ConditionalStyle(
                 Func<T, TContext, bool> shouldActivate,
                 Func<T, TContext, object> activate,
                 Action<T, TContext, object> deactivate) {
-                
                 _shouldActivate = shouldActivate;
                 _activate = activate;
                 _deactivate = deactivate;

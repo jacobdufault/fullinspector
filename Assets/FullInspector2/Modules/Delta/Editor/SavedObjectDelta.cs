@@ -6,8 +6,8 @@ using UnityEngine;
 
 namespace FullInspector.Internal {
     public struct SavedObjectDelta {
-        // The delta will save all of the changes needed to convert |previousState| into
-        // |currentState|.
+        // The delta will save all of the changes needed to convert
+        // |previousState| into |currentState|.
         public SavedObjectDelta(SavedObject currentState, SavedObject previousState)
             : this(currentState, previousState, false) {
         }
@@ -49,8 +49,8 @@ namespace FullInspector.Internal {
                     break;
 
                 ObjectDataPath pathElement = path[i - 1];
-                // byType uses the parent element to adjust the type, so we
-                // have to go back two elements instead of just one.
+                // byType uses the parent element to adjust the type, so we have
+                // to go back two elements instead of just one.
                 if (path[i].byType != null) {
                     if (i - 2 < 0)
                         break;
@@ -92,10 +92,11 @@ namespace FullInspector.Internal {
                                  Dictionary<ObjectDataPath[], object> toAdd,
                                  Dictionary<ObjectDataPath[], object> toModify,
                                  List<ObjectDataPath[]> toRemove) {
-            // - We remove first, because we will generate a diff that removes the null value and then adds
-            //   the expected value back.
+            // - We remove first, because we will generate a diff that removes
+            //   the null value and then adds the expected value back.
             // - We modify next, since we might change the object type.
-            // TODO: If we change the object type then we need to restore the state :/
+            // TODO: If we change the object type then we need to restore the
+            //       state :/
             foreach (ObjectDataPath[] path in toRemove) {
                 object context = ReadNavigation(path, target, /*create:*/false);
 
@@ -111,7 +112,8 @@ namespace FullInspector.Internal {
                 object newValue = property.Value;
 
                 object context = ReadNavigation(path, target, /*create:*/false);
-                // Debug.Log("Modifying " + DumpToString(property) + " on " + context);
+                // Debug.Log("Modifying " + DumpToString(property) + " on " +
+                // context);
                 path[path.Length - 1].Write(context, newValue);
                 WriteNavigation(path, target, context);
             }
@@ -120,12 +122,14 @@ namespace FullInspector.Internal {
                 ObjectDataPath[] path = property.Key;
                 object addedValue = property.Value;
                 object context = ReadNavigation(path, target, /*create:*/true);
-                // Debug.Log("Adding " + DumpToString(property) + " on " + context);
+                // Debug.Log("Adding " + DumpToString(property) + " on " +
+                // context);
                 path[path.Length - 1].Write(context, addedValue);
             }
         }
 
-        // Return the set of operations needed to make |previousState| look like |currentState|.
+        // Return the set of operations needed to make |previousState| look like
+        // |currentState|.
         public static void CreateDelta(
                 Dictionary<ObjectDataPath[], object> currentState,
                 Dictionary<ObjectDataPath[], object> previousState,
@@ -133,7 +137,6 @@ namespace FullInspector.Internal {
                 out Dictionary<ObjectDataPath[], object> toModify,
                 out List<ObjectDataPath[]> toRemove,
                 bool dumpString) {
-
             toAdd = AllocateDict();
             toModify = AllocateDict();
             toRemove = new List<ObjectDataPath[]>();
@@ -208,7 +211,6 @@ namespace FullInspector.Internal {
 
             return result.ToString();
         }
-
 
         public List<ObjectDataPath[]> toRemove;
         public Dictionary<ObjectDataPath[], object> toModify;

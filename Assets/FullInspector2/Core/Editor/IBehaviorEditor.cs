@@ -22,13 +22,14 @@ namespace FullInspector {
 
     public abstract class BehaviorEditor<TBehavior> : IBehaviorEditor
         where TBehavior : UnityObject {
-
         protected abstract void OnEdit(Rect rect, TBehavior behavior, fiGraphMetadata metadata);
         protected abstract float OnGetHeight(TBehavior behavior, fiGraphMetadata metadata);
         protected abstract void OnSceneGUI(TBehavior behavior);
 
-        protected virtual void OnEditorActivate(UnityObject behavior) { }
-        protected virtual void OnEditorDeactivate(UnityObject behavior) { }
+        protected virtual void OnEditorActivate(UnityObject behavior) {
+        }
+        protected virtual void OnEditorDeactivate(UnityObject behavior) {
+        }
         void IBehaviorEditor.OnEditorActivate(UnityObject behavior) {
             OnEditorActivate(behavior);
         }
@@ -41,16 +42,18 @@ namespace FullInspector {
 
             EditorGUI.BeginChangeCheck();
 
-            // we don't want to get the IObjectPropertyEditor for the given target, which extends
-            // UnityObject, so that we can actually edit the property instead of getting a Unity
-            // reference field
+            // we don't want to get the IObjectPropertyEditor for the given
+            // target, which extends UnityObject, so that we can actually edit
+            // the property instead of getting a Unity reference field
             OnSceneGUI((TBehavior)behavior);
 
-            // If the GUI has been changed, then we want to reserialize the current object state.
-            // However, we don't bother doing this if we're currently in play mode, as the
-            // serialized state changes will be lost regardless.
+            // If the GUI has been changed, then we want to reserialize the
+            // current object state. However, we don't bother doing this if we're
+            // currently in play mode, as the serialized state changes will be
+            // lost regardless.
             if (EditorGUI.EndChangeCheck()) {
-                // We want to call OnValidate even if we are in play-mode, though.
+                // We want to call OnValidate even if we are in play-mode,
+                // though.
                 fiRuntimeReflectionUtility.InvokeMethod(behavior.GetType(), "OnValidate", behavior, null);
 
                 if (EditorApplication.isPlaying == false) {
@@ -68,7 +71,8 @@ namespace FullInspector {
             // Inspector based off of the property editor
             EditorGUI.BeginChangeCheck();
 
-            // Seed the label width - sometimes we don't always go through the property editor logic.
+            // Seed the label width - sometimes we don't always go through the
+            // property editor logic.
             EditorGUIUtility.labelWidth = fiGUI.PushLabelWidth(GUIContent.none, rect.width);
 
             // Run the editor
@@ -76,13 +80,15 @@ namespace FullInspector {
 
             fiGUI.PopLabelWidth();
 
-            // If the GUI has been changed, then we want to reserialize the current object state.
-            // However, we don't bother doing this if we're currently in play mode, as the
-            // serialized state changes will be lost regardless.
+            // If the GUI has been changed, then we want to reserialize the
+            // current object state. However, we don't bother doing this if we're
+            // currently in play mode, as the serialized state changes will be
+            // lost regardless.
             if (EditorGUI.EndChangeCheck()) {
                 fiSerializationManager.DirtyForceSerialize.Add(behavior);
 
-                // We want to call OnValidate even if we are in play-mode, though.
+                // We want to call OnValidate even if we are in play-mode,
+                // though.
                 fiRuntimeReflectionUtility.InvokeMethod(behavior.GetType(), "OnValidate", behavior, null);
 
                 if (EditorApplication.isPlaying == false) {

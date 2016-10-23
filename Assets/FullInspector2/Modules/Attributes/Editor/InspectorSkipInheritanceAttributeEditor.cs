@@ -5,7 +5,6 @@ using UnityEngine;
 namespace FullInspector.Modules {
     [CustomAttributePropertyEditor(typeof(InspectorSkipInheritanceAttribute), ReplaceOthers = true)]
     public class InspectorSkipInheritanceAttributeEditor<T> : AttributePropertyEditor<T, InspectorSkipInheritanceAttribute> {
-
         private static IPropertyEditor GetEditor(object element) {
             if (element == null) {
                 return PropertyEditor.Get(typeof(T), null).FirstEditor;

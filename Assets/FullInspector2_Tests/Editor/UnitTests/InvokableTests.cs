@@ -6,15 +6,31 @@ namespace FullInspector.Tests {
     public class MethodContainer : ScriptableObject {
         public int InvokeCount;
 
-        public void Action() { ++InvokeCount; }
-        public void ActionInt(int a) { ++InvokeCount; }
-        public void ActionIntDouble(int a, double b) { ++InvokeCount; }
-        public void ActionIntDoubleBool(int a, double b, bool c) { ++InvokeCount; }
+        public void Action() {
+            ++InvokeCount;
+        }
+        public void ActionInt(int a) {
+            ++InvokeCount;
+        }
+        public void ActionIntDouble(int a, double b) {
+            ++InvokeCount;
+        }
+        public void ActionIntDoubleBool(int a, double b, bool c) {
+            ++InvokeCount;
+        }
 
-        public int IntFunc() { ++InvokeCount; return 1; }
-        public int IntFuncInt(int a) { ++InvokeCount; return 1; }
-        public int IntFuncIntDouble(int a, double b) { ++InvokeCount; return 1; }
-        public int IntFuncIntDoubleBool(int a, double b, bool c) { ++InvokeCount; return 1; }
+        public int IntFunc() {
+            ++InvokeCount; return 1;
+        }
+        public int IntFuncInt(int a) {
+            ++InvokeCount; return 1;
+        }
+        public int IntFuncIntDouble(int a, double b) {
+            ++InvokeCount; return 1;
+        }
+        public int IntFuncIntDoubleBool(int a, double b, bool c) {
+            ++InvokeCount; return 1;
+        }
     }
 
     public class InvokableTests {

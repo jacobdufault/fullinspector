@@ -1,8 +1,8 @@
-﻿using FullInspector.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using FullInspector.Internal;
 using FullSerializer.Internal;
 using UnityEngine;
 using UnityObject = UnityEngine.Object;
@@ -40,7 +40,8 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// A list of all types that have a CustomPropertyEditorAttribute attribute.
+        /// A list of all types that have a CustomPropertyEditorAttribute
+        /// attribute.
         /// </summary>
         private static List<Type> _editorTypes;
 
@@ -63,7 +64,6 @@ namespace FullInspector {
                 where fsPortableReflection.HasAttribute<CustomPropertyEditorAttribute>(type)
 
                 select type) {
-
                 if (typeof(IPropertyEditor).IsAssignableFrom(editorType) == false) {
                     Debug.LogWarning(string.Format("{0} has a {1} attribute but does not extend {2}",
                         editorType, typeof(CustomPropertyEditorAttribute).Name,
@@ -74,7 +74,6 @@ namespace FullInspector {
                 var attr = fsPortableReflection.GetAttribute<CustomPropertyEditorAttribute>(editorType);
                 if (typeof(UnityObject).IsAssignableFrom(attr.PropertyType) &&
                     attr.DisableErrorOnUnityObject == false) {
-
                     Debug.LogError("Please derive from BehaviorEditor (not PropertyEditor) for " + editorType + " (which is editing type " + attr.PropertyType + ")");
                     continue;
                 }
@@ -84,9 +83,10 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// If there are multiple user-defined property editors that report that they can edit a
-        /// specific type, we sort the applicability of the property editor based on how close it's
-        /// reported edited type is to the actual property type. This allows for, say, the
+        /// If there are multiple user-defined property editors that report that
+        /// they can edit a specific type, we sort the applicability of the
+        /// property editor based on how close it's reported edited type is to
+        /// the actual property type. This allows for, say, the
         /// IListPropertyEditor to override the ICollectionPropertyEditor.
         /// </summary>
         private static void SortByPropertyTypeRelevance(List<IPropertyEditor> editors) {
@@ -103,7 +103,8 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// Returns a set of property editors that can be used to edit the given property type.
+        /// Returns a set of property editors that can be used to edit the given
+        /// property type.
         /// </summary>
         private static PropertyEditorChain GetCachedEditors(Type propertyType, ICustomAttributeProvider attributes) {
             var cachedType = new CachedType {
@@ -121,11 +122,13 @@ namespace FullInspector {
 
                 if ((editor = AttributePropertyEditor.TryCreate(propertyType, attributes)) != null) chain.AddEditor(editor);
 
-                // arrays always need special handling; we don't support overriding them
+                // arrays always need special handling; we don't support
+                // overriding them
                 if ((editor = ArrayPropertyEditor.TryCreate(propertyType, attributes)) != null) chain.AddEditor(editor);
 
-                // support layout editors above custom editors
-                // notably this enables the layout editor to be the highest-priority, ie, above inherited editors
+                // support layout editors above custom editors notably this
+                // enables the layout editor to be the highest-priority, ie,
+                // above inherited editors
                 if ((editor = tkControlPropertyEditor.TryCreate(propertyType, attributes)) != null) chain.AddEditor(editor);
 
                 // user-defined property editors
@@ -139,11 +142,13 @@ namespace FullInspector {
                 SortByPropertyTypeRelevance(added);
                 foreach (IPropertyEditor toAdd in added) chain.AddEditor(toAdd);
 
-                // no user-defined editors so let's try to see if we can integrate a PropertyDrawer
+                // no user-defined editors so let's try to see if we can
+                // integrate a PropertyDrawer
                 if (added.Count == 0)
                     if ((editor = fiGenericPropertyDrawerPropertyEditorManager.TryCreate(propertyType)) != null) chain.AddEditor(editor);
 
-                // enums come after generic & inherited to allow them to be overridden
+                // enums come after generic & inherited to allow them to be
+                // overridden
                 if ((editor = EnumPropertyEditor.TryCreate(propertyType)) != null) chain.AddEditor(editor);
 
                 // try and create an editor for nullable types
@@ -152,8 +157,8 @@ namespace FullInspector {
                 // try and create an editor for abstract/interface type
                 if ((editor = AbstractTypePropertyEditor.TryCreate(propertyType)) != null) chain.AddEditor(editor);
 
-                // try and create a reflected editor; will only fail for arrays or collections,
-                // which should be covered by the array editor
+                // try and create a reflected editor; will only fail for arrays
+                // or collections, which should be covered by the array editor
                 if ((editor = ReflectedPropertyEditor.TryCreate(propertyType, attributes)) != null) chain.AddEditor(editor);
             }
 
@@ -161,19 +166,25 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// Returns a PropertyEditorChain that can edit the given type. The PropertyEditorChain will
-        /// contain all of the IPropertyEditor instances which reported that they could edit the
-        /// given type (with the associated set of attributes). To get an actual property editor,
-        /// use chain.FirstEditor or a similar method.
+        /// Returns a PropertyEditorChain that can edit the given type. The
+        /// PropertyEditorChain will contain all of the IPropertyEditor instances
+        /// which reported that they could edit the given type (with the
+        /// associated set of attributes). To get an actual property editor, use
+        /// chain.FirstEditor or a similar method.
         /// </summary>
-        /// <param name="propertyType">The type of property/field that is being edited.</param>
-        /// <param name="editedAttributes">Provides attributes that may override the default
-        /// property editor. This parameter can safely be set to null.</param>
-        /// <returns>A property editor chain composed of property editors which can edit the given
-        /// property type.</returns>
+        /// <param name="propertyType">
+        /// The type of property/field that is being edited.
+        /// </param>
+        /// <param name="editedAttributes">
+        /// Provides attributes that may override the default property editor.
+        /// This parameter can safely be set to null.
+        /// </param>
+        /// <returns>
+        /// A property editor chain composed of property editors which can edit
+        /// the given property type.
+        /// </returns>
         public static PropertyEditorChain Get(Type propertyType,
             ICustomAttributeProvider editedAttributes) {
-
             return GetCachedEditors(propertyType, editedAttributes);
         }
     }

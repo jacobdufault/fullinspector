@@ -2,10 +2,11 @@
 
 namespace FullInspector.LayoutToolkit {
     /// <summary>
-    /// A rule in the layout toolkit. A rule defines how some layout operation will occur. The
-    /// primary rules are the horizontal and vertical rules, which function similar to Unity's
-    /// GUILayout.BeginHorizontal and BeginVertical. However, rules are much more flexible;
-    /// there is also a rule for centering items vertically, among other things.
+    /// A rule in the layout toolkit. A rule defines how some layout operation
+    /// will occur. The primary rules are the horizontal and vertical rules,
+    /// which function similar to Unity's GUILayout.BeginHorizontal and
+    /// BeginVertical. However, rules are much more flexible; there is also a
+    /// rule for centering items vertically, among other things.
     /// </summary>
     public abstract class fiLayout {
         /// <summary>

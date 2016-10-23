@@ -1,20 +1,21 @@
-﻿using FullInspector.Internal;
-using FullSerializer.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using FullInspector.Internal;
+using FullSerializer.Internal;
 using UnityEngine;
 using UnityObject = UnityEngine.Object;
 
 namespace FullInspector {
     /// <summary>
-    /// This partial implementation contains methods which are used to determine if a MemberInfo can
-    /// be serialized by Unity or if it can be serialized by Full Inspector.
+    /// This partial implementation contains methods which are used to determine
+    /// if a MemberInfo can be serialized by Unity or if it can be serialized by
+    /// Full Inspector.
     /// </summary>
     public partial class InspectedType {
         /// <summary>
-        /// A simple type is a type that is either primitive, a string, or a non-generic
-        /// non-abstract class composed of other simple types.
+        /// A simple type is a type that is either primitive, a string, or a
+        /// non-generic non-abstract class composed of other simple types.
         /// </summary>
         private static bool IsSimpleTypeThatUnityCanSerialize(Type type) {
             if (IsPrimitiveSkippedByUnity(type)) {
@@ -29,8 +30,9 @@ namespace FullInspector {
                 return true;
             }
 
-            // TODO: Enable more complex detection for types which Unity can serialize by
-            //       uncommenting this block. First, test it, though.
+            // TODO: Enable more complex detection for types which Unity can
+            //       serialize by uncommenting this block. First, test it,
+            //       though.
             /*
             if (type.IsClass && type.IsGenericType == false && type.IsAbstract == false) {
                 BindingFlags flags =
@@ -71,9 +73,10 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// Returns true if the given type can be serialized by Unity. This function is conservative
-        /// and may not return true if the type can be serialized by unity. However, it will *not*
-        /// return true if the type cannot be serialized by unity.
+        /// Returns true if the given type can be serialized by Unity. This
+        /// function is conservative and may not return true if the type can be
+        /// serialized by unity. However, it will *not* return true if the type
+        /// cannot be serialized by unity.
         /// </summary>
         public static bool IsSerializedByUnity(InspectedProperty property) {
             // Properties are *not* serialized by Unity
@@ -92,8 +95,8 @@ namespace FullInspector {
                 return false;
             }
 
-            // If the attribute is not public and doesn't have a [SerializeField] attribute, then
-            // Unity will not serialize it, regardless of type.
+            // If the attribute is not public and doesn't have a [SerializeField]
+            // attribute, then Unity will not serialize it, regardless of type.
             if (property.IsPublic == false &&
                 property.MemberInfo.IsDefined(typeof(SerializeField), /*inherit:*/ true) == false) {
                 return false;
@@ -128,8 +131,9 @@ namespace FullInspector {
                 return false;
             }
 
-            // Do not bother serializing BaseObject derived types - they will handle it properly
-            // themselves. Serializing them will only lead to wasted storage space.
+            // Do not bother serializing BaseObject derived types - they will
+            // handle it properly themselves. Serializing them will only lead to
+            // wasted storage space.
             if (typeof(BaseObject).Resolve().IsAssignableFrom(property.StorageType.Resolve())) {
                 return false;
             }
@@ -142,7 +146,8 @@ namespace FullInspector {
                 return false;
             }
 
-            // Don't serialize it if it has one of the custom opt-out annotations either
+            // Don't serialize it if it has one of the custom opt-out annotations
+            // either
             var optOut = fiInstalledSerializerManager.SerializationOptOutAnnotations;
             for (int i = 0; i < optOut.Length; ++i) {
                 if (member.IsDefined(optOut[i], true)) {
@@ -150,7 +155,8 @@ namespace FullInspector {
                 }
             }
 
-            // if we have a [SerializeField] or [Serializable] attribute, then we *do* serialize
+            // if we have a [SerializeField] or [Serializable] attribute, then we
+            // *do* serialize
             if (fsPortableReflection.HasAttribute<SerializeField>(member, /*shouldCache:*/false) ||
                 fsPortableReflection.HasAttribute<SerializableAttribute>(member, /*shouldCache:*/false)) {
                 return true;
@@ -165,14 +171,18 @@ namespace FullInspector {
             }
 
             if (property.MemberInfo is PropertyInfo) {
-                // perf: property.IsAutoProperty is lazily computed, so if we have SerializeAutoProperties set
-                //       to false we can avoid computing any auto-property checks by putting the
-                //       SerializeAutoProperties check before the IsAutoProperty check
+                // perf: property.IsAutoProperty is lazily computed, so if we
+                //       have SerializeAutoProperties set to false we can avoid
+                //       computing any auto-property checks by putting the
+                //       SerializeAutoProperties check before the IsAutoProperty
+                //       check
 
-                // If we're not serializing auto-properties, then we will not serialize any properties by default
+                // If we're not serializing auto-properties, then we will not
+                // serialize any properties by default
                 if (fiSettings.SerializeAutoProperties == false) return false;
 
-                // If it's not an auto property, then we are not going to serialize it by default
+                // If it's not an auto property, then we are not going to
+                // serialize it by default
                 if (property.IsAutoProperty == false) return false;
             }
 

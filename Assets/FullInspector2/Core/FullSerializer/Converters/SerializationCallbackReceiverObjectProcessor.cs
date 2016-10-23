@@ -11,9 +11,11 @@ namespace FullInspector.Serializers.FullSerializer {
                 typeof(UnityObject).Resolve().IsAssignableFrom(type.Resolve()) == false &&
                 typeof(ISerializationCallbackReceiver).Resolve().IsAssignableFrom(type.Resolve()) &&
 
-                // If we are BaseObject, we explicitly do not want to invoke the callback receivers. Doing
-                // so will mess up the serialization pipeline. This does not present an issue because the
-                // object will be serialized normally/as expected by the regular FS pipeline.
+                // If we are BaseObject, we explicitly do not want to invoke the
+                // callback receivers. Doing so will mess up the serialization
+                // pipeline. This does not present an issue because the object
+                // will be serialized normally/as expected by the regular FS
+                // pipeline.
                 typeof(BaseObject).Resolve().IsAssignableFrom(type.Resolve()) == false;
         }
 

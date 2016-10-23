@@ -54,7 +54,6 @@ namespace FullInspector.Tests {
                 },
                 migrations);
 
-
             from = new[] { a, b, c, d };
             to = new[] { a, b, c, d, new object() };
             migrations = fiGraphMetadata.ComputeNeededMigrations(from, to);

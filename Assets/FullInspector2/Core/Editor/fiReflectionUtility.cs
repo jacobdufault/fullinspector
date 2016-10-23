@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using FullSerializer;
 using FullSerializer.Internal;
-using UnityEngine;
 
 namespace FullInspector.Internal {
     public static class fiReflectionUtility {
         // TODO: move this to fiEditorReflectionUtility
 
         /// <summary>
-        /// A cache of all types that derive the key type in the AppDomain. The cache is
-        /// automatically destroyed upon assembly loads.
+        /// A cache of all types that derive the key type in the AppDomain. The
+        /// cache is automatically destroyed upon assembly loads.
         /// </summary>
         private static Dictionary<Type, List<DisplayedType>> _creatableTypeCache;
         public struct DisplayedType {
@@ -41,8 +39,9 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Returns all types that derive from the base type. This includes generic type
-        /// definitions, which when returned will have appropriate constructor values injected.
+        /// Returns all types that derive from the base type. This includes
+        /// generic type definitions, which when returned will have appropriate
+        /// constructor values injected.
         /// </summary>
         /// <param name="baseType">The base parent type.</param>
         public static List<DisplayedType> GetCreatableTypesDeriving(Type baseType) {
@@ -66,7 +65,6 @@ namespace FullInspector.Internal {
                 if (baseType.IsSealed) {
                     result.Add(new DisplayedType(baseType));
                 }
-
                 else {
                     // non-generic types
                     foreach (var type in from assembly in fiRuntimeReflectionUtility.GetUserDefinedEditorAssemblies()
@@ -88,7 +86,6 @@ namespace FullInspector.Internal {
                                                         from type in assembly.GetTypesWithoutException()
                                                         where type.GetExactImplementation(baseTypeGenericDefinition) != null
                                                         select type) {
-
                             Type constructed;
                             if (TryConstructAssignableGenericType(openGenericType,
                                 baseType, baseTypeGenericDefinition, baseTypeGenericArguments,
@@ -106,7 +103,8 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// A candidate type that can potentially be used as a generic parameter argument.
+        /// A candidate type that can potentially be used as a generic parameter
+        /// argument.
         /// </summary>
         private struct GenericParameterCandidate {
             /// <summary>
@@ -121,7 +119,8 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Helper method to return the index of the Type in the array that has the given Name (or
+        /// Helper method to return the index of the Type in the array that has
+        /// the given Name (or
         /// - 1 if the item is not in the array).
         /// </summary>
         private static int GetIndexOfName(Type[] types, string name) {
@@ -135,15 +134,21 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Orders the given types parameter array so that the order most closely matches the given
-        /// genericArguments array
+        /// Orders the given types parameter array so that the order most closely
+        /// matches the given genericArguments array
         /// </summary>
-        /// <param name="candidateTypes">The types that have been collected as potential candidates
-        /// for generic parameter arguments</param>
-        /// <param name="openGenericType">The type that we are going to use the candidateTypes for
-        /// constructing a closed generic type on</param>
-        /// <returns>An array of types that can (hopefully) be used to construct a closed generic
-        /// type from the given openGenericType.</returns>
+        /// <param name="candidateTypes">
+        /// The types that have been collected as potential candidates for
+        /// generic parameter arguments
+        /// </param>
+        /// <param name="openGenericType">
+        /// The type that we are going to use the candidateTypes for constructing
+        /// a closed generic type on
+        /// </param>
+        /// <returns>
+        /// An array of types that can (hopefully) be used to construct a closed
+        /// generic type from the given openGenericType.
+        /// </returns>
         private static Type[] SelectBestTypeParameters(
             List<GenericParameterCandidate> candidateTypes, Type openGenericType) {
             Type[] genericArguments = openGenericType.GetGenericArguments();
@@ -170,8 +175,8 @@ namespace FullInspector.Internal {
                 }
             }
 
-            // there were some types that didn't match by name; just insert them first come first
-            // serve
+            // there were some types that didn't match by name; just insert them
+            // first come first serve
             int start = 0;
             foreach (var type in overflow) {
                 while (start < ordered.Length && ordered[start] != null) {
@@ -189,21 +194,30 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Attempts to create an instance of openGenericType such that it is can be assigned to
-        /// baseType.
+        /// Attempts to create an instance of openGenericType such that it is can
+        /// be assigned to baseType.
         /// </summary>
-        /// <param name="openGenericType">An open generic type that derives baseType</param>
-        /// <param name="baseType">A generic type with fully populated type parameters.</param>
-        /// <param name="baseTypeGenericDefinition">Just baseType.GetGenericTypeDefinition()</param>
-        /// <param name="baseTypeGenericArguments">Just baseType.GetGenericArguments()</param>
-        /// <param name="constructedType">If this function returns true, then this value is set to
-        /// the created type that is assignable to baseType and an instance of
-        /// openGenericType.</param>
+        /// <param name="openGenericType">
+        /// An open generic type that derives baseType
+        /// </param>
+        /// <param name="baseType">
+        /// A generic type with fully populated type parameters.
+        /// </param>
+        /// <param name="baseTypeGenericDefinition">
+        /// Just baseType.GetGenericTypeDefinition()
+        /// </param>
+        /// <param name="baseTypeGenericArguments">
+        /// Just baseType.GetGenericArguments()
+        /// </param>
+        /// <param name="constructedType">
+        /// If this function returns true, then this value is set to the created
+        /// type that is assignable to baseType and an instance of
+        /// openGenericType.
+        /// </param>
         /// <returns>True if a type was constructed, false otherwise.</returns>
         private static bool TryConstructAssignableGenericType(Type openGenericType,
             Type baseType, Type baseTypeGenericDefinition, Type[] baseTypeGenericArguments,
             out Type constructedType) {
-
             // The base type populated with openGenericType's generic parameters.
             //
             // For example, if
@@ -235,9 +249,10 @@ namespace FullInspector.Internal {
 
             Type[] orderedTypeParams = SelectBestTypeParameters(typeParamCandidates, openGenericType);
 
-            // Try to construct the generic type from our unspecified parameters. This could fail
-            // for a number of reasons, but for now we will just ignore them and say we failed to
-            // create the generic type. We accept that this method will never be fully perfect.
+            // Try to construct the generic type from our unspecified parameters.
+            // This could fail for a number of reasons, but for now we will just
+            // ignore them and say we failed to create the generic type. We
+            // accept that this method will never be fully perfect.
             try {
                 Type createdType = openGenericType.MakeGenericType(orderedTypeParams);
                 if (baseType.IsAssignableFrom(createdType)) {
@@ -252,16 +267,19 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Searches for a particular implementation of the given parent type inside of the type.
-        /// This is particularly useful if the interface type is an open type, ie, typeof(IFace{}),
-        /// because this method will then return IFace{} but with appropriate type parameters
-        /// inserted.
+        /// Searches for a particular implementation of the given parent type
+        /// inside of the type. This is particularly useful if the interface type
+        /// is an open type, ie, typeof(IFace{}), because this method will then
+        /// return IFace{} but with appropriate type parameters inserted.
         /// </summary>
         /// <param name="type">The base type to search for interface</param>
-        /// <param name="parentType">The parent type to search for. Can be an open generic
-        /// type.</param>
-        /// <returns>The actual interface type that the type contains, or null if there is no
-        /// implementation of the given interfaceType on type.</returns>
+        /// <param name="parentType">
+        /// The parent type to search for. Can be an open generic type.
+        /// </param>
+        /// <returns>
+        /// The actual interface type that the type contains, or null if there is
+        /// no implementation of the given interfaceType on type.
+        /// </returns>
         public static Type GetExactImplementation(this Type type, Type parentType) {
             if (parentType.IsGenericType && parentType.IsGenericTypeDefinition == false) {
                 throw new ArgumentException("GetInterface requires that if the parent " +
@@ -288,10 +306,9 @@ namespace FullInspector.Internal {
             return null;
         }
 
-
         /// <summary>
-        /// Tries to fetch the given CSharpName of the given object type, or null if the object is
-        /// null.
+        /// Tries to fetch the given CSharpName of the given object type, or null
+        /// if the object is null.
         /// </summary>
         public static string GetObjectTypeNameSafe(object obj) {
             if (obj == null) return "null";

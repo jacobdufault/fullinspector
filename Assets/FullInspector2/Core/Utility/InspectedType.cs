@@ -2,20 +2,23 @@
 //
 // Copyright (c) 2013-2014 Jacob Dufault
 //
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
-// associated documentation files (the "Software"), to deal in the Software without restriction,
-// including without limitation the rights to use, copy, modify, merge, publish, distribute,
-// sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all copies or
-// substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
 //
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
-// NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 
 using System;
 using System.Collections.Generic;
@@ -30,9 +33,10 @@ using UnityEngine.Serialization;
 
 namespace FullInspector {
     /// <summary>
-    /// Provides a view of an arbitrary type that unifies a number of discrete concepts in the CLR.
-    /// Arrays and Collection types have special support, but their APIs are unified by the
-    /// InspectedType so that they can be treated as if they were a regular type.
+    /// Provides a view of an arbitrary type that unifies a number of discrete
+    /// concepts in the CLR. Arrays and Collection types have special support,
+    /// but their APIs are unified by the InspectedType so that they can be
+    /// treated as if they were a regular type.
     /// </summary>
     public sealed partial class InspectedType {
         static InspectedType() {
@@ -40,7 +44,8 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// Returns true if the type represented by this metadata contains a default constructor.
+        /// Returns true if the type represented by this metadata contains a
+        /// default constructor.
         /// </summary>
         public bool HasDefaultConstructor {
             get {
@@ -50,11 +55,11 @@ namespace FullInspector {
                         _hasDefaultConstructorCache = true;
                     }
 
-                    // value types (ie, structs) always have a default constructor
+                    // value types (ie, structs) always have a default
+                    // constructor
                     else if (ReflectedType.Resolve().IsValueType) {
                         _hasDefaultConstructorCache = true;
                     }
-
                     else {
                         // consider private constructors as well
                         var ctor = ReflectedType.GetDeclaredConstructor(fsPortableReflection.EmptyTypes);
@@ -68,22 +73,26 @@ namespace FullInspector {
         private bool? _hasDefaultConstructorCache;
 
         /// <summary>
-        /// Creates a new instance of the type that this metadata points back to. If this type has a
-        /// default constructor, then Activator.CreateInstance will be used to construct the type
-        /// (or Array.CreateInstance if it an array). Otherwise, an uninitialized object created via
-        /// FormatterServices.GetSafeUninitializedObject is used to construct the instance.
+        /// Creates a new instance of the type that this metadata points back to.
+        /// If this type has a default constructor, then Activator.CreateInstance
+        /// will be used to construct the type (or Array.CreateInstance if it an
+        /// array). Otherwise, an uninitialized object created via
+        /// FormatterServices.GetSafeUninitializedObject is used to construct the
+        /// instance.
         /// </summary>
         public object CreateInstance() {
-            // Unity requires special construction logic for types that derive from
-            // ScriptableObject. The normal inspector reflection logic will create ScriptableObject
-            // instances if fiSettings.AutomaticReferenceInstantation has been set to true.
+            // Unity requires special construction logic for types that derive
+            // from ScriptableObject. The normal inspector reflection logic will
+            // create ScriptableObject instances if
+            // fiSettings.AutomaticReferenceInstantation has been set to true.
             if (typeof(ScriptableObject).IsAssignableFrom(ReflectedType)) {
                 return ScriptableObject.CreateInstance(ReflectedType);
             }
 
-            // HACK: Constructing components is tricky, as they require a GameObject context. We
-            //       fetch a GameObject from the active selection for the context to add the
-            //       component to. If that doesn't work, then we construct an unformatted instance,
+            // HACK: Constructing components is tricky, as they require a
+            //       GameObject context. We fetch a GameObject from the active
+            //       selection for the context to add the component to. If that
+            //       doesn't work, then we construct an unformatted instance,
             //       which will be reported to the underlying system as null.
             //
             // TODO: Can this support multi-object selection? Very, very dirty.
@@ -96,7 +105,8 @@ namespace FullInspector {
                         return component;
                     }
 
-                    // Failed -- add a fake "dead" instance that isn't attached to anything.
+                    // Failed -- add a fake "dead" instance that isn't attached
+                    // to anything.
 #if !(!UNITY_EDITOR && (UNITY_WP8 || UNITY_METRO))
                     return FormatterServices.GetSafeUninitializedObject(ReflectedType);
 #endif
@@ -123,8 +133,8 @@ namespace FullInspector {
             }
 
             if (_isArray) {
-                // we have to start with a size zero array otherwise it will have invalid data
-                // inside of it
+                // we have to start with a size zero array otherwise it will have
+                // invalid data inside of it
                 return Array.CreateInstance(ReflectedType.GetElementType(), 0);
             }
 
@@ -145,17 +155,20 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// Returns all fields/properties/methods on the type that pass the given filter.
+        /// Returns all fields/properties/methods on the type that pass the given
+        /// filter.
         /// </summary>
-        /// <param name="filter">The filter to use. You may be interested in some predefined
-        /// filters available in the InspectedMemberFilters type.</param>
+        /// <param name="filter">
+        /// The filter to use. You may be interested in some predefined filters
+        /// available in the InspectedMemberFilters type.
+        /// </param>
         public List<InspectedMember> GetMembers(IInspectedMemberFilter filter) {
             VerifyNotCollection();
 
             List<InspectedMember> members;
             if (_cachedMembers.TryGetValue(filter, out members) == false) {
-
-                // Not in the cache. Run each item through the filter and then cache the result.
+                // Not in the cache. Run each item through the filter and then
+                // cache the result.
                 members = new List<InspectedMember>();
                 for (int i = 0; i < _allMembers.Count; ++i) {
                     var member = _allMembers[i];
@@ -178,8 +191,10 @@ namespace FullInspector {
         /// <summary>
         /// Returns all fields/properties on the type that pass the given filter.
         /// </summary>
-        /// <param name="filter">The filter to use. You may be interested in some predefined
-        /// filters available in the InspectedMemberFilters type.</param>
+        /// <param name="filter">
+        /// The filter to use. You may be interested in some predefined filters
+        /// available in the InspectedMemberFilters type.
+        /// </param>
         public List<InspectedProperty> GetProperties(IInspectedMemberFilter filter) {
             VerifyNotCollection();
 
@@ -197,8 +212,10 @@ namespace FullInspector {
         /// <summary>
         /// Returns all methods on the type that pass the filter.
         /// </summary>
-        /// <param name="filter">The filter to use. You may be interested in some predefined
-        /// filters available in the InspectedMemberFilters type.</param>
+        /// <param name="filter">
+        /// The filter to use. You may be interested in some predefined filters
+        /// available in the InspectedMemberFilters type.
+        /// </param>
         public List<InspectedMethod> GetMethods(IInspectedMemberFilter filter) {
             VerifyNotCollection();
 
@@ -228,14 +245,15 @@ namespace FullInspector {
         private Dictionary<IInspectedMemberFilter, List<InspectedMethod>> _cachedMethods;
 
         /// <summary>
-        /// Initializes a new instance of the TypeMetadata class from a type. Use TypeCache to get
-        /// instances of TypeMetadata; do not use this constructor directly.
+        /// Initializes a new instance of the TypeMetadata class from a type. Use
+        /// TypeCache to get instances of TypeMetadata; do not use this
+        /// constructor directly.
         /// </summary>
         internal InspectedType(Type type) {
             ReflectedType = type;
 
-            // determine if we are a collection or array; recall that arrays implement the
-            // ICollection interface, however
+            // determine if we are a collection or array; recall that arrays
+            // implement the ICollection interface, however
 
             _isArray = type.IsArray;
             IsCollection = _isArray || type.IsImplementationOf(typeof(ICollection<>));
@@ -248,7 +266,8 @@ namespace FullInspector {
 
                 _allMembers = new List<InspectedMember>();
 
-                // Add the parent members first. They will be sorted properly and the like.
+                // Add the parent members first. They will be sorted properly and
+                // the like.
                 if (ReflectedType.Resolve().BaseType != null) {
                     var inspectedParentType = InspectedType.Get(ReflectedType.Resolve().BaseType);
                     _allMembers.AddRange(inspectedParentType._allMembers);
@@ -272,7 +291,6 @@ namespace FullInspector {
                         return Math.Sign(orderA - orderB);
                     });
                 }
-
 
                 // Add our property names in
                 _nameToProperty = new Dictionary<string, InspectedProperty>();
@@ -320,8 +338,9 @@ namespace FullInspector {
 
                 // Properties
                 if (property != null) {
-                    // If either the get or set methods are overridden, then the property is not
-                    // considered local and will appear on a parent type.
+                    // If either the get or set methods are overridden, then the
+                    // property is not considered local and will appear on a
+                    // parent type.
                     var getMethod = property.GetGetMethod(/*nonPublic:*/ true);
                     var setMethod = property.GetSetMethod(/*nonPublic:*/ true);
                     if ((getMethod != null && getMethod != getMethod.GetBaseDefinition()) ||
@@ -338,13 +357,13 @@ namespace FullInspector {
                 }
             }
 
-            // While split field/property and method handling apart so that methods will always
-            // appear at the end of the members list. Otherwise, the methods will go wherever
-            // C# reflection feels like.
+            // While split field/property and method handling apart so that
+            // methods will always appear at the end of the members list.
+            // Otherwise, the methods will go wherever C# reflection feels like.
 
             foreach (MethodInfo method in reflectedType.GetDeclaredMethods()) {
-                // This is a method override. Skip it as it is not a "local" property -- it
-                // will appear in a parent type.
+                // This is a method override. Skip it as it is not a "local"
+                // property -- it will appear in a parent type.
                 if (method != method.GetBaseDefinition()) {
                     continue;
                 }
@@ -356,8 +375,8 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// The type that this metadata is modeling, ie, the type that the metadata was constructed
-        /// off of.
+        /// The type that this metadata is modeling, ie, the type that the
+        /// metadata was constructed off of.
         /// </summary>
         public Type ReflectedType {
             get;
@@ -365,8 +384,8 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// True if the base type is a collection. If true, accessing Properties will throw an
-        /// exception.
+        /// True if the base type is a collection. If true, accessing Properties
+        /// will throw an exception.
         /// </summary>
         public bool IsCollection {
             get;
@@ -392,29 +411,29 @@ namespace FullInspector {
         private Type _elementType;
 
         /// <summary>
-        /// True if the base type is an array. If true, accessing Properties will throw an
-        /// exception. IsCollection is also true if _isArray is true.
+        /// True if the base type is an array. If true, accessing Properties will
+        /// throw an exception. IsCollection is also true if _isArray is true.
         /// </summary>
         private bool _isArray;
 
         /// <summary>
-        /// The categories that are used for this type. If the type has no categories defined, then
-        /// this will be empty.
+        /// The categories that are used for this type. If the type has no
+        /// categories defined, then this will be empty.
         /// </summary>
         public Dictionary<string, List<InspectedMember>> GetCategories(IInspectedMemberFilter filter) {
             VerifyNotCollection();
 
             Dictionary<string, List<InspectedMember>> categories;
             if (_categoryCache.TryGetValue(filter, out categories) == false) {
-
                 var defaultCategories = (from oattribute in ReflectedType.Resolve().GetCustomAttributes(typeof(InspectorCategoryAttribute), /*inherit:*/true)
                                          let attribute = (InspectorCategoryAttribute)oattribute
                                          select attribute.Category).ToList();
 
                 // Not in the cache - actually compute the result.
-                // NOTE: we update the cache before actually doing the computation - if for whatever
-                //       reason there is an error, we will not redo this computation and just return
-                //       an empty result.
+                // NOTE: we update the cache before actually doing the
+                //       computation - if for whatever reason there is an error,
+                //       we will not redo this computation and just return an
+                //       empty result.
                 categories = new Dictionary<string, List<InspectedMember>>();
                 _categoryCache[filter] = categories;
 
@@ -431,7 +450,6 @@ namespace FullInspector {
                             categories[category] = new List<InspectedMember>();
                         categories[category].Add(member);
                     }
-
                 }
             }
 

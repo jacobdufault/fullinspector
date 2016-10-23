@@ -73,7 +73,6 @@ namespace FullInspector.Internal {
     [CustomPropertyEditor(typeof(Stack<>), Inherit = true)]
     public class StackPropertyEditor<TStack, T> : PropertyEditor<TStack>
         where TStack : Stack<T> {
-
         private ICollectionPropertyEditor<TStack, T> ActualEditor;
 
         public StackPropertyEditor(Type editedType, ICustomAttributeProvider attribute) {

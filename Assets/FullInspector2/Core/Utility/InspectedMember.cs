@@ -2,15 +2,16 @@
 using System.Reflection;
 namespace FullInspector {
     /// <summary>
-    /// An InspectedMember is either an InspectedMethod or an InspectedProperty. This also contains
-    /// some common API functions between the two types.
+    /// An InspectedMember is either an InspectedMethod or an InspectedProperty.
+    /// This also contains some common API functions between the two types.
     /// </summary>
     public struct InspectedMember {
         private InspectedProperty _property;
         private InspectedMethod _method;
 
         /// <summary>
-        /// Returns the property value. Throws an exception if this is not a property.
+        /// Returns the property value. Throws an exception if this is not a
+        /// property.
         /// </summary>
         public InspectedProperty Property {
             get {
@@ -23,7 +24,8 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// Returns the method value. Throws an exception if this is not a method.
+        /// Returns the method value. Throws an exception if this is not a
+        /// method.
         /// </summary>
         public InspectedMethod Method {
             get {
@@ -38,14 +40,14 @@ namespace FullInspector {
         /// <summary>
         /// Is this member a method?
         /// </summary>
-        public bool IsMethod { 
+        public bool IsMethod {
             get { return _method != null; }
         }
 
         /// <summary>
         /// Is this member a field or property?
         /// </summary>
-        public bool IsProperty { 
+        public bool IsProperty {
             get { return _property != null; }
         }
 

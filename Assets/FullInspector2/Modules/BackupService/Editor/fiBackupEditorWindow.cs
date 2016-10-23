@@ -1,7 +1,7 @@
-﻿using FullInspector.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FullInspector.Internal;
 using UnityEditor;
 using UnityEngine;
 using UnityObject = UnityEngine.Object;
@@ -125,8 +125,8 @@ namespace FullInspector.BackupService {
 
             EditorGUILayout.EndVertical();
 
-            // Do the backups last so we don't screw up the layout code by modifying the
-            // backup data structure.
+            // Do the backups last so we don't screw up the layout code by
+            // modifying the backup data structure.
             UnityObject[] droppedObjects;
             if (fiEditorGUI.TryDragAndDropArea(dragDropArea, unityObj => unityObj is Component, out droppedObjects)) {
                 foreach (var droppedObject in droppedObjects) {

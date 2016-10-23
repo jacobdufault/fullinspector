@@ -4,8 +4,9 @@ using UnityEngine;
 
 namespace FullInspector.Internal {
     /// <summary>
-    /// Provides a property editor for types which cannot be instantiated directly and require the
-    /// user to select a specific instance to instantiate.
+    /// Provides a property editor for types which cannot be instantiated
+    /// directly and require the user to select a specific instance to
+    /// instantiate.
     /// </summary>
     public class AbstractTypePropertyEditor : IPropertyEditor, IPropertyEditorEditAPI {
         private TypeDropdownOptionsManager _options;
@@ -22,7 +23,6 @@ namespace FullInspector.Internal {
         public bool DisplaysStandardLabel {
             get { return true; }
         }
-
 
         public object OnSceneGUI(object element) {
             if (element != null) {
@@ -41,7 +41,6 @@ namespace FullInspector.Internal {
                 fiEditorGUI.AnimatedBegin(ref region, metadata);
 
                 _options.RemoveExtraneousOptions();
-
 
                 // draw the popup
                 {

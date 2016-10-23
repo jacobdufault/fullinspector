@@ -2,7 +2,8 @@
 
 namespace FullInspector {
     /// <summary>
-    /// Keep a numeric value within the given min/max range, with an optional step.
+    /// Keep a numeric value within the given min/max range, with an optional
+    /// step.
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public sealed class InspectorRangeAttribute : Attribute {

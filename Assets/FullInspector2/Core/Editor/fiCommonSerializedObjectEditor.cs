@@ -14,8 +14,8 @@ namespace FullInspector {
     public class FullInspectorCommonSerializedObjectEditor : Editor { }
 
     /// <summary>
-    /// An editor that provides a good inspector experience for types which derive from
-    /// ISerializedObject.
+    /// An editor that provides a good inspector experience for types which
+    /// derive from ISerializedObject.
     /// </summary>
     public class fiCommonSerializedObjectEditor : Editor {
         private static Dictionary<Type, string> s_cachedTypeTooltips = new Dictionary<Type, string>();
@@ -29,14 +29,14 @@ namespace FullInspector {
         }
 
         public override bool RequiresConstantRepaint() {
-            // When we're playing and code modifies the inspector for an object, we want to always
-            // show the latest data
+            // When we're playing and code modifies the inspector for an object,
+            // we want to always show the latest data
             return EditorApplication.isPlaying || fiEditorUtility.ShouldInspectorRedraw.Enabled;
         }
 
         /// <summary>
-        /// This is accessed by the BaseBehaviorEditor (using reflection) to determine if the editor
-        /// should show the value for _serializedState.
+        /// This is accessed by the BaseBehaviorEditor (using reflection) to
+        /// determine if the editor should show the value for _serializedState.
         /// </summary>
         private static bool _editorShowSerializedState;
 
@@ -129,7 +129,6 @@ namespace FullInspector {
                 GUILayout.Space(marginVertical);
                 GUI.Box(boxed, GUIContent.none);
 
-
                 {
                     List<fiSerializedObject> toRemove = new List<fiSerializedObject>();
 
@@ -140,7 +139,6 @@ namespace FullInspector {
                     foreach (fiSerializedObject rem in toRemove) {
                         fiStorageManager.RemoveBackup(rem);
                     }
-
                 }
 
                 GUILayout.Space(marginVertical);
@@ -171,7 +169,6 @@ namespace FullInspector {
                 /* TODO: Support replacing the script with another one.
                 if (newScript != monoScript &&
                     element is MonoBehaviour && element is ISerializedObject) {
-
                     var root = ((MonoBehaviour)element).gameObject;
                     var newInstance = root.AddComponent(newScript.GetClass());
                     var newSerialized = new SerializedObject(newInstance);
@@ -198,20 +195,20 @@ namespace FullInspector {
             // Here's a description of the race which occurs after changing the
             // MonoBehaviour to BaseBehavior:
             //
-            // 1. Unity deserializes the FI objects. FI does an early return
-            //    here because there is no data to deserialize.
-            // 2. When you click on a prefab instance in the inspector, that
-            //    item will get serialized. Unity will then go to the prefab
-            //    and serialize it as well, invoking the serialization
-            //    callbacks for those two objects.
+            // 1. Unity deserializes the FI objects. FI does an early return here
+            //    because there is no data to deserialize.
+            // 2. When you click on a prefab instance in the inspector, that item
+            //    will get serialized. Unity will then go to the prefab and
+            //    serialize it as well, invoking the serialization callbacks for
+            //    those two objects.
             // 3. The current update loop finishes.
             // 4. Unity pushes out the prefab serialization changes to the rest
             //    of the prefab instances and calls their deserialization
             //    callbacks. Because these objects have never had Serialize
             //    called on them, they will blindly accept the prefab changes.
             // 5. When these objects are next serialized, they will use the
-            //    incorrect prefab data.
-            // Null check, sometimes there is no prefab state.
+            //    incorrect prefab data. Null check, sometimes there is no prefab
+            // state.
             if (fiPrefabManager.Storage == null || fiPrefabManager.Storage.SeenBaseBehaviors == null)
                 return;
 
@@ -235,7 +232,9 @@ namespace FullInspector {
 
             // TODO: How do we show a mixed value?
             // TODO: We could have a global call of some sort?
-            // TODO: We have the edit path w.r.t. metadata, so we can compute the deltas at the start and then export it as a list which property editors can check against.
+            // TODO: We have the edit path w.r.t. metadata, so we can compute the
+            //       deltas at the start and then export it as a list which
+            //       property editors can check against.
 
             // Capture object state if we are doing multi-object editing.
             var preeditState = new SavedObject();

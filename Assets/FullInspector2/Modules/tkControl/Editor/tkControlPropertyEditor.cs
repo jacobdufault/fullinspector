@@ -7,10 +7,12 @@ using UnityObject = UnityEngine.Object;
 
 namespace FullInspector.Internal {
     /// <summary>
-    /// A standard tkControlPropertyEditor except with some more appropriate values popualted.
+    /// A standard tkControlPropertyEditor except with some more appropriate
+    /// values popualted.
     /// </summary>
     public abstract class tkControlPropertyEditor<TEdited> : tkControlPropertyEditor {
-        public tkControlPropertyEditor(Type dataType) : base(dataType) { }
+        public tkControlPropertyEditor(Type dataType) : base(dataType) {
+        }
 
         public override bool CanEdit(Type dataType) {
             return typeof(TEdited).IsAssignableFrom(dataType);
@@ -28,10 +30,12 @@ namespace FullInspector.Internal {
     }
 
     /// <summary>
-    /// Derive from this class if you wish to write a custom property editor that is rendered
-    /// from a tkControl.
+    /// Derive from this class if you wish to write a custom property editor that
+    /// is rendered from a tkControl.
     /// </summary>
-    /// <remarks>You probably want to derive from tkControlPropertyEditor{TEdited}</remarks>
+    /// <remarks>
+    /// You probably want to derive from tkControlPropertyEditor{TEdited}
+    /// </remarks>
     public class tkControlPropertyEditor : IPropertyEditor, IPropertyEditorEditAPI {
         public class fiLayoutPropertyEditorMetadata : IGraphMetadataItemNotPersistent {
             [fsIgnore]
@@ -71,7 +75,8 @@ namespace FullInspector.Internal {
         }
 
         public virtual bool CanEdit(Type dataType) {
-            // TODO: this doesn't need to be overridable; do what the default control does
+            // TODO: this doesn't need to be overridable; do what the default
+            //       control does
             throw new NotSupportedException();
         }
 
@@ -114,7 +119,6 @@ namespace FullInspector.Internal {
         public static IPropertyEditor TryCreate(Type dataType, ICustomAttributeProvider attributes) {
             if (typeof(UnityObject).IsAssignableFrom(dataType) ||
                 typeof(tkCustomEditor).IsAssignableFrom(dataType) == false) {
-
                 return null;
             }
 

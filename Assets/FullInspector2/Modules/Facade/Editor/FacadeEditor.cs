@@ -31,7 +31,8 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// Finds the active display option index for the given type, or -1 if it isn't found.
+        /// Finds the active display option index for the given type, or -1 if it
+        /// isn't found.
         /// </summary>
         public int GetDisplayOptionIndex(Type type) {
             return Array.IndexOf(Types, type);
@@ -43,7 +44,8 @@ namespace FullInspector {
         public Type[] Types;
 
         /// <summary>
-        /// A displayable variant of the type array. This will always have at least one element.
+        /// A displayable variant of the type array. This will always have at
+        /// least one element.
         /// </summary>
         public GUIContent[] DisplayedOptions;
     }
@@ -51,8 +53,8 @@ namespace FullInspector {
     [CustomPropertyEditor(typeof(Facade<>))]
     public class FacadeEditor<T> : PropertyEditor<Facade<T>> {
         /// <summary>
-        /// Returns the default value for the given type. Notably, this will return a zeroed out
-        /// value type if the type is a value type, not null.
+        /// Returns the default value for the given type. Notably, this will
+        /// return a zeroed out value type if the type is a value type, not null.
         /// </summary>
         private static object GetDefault(Type type) {
             if (type.IsValueType) {
@@ -67,7 +69,6 @@ namespace FullInspector {
         private static object DeserializeProperty(BaseSerializer serializer,
             ISerializationOperator serializationOperator, InspectedProperty property,
             Facade<T> facade) {
-
             string data;
             if (facade.FacadeMembers.TryGetValue(property.Name, out data)) {
                 try {
@@ -86,7 +87,6 @@ namespace FullInspector {
         public static bool TrySerializeProperty(BaseSerializer serializer,
             ISerializationOperator serializationOperator, InspectedProperty property, object value,
             out string data) {
-
             try {
                 data = serializer.Serialize(property.StorageType, value, serializationOperator);
                 return true;
@@ -103,7 +103,6 @@ namespace FullInspector {
 
         private static void DrawHeader(ref Rect region, GUIContent label, Facade<T> element,
             out bool changedTypes) {
-
             changedTypes = false;
 
             if (string.IsNullOrEmpty(label.text) && TypeOptions.Types.Length == 1) {
@@ -124,13 +123,11 @@ namespace FullInspector {
 
                 if (currentIndex != updatedIndex &&
                     updatedIndex >= 0 && updatedIndex < TypeOptions.Types.Length) {
-
                     changedTypes = true;
                     element.InstanceType = TypeOptions.Types[updatedIndex];
                 }
             }
         }
-
 
         public override Facade<T> Edit(Rect region, GUIContent label, Facade<T> element, fiGraphMetadata metadata) {
             if (element == null) {
@@ -214,7 +211,6 @@ namespace FullInspector {
             if (element == null) {
                 element = new Facade<T>();
             }
-
 
             if (element.InstanceType == null) {
                 element.InstanceType = TypeOptions.Types[0];

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace FullInspector.Tests {
-    // TODO: Move to an editor window approach? That way we can remove this MonoBehaviour.
+    // TODO: Move to an editor window approach? That way we can remove this
+    //       MonoBehaviour.
 
     /// <summary>
     /// Hosts FI editor tests. Has a custom editor.

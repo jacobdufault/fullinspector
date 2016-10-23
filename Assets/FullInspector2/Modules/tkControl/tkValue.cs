@@ -28,7 +28,6 @@ namespace FullInspector {
                 _direct = default(TValue);
             }
 
-
             public TValue GetCurrentValue(T instance, TContext context) {
                 if (_generator == null) return _direct;
                 return _generator(instance, context);
@@ -57,7 +56,6 @@ namespace FullInspector {
                     _direct = default(TValue)
                 };
             }
-
 
             public static implicit operator Value<TValue>(Func<T, int, TValue> generator) {
                 return new Value<TValue>();

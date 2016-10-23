@@ -7,9 +7,10 @@ namespace FullInspector.Internal {
     /// <summary>
     /// A property editor for nullable types.
     /// </summary>
-    // TODO: eventually we need to make sure that this works for generic nullable types, but at
-    //       the moment they cause an internal compiler error within the Mono C# compiler. The
-    //       potential error point is the constructor where we fetch the struct type.
+    // TODO: eventually we need to make sure that this works for generic nullable
+    //       types, but at the moment they cause an internal compiler error
+    //       within the Mono C# compiler. The potential error point is the
+    //       constructor where we fetch the struct type.
     public class NullablePropertyEditor : IPropertyEditor, IPropertyEditorEditAPI {
         public bool DisplaysStandardLabel {
             get { return true; }
@@ -89,7 +90,6 @@ namespace FullInspector.Internal {
             }
             return element;
         }
-
 
         public static IPropertyEditor TryCreate(Type type, ICustomAttributeProvider attributes) {
             if (type.IsNullableType()) {

@@ -1,5 +1,5 @@
-﻿using NUnit.Framework;
-using FullInspector.Internal;
+﻿using FullInspector.Internal;
+using NUnit.Framework;
 
 namespace FullInspector.Tests {
     public class HasParentTests {

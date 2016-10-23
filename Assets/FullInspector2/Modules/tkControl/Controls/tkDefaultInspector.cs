@@ -20,7 +20,7 @@ namespace FullInspector {
             }
 
             protected override T DoEdit(Rect rect, T obj, TContext context, fiGraphMetadata metadata) {
-                return (T)fiLateBindings.PropertyEditor.EditSkipUntilNot(new [] {
+                return (T)fiLateBindings.PropertyEditor.EditSkipUntilNot(new[] {
                     type_fitkControlPropertyEditor, type_IObjectPropertyEditor
                 }, typeof(T), typeof(T).Resolve(), rect, GUIContent.none, obj, new fiGraphMetadataChild { Metadata = metadata });
             }

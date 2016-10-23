@@ -3,7 +3,8 @@
 namespace FullInspector {
     public partial class tk<T, TContext> {
         /// <summary>
-        /// This will change the color of the subcontrol if the given predicate passes.
+        /// This will change the color of the subcontrol if the given predicate
+        /// passes.
         /// </summary>
         public class ColorIf : ConditionalStyle {
             public ColorIf(Value<bool> shouldActivate, Value<UnityEngine.Color> color) :
@@ -24,7 +25,6 @@ namespace FullInspector {
             public ColorIf(Value<bool>.GeneratorNoContext shouldActivate, Value<UnityEngine.Color> color)
                 : this(Val(shouldActivate), color) {
             }
-
         }
     }
 }

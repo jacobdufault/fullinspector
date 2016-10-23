@@ -7,7 +7,8 @@ using UnityObject = UnityEngine.Object;
 
 namespace FullInspector.Internal {
     /// <summary>
-    /// Helper methods for actually serializing objects that extend ISerializedObject. This works via reflection.
+    /// Helper methods for actually serializing objects that extend
+    /// ISerializedObject. This works via reflection.
     /// </summary>
     public static class fiISerializedObjectUtility {
         private static Dictionary<string, ISerializedObject> _skipSerializationQueue = new Dictionary<string, ISerializedObject>();
@@ -75,13 +76,16 @@ namespace FullInspector.Internal {
         /// <summary>
         /// Serializes the current state of the given object.
         /// </summary>
-        /// <typeparam name="TSerializer">The type of serializer to use for the serialization
-        /// process.</typeparam>
+        /// <typeparam name="TSerializer">
+        /// The type of serializer to use for the serialization process.
+        /// </typeparam>
         /// <param name="obj">The object that should be serialized.</param>
-        /// <returns>True if serialization was entirely successful, false if something bad happened along the way.</returns>
+        /// <returns>
+        /// True if serialization was entirely successful, false if something bad
+        /// happened along the way.
+        /// </returns>
         public static bool SaveState<TSerializer>(ISerializedObject obj)
             where TSerializer : BaseSerializer {
-
             fiLog.Log(typeof(fiISerializedObjectUtility), "Serializing object of type {0}", obj.GetType());
 
             bool success = true;
@@ -107,10 +111,14 @@ namespace FullInspector.Internal {
             var serializedKeys = new List<string>();
             var serializedValues = new List<string>();
 
-            // PERF: Calling InspectedType().GetProperties() is extremely expensive. If we're not in the editor, then we can avoid making
-            //       that call because the only time we serialize an object is if it has existing FS data. If it has FS data, then that data
-            //       stores the set of properties which are serialized, so we can just hijack that information when doing the serialization to
-            //       determine which properties to serialize.
+            // PERF: Calling InspectedType().GetProperties() is extremely
+            //       expensive. If we're not in the editor, then we can avoid
+            //       making that call because the only time we serialize an
+            //       object is if it has existing FS data. If it has FS data,
+            //       then that data stores the set of properties which are
+            //       serialized, so we can just hijack that information when
+            //       doing the serialization to determine which properties to
+            //       serialize.
 
             if (fiUtility.IsEditor || obj.SerializedStateKeys == null || obj.SerializedStateKeys.Count == 0) {
                 var properties = InspectedType.Get(obj.GetType()).GetProperties(InspectedMemberFilters.FullInspectorSerializedProperties);
@@ -139,11 +147,11 @@ namespace FullInspector.Internal {
 
             // Write the updated data out to the object.
 
-            // Note that we only write data out to the object if our serialized state has
-            // changed. Unity will blindly rewrite the data on disk which will cause some
-            // source control systems to check-out the files. If we are just updating
-            // the content to the same content, we do not want to cause an accidental
-            // checkout.
+            // Note that we only write data out to the object if our serialized
+            // state has changed. Unity will blindly rewrite the data on disk
+            // which will cause some source control systems to check-out the
+            // files. If we are just updating the content to the same content, we
+            // do not want to cause an accidental checkout.
 
             bool changed = false;
             if (AreListsDifferent(obj.SerializedStateKeys, serializedKeys)) {
@@ -203,14 +211,19 @@ namespace FullInspector.Internal {
         /// <summary>
         /// Deserializes an object that has been serialized.
         /// </summary>
-        /// <typeparam name="TSerializer">The type of serializer that was used to serialize the
-        /// object.</typeparam>
-        /// <param name="obj">The object that will be restored from its serialized state.</param>
-        /// <returns>True if restoration was completely successful, false if something bad happened
-        /// at some point (the object may be in a partially deserialized state).</returns>
+        /// <typeparam name="TSerializer">
+        /// The type of serializer that was used to serialize the object.
+        /// </typeparam>
+        /// <param name="obj">
+        /// The object that will be restored from its serialized state.
+        /// </param>
+        /// <returns>
+        /// True if restoration was completely successful, false if something bad
+        /// happened at some point (the object may be in a partially deserialized
+        /// state).
+        /// </returns>
         public static bool RestoreState<TSerializer>(ISerializedObject obj)
             where TSerializer : BaseSerializer {
-
             fiLog.Log(typeof(fiISerializedObjectUtility), "Deserializing object of type {0}", obj.GetType());
 
             var callbacks = obj as ISerializationCallbacks;
@@ -261,7 +274,8 @@ namespace FullInspector.Internal {
                 // fetch the selected serializer
                 var serializer = fiSingletons.Get<TSerializer>();
 
-                // setup the serialization operator setup the serialization operator
+                // setup the serialization operator setup the serialization
+                // operator
                 var serializationOperator = fiSingletons.Get<ListSerializationOperator>();
                 serializationOperator.SerializedObjects = obj.SerializedObjectReferences;
 
@@ -360,18 +374,21 @@ namespace FullInspector.Internal {
                     if (property.StorageType.Resolve().IsAbstract) {
                         continue;
                     }
-                    // check to see if the property already has a value; if it does, then skip it
+                    // check to see if the property already has a value; if it
+                    // does, then skip it
                     object current = property.Read(obj);
                     if (current != null) {
                         continue;
                     }
 
-                    // the property is null; we need to instantiate a new value for it
+                    // the property is null; we need to instantiate a new value
+                    // for it
                     var propertyMetadata = InspectedType.Get(property.StorageType);
 
-                    // the value cannot be created using the default constructor (ie, it has only
-                    // one constructor that takes parameters); we cannot initialize an instance that
-                    // is guaranteed to be in a valid state
+                    // the value cannot be created using the default constructor
+                    // (ie, it has only one constructor that takes parameters);
+                    // we cannot initialize an instance that is guaranteed to be
+                    // in a valid state
                     if (propertyMetadata.HasDefaultConstructor == false) {
                         continue;
                     }

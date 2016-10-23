@@ -104,7 +104,6 @@ namespace FullInspector.Tests {
             }
         }
         private class CustomList<T> : IList<T> {
-
             public int IndexOf(T item) {
                 throw new NotImplementedException();
             }
@@ -187,6 +186,6 @@ namespace FullInspector.Tests {
                 throw new NotImplementedException();
             }
         }
-        #endregion
+        #endregion Types for Testing
     }
 }

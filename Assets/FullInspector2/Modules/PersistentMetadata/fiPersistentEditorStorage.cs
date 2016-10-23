@@ -22,7 +22,6 @@ namespace FullInspector.Internal {
 
         public static T Read<T>(fiUnityObjectReference key)
             where T : new() {
-
             fiBaseStorageComponent<T> storage;
             if (fiLateBindings.EditorUtility.IsPersistent(key.Target)) {
                 storage = GetStorageDictionary<T>(PrefabStorage);
@@ -41,20 +40,21 @@ namespace FullInspector.Internal {
         }
 
 #if false
-        // This code is commented out because it is no longer used. It used to migrate data inside of the prefab
-        // into the scene object. Now, we just don't store scene objects inside of the prefab (we lose the ability
-        // to save the state from play-mode, but that's okay)
+        // This code is commented out because it is no longer used. It used to
+        // migrate data inside of the prefab into the scene object. Now, we just
+        // don't store scene objects inside of the prefab (we lose the ability to
+        // save the state from play-mode, but that's okay)
 
         /// <summary>
         /// Attempts to migrate prefab storage into scene storage.
         /// </summary>
         private static void MigratePrefabIntoSceneStorage<T>()
             where T : fiPersistentEditorStorageItem {
-
             // Only try to do the migration once (per type)
             if (_didMigrate.Add(typeof(T)) == false) return;
 
-            // We cannot migrate data while playing -- scene storage will not be persisted
+            // We cannot migrate data while playing -- scene storage will not be
+            // persisted
             if (Application.isPlaying) {
                 return;
             }
@@ -71,8 +71,8 @@ namespace FullInspector.Internal {
             var toRemove = new List<fiUnityObjectReference>();
             foreach (var entry in prefabStorage.Data) {
                 if (AssetDatabase.Contains(entry.Key.Target)) {
-                    // data should stay in prefab storage, as the UnityObject target
-                    // does not live in the scene
+                    // data should stay in prefab storage, as the UnityObject
+                    // target does not live in the scene
                     continue;
                 }
 
@@ -80,7 +80,6 @@ namespace FullInspector.Internal {
                     // move directly into scene storage
                     sceneStorage.Data[entry.Key] = entry.Value;
                 }
-
                 else {
                     // copy into scene storage
                     sceneStorage.Data[entry.Key].CopyFromAndClear(prefabStorage.Data[entry.Key]);
@@ -116,7 +115,7 @@ namespace FullInspector.Internal {
 
             return (fiBaseStorageComponent<T>)component;
         }
-        #endregion
+        #endregion Reading/Writing
 
         #region Scene Storage
         private const string SceneStorageName = "fiPersistentEditorStorage";
@@ -127,8 +126,9 @@ namespace FullInspector.Internal {
                     _cachedSceneStorage = GameObject.Find(SceneStorageName);
 
                     if (_cachedSceneStorage == null) {
-                        // If we use new GameObject(), then for a split second Unity will show the
-                        // game object in the hierarchy, which is bad UX.
+                        // If we use new GameObject(), then for a split second
+                        // Unity will show the game object in the hierarchy,
+                        // which is bad UX.
                         _cachedSceneStorage = fiLateBindings.EditorUtility.CreateGameObjectWithHideFlags(SceneStorageName, HideFlags.HideInHierarchy);
                     }
                 }
@@ -136,7 +136,7 @@ namespace FullInspector.Internal {
                 return _cachedSceneStorage;
             }
         }
-        #endregion
+        #endregion Scene Storage
 
         #region Prefab Storage
         private static string PrefabPath = fiUtility.CombinePaths(fiSettings.RootGeneratedDirectory, "fiPersistentEditorStorage.prefab");
@@ -162,6 +162,6 @@ namespace FullInspector.Internal {
                 return _cachedPrefabStorage;
             }
         }
-        #endregion
+        #endregion Prefab Storage
     }
 }

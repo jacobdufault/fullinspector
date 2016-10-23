@@ -4,7 +4,6 @@ using UnityObject = UnityEngine.Object;
 namespace FullInspector.Internal {
     public class fiGraphMetadataSerializer<TPersistentData> : fiIGraphMetadataStorage, ISerializationCallbackReceiver
        where TPersistentData : IGraphMetadataItemPersistent {
-
         [SerializeField]
         private string[] _keys;
         [SerializeField]
@@ -46,5 +45,4 @@ namespace FullInspector.Internal {
             }
         }
     }
-
 }

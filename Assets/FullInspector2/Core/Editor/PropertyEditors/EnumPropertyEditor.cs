@@ -15,7 +15,7 @@ namespace FullInspector.Internal {
             get;
             set;
         }
-        
+
         public object OnSceneGUI(object element) {
             return element;
         }

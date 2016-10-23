@@ -3,8 +3,8 @@ using UnityEditor;
 using UnityEngine;
 
 namespace FullInspector.Internal {
-    // Enables fiInspectorOnly on ScriptableObjects
-    // Also enables ScriptableObject for extending tkCustomEditor
+    // Enables fiInspectorOnly on ScriptableObjects Also enables ScriptableObject
+    // for extending tkCustomEditor
 
     [CanEditMultipleObjects]
     [CustomEditor(typeof(ScriptableObject), editorForChildClasses: true, isFallback = true)]
@@ -13,7 +13,6 @@ namespace FullInspector.Internal {
             if (fsPortableReflection.HasAttribute<fiInspectorOnlyAttribute>(target.GetType()) || target is tkCustomEditor) {
                 BehaviorEditor.Get(target.GetType()).EditWithGUILayout(target);
             }
-
             else {
                 base.OnInspectorGUI();
             }

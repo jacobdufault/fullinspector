@@ -29,7 +29,6 @@ namespace FullInspector {
             set { UpdateFlag(value, ReorderableListFlags.ShowIndices); }
         }
 
-
         private void UpdateFlag(bool shouldSet, ReorderableListFlags flag) {
             if (shouldSet) Flags |= flag;
             else Flags &= ~flag;

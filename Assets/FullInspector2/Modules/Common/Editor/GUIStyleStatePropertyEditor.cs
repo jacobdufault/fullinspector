@@ -7,7 +7,8 @@ using tk = FullInspector.tk<UnityEngine.GUIStyleState>;
 namespace FullInspector.Modules {
     [CustomPropertyEditor(typeof(GUIStyleState))]
     public class GUIStyleStatePropertyEditor : tkControlPropertyEditor<GUIStyleState> {
-        public GUIStyleStatePropertyEditor(Type dataType, ICustomAttributeProvider attr) : base(dataType) { }
+        public GUIStyleStatePropertyEditor(Type dataType, ICustomAttributeProvider attr) : base(dataType) {
+        }
 
         protected override tkControlEditor GetControlEditor(GUIContent label, GUIStyleState element, fiGraphMetadata graphMetadata) {
             return new tkControlEditor(new tk.VerticalGroup {

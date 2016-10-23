@@ -8,7 +8,8 @@ using DisplayedType = FullInspector.Internal.fiReflectionUtility.DisplayedType;
 
 namespace FullInspector.Internal {
     /// <summary>
-    /// Manages the options that are displayed to the user in the instance selection drop-down.
+    /// Manages the options that are displayed to the user in the instance
+    /// selection drop-down.
     /// </summary>
     internal class TypeDropdownOptionsManager {
         private List<DisplayedType> _options;
@@ -33,7 +34,6 @@ namespace FullInspector.Internal {
             if (addSkipCtorMessage &&
                 type.Type.IsValueType == false &&
                 type.Type.GetConstructor(fsPortableReflection.EmptyTypes) == null) {
-
                 return new GUIContent(type.DisplayName + " (skips ctor)");
             }
 
@@ -48,7 +48,8 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Remove any options from the set of display options that are not permanently visible.
+        /// Remove any options from the set of display options that are not
+        /// permanently visible.
         /// </summary>
         public void RemoveExtraneousOptions() {
             // Figure out how long we want to be.
@@ -87,8 +88,8 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Returns the index of the option that should be displayed (from GetDisplayOptions())
-        /// based on the current object instance.
+        /// Returns the index of the option that should be displayed (from
+        /// GetDisplayOptions()) based on the current object instance.
         /// </summary>
         public int GetDisplayOptionIndex(object instance) {
             if (instance == null) {
@@ -115,7 +116,8 @@ namespace FullInspector.Internal {
         /// Changes the instance of the given object, if necessary.
         /// </summary>
         public object UpdateObjectInstance(object current, int currentIndex, int updatedIndex) {
-            // the index has not changed - there will be no change in object instance
+            // the index has not changed - there will be no change in object
+            // instance
             if (currentIndex == updatedIndex) {
                 return current;
             }

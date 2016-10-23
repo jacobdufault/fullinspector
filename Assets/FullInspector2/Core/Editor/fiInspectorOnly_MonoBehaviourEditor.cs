@@ -3,8 +3,8 @@ using UnityEditor;
 using UnityEngine;
 
 namespace FullInspector.Internal {
-    // Enables fiInspectorOnly on MonoBehavior
-    // Also enables MonoBehavior for extending tkCustomEditor
+    // Enables fiInspectorOnly on MonoBehavior Also enables MonoBehavior for
+    // extending tkCustomEditor
 
     [CanEditMultipleObjects]
     [CustomEditor(typeof(MonoBehaviour), true)]
@@ -13,7 +13,6 @@ namespace FullInspector.Internal {
             if (fsPortableReflection.HasAttribute<fiInspectorOnlyAttribute>(target.GetType()) || target is tkCustomEditor) {
                 fiCommonSerializedObjectEditor.ShowInspectorForSerializedObject(target);
             }
-
             else {
                 base.OnInspectorGUI();
             }

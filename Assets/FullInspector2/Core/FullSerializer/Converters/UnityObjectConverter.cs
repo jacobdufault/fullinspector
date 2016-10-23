@@ -1,6 +1,6 @@
-﻿using FullSerializer;
+﻿using System;
+using FullSerializer;
 using FullSerializer.Internal;
-using System;
 using UnityObject = UnityEngine.Object;
 
 namespace FullInspector.Serializers.FullSerializer {
@@ -28,9 +28,8 @@ namespace FullInspector.Serializers.FullSerializer {
 
             // Serialize invalid object references as null. This will reduce
             // round-trip serialization differences, since when we deserialize
-            // the negative value we will return null, and then we will
-            // serialize that as null. Instead, just serialize directly to
-            // null.
+            // the negative value we will return null, and then we will serialize
+            // that as null. Instead, just serialize directly to null.
             if (id < 0) {
                 serialized = fsData.Null;
                 return fsResult.Success;

@@ -12,9 +12,9 @@ namespace FullInspector.Internal {
             fiLateBindings.EditorApplication.InvokeOnEditorThread(() => {
                 // Remove any potentially missing scripts.
                 //
-                // NOTE: If this approach doesn't work, then we can use RemoveComponent with
-                // the specific component type to remove. This is more similar to how RemoveMetadata
-                // works.
+                // NOTE: If this approach doesn't work, then we can use
+                //       RemoveComponent with the specific component type to
+                // remove. This is more similar to how RemoveMetadata works.
                 fiEditorUtility.RemoveMissingScripts(fiPersistentEditorStorage.SceneStorage);
                 EditorUtility.SetDirty(fiPersistentEditorStorage.SceneStorage);
                 fiEditorUtility.RemoveMissingScripts(fiPersistentEditorStorage.PrefabStorage);

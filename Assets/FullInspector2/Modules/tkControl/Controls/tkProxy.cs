@@ -3,8 +3,8 @@
 namespace FullInspector {
     public partial class tk<T, TContext> {
         /// <summary>
-        /// Does nothing by itself. However, this can be used for applying a style to layout style controls
-        /// which override the Add method.
+        /// Does nothing by itself. However, this can be used for applying a
+        /// style to layout style controls which override the Add method.
         /// </summary>
         public class StyleProxy : tkControl<T, TContext> {
             public tkControl<T, TContext> Control;

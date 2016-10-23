@@ -3,8 +3,9 @@ using UnityEditor;
 
 namespace FullInspector.Internal {
     /// <summary>
-    /// Detects when Unity is recompiling code. Before a recompile happens, all state is saved and
-    /// after the recompilation is finished all state is restored.
+    /// Detects when Unity is recompiling code. Before a recompile happens, all
+    /// state is saved and after the recompilation is finished all state is
+    /// restored.
     /// </summary>
     [InitializeOnLoad]
     public static class CompilationDetector {
@@ -19,8 +20,8 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// True if we have detected a compile but have already saved. This is set to false by Unity
-        /// after a compilation has finished.
+        /// True if we have detected a compile but have already saved. This is
+        /// set to false by Unity after a compilation has finished.
         /// </summary>
         [NonSerialized]
         private static bool _saved = false;
@@ -33,8 +34,8 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// True if everything has been restored. This is set to false by Unity after a compilation
-        /// / reload has occurred.
+        /// True if everything has been restored. This is set to false by Unity
+        /// after a compilation / reload has occurred.
         /// </summary>
         [NonSerialized]
         private static bool _restored = false;

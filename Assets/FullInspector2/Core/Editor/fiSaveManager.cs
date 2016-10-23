@@ -6,20 +6,19 @@ using UnityObject = UnityEngine.Object;
 
 namespace FullInspector {
     /// <summary>
-    /// A few APIs to forcibly call SaveState and RestoreState on every type
-    /// that implements ISerializedObject.
+    /// A few APIs to forcibly call SaveState and RestoreState on every type that
+    /// implements ISerializedObject.
     /// </summary>
     public static class fiSaveManager {
         /// <summary>
-        /// Forcibly save the state of all objects which derive from ISerializedObject.
-        /// ISerializedObject saving is managed automatically when you use the editor (and can be
-        /// customized in fiSettings).
+        /// Forcibly save the state of all objects which derive from
+        /// ISerializedObject. ISerializedObject saving is managed automatically
+        /// when you use the editor (and can be customized in fiSettings).
         /// </summary>
         [MenuItem("Window/Full Inspector/Developer/Save All", priority = 0)]
         public static void SaveAll() {
             foreach (Type serializedObjectType in
                 fiRuntimeReflectionUtility.AllSimpleTypesDerivingFrom(typeof(ISerializedObject))) {
-
                 if (typeof(UnityObject).IsAssignableFrom(serializedObjectType) == false)
                     continue;
 
@@ -36,13 +35,13 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// Forcibly restore the state of all objects which derive from ISerializedObject.
+        /// Forcibly restore the state of all objects which derive from
+        /// ISerializedObject.
         /// </summary>
         [MenuItem("Window/Full Inspector/Developer/Restore All", priority = 1)]
         public static void RestoreAll() {
             foreach (Type serializedObjectType in
                 fiRuntimeReflectionUtility.AllSimpleTypesDerivingFrom(typeof(ISerializedObject))) {
-
                 if (typeof(UnityObject).IsAssignableFrom(serializedObjectType) == false) continue;
 
                 UnityObject[] objects = UnityObject.FindObjectsOfType(serializedObjectType);
@@ -66,7 +65,6 @@ namespace FullInspector {
         public static void RemoveAllSerializedData() {
             foreach (Type serializedObjectType in
                 fiRuntimeReflectionUtility.AllSimpleTypesDerivingFrom(typeof(ISerializedObject))) {
-
                 if (typeof(UnityObject).IsAssignableFrom(serializedObjectType) == false) continue;
 
                 UnityObject[] objects = UnityObject.FindObjectsOfType(serializedObjectType);

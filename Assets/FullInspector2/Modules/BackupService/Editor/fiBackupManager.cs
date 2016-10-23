@@ -1,13 +1,13 @@
-﻿using FullInspector.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using FullInspector.Internal;
 using UnityEditor;
 using UnityEngine;
 
 namespace FullInspector.BackupService {
     /// <summary>
-    /// The central API that end-users might be interested in. Provides key functions such as
-    /// creating a new backup and restoring an old one.
+    /// The central API that end-users might be interested in. Provides key
+    /// functions such as creating a new backup and restoring an old one.
     /// </summary>
     public static class fiBackupManager {
         /// <summary>
@@ -22,9 +22,9 @@ namespace FullInspector.BackupService {
         }
 
         /// <summary>
-        /// Creates a new backup of the given component. Only guaranteed to work for types that
-        /// derive from CommonBaseBehavior, but there is a good chance it'll work for most/all
-        /// types derived from Component.
+        /// Creates a new backup of the given component. Only guaranteed to work
+        /// for types that derive from CommonBaseBehavior, but there is a good
+        /// chance it'll work for most/all types derived from Component.
         /// </summary>
         public static void CreateBackup(Component behavior) {
             fiSerializedObject serialized = Serialize(behavior);
@@ -47,8 +47,9 @@ namespace FullInspector.BackupService {
         }
 
         /// <summary>
-        /// Helper function that just ignores a few FI internal types for serialization since the
-        /// backup solution serializes all inspected properties, not just those that are serialized
+        /// Helper function that just ignores a few FI internal types for
+        /// serialization since the backup solution serializes all inspected
+        /// properties, not just those that are serialized
         /// </summary>
         private static bool ShouldIgnoreForPersist(InspectedProperty property) {
             string name = property.Name;
@@ -120,8 +121,8 @@ namespace FullInspector.BackupService {
                 SerializedObjects = state.ObjectReferences
             };
 
-            // note: we use InspectedProperties, *not* SerializedProperties, because we want to
-            //       backup every field
+            // note: we use InspectedProperties, *not* SerializedProperties,
+            //       because we want to backup every field
             var properties = InspectedType.Get(target.GetType()).GetProperties(InspectedMemberFilters.InspectableMembers);
             foreach (InspectedProperty property in properties) {
                 if (ShouldIgnoreForPersist(property)) continue;

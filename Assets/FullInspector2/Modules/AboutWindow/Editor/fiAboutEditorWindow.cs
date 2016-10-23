@@ -18,7 +18,7 @@ namespace FullInspector.Internal {
             linksRect.x += 4;
             linksRect.width -= 4;
             GUI.Box(linksRect, GUIContent.none);
-            
+
             GUILayout.FlexibleSpace();
             if (GUILayout.Button("View Product Website", EditorStyles.boldLabel)) {
                 Application.OpenURL("http://jacobdufault.github.io/fullinspector/");

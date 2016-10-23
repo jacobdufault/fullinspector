@@ -3,15 +3,16 @@ using System.Collections.Generic;
 
 namespace FullInspector {
     /// <summary>
-    /// In Full Inspector, there are typically a large number of property editors that can be used
-    /// for each type, for example, a user defined editor, then the abstract editor, then the
-    /// reflected editor. PropertyEditorChain encapsulates this idea and makes it easy to retrieve
-    /// the next editor that will be used.
+    /// In Full Inspector, there are typically a large number of property editors
+    /// that can be used for each type, for example, a user defined editor, then
+    /// the abstract editor, then the reflected editor. PropertyEditorChain
+    /// encapsulates this idea and makes it easy to retrieve the next editor that
+    /// will be used.
     /// </summary>
     public class PropertyEditorChain {
         /// <summary>
-        /// The editing chain. The most applicable editor is at index 0 (followed by the next most
-        /// applicable at index 1, ...).
+        /// The editing chain. The most applicable editor is at index 0 (followed
+        /// by the next most applicable at index 1, ...).
         /// </summary>
         private List<IPropertyEditor> _editors = new List<IPropertyEditor>();
 
@@ -36,8 +37,8 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// Returns the next editor that will be used, or null if the given editor is either the
-        /// last one or was not found in the chain.
+        /// Returns the next editor that will be used, or null if the given
+        /// editor is either the last one or was not found in the chain.
         /// </summary>
         /// <param name="editor">The editor that is currently being used.</param>
         /// <returns>The next editor, or null if there is no next one.</returns>
@@ -56,8 +57,8 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// Returns the first property editor in this chain that is not an instance of any of the
-        /// given types.
+        /// Returns the first property editor in this chain that is not an
+        /// instance of any of the given types.
         /// </summary>
         public IPropertyEditor SkipUntilNot(params Type[] skipTypes) {
             for (int i = 0; i < _editors.Count; ++i) {

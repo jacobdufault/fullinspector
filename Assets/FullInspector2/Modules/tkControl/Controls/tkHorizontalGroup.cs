@@ -13,9 +13,9 @@ namespace FullInspector {
 #if UNITY_EDITOR
             : tkCustomEditor
 #endif
-				{
-                // We wrap _minWidth and _fillStrength into properties so that
-                // we can verify their values when the user modifies them in the
+                {
+                // We wrap _minWidth and _fillStrength into properties so that we
+                // can verify their values when the user modifies them in the
                 // inspector
 
                 private float _minWidth;
@@ -33,11 +33,14 @@ namespace FullInspector {
                 }
 
                 /// <summary>
-                /// Should this layout item match the height of the rect passed into the horizontal group?
-                /// If this is true, then the subrect will not have its height trimmed. Note that for the
-                /// total group height calculation, this is not used -- this means that the minimum height
-                /// passed to a control will always be >= its requested height, just when MatchParentHeight
-                /// is true the height passed into Edit may be > than the height requested from GetHeight.
+                /// Should this layout item match the height of the rect passed
+                /// into the horizontal group? If this is true, then the subrect
+                /// will not have its height trimmed. Note that for the total
+                /// group height calculation, this is not used -- this means that
+                /// the minimum height passed to a control will always be &gt;=
+                /// its requested height, just when MatchParentHeight is true the
+                /// height passed into Edit may be &gt; than the height requested
+                /// from GetHeight.
                 /// </summary>
                 public bool MatchParentHeight;
 
@@ -104,10 +107,14 @@ namespace FullInspector {
             }
 
             /// <summary>
-            /// Create a rule with auto width that can control if it matches the parent height.
+            /// Create a rule with auto width that can control if it matches the
+            /// parent height.
             /// </summary>
-            /// <param name="matchParentHeight">If true, then the height of the rect passed to the
-            /// rule will be equal to the height of the overall rect passed to this horizontal group.</param>
+            /// <param name="matchParentHeight">
+            /// If true, then the height of the rect passed to the rule will be
+            /// equal to the height of the overall rect passed to this horizontal
+            /// group.
+            /// </param>
             public void Add(bool matchParentHeight, tkControl<T, TContext> rule) {
                 InternalAdd(matchParentHeight, 0, 1, rule);
             }
@@ -139,25 +146,31 @@ namespace FullInspector {
             }
 
             private void DoLayout(Rect rect, T obj, TContext context, fiGraphMetadata metadata) {
-                // The layout algorithm is relatively simple once you understand what is going on.
-                // It can run up to N times where N is the number of items that have a fill strength > 0.
+                // The layout algorithm is relatively simple once you understand
+                // what is going on. It can run up to N times where N is the
+                // number of items that have a fill strength > 0.
                 //
-                // The idea is simple: we initially treat every item that wants to be flexible as flexible. If
-                // that item has a minimum width and it will not be met using the flexible layout logic, then
-                // we rerun the layout except that item is treated as a fixed-width item instead.
+                // The idea is simple: we initially treat every item that wants
+                // to be flexible as flexible. If that item has a minimum width
+                // and it will not be met using the flexible layout logic, then
+                // we rerun the layout except that item is treated as a
+                // fixed-width item instead.
                 //
-                // We complete the algorithm when every item has met its minimum width requirement.
+                // We complete the algorithm when every item has met its minimum
+                // width requirement.
 
-                // step1: Try to treat every item that wants to be flexible as flexible.
+                // step1: Try to treat every item that wants to be flexible as
+                //        flexible.
                 for (int i = 0; i < _items.Count; ++i) {
                     SectionItem item = _items[i];
                     item.Layout_IsFlexible = item.FillStrength > 0;
                     _items[i] = item;
                 }
 
-                // step2..n: Iterate until each item has a width greater than its minimum width.
+                // step2..n: Iterate until each item has a width greater than its
+                // minimum width.
                 while (true) {
-                tryAgain:
+                    tryAgain:
 
                     float requiredMinSpace = 0;
                     float totalFillStrength = 0;
@@ -174,9 +187,7 @@ namespace FullInspector {
                         }
                     }
 
-
                     float growableSpace = rect.width - requiredMinSpace;
-
 
                     for (int i = 0; i < _items.Count; ++i) {
                         var item = _items[i];
@@ -186,9 +197,11 @@ namespace FullInspector {
                             item.Layout_FlexibleWidth = growableSpace * item.FillStrength / totalFillStrength;
                             _items[i] = item;
 
-                            // There is not enough flexible room for this item; try again but with this item at
-                            // its fixed width. We have to rerun the entire algorithm because setting an item
-                            // to fixed width can alter how wide flexible items before us are.
+                            // There is not enough flexible room for this item;
+                            // try again but with this item at its fixed width.
+                            // We have to rerun the entire algorithm because
+                            // setting an item to fixed width can alter how wide
+                            // flexible items before us are.
                             if (item.Layout_FlexibleWidth < item.MinWidth) {
                                 item.Layout_IsFlexible = false;
                                 _items[i] = item;
@@ -213,8 +226,9 @@ namespace FullInspector {
                     Rect itemRect = rect;
                     itemRect.width = width;
 
-                    // If we're not matching the parent height then manually trim the rects height
-                    // so the layout gets a rect equal to the height it requests.
+                    // If we're not matching the parent height then manually trim
+                    // the rects height so the layout gets a rect equal to the
+                    // height it requests.
                     if (item.MatchParentHeight == false) {
                         itemRect.height = item.Rule.GetHeight(obj, context, metadata);
                     }

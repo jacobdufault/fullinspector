@@ -1,7 +1,7 @@
-﻿using FullInspector.Internal;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using FullInspector.Internal;
 using UnityEditor;
 using UnityEngine;
 using UnityObject = UnityEngine.Object;
@@ -11,7 +11,11 @@ namespace FullInspector.Modules {
         /// <summary>
         /// Changes the serialization data for the given GameObject.
         /// </summary>
-        /// <param name="go">The UnityObject to migrate (either a ScriptableObject, GameObject, or Component). If it is a GameObject, then all child components will also be scanned.</param>
+        /// <param name="go">
+        /// The UnityObject to migrate (either a ScriptableObject, GameObject, or
+        /// Component). If it is a GameObject, then all child components will
+        /// also be scanned.
+        /// </param>
         /// <param name="fromSerializer">The current serializer</param>
         /// <param name="toSerializer">The new serializer</param>
         public static void MigrateUnityObject(UnityObject obj, Type fromSerializer, Type toSerializer) {
@@ -84,19 +88,20 @@ namespace FullInspector.Modules {
                         continue;
                     }
 
-                    // for a scene, we only need to care about top-level GameObjects
+                    // for a scene, we only need to care about top-level
+                    // GameObjects
                     if (go.transform.parent != null) continue;
 
-                    // the game object must also have some ISerializedObject components
+                    // the game object must also have some ISerializedObject
+                    // components
                     var serializedObjChildren = go.GetComponentsInChildren(typeof(ISerializedObject));
                     if (serializedObjChildren == null || serializedObjChildren.Length == 0) continue;
                 }
-
                 else if (obj is ScriptableObject) {
-                    // ScriptableObjects need to just derive from ISerializedObject
+                    // ScriptableObjects need to just derive from
+                    // ISerializedObject
                     if (obj is ISerializedObject == false) continue;
                 }
-
                 else {
                     // note: we do not process components here
                     continue;

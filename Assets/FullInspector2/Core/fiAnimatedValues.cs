@@ -2,7 +2,6 @@
 using UnityEngine;
 
 namespace FullInspector.Internal {
-
     public abstract class fiBaseAnimValue<T> {
         private double m_LerpPosition = 1.0;
         public float speed = 2f;

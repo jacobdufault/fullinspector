@@ -5,8 +5,8 @@ using UnityEditor;
 #endif
 using UnityEngine;
 
-// This file demonstrates how you could have a item database setup where the database is defined
-// inside of a scriptable object
+// This file demonstrates how you could have a item database setup where the
+// database is defined inside of a scriptable object
 
 namespace FullInspector.Samples.ItemDatabase {
     public class ItemDatabaseSample : BaseScriptableObject<FullSerializerSerializer> {
@@ -43,7 +43,8 @@ namespace FullInspector.Samples.ItemDatabase {
         }
 
         /// <summary>
-        //	This makes it easy to create, name and place unique new ScriptableObject asset files.
+        // This makes it easy to create, name and place unique new
+        // ScriptableObject asset files.
         /// </summary>
         public static void CreateAsset<T>() where T : ScriptableObject {
             T asset = ScriptableObject.CreateInstance<T>();

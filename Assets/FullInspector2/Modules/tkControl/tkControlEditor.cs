@@ -1,9 +1,9 @@
 ﻿namespace FullInspector {
     public class tkControlEditor {
         /// <summary>
-        /// Determines if the debugger will be displayed beneath the control. The debugger
-        /// will allow you to easily tweak values within the control so that you can get
-        /// the perfect GUI.
+        /// Determines if the debugger will be displayed beneath the control. The
+        /// debugger will allow you to easily tweak values within the control so
+        /// that you can get the perfect GUI.
         /// </summary>
         public bool Debug;
 

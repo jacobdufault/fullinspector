@@ -28,7 +28,6 @@ namespace FullInspector.Internal {
             return true;
         }
 
-
         static fiInstalledSerializerManager() {
             var optIn = new List<Type>();
             var optOut = new List<Type>();
@@ -46,7 +45,6 @@ namespace FullInspector.Internal {
                     optIn.AddRange(metadata.SerializationOptInAnnotationTypes);
                     optOut.AddRange(metadata.SerializationOptOutAnnotationTypes);
                 }
-
             }
 
             foreach (var providerType in
@@ -66,7 +64,6 @@ namespace FullInspector.Internal {
             get;
             private set;
         }
-
 
         private static fiISerializerMetadata _defaultMetadata;
         public static fiISerializerMetadata DefaultMetadata {
@@ -104,8 +101,8 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Annotations that signify a field or property inside a type should *definitely* be
-        /// serialized.
+        /// Annotations that signify a field or property inside a type should
+        /// *definitely* be serialized.
         /// </summary>
         public static Type[] SerializationOptInAnnotations {
             get;
@@ -113,8 +110,8 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Annotations that signify a field or property inside a type should definitely *not* be
-        /// serialized.
+        /// Annotations that signify a field or property inside a type should
+        /// definitely *not* be serialized.
         /// </summary>
         public static Type[] SerializationOptOutAnnotations {
             get;

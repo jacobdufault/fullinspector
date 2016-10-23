@@ -5,15 +5,16 @@ using UnityObject = UnityEngine.Object;
 
 namespace FullInspector.Internal {
     /// <summary>
-    /// Full Inspector has to support running in both DLL and source code mode. This sometimes introduces
-    /// issues when non-editor code has to access editor-related code. This is achieved via a late-binding
-    /// mechanism; the editor code will automatically inject the relevant pointers into this data
-    /// structure. If the binding does not exist yet, then a warning will be emitted.
+    /// Full Inspector has to support running in both DLL and source code mode.
+    /// This sometimes introduces issues when non-editor code has to access
+    /// editor-related code. This is achieved via a late-binding mechanism; the
+    /// editor code will automatically inject the relevant pointers into this
+    /// data structure. If the binding does not exist yet, then a warning will be
+    /// emitted.
     /// </summary>
     public static class fiLateBindings {
         public static class _Bindings {
             public static Func<string, Type, UnityObject> _AssetDatabase_LoadAssetAtPath;
-
 
             public static Func<bool> _EditorApplication_isPlaying;
             public static Func<bool> _EditorApplication_isCompilingOrChangingToPlayMode;
@@ -22,22 +23,18 @@ namespace FullInspector.Internal {
             public static Action<Action> _EditorApplication_RemUpdateAction;
             public static Func<double> _EditorApplication_timeSinceStartup;
 
-
             public static Func<string, string, string> _EditorPrefs_GetString;
             public static Action<string, string> _EditorPrefs_SetString;
-
 
             public static Action<UnityObject> _EditorUtility_SetDirty;
             public static Func<int, UnityObject> _EditorUtility_InstanceIdToObject;
             public static Func<UnityObject, bool> _EditorUtility_IsPersistent;
             public static Func<string, HideFlags, GameObject> _EditorUtility_CreateGameObjectWithHideFlags;
 
-
             public static Action _EditorGUI_BeginChangeCheck;
             public static Func<bool> _EditorGUI_EndChangeCheck;
             public static Action<bool> _EditorGUI_BeginDisabledGroup;
             public static Action _EditorGUI_EndDisabledGroup;
-
 
             public delegate bool _EditorGUI_Foldout_Type(Rect rect, bool status, GUIContent label, bool toggleOnLabelClick, GUIStyle style);
             public static _EditorGUI_Foldout_Type _EditorGUI_Foldout;
@@ -48,19 +45,15 @@ namespace FullInspector.Internal {
             public static _EditorGUI_PopupType _EditorGUI_Popup;
             public static _EditorGUI_Slider_Type<float> _EditorGUI_Slider;
 
-
             public static Func<GUIStyle> _EditorStyles_label;
             public static Func<GUIStyle> _EditorStyles_foldout;
-
 
             public static Action<bool> _fiEditorGUI_PushHierarchyMode;
             public static Action _fiEditorGUI_PopHierarchyMode;
 
-
             public static Func<string, GameObject, GameObject> _PrefabUtility_CreatePrefab;
             public static Func<UnityObject, bool> _PrefabUtility_IsPrefab;
             public static Func<UnityObject, bool> _PrefabUtility_IsPrefabInstance;
-
 
             // too many parameters for Func
             public delegate object _PropertyEditor_Edit_Type(Type objType, MemberInfo attrs, Rect rect, GUIContent label, object obj, fiGraphMetadataChild metadata, Type[] skippedEditors);
@@ -68,12 +61,10 @@ namespace FullInspector.Internal {
             public static _PropertyEditor_Edit_Type _PropertyEditor_Edit;
             public static _PropertyEditor_GetElementHeight_Type _PropertyEditor_GetElementHeight;
 
-
             public delegate object _PropertyEditor_EditSkipUntilNot_Type(Type[] skipUntilNot, Type objType, MemberInfo attrs, Rect rect, GUIContent label, object obj, fiGraphMetadataChild metadata);
             public delegate float _PropertyEditor_GetElementHeightSkipUntilNot_Type(Type[] skipUntilNot, Type objType, MemberInfo attrs, GUIContent label, object obj, fiGraphMetadataChild metadata);
             public static _PropertyEditor_EditSkipUntilNot_Type _PropertyEditor_EditSkipUntilNot;
             public static _PropertyEditor_GetElementHeightSkipUntilNot_Type _PropertyEditor_GetElementHeightSkipUntilNot;
-
 
             public static Func<UnityObject> _Selection_activeObject;
             public static Func<UnityObject[]> _Selection_activeSelection;
@@ -136,7 +127,6 @@ namespace FullInspector.Internal {
         }
 
         public static class EditorPrefs {
-
             public static string GetString(string key, string defaultValue) {
                 if (VerifyBinding("EditorPrefs.GetString", _Bindings._EditorPrefs_GetString)) {
                     return _Bindings._EditorPrefs_GetString(key, defaultValue);
@@ -242,7 +232,6 @@ namespace FullInspector.Internal {
                 }
                 return value;
             }
-
         }
 
         public static class EditorGUIUtility {
@@ -305,7 +294,8 @@ namespace FullInspector.Internal {
             }
 
             /// <summary>
-            /// Returns true if UnityEditor.PrefabUtility.GetPrefabType(unityObj) == UnityEditor.PrefabType.Prefab
+            /// Returns true if UnityEditor.PrefabUtility.GetPrefabType(unityObj)
+            /// == UnityEditor.PrefabType.Prefab
             /// </summary>
             public static bool IsPrefab(UnityObject unityObject) {
                 if (VerifyBinding("PrefabUtility.IsPrefab", _Bindings._PrefabUtility_IsPrefab)) {
@@ -348,7 +338,6 @@ namespace FullInspector.Internal {
                 return 0;
             }
         }
-
 
         public static class Selection {
             public static UnityObject activeObject {

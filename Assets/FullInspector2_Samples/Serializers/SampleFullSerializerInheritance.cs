@@ -4,7 +4,6 @@ using UnityEngine;
 namespace FullInspector.Samples.FullSerializer {
     [AddComponentMenu("Full Inspector Samples/FullSerializer/Inheritance")]
     public class SampleFullSerializerInheritance : BaseBehavior<FullSerializerSerializer> {
-
         // interface
         public interface IFace { }
         public class DerivedIFaceA : IFace { public int A; }

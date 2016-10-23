@@ -19,7 +19,8 @@ namespace FullInspector.BackupService {
         public string SavedAt;
 
         /// <summary>
-        /// Only used in the editor -- if true, then the deserialized state should be shown.
+        /// Only used in the editor -- if true, then the deserialized state
+        /// should be shown.
         /// </summary>
         public bool ShowDeserialized;
 
@@ -55,8 +56,9 @@ namespace FullInspector.BackupService {
         public string Value;
 
         /// <summary>
-        /// A shared object instance (with fiDeserializedMember) that tells the deserialization
-        /// engine if this property should be restored upon backup restore.
+        /// A shared object instance (with fiDeserializedMember) that tells the
+        /// deserialization engine if this property should be restored upon
+        /// backup restore.
         /// </summary>
         public fiEnableRestore ShouldRestore = new fiEnableRestore() {
             Enabled = true

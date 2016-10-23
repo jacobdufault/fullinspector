@@ -8,11 +8,12 @@ namespace FullInspector.Internal {
     public class fiSerializedPropertyUtility {
         public static object ReadFieldOrProperty(object obj, string name) {
             // TODO: can we use/add fiRuntimeReflectionUtility.ReadField<>()?
-            //       + add support for properties, rename to ReadMember?
+            // + add support for properties, rename to ReadMember?
 
-            // We cannot use BindingFlags.FlattenHierarchy because that does *not* include
-            // private members in the parent type. Instead, we scan fields/properties for each
-            // inheritance level which *will* include private members on parent types.
+            // We cannot use BindingFlags.FlattenHierarchy because that does
+            // *not* include private members in the parent type. Instead, we scan
+            // fields/properties for each inheritance level which *will* include
+            // private members on parent types.
 
             var flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
             var type = obj.GetType();
@@ -121,7 +122,8 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Returns the object that this serialized property is currently storing.
+        /// Returns the object that this serialized property is currently
+        /// storing.
         /// </summary>
         public static object GetTarget(SerializedProperty property) {
             object result = property.serializedObject.targetObject;
@@ -143,8 +145,8 @@ namespace FullInspector.Internal {
                     result = ReadFieldOrProperty(result, name);
                 }
 
-                // reading the property from reflection failed for some reason -- we have
-                // to return null
+                // reading the property from reflection failed for some reason --
+                // we have to return null
                 if (result == null) return null;
             }
 
@@ -155,7 +157,6 @@ namespace FullInspector.Internal {
             if (Event.current.type == EventType.ContextClick &&
                 region.Contains(Event.current.mousePosition) &&
                 property.prefabOverride) {
-
                 Event.current.Use();
 
                 var content = new GUIContent("Revert Value to Prefab");

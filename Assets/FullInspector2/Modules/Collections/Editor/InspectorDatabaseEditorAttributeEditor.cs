@@ -11,15 +11,14 @@ namespace FullInspector.Modules {
     }
 
     /// <summary>
-    /// Provides a relatively simple editor for IList{T} types that only views one element at a
-    /// time. This is useful if the list is massive, or perhaps to just reduce information overload
-    /// when editing.
+    /// Provides a relatively simple editor for IList{T} types that only views
+    /// one element at a time. This is useful if the list is massive, or perhaps
+    /// to just reduce information overload when editing.
     /// </summary>
     [CustomAttributePropertyEditor(typeof(InspectorDatabaseEditorAttribute), ReplaceOthers = true)]
     public class InspectorDatabaseEditorAttributeEditor<TDerived, T> :
         AttributePropertyEditor<IList<T>, InspectorDatabaseEditorAttribute>
         where TDerived : IList<T> {
-
         public override bool DisplaysStandardLabel {
             get { return false; }
         }
@@ -33,8 +32,9 @@ namespace FullInspector.Modules {
         }
 
         /// <summary>
-        /// Attempts to ensure that the current editing index is not out of range. However, if the
-        /// edited list is empty, then the index will always be out of range.
+        /// Attempts to ensure that the current editing index is not out of
+        /// range. However, if the edited list is empty, then the index will
+        /// always be out of range.
         /// </summary>
         private static void TryEnsureValidIndex(tkDatabaseContext context) {
             var list = context.editedList;
@@ -72,13 +72,11 @@ namespace FullInspector.Modules {
             return metadata.CurrentIndex;
         }
 
-
         private static void ChangeIndexTo(tkDatabaseContext context, int index) {
             var metadata = fiGlobalMetadata.Get<InspectorDatabaseEditorMetadata>(context.editedList);
             metadata.CurrentIndex = index;
             TryEnsureValidIndex(context);
         }
-
 
         private static bool CanMoveIndexByOffset(tkDatabaseContext context, int offset) {
             int newIndex = GetCurrentIndex(context) + offset;
@@ -92,8 +90,8 @@ namespace FullInspector.Modules {
                 metadata.CurrentIndex = 0;
             }
 
-            // If we don't have enough elements inside of the list, then we'll just add to the
-            // list until we have a valid index
+            // If we don't have enough elements inside of the list, then we'll
+            // just add to the list until we have a valid index
             while (metadata.CurrentIndex >= context.editedList.Count) {
                 fiListUtility.Add<T>(ref context.editedList);
                 metadata.CurrentIndex = context.editedList.Count - 1;
@@ -111,7 +109,8 @@ namespace FullInspector.Modules {
             int a = GetCurrentIndex(context);
             int b = a + offset;
 
-            // Make sure we can do the swap - we *should* be able to remove this code
+            // Make sure we can do the swap - we *should* be able to remove this
+            // code
             var list = context.editedList;
             if (list.Count > 0 && a >= 0 && a < list.Count && b >= 0 && b < list.Count) {
                 var temp = list[a];
@@ -158,7 +157,6 @@ namespace FullInspector.Modules {
                             /*min, max*/ 1, tk.Val(l => l.Count),
                             /*get*/ (l, c) => l.Count == 0 ? 0 : GetCurrentIndex(c) + 1,
                             /*set*/ (l, c, i) => ChangeIndexTo(c, i-1)) {
-
                             Style = new tk.EnabledIf(l => l.Count > 0)
                         },
 
@@ -167,15 +165,15 @@ namespace FullInspector.Modules {
                                 60,
                                 new tk.Button(Label_SwapBack, (o, c) => SwapItemByOffset(c, -1)) {
                                     Style = new tk.EnabledIf((o, c) => CanSwapItemByOffset(c, -1))
-                                } 
+                                }
                             },
-                                                       
-                            2, 
+
+                            2,
 
                             new tk.Button(Label_Back, (o, c) => MoveIndexByOffset(c, -1)) {
                                 Style = new tk.EnabledIf((o, c) => CanMoveIndexByOffset(c, -1))
                             },
-                            
+
                             2,
 
                             new tk.Button(tk.Val((o, c) => GetForwardButtonText(c)), (o, c) => MoveIndexByOffset(c, 1)) {
@@ -188,7 +186,7 @@ namespace FullInspector.Modules {
                                 60,
                                 new tk.Button(Label_SwapForward, (o, c) => SwapItemByOffset(c, 1)) {
                                     Style = new tk.EnabledIf((o, c) => CanSwapItemByOffset(c, 1))
-                                } 
+                                }
                             },
 
                             2,
@@ -231,8 +229,9 @@ namespace FullInspector.Modules {
 
             InspectorDatabaseEditorMetadata databaseMetadata = metadata.GetMetadata<InspectorDatabaseEditorMetadata>();
 
-            // Set the global metadata to the graph metadata, as the graph metadata is persistent
-            // but users still may want to access the global metadata.
+            // Set the global metadata to the graph metadata, as the graph
+            // metadata is persistent but users still may want to access the
+            // global metadata.
             fiGlobalMetadata.Set(context.editedList, databaseMetadata);
 
             // Disable the dropdown
@@ -270,8 +269,8 @@ namespace FullInspector.Modules {
         }
 
         /// <summary>
-        /// The metadata we store on each item that we edit so that we know what the active editing
-        /// item is.
+        /// The metadata we store on each item that we edit so that we know what
+        /// the active editing item is.
         /// </summary>
         // TODO: make this persistent
         public class InspectorDatabaseEditorMetadata : IGraphMetadataItemNotPersistent {

@@ -7,7 +7,8 @@ using UnityObject = UnityEngine.Object;
 
 namespace FullInspector.Internal {
     /// <summary>
-    /// This class is used to cache results for some expensive fiEditorUtility method calls.
+    /// This class is used to cache results for some expensive fiEditorUtility
+    /// method calls.
     /// </summary>
     public class fiEditorUtilityCache : UnityEditor.AssetModificationProcessor {
         public static void OnWillCreateAsset(string path) {
@@ -48,10 +49,12 @@ namespace FullInspector.Internal {
         }
 
         public static void RemoveMissingScripts(GameObject gameObject) {
-            // UnityEngine.Object.Destroy doesn't work if the script is missing (the object reference is null). We
-            // have to work around this by using the SerializedObject API instead.
+            // UnityEngine.Object.Destroy doesn't work if the script is missing
+            // (the object reference is null). We have to work around this by
+            // using the SerializedObject API instead.
             //
-            // See http://answers.unity3d.com/questions/15225/how-do-i-remove-null-components-ie-missingmono-scr.html.
+            // See
+            // http://answers.unity3d.com/questions/15225/how-do-i-remove-null-components-ie-missingmono-scr.html.
             var components = gameObject.GetComponents<Component>();
             var serializedObject = new SerializedObject(gameObject);
             var prop = serializedObject.FindProperty("m_Component");
@@ -90,7 +93,10 @@ namespace FullInspector.Internal {
         /// Find all prefabs of a given type, regardless of location.
         /// </summary>
         /// <param name="type">The type of object to fetch</param>
-        /// <remarks>Please note that this method can return UnityObject instances that have been deleted.</remarks>
+        /// <remarks>
+        /// Please note that this method can return UnityObject instances that
+        /// have been deleted.
+        /// </remarks>
         public static List<UnityObject> GetAllPrefabsOfType(Type type) {
             List<UnityObject> found;
 
@@ -119,8 +125,13 @@ namespace FullInspector.Internal {
         /// <summary>
         /// Find all assets of a given type, regardless of location.
         /// </summary>
-        /// <param name="type">The (ScriptableObject derived) type of object to fetch</param>
-        /// <remarks>Please note that this method can return UnityObject instances that have been deleted.</remarks>
+        /// <param name="type">
+        /// The (ScriptableObject derived) type of object to fetch
+        /// </param>
+        /// <remarks>
+        /// Please note that this method can return UnityObject instances that
+        /// have been deleted.
+        /// </remarks>
         public static List<UnityObject> GetAllAssetsOfType(Type type) {
             List<UnityObject> found;
 
@@ -167,13 +178,14 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Add to this list if the editor should be repainted upon a general repaint request.
+        /// Add to this list if the editor should be repainted upon a general
+        /// repaint request.
         /// </summary>
         public static List<EditorWindow> RepaintableEditorWindows = new List<EditorWindow>();
 
         /// <summary>
-        /// If enabled, then the inspector should be constantly redrawn. This is used to work around
-        /// some rendering issues within Unity.
+        /// If enabled, then the inspector should be constantly redrawn. This is
+        /// used to work around some rendering issues within Unity.
         /// </summary>
         public static fiStackEnabled ShouldInspectorRedraw = new fiStackEnabled();
 
@@ -190,7 +202,6 @@ namespace FullInspector.Internal {
                 var behavior = (MonoBehaviour)obj;
                 script = MonoScript.FromMonoBehaviour(behavior);
             }
-
             else if (obj is ScriptableObject) {
                 var scriptable = (ScriptableObject)obj;
                 script = MonoScript.FromScriptableObject(scriptable);

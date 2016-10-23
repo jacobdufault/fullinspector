@@ -1,6 +1,6 @@
-﻿using FullInspector.Internal;
+﻿using System;
+using FullInspector.Internal;
 using FullSerializer;
-using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,7 +8,6 @@ namespace FullInspector.Modules {
     [CustomBehaviorEditor(typeof(SharedInstance<,>), Inherit = true)]
     public class fiSharedInstanceBehaviorEditor<TActual, T, TSerializer> : BehaviorEditor<SharedInstance<T, TSerializer>>
         where TSerializer : BaseSerializer {
-
         protected override void OnEdit(Rect rect, SharedInstance<T, TSerializer> behavior, fiGraphMetadata metadata) {
             behavior.Instance = PropertyEditor.Get(typeof(T), null).FirstEditor.Edit(rect, GUIContent.none, behavior.Instance, metadata.Enter("Instance", behavior));
         }
@@ -24,12 +23,15 @@ namespace FullInspector.Modules {
     [CustomPropertyEditor(typeof(SharedInstance<,>), DisableErrorOnUnityObject = true, Inherit = true)]
     public class fiSharedInstancePropertyEditor<TActual, T, TSerializer> : PropertyEditor<SharedInstance<T, TSerializer>>
         where TSerializer : BaseSerializer {
-
-        // This property editor is rather strange. It works in two different modes based on the type of TSerializer. Because it is inherited (so that it
-        // properly supports SharedInstance<>) it will be invoked by the parent editor (as expected) *but also* by the object property editor when an
-        // inline view is requested (because the inline view is requested for the actual object type, but that editor is *also* this one). We can detect
-        // the two scenarios by looking at TActual; when TActual is generic, we are being invoked for the standard view; when TActual is not generic,
-        // we are being invoked as an inline editor.
+        // This property editor is rather strange. It works in two different
+        // modes based on the type of TSerializer. Because it is inherited (so
+        // that it properly supports SharedInstance<>) it will be invoked by the
+        // parent editor (as expected) *but also* by the object property editor
+        // when an inline view is requested (because the inline view is requested
+        // for the actual object type, but that editor is *also* this one). We
+        // can detect the two scenarios by looking at TActual; when TActual is
+        // generic, we are being invoked for the standard view; when TActual is
+        // not generic, we are being invoked as an inline editor.
 
         public class SharedInstanceMetadata : IGraphMetadataItemNotPersistent {
             [fsIgnore]
@@ -58,7 +60,6 @@ namespace FullInspector.Modules {
 
             if (typeof(TActual).IsGenericType) {
                 region = EditorGUI.PrefixLabel(region, label);
-
 
                 float ButtonRectWidth = 23;
                 Rect buttonRect = region, objectRect = region;
@@ -103,7 +104,6 @@ namespace FullInspector.Modules {
             if (typeof(TActual).IsGenericType == false) {
                 return PropertyEditor.Get(typeof(T), null).FirstEditor.GetElementHeight(new GUIContent("Instance"), element.Instance, new fiGraphMetadataChild { Metadata = metadata });
             }
-
 
             TryEnsureScript();
             return EditorChain.GetNextEditor(this).GetElementHeight(label, element, metadata.Enter("ObjectReference", metadata.Context));

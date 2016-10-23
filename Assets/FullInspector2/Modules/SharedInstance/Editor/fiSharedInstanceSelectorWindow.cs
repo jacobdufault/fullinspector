@@ -12,9 +12,15 @@ namespace FullInspector.Modules {
         /// <summary>
         /// Shows a new selection window for a SharedInstance type.
         /// </summary>
-        /// <param name="instanceType">The generic SharedInstance parameter; that actual instance type.</param>
-        /// <param name="sharedInstanceType">The generic SharedInstance type itself.</param>
-        /// <param name="onSelected">Method to invoke when a new SharedInstance has been selected.</param>
+        /// <param name="instanceType">
+        /// The generic SharedInstance parameter; that actual instance type.
+        /// </param>
+        /// <param name="sharedInstanceType">
+        /// The generic SharedInstance type itself.
+        /// </param>
+        /// <param name="onSelected">
+        /// Method to invoke when a new SharedInstance has been selected.
+        /// </param>
         public static void Show(Type instanceType, Type sharedInstanceType, Action<UnityObject> onSelected) {
             var window = fiEditorWindowUtility.ShowUtility<fiSharedInstanceSelectorWindow>("Shared Instance Selector (" + instanceType.CSharpName() + ")");
             window._instanceType = instanceType;
@@ -35,8 +41,9 @@ namespace FullInspector.Modules {
             fiEditorUtility.ShouldInspectorRedraw.Push();
         }
         public void OnDestroy() {
-            // We delay the inspector redraw pop so that the inspector will redraw one more time
-            // after the window is closed so it gets all of the updated state.
+            // We delay the inspector redraw pop so that the inspector will
+            // redraw one more time after the window is closed so it gets all of
+            // the updated state.
             EditorApplication.delayCall += () => fiEditorUtility.ShouldInspectorRedraw.Pop();
         }
 
@@ -63,11 +70,11 @@ namespace FullInspector.Modules {
         }
 
         public void OnGUI() {
-            // If we went through an serialization cycle, then the types will be null so we have to close the selection
-            // window.
+            // If we went through an serialization cycle, then the types will be
+            // null so we have to close the selection window.
             if (_sharedInstanceType == null || _instanceType == null) {
-                // we have to close the window *outside* of OnGUI otherwise Unity will
-                // report cleanup errors
+                // we have to close the window *outside* of OnGUI otherwise Unity
+                // will report cleanup errors
                 EditorApplication.delayCall += () => { if (this != null) Close(); };
                 return;
             }
@@ -86,7 +93,6 @@ namespace FullInspector.Modules {
 
             List<UnityObject> availableInstances = fiEditorUtility.GetAllAssetsOfType(_sharedInstanceType);
 
-
             GUILayout.BeginHorizontal();
             GUILayout.Label("Select Existing Instance (" + availableInstances.Count + " available)", EditorStyles.boldLabel);
 
@@ -102,7 +108,6 @@ namespace FullInspector.Modules {
             GUILayout.EndHorizontal();
 
             _scroll = EditorGUILayout.BeginScrollView(_scroll);
-
 
             for (int i = 0; i < availableInstances.Count; ++i) {
                 if (_foldouts.ContainsKey(i) == false) _foldouts[i] = false;

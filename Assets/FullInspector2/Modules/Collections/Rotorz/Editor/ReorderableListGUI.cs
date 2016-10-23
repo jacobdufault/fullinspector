@@ -1,34 +1,35 @@
-// Copyright (c) 2012-2013 Rotorz Limited. All rights reserved. Use of this source code is governed
-// by a BSD-style license that can be found in the LICENSE file.
+// Copyright (c) 2012-2013 Rotorz Limited. All rights reserved. Use of this
+// source code is governed by a BSD-style license that can be found in the
+// LICENSE file.
 
 using FullInspector.Rotorz.ReorderableList.Internal;
 using UnityEditor;
 using UnityEngine;
 
 namespace FullInspector.Rotorz.ReorderableList {
-
     /// <summary>
     /// Utility class for drawing reorderable lists.
     /// </summary>
     public static class ReorderableListGUI {
-
         /// <summary>
         /// Default list item height.
         /// </summary>
         public const float DefaultItemHeight = 18;
 
         /// <summary>
-        /// Gets or sets zero-based index of last item which was changed. A value of -1 indicates
-        /// that no item was changed by list.
+        /// Gets or sets zero-based index of last item which was changed. A value
+        /// of -1 indicates that no item was changed by list.
         /// </summary>
         /// <remarks>
-        /// <para>This property should not be set when items are added or removed.</para>
+        /// <para>
+        /// This property should not be set when items are added or removed.
+        /// </para>
         /// </remarks>
         public static int indexOfChangedItem { get; internal set; }
 
         /// <summary>
-        /// Gets zero-based index of list item which is currently being drawn; or a value of -1 if
-        /// no item is currently being drawn.
+        /// Gets zero-based index of list item which is currently being drawn; or
+        /// a value of -1 if no item is currently being drawn.
         /// </summary>
         public static int currentItemIndex {
             get { return ReorderableListControl.currentItemIndex; }
@@ -44,8 +45,8 @@ namespace FullInspector.Rotorz.ReorderableList {
 
             defaultListControl = new ReorderableListControl();
 
-            // Duplicate default styles to prevent user scripts from interferring with the default
-            // list control instance.
+            // Duplicate default styles to prevent user scripts from interferring
+            // with the default list control instance.
             defaultListControl.containerStyle = new GUIStyle(defaultContainerStyle);
             defaultListControl.addButtonStyle = new GUIStyle(defaultAddButtonStyle);
             defaultListControl.removeButtonStyle = new GUIStyle(defaultRemoveButtonStyle);
@@ -119,7 +120,6 @@ namespace FullInspector.Rotorz.ReorderableList {
                 active = { background = ReorderableListResources.texAddButtonActive }
             };
 
-
             defaultRemoveButtonStyle = new GUIStyle {
                 fixedWidth = 27,
                 active = {
@@ -130,9 +130,8 @@ namespace FullInspector.Rotorz.ReorderableList {
                 imagePosition = ImagePosition.ImageOnly,
                 alignment = TextAnchor.MiddleCenter
             };
-
         }
-        #endregion
+        #endregion Custom Styles
 
         private static readonly GUIContent s_Temp = new GUIContent();
 
@@ -142,10 +141,17 @@ namespace FullInspector.Rotorz.ReorderableList {
         /// Draw title control for list field.
         /// </summary>
         /// <remarks>
-        /// <para>When needed, should be shown immediately before list field.</para>
+        /// <para>
+        /// When needed, should be shown immediately before list field.
+        /// </para>
         /// </remarks>
         /// <example>
-        /// <code language="csharp"><![CDATA[ ReorderableListGUI.Title(titleContent); ReorderableListGUI.ListField(list, DynamicListGU.TextFieldItemDrawer); ]]></code> <code language="unityscript"><![CDATA[ ReorderableListGUI.Title(titleContent); ReorderableListGUI.ListField(list, DynamicListGU.TextFieldItemDrawer); ]]></code>
+        /// <code language="csharp">
+        /// <![CDATA[ ReorderableListGUI.Title(titleContent); ReorderableListGUI.ListField(list, DynamicListGU.TextFieldItemDrawer); ]]>
+        /// </code>
+        /// <code language="unityscript">
+        /// <![CDATA[ ReorderableListGUI.Title(titleContent); ReorderableListGUI.ListField(list, DynamicListGU.TextFieldItemDrawer); ]]>
+        /// </code>
         /// </example>
         /// <param name="title">Content for title control.</param>
         public static void Title(GUIContent title) {
@@ -162,10 +168,17 @@ namespace FullInspector.Rotorz.ReorderableList {
         /// Draw title control for list field.
         /// </summary>
         /// <remarks>
-        /// <para>When needed, should be shown immediately before list field.</para>
+        /// <para>
+        /// When needed, should be shown immediately before list field.
+        /// </para>
         /// </remarks>
         /// <example>
-        /// <code language="csharp"><![CDATA[ ReorderableListGUI.Title("Your Title"); ReorderableListGUI.ListField(list, DynamicListGU.TextFieldItemDrawer); ]]></code> <code language="unityscript"><![CDATA[ ReorderableListGUI.Title('Your Title'); ReorderableListGUI.ListField(list, DynamicListGU.TextFieldItemDrawer); ]]></code>
+        /// <code language="csharp">
+        /// <![CDATA[ ReorderableListGUI.Title("Your Title"); ReorderableListGUI.ListField(list, DynamicListGU.TextFieldItemDrawer); ]]>
+        /// </code>
+        /// <code language="unityscript">
+        /// <![CDATA[ ReorderableListGUI.Title('Your Title'); ReorderableListGUI.ListField(list, DynamicListGU.TextFieldItemDrawer); ]]>
+        /// </code>
         /// </example>
         /// <param name="title">Text for title control.</param>
         public static void Title(string title) {
@@ -192,7 +205,7 @@ namespace FullInspector.Rotorz.ReorderableList {
             Title(position, s_Temp);
         }
 
-        #endregion
+        #endregion Title Control
 
         #region Adaptor Control
 
@@ -200,8 +213,9 @@ namespace FullInspector.Rotorz.ReorderableList {
         /// Draw list field control for adapted collection.
         /// </summary>
         /// <param name="adaptor">Reorderable list adaptor.</param>
-        /// <param name="drawEmpty">Callback to draw custom content for empty list
-        /// (optional).</param>
+        /// <param name="drawEmpty">
+        /// Callback to draw custom content for empty list (optional).
+        /// </param>
         /// <param name="flags">Optional flags to pass into list field.</param>
         private static void DoListField(IReorderableListAdaptor adaptor, ReorderableListControl.DrawEmpty drawEmpty, ReorderableListFlags flags) {
             ReorderableListControl.DrawControlFromState(adaptor, drawEmpty, flags);
@@ -211,8 +225,9 @@ namespace FullInspector.Rotorz.ReorderableList {
         /// </summary>
         /// <param name="position">Position of control.</param>
         /// <param name="adaptor">Reorderable list adaptor.</param>
-        /// <param name="drawEmpty">Callback to draw custom content for empty list
-        /// (optional).</param>
+        /// <param name="drawEmpty">
+        /// Callback to draw custom content for empty list (optional).
+        /// </param>
         /// <param name="flags">Optional flags to pass into list field.</param>
         private static void DoListFieldAbsolute(Rect position, IReorderableListAdaptor adaptor, ReorderableListControl.DrawEmptyAbsolute drawEmpty, ReorderableListFlags flags) {
             ReorderableListControl.DrawControlFromState(position, adaptor, drawEmpty, flags);
@@ -261,7 +276,8 @@ namespace FullInspector.Rotorz.ReorderableList {
         /// <param name="flags">Optional flags to pass into list field.</param>
         /// <returns>Required list height in pixels.</returns>
         public static float CalculateListFieldHeight(IReorderableListAdaptor adaptor, ReorderableListFlags flags) {
-            // We need to push/pop flags so that nested controls are properly calculated.
+            // We need to push/pop flags so that nested controls are properly
+            // calculated.
             var restoreFlags = defaultListControl.flags;
             try {
                 defaultListControl.flags = flags;
@@ -272,15 +288,11 @@ namespace FullInspector.Rotorz.ReorderableList {
             }
         }
 
-        ///
-        ///
         /// <inheritdoc cref="CalculateListFieldHeight(IReorderableListAdaptor, ReorderableListFlags)"/>
         public static float CalculateListFieldHeight(IReorderableListAdaptor adaptor) {
             return CalculateListFieldHeight(adaptor, 0);
         }
 
-        #endregion
-
+        #endregion Adaptor Control
     }
-
 }

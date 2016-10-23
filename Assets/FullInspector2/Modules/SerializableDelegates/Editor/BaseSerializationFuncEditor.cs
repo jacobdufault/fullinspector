@@ -5,7 +5,6 @@ namespace FullInspector.Modules {
     [CustomPropertyEditor(typeof(BaseSerializedFunc), Inherit = true)]
     public class BaseSerializationFuncEditor<TSerializationFunc> : BaseSerialiationInvokableEditor<TSerializationFunc>
         where TSerializationFunc : BaseSerializedFunc, new() {
-
         protected override bool IsValidMethod(MethodInfo method) {
             var methodParameters = method.GetParameters();
 
@@ -34,6 +33,4 @@ namespace FullInspector.Modules {
             return true;
         }
     }
-
-
 }

@@ -20,4 +20,3 @@ namespace FullInspector.Samples.Other.RecursiveTypeDefinitions {
         public RecursiveType Root;
     }
 }
-

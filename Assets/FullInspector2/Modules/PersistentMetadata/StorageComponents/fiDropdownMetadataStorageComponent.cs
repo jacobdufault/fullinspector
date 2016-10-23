@@ -4,11 +4,10 @@ using UnityEngine;
 
 namespace FullInspector {
     [Serializable]
-    public class fiDropdownMetadata : IGraphMetadataItemPersistent, ISerializationCallbackReceiver
-        {
+    public class fiDropdownMetadata : IGraphMetadataItemPersistent, ISerializationCallbackReceiver {
         /// <summary>
-        /// Is the foldout currently active, ie, is the rendered item being displayed or is the
-        /// short-form foldout being displayed?
+        /// Is the foldout currently active, ie, is the rendered item being
+        /// displayed or is the short-form foldout being displayed?
         /// </summary>
         public bool IsActive {
             get {
@@ -46,8 +45,8 @@ namespace FullInspector {
         }
 
         /// <summary>
-        /// Should we render a dropdown? This will be false if the override has been set *or* if
-        /// the element is not above a certain minimum height.
+        /// Should we render a dropdown? This will be false if the override has
+        /// been set *or* if the element is not above a certain minimum height.
         /// </summary>
         public bool ShouldDisplayDropdownArrow {
             get {
@@ -64,8 +63,8 @@ namespace FullInspector {
         private bool _showDropdown;
 
         /// <summary>
-        /// Inverts the default state of the dropdown metadata, ie, collapsed is default. This
-        /// is useful for serialization.
+        /// Inverts the default state of the dropdown metadata, ie, collapsed is
+        /// default. This is useful for serialization.
         /// </summary>
         public void InvertDefaultState() {
             _invertedDefaultState = true;
@@ -86,7 +85,6 @@ namespace FullInspector {
         }
         private bool _forceDisable;
 
-
         [SerializeField]
         private bool _serializedIsActive;
         void ISerializationCallbackReceiver.OnBeforeSerialize() {
@@ -102,7 +100,6 @@ namespace FullInspector {
             return IsActive == false;
         }
     }
-
 }
 
 namespace FullInspector.Internal {
@@ -113,7 +110,8 @@ namespace FullInspector.Internal {
     public class fiDropdownMetadataStorageComponent : fiBaseStorageComponent<fiDropdownGraphMetadataSerializer> { }
 
     // To serialize the graph metadata
-    [Serializable] public class fiDropdownGraphMetadataSerializer : fiGraphMetadataSerializer<fiDropdownMetadata> { }
+    [Serializable]
+    public class fiDropdownGraphMetadataSerializer : fiGraphMetadataSerializer<fiDropdownMetadata> { }
 
     // To provide the presistent metadata system information about our types
     public class fiDropdownMetadataProvider : fiPersistentEditorStorageMetadataProvider<fiDropdownMetadata, fiDropdownGraphMetadataSerializer> { }

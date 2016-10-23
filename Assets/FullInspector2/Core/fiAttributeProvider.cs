@@ -5,7 +5,8 @@ using FullSerializer.Internal;
 
 namespace FullInspector.Internal {
     /// <summary>
-    /// Implements ICustomAttributeProvider with the given set of attribute objects.
+    /// Implements ICustomAttributeProvider with the given set of attribute
+    /// objects.
     /// </summary>
 #if !UNITY_EDITOR && UNITY_METRO
     public class fiAttributeProvider {

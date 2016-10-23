@@ -2,7 +2,6 @@
 using UnityEngine;
 
 namespace FullInspector.Samples {
-
     [CustomBehaviorEditor(typeof(ExtendedDefaultEditor))]
     public class ExtendedDefaultEditorEditor : DefaultBehaviorEditor<ExtendedDefaultEditor> {
         protected override void OnBeforeEdit(Rect rect, ExtendedDefaultEditor behavior, fiGraphMetadata metadata) {
@@ -18,7 +17,7 @@ namespace FullInspector.Samples {
             // margin
             rect.y += 3;
             rect.height -= 3;
-            
+
             EditorGUI.HelpBox(rect, "Hello, this is a custom after section", MessageType.Info);
         }
 
@@ -26,5 +25,4 @@ namespace FullInspector.Samples {
             return 30;
         }
     }
-
 }

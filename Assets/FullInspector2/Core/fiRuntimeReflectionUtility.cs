@@ -9,7 +9,8 @@ using UnityObject = UnityEngine.Object;
 
 namespace FullInspector.Internal {
     /// <summary>
-    /// Some reflection utilities that can be AOT compiled (and are therefore available at runtime).
+    /// Some reflection utilities that can be AOT compiled (and are therefore
+    /// available at runtime).
     /// </summary>
     public class fiRuntimeReflectionUtility {
         /// <summary>
@@ -17,7 +18,9 @@ namespace FullInspector.Internal {
         /// </summary>
         /// <param name="type">The type to search for the method.</param>
         /// <param name="methodName">The name of the method.</param>
-        /// <param name="parameters">The parameters to invoke the method with.</param>
+        /// <param name="parameters">
+        /// The parameters to invoke the method with.
+        /// </param>
         public static object InvokeStaticMethod(Type type, string methodName, object[] parameters) {
             try {
                 return type.GetFlattenedMethod(methodName).Invoke(null, parameters);
@@ -32,7 +35,9 @@ namespace FullInspector.Internal {
         /// <summary>
         /// Invokes the given method on the given type.
         /// </summary>
-        /// <param name="type">The type to find the method to invoke from.</param>
+        /// <param name="type">
+        /// The type to find the method to invoke from.
+        /// </param>
         /// <param name="methodName">The name of the method to invoke.</param>
         /// <param name="thisInstance">The "this" object in the method.</param>
         /// <param name="parameters">The parameters to invoke with.</param>
@@ -83,11 +88,18 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Reads the given field from the value. Note that only field reads are supported.
+        /// Reads the given field from the value. Note that only field reads are
+        /// supported.
         /// </summary>
-        /// <typeparam name="T">The type of value stored within the field that we are reading.</typeparam>
-        /// <typeparam name="TContext">The type of context we are reading the field from.</typeparam>
-        /// <param name="context">The value where we are reading the field from.</param>
+        /// <typeparam name="T">
+        /// The type of value stored within the field that we are reading.
+        /// </typeparam>
+        /// <typeparam name="TContext">
+        /// The type of context we are reading the field from.
+        /// </typeparam>
+        /// <param name="context">
+        /// The value where we are reading the field from.
+        /// </param>
         /// <param name="fieldName">The name of the field we are reading.</param>
         /// <returns>The read value, or a thrown exception on error.</returns>
         public static T ReadField<TContext, T>(TContext context, string fieldName) {
@@ -125,8 +137,9 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Returns a list of object instances from types in the assembly that implement the given
-        /// type. This only constructs objects which have default constructors.
+        /// Returns a list of object instances from types in the assembly that
+        /// implement the given type. This only constructs objects which have
+        /// default constructors.
         /// </summary>
         public static IEnumerable<TInterface> GetAssemblyInstances<TInterface>() {
             return from assembly in GetUserDefinedEditorAssemblies()
@@ -143,13 +156,15 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Returns all types that derive from UnityEngine.Object that are usable during runtime.
+        /// Returns all types that derive from UnityEngine.Object that are usable
+        /// during runtime.
         /// </summary>
         public static IEnumerable<Type> GetUnityObjectTypes() {
             return from assembly in GetRuntimeAssemblies()
 
-                   // GetExportedTypes() doesn't work for dynamic modules, so we jut use GetTypes()
-                   // instead and manually filter for public
+                       // GetExportedTypes() doesn't work for dynamic modules, so
+                       // we jut use GetTypes() instead and manually filter for
+                       // public
                    from type in assembly.GetTypesWithoutException()
                    where type.Resolve().IsVisible
 
@@ -162,7 +177,8 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Returns the equivalent of assembly.GetName().Name, which does not work on WebPlayer.
+        /// Returns the equivalent of assembly.GetName().Name, which does not
+        /// work on WebPlayer.
         /// </summary>
         private static string GetName(Assembly assembly) {
             int index = assembly.FullName.IndexOf(",");
@@ -184,15 +200,17 @@ namespace FullInspector.Internal {
                 _cachedRuntimeAssemblies =
                     (from assembly in AppDomain.CurrentDomain.GetAssemblies()
 
-                     // Unity exposes lots of assemblies that won't contain any behaviors that will
-                     // contain a MonoBehaviour or UnityObject reference... so we ignore them to speed
-                     // up reflection processing
+                         // Unity exposes lots of assemblies that won't contain
+                         // any behaviors that will contain a MonoBehaviour or
+                         // UnityObject reference... so we ignore them to speed
+                         // up reflection processing
 
                      where IsBannedAssembly(assembly) == false
                      where IsUnityEditorAssembly(assembly) == false
 
-                     // In the editor, even Assembly-CSharp, etc contain a reference to UnityEditor,
-                     // so we can't strip the assembly that way
+                     // In the editor, even Assembly-CSharp, etc contain a
+                     // reference to UnityEditor, so we can't strip the assembly
+                     // that way
                      where GetName(assembly).Contains("-Editor") == false
 
                      select assembly).ToList();
@@ -209,8 +227,9 @@ namespace FullInspector.Internal {
         private static List<Assembly> _cachedRuntimeAssemblies;
 
         /// <summary>
-        /// Returns a guess of all user-defined assemblies that are available in the editor, but not
-        /// necessarily in the runtime. This is a superset over GetRuntimeAssemblies().
+        /// Returns a guess of all user-defined assemblies that are available in
+        /// the editor, but not necessarily in the runtime. This is a superset
+        /// over GetRuntimeAssemblies().
         /// </summary>
         public static IEnumerable<Assembly> GetUserDefinedEditorAssemblies() {
 #if !UNITY_EDITOR && UNITY_METRO && !ENABLE_IL2CPP
@@ -243,8 +262,8 @@ namespace FullInspector.Internal {
         private static List<Assembly> _cachedUserDefinedEditorAssemblies;
 
         /// <summary>
-        /// Gets all possible editor assemblies, including those defined by Unity. This is a superset over
-        /// GetUserDefinedEditorAssemblies().
+        /// Gets all possible editor assemblies, including those defined by
+        /// Unity. This is a superset over GetUserDefinedEditorAssemblies().
         /// </summary>
         public static IEnumerable<Assembly> GetAllEditorAssemblies() {
 #if !UNITY_EDITOR && UNITY_METRO && !ENABLE_IL2CPP
@@ -275,7 +294,6 @@ namespace FullInspector.Internal {
         }
         private static List<Assembly> _cachedAllEditorAssembles;
 
-
         private static bool IsUnityEditorAssembly(Assembly assembly) {
             var allowableScripts = new string[] {
                 "UnityEditor",
@@ -286,8 +304,8 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Returns true if the given assembly is likely to contain user-scripts or it is a core
-        /// runtime assembly (ie, UnityEngine).
+        /// Returns true if the given assembly is likely to contain user-scripts
+        /// or it is a core runtime assembly (ie, UnityEngine).
         /// </summary>
         /// <param name="name">The unqualified name of the assembly.</param>
         private static bool IsBannedAssembly(Assembly assembly) {
@@ -368,8 +386,8 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Returns all types in the current AppDomain that derive from the given baseType and are a
-        /// class that is not an open generic type.
+        /// Returns all types in the current AppDomain that derive from the given
+        /// baseType and are a class that is not an open generic type.
         /// </summary>
         public static IEnumerable<Type> AllSimpleTypesDerivingFrom(Type baseType) {
             return from assembly in GetRuntimeAssemblies()
@@ -381,8 +399,9 @@ namespace FullInspector.Internal {
         }
 
         /// <summary>
-        /// Returns all types in the current AppDomain that derive from the given baseType, are classes,
-        /// are not generic, have a default constuctor, and are not abstract.
+        /// Returns all types in the current AppDomain that derive from the given
+        /// baseType, are classes, are not generic, have a default constuctor,
+        /// and are not abstract.
         /// </summary>
         public static IEnumerable<Type> AllSimpleCreatableTypesDerivingFrom(Type baseType) {
             return from type in AllSimpleTypesDerivingFrom(baseType)

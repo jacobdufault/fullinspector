@@ -5,7 +5,8 @@ using UnityEngine;
 
 namespace FullInspector.BackupService {
     /// <summary>
-    /// This class provides a unified API for accessing backups across scene and prefab storage.
+    /// This class provides a unified API for accessing backups across scene and
+    /// prefab storage.
     /// </summary>
     public static class fiStorageManager {
         /// <summary>
@@ -13,7 +14,8 @@ namespace FullInspector.BackupService {
         /// </summary>
         public static fiStorageComponent PersistentStorage {
             get {
-                // If we're playing, scene storage will not persist, so we *must* use prefab storage
+                // If we're playing, scene storage will not persist, so we *must*
+                // use prefab storage
                 if (Application.isPlaying) {
                     return fiPrefabManager.Storage;
                 }
@@ -33,7 +35,8 @@ namespace FullInspector.BackupService {
         }
 
         /// <summary>
-        /// Removes backups that are no longer valid (their target got destroyed, etc).
+        /// Removes backups that are no longer valid (their target got destroyed,
+        /// etc).
         /// </summary>
         public static void RemoveInvalidBackups() {
             fiSceneManager.Storage.RemoveInvalidBackups();
@@ -44,7 +47,8 @@ namespace FullInspector.BackupService {
         /// Attempts to migrate prefab storage into scene storage.
         /// </summary>
         public static void MigrateStorage() {
-            // We cannot migrate data while playing -- scene storage will not be persisted.
+            // We cannot migrate data while playing -- scene storage will not be
+            // persisted.
             if (Application.isPlaying) {
                 return;
             }
@@ -59,13 +63,15 @@ namespace FullInspector.BackupService {
             while (i < fiPrefabManager.Storage.Objects.Count) {
                 fiSerializedObject obj = fiPrefabManager.Storage.Objects[i];
 
-                // If the target object is persistent (ie, not from the scene or a temporary object),
-                // then we want to keep it in the prefab storage.
+                // If the target object is persistent (ie, not from the scene or
+                // a temporary object), then we want to keep it in the prefab
+                // storage.
                 if (AssetDatabase.Contains(obj.Target.Target)) {
                     ++i;
                 }
 
-                // This appears to be a scene object, so migrate it to scene storage.
+                // This appears to be a scene object, so migrate it to scene
+                // storage.
                 else {
                     fiSceneManager.Storage.Objects.Add(obj);
                     fiPrefabManager.Storage.Objects.RemoveAt(i);
@@ -78,8 +84,9 @@ namespace FullInspector.BackupService {
         /// Returns true if there is a backup for the given behavior.
         /// </summary>
         public static bool HasBackups(CommonBaseBehavior behavior) {
-            // TODO: Maybe this should be triggering? If a user reports a bug about having
-            //       backups not work then this is probably the cause...
+            // TODO: Maybe this should be triggering? If a user reports a bug
+            //       about having backups not work then this is probably the
+            //       cause...
             if (fiSceneManager.Storage == null || fiPrefabManager.Storage == null)
                 return false;
 
