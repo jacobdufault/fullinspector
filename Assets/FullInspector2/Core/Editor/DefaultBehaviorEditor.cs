@@ -13,7 +13,7 @@ namespace FullInspector {
         }
 
         protected override void OnEdit(Rect rect, UnityObject behavior, fiGraphMetadata metadata) {
-            fiGraphMetadataChild childMetadata = metadata.Enter("DefaultBehaviorEditor");
+            fiGraphMetadataChild childMetadata = metadata.Enter("DefaultBehaviorEditor", null);
             childMetadata.Metadata.GetPersistentMetadata<fiDropdownMetadata>().ForceDisable();
 
             // We don't want to get the IObjectPropertyEditor for the given target, which extends
@@ -30,7 +30,7 @@ namespace FullInspector {
         }
 
         protected override float OnGetHeight(UnityObject behavior, fiGraphMetadata metadata) {
-            fiGraphMetadataChild childMetadata = metadata.Enter("DefaultBehaviorEditor");
+            fiGraphMetadataChild childMetadata = metadata.Enter("DefaultBehaviorEditor", null);
             childMetadata.Metadata.GetPersistentMetadata<fiDropdownMetadata>().ForceDisable();
 
             float height = 0;

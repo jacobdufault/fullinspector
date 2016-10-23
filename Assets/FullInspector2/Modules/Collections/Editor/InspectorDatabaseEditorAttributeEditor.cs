@@ -240,7 +240,7 @@ namespace FullInspector.Modules {
 
             TryEnsureValidIndex(context);
 
-            return metadata.Enter(databaseMetadata.CurrentIndex).Metadata;
+            return metadata.Enter(databaseMetadata.CurrentIndex, context.editedList).Metadata;
         }
 
         protected override IList<T> Edit(Rect region, GUIContent label, IList<T> list, InspectorDatabaseEditorAttribute attribute, fiGraphMetadata metadata) {

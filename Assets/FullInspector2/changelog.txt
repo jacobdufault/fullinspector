@@ -1,6 +1,8 @@
 For v2.6.4
 
 New:
+- Added context state to property editors, which allows a property editor to fetch the parent object. This allows attribute editors to make behavior changes based on the instance that hosts the variable they are editing. See [InspectorDisabledIf] for an example implementation.
+- Added [InspectorDisabledIf], similar to [InspectorShowIf] and [InspectorHideIf].
 - [InspectorShowIf] and [InspectorHideIf] now support multiple fields/properties.
 - Decreased initialization time with some reflection optimizations.
 - Added Lines helper to [InspectorTextArea].
@@ -382,14 +384,14 @@ For v2.0 (3/13/2014)
 - You no longer have to annotate your BaseBehavior derived type. In BaseBehaviors, public fields / properties are serialized by default. You can also serialize private fields by annotating them with [SerializeField]. - Fields / properties will not be serialized if they are annotated with [NonSerialized] or [NotSerialized].
 - A (beta) BinaryFormatter serializer has been added
 - An experimental EasySave2 serializer has been added
-- Full Inspector now resides inside a “FullInspector2” folder due to a directory reorganization. Please make sure to delete your “FullInspector” directory if upgrading.
+- Full Inspector now resides inside a ï¿½FullInspector2ï¿½ folder due to a directory reorganization. Please make sure to delete your ï¿½FullInspectorï¿½ directory if upgrading.
 - Added a setting to disable automatic display of public properties in the inspector (fiSettings.InspectorAutomaticallyShowPublicPropertie)
 - Added a setting to automatically restore all assets on recompilation (fiSettings.ForceRestoreAllAssetsOnRecompilation)
 - Json.NET compatibility fixes for Json.NET from the Asset Store.
 - Better prefab revert support
 - (beta) protobuf-net one-click precompilation support
 - Namespace changes, most things moved into FullInspector.Internal
-- Foldouts are no longer displayed for structs – sorry! Hopefully this will get reenabled in the future, but it the current solution doesn’t support it.
+- Foldouts are no longer displayed for structs ï¿½ sorry! Hopefully this will get reenabled in the future, but it the current solution doesnï¿½t support it.
 - SaveState now marks an object as dirty if running in the editor
 - The samples have been redesigned and sample scenes are now included.
 

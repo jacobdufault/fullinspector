@@ -218,7 +218,7 @@ namespace FullInspector.Internal {
             ReorderableListGUI.ListFieldAbsolute(bodyRect, adaptor, DrawEmpty, _listFlags);
 
             // draw the next key
-            metadata.Enter("NextValue").Metadata.GetPersistentMetadata<fiDropdownMetadata>().ForceDisable();
+            metadata.Enter("NextValue", null).Metadata.GetPersistentMetadata<fiDropdownMetadata>().ForceDisable();
 
             if (DisplayAddItemPreview) {
                 var addButtonStyle = ReorderableListGUI.defaultAddButtonStyleFlipped;
@@ -233,7 +233,7 @@ namespace FullInspector.Internal {
                 EnsureValidAddItem(ref _addItem);
                 fiEditorGUI.PushHierarchyMode(false);
                 _addItem = _addItemEditor.FirstEditor.Edit(addItemItemRect, GUIContent.none, _addItem,
-                    metadata.Enter("NextValue"));
+                    metadata.Enter("NextValue", null));
                 fiEditorGUI.PopHierarchyMode();
             }
 
@@ -611,7 +611,7 @@ namespace FullInspector.Internal {
             EnsureValidAddItem(ref _addItem);
 
             int buttonHeight = (int)ReorderableListGUI.defaultAddButtonStyle.fixedHeight;
-            float itemHeight = _addItemEditor.FirstEditor.GetElementHeight(GUIContent.none, _addItem, metadata.Enter("NextValue"));
+            float itemHeight = _addItemEditor.FirstEditor.GetElementHeight(GUIContent.none, _addItem, metadata.Enter("NextValue", null));
 
             return Math.Max(buttonHeight, itemHeight);
         }

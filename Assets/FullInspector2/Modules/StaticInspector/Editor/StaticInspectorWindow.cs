@@ -57,7 +57,7 @@ namespace FullInspector.Modules {
                     var label = new GUIContent("Inspected Type");
                     var typeEditor = PropertyEditor.Get(typeof(Type), null);
 
-                    updatedType = typeEditor.FirstEditor.EditWithGUILayout(label, _inspectedType, Metadata.Enter("TypeSelector"));
+                    updatedType = typeEditor.FirstEditor.EditWithGUILayout(label, _inspectedType, Metadata.Enter("TypeSelector", null));
                 }
 
                 fiEditorGUILayout.Splitter(2);
@@ -78,7 +78,7 @@ namespace FullInspector.Modules {
                         EditorGUILayout.BeginVertical();
 
                         GUI.enabled = staticProperty.CanWrite;
-                        object updatedValue = editor.EditWithGUILayout(label, currentValue, Metadata.Enter(staticProperty.Name));
+                        object updatedValue = editor.EditWithGUILayout(label, currentValue, Metadata.Enter(staticProperty.Name, null));
                         if (staticProperty.CanWrite) {
                             staticProperty.Write(null, updatedValue);
                         }

@@ -153,7 +153,7 @@ namespace FullInspector.Internal {
 
             // edit the property
             {
-                var childMetadata = metadata.Enter(property.Name);
+                var childMetadata = metadata.Enter(property.Name, element);
                 fiGraphMetadataCallbacks.PropertyMetadataCallback(childMetadata.Metadata, property);
 
                 Rect propertyRect = region;
@@ -201,27 +201,11 @@ namespace FullInspector.Internal {
             }
 
             if (showIf != null) {
-                bool finalValue = fiLogicalOperatorSupport.GetInitialValue(showIf.Operator);
-
-                for (int i = 0; i < showIf.ConditionalMemberNames.Length; ++i) {
-                    string memberName = showIf.ConditionalMemberNames[i];
-                    bool result = fiReflectionUtility.GetBooleanReflectedMember(element.GetType(), element, memberName, /*defaultValue:*/true);
-                    finalValue = fiLogicalOperatorSupport.Combine(showIf.Operator, finalValue, result);
-                }
-
-                return finalValue;
+                return fiLogicalOperatorSupport.ComputeValue(showIf.Operator, showIf.ConditionalMemberNames, element);
             }
 
             if (hideIf != null) {
-                bool finalValue = fiLogicalOperatorSupport.GetInitialValue(hideIf.Operator);
-
-                for (int i = 0; i < hideIf.ConditionalMemberNames.Length; ++i) {
-                    string memberName = hideIf.ConditionalMemberNames[i];
-                    bool result = fiReflectionUtility.GetBooleanReflectedMember(element.GetType(), element, memberName, /*defaultValue:*/true);
-                    finalValue = fiLogicalOperatorSupport.Combine(hideIf.Operator, finalValue, result);
-                }
-
-                return !finalValue;
+                return !fiLogicalOperatorSupport.ComputeValue(hideIf.Operator, hideIf.ConditionalMemberNames, element);
             }
 
             return true;
@@ -279,7 +263,7 @@ namespace FullInspector.Internal {
 
                 // Make sure we don't prune metadata
                 foreach (var member in _metadata.GetMembers(InspectedMemberFilters.InspectableMembers)) {
-                    metadata.Enter(member.Name);
+                    metadata.Enter(member.Name, element);
                 }
             }
 
@@ -402,7 +386,7 @@ namespace FullInspector.Internal {
                             continue;
                         }
 
-                        var childMetadata = metadata.Enter(member.Name);
+                        var childMetadata = metadata.Enter(member.Name, element);
 
                         if (member.IsMethod) {
                             height += ButtonHeight;

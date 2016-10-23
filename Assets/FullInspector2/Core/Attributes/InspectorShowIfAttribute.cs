@@ -1,6 +1,8 @@
 ﻿using System;
 
 namespace FullInspector {
+    // TODO: Pull these attributes out of Core.
+
     /// <summary>
     /// This allows a member to be conditionally hidden in the inspector depending upon the
     /// state of other variables in object. This does *not* change serialization behavior,

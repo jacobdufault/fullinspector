@@ -41,18 +41,18 @@ namespace FullInspector.Modules {
             Rect keyRect, valueRect;
             SplitRect(region, /*percentage:*/ _widthPercentage, /*margin:*/ 5, out keyRect, out valueRect);
 
-            keyRect.height = _keyEditor.FirstEditor.GetElementHeight(label, element.Key, metadata.Enter("Key"));
-            valueRect.height = _valueEditor.FirstEditor.GetElementHeight(GUIContent.none, element.Value, metadata.Enter("Value"));
+            keyRect.height = _keyEditor.FirstEditor.GetElementHeight(label, element.Key, metadata.Enter("Key", element));
+            valueRect.height = _valueEditor.FirstEditor.GetElementHeight(GUIContent.none, element.Value, metadata.Enter("Value", element));
 
-            var newKey = _keyEditor.FirstEditor.Edit(keyRect, label, element.Key, metadata.Enter("Key"));
-            var newValue = _valueEditor.FirstEditor.Edit(valueRect, GUIContent.none, element.Value, metadata.Enter("Value"));
+            var newKey = _keyEditor.FirstEditor.Edit(keyRect, label, element.Key, metadata.Enter("Key", element));
+            var newValue = _valueEditor.FirstEditor.Edit(valueRect, GUIContent.none, element.Value, metadata.Enter("Value", element));
 
             return new KeyValuePair<TKey, TValue>(newKey, newValue);
         }
 
         public override float GetElementHeight(GUIContent label, KeyValuePair<TKey, TValue> element, fiGraphMetadata metadata) {
-            float keyHeight = _keyEditor.FirstEditor.GetElementHeight(label, element.Key, metadata.Enter("Key"));
-            float valueHeight = _valueEditor.FirstEditor.GetElementHeight(GUIContent.none, element.Value, metadata.Enter("Value"));
+            float keyHeight = _keyEditor.FirstEditor.GetElementHeight(label, element.Key, metadata.Enter("Key", element));
+            float valueHeight = _valueEditor.FirstEditor.GetElementHeight(GUIContent.none, element.Value, metadata.Enter("Value", element));
 
             return Math.Max(keyHeight, valueHeight);
         }

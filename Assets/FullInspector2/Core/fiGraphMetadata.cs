@@ -155,6 +155,9 @@ namespace FullInspector {
         /// Reference to parent data, for access via GetInheritedMetadata
         /// </summary>
         private fiGraphMetadata _parentMetadata;
+        public fiGraphMetadata Parent {
+            get { return _parentMetadata; }
+        }
 
         private fiUnityObjectReference _targetObject;
         private UnityObject TargetObject {
@@ -164,6 +167,18 @@ namespace FullInspector {
                 return null;
             }
         }
+
+        /// <summary>
+        /// The metadata context is simply the parent object which generated
+        /// this metadata. For example, if there is a struct |S| with members
+        /// |a|, |b|, |c|, then the context for the metadata on |a|, |b|, and
+        /// |c| is the instance of |S| that owns them.
+        /// 
+        /// Context can be gathered recursively by examining the |Parent|
+        /// metadata instance.
+        /// </summary>
+        public object Context;
+
 
         private string _accessPath;
         public string Path {
@@ -293,13 +308,14 @@ namespace FullInspector {
         /// Get a child metadata instance for the given identifier. This is useful for collections
         /// where each item maps to a unique index.
         /// </summary>
-        public fiGraphMetadataChild Enter(int childIdentifier) {
+        public fiGraphMetadataChild Enter(int childIdentifier, object context) {
             fiGraphMetadata metadata;
 
             if (_childrenInt.TryGetValue(childIdentifier, out metadata) == false) {
                 metadata = new fiGraphMetadata(this, childIdentifier.ToString());
                 _childrenInt[childIdentifier] = metadata;
             }
+            metadata.Context = context;
 
             return new fiGraphMetadataChild { Metadata = metadata };
         }
@@ -308,15 +324,20 @@ namespace FullInspector {
         /// Get a child metadata instance for the given identifier. This is useful for general
         /// classes and structs where an object has a set of discrete named fields or properties.
         /// </summary>
-        public fiGraphMetadataChild Enter(string childIdentifier) {
+        public fiGraphMetadataChild Enter(string childIdentifier, object context) {
             fiGraphMetadata metadata;
 
             if (_childrenString.TryGetValue(childIdentifier, out metadata) == false) {
                 metadata = new fiGraphMetadata(this, childIdentifier);
                 _childrenString[childIdentifier] = metadata;
             }
+            metadata.Context = context;
 
             return new fiGraphMetadataChild { Metadata = metadata };
+        }
+
+        public fiGraphMetadataChild NoOp() {
+            return new fiGraphMetadataChild { Metadata = this };
         }
 
         public T GetPersistentMetadata<T>()

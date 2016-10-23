@@ -171,7 +171,7 @@ namespace FullInspector {
 
                 object propertyValue = DeserializeProperty(serializer, deserializationOp, property, element);
 
-                float height = fiEditorGUI.EditPropertyHeightDirect(property, propertyValue, metadata.Enter(property.Name));
+                float height = fiEditorGUI.EditPropertyHeightDirect(property, propertyValue, metadata.Enter(property.Name, element));
 
                 Rect propertyRect = region;
                 propertyRect.height = height;
@@ -180,7 +180,7 @@ namespace FullInspector {
 
                 usedHeight += height + SplitterHeight;
 
-                object updatedValue = fiEditorGUI.EditPropertyDirect(propertyRect, property, propertyValue, metadata.Enter(property.Name));
+                object updatedValue = fiEditorGUI.EditPropertyDirect(propertyRect, property, propertyValue, metadata.Enter(property.Name, element));
 
                 string data;
                 if (TrySerializeProperty(serializer, serializationOp, property, updatedValue, out data)) {
@@ -233,7 +233,7 @@ namespace FullInspector {
 
                 object propertyValue = DeserializeProperty(serializer, deserializationOp, property, element);
 
-                height += fiEditorGUI.EditPropertyHeightDirect(property, propertyValue, metadata.Enter(property.Name));
+                height += fiEditorGUI.EditPropertyHeightDirect(property, propertyValue, metadata.Enter(property.Name, element));
                 height += SplitterHeight;
             }
 

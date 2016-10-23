@@ -107,7 +107,7 @@ namespace FullInspector.Internal {
         public void OnGUI() {
             PropertyEditor.Get(_resources.GetType(), null)
                 .FirstEditor
-                .EditWithGUILayout(new GUIContent("Resources"), _resources, _metadata.Enter("Resources"));
+                .EditWithGUILayout(new GUIContent("Resources"), _resources, _metadata.Enter("Resources", null));
 
             if (GUILayout.Button("Write To Disk")) {
                 const string outputPath = "Assets/FullInspector2/Modules/EditorImagesManager/Editor/fiEditorImages.cs";

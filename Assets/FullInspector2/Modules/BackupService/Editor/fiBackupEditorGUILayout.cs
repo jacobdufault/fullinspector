@@ -88,7 +88,7 @@ namespace FullInspector.BackupService {
 
                 string label = member.InspectedProperty.DisplayName;
                 if (member.ShouldRestore.Enabled) {
-                    editor.FirstEditor.EditWithGUILayout(new GUIContent(label), member.Value, metadata.Enter(label));
+                    editor.FirstEditor.EditWithGUILayout(new GUIContent(label), member.Value, metadata.Enter(label, null));
                 }
                 else {
                     GUILayout.Label(new GUIContent(label + " (will not restore)"));

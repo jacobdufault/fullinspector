@@ -176,7 +176,7 @@ namespace FullInspector.Internal {
         }
 
         public static fiGraphMetadataChild GetMetadata(SerializedProperty property) {
-            return fiPersistentMetadata.GetMetadataFor(property.serializedObject.targetObject).Enter(property.propertyPath);
+            return fiPersistentMetadata.GetMetadataFor(property.serializedObject.targetObject).Enter(property.propertyPath, null);
         }
     }
 }

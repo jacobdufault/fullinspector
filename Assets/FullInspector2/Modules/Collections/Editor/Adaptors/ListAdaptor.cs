@@ -53,7 +53,7 @@ namespace FullInspector.Internal {
             // shift metadata forwards
             for (int i = List.Count - 1; i > index; --i) {
                 List[i] = List[i - 1];
-                _metadata.SetChild(i, _metadata.Enter(i - 1).Metadata);
+                _metadata.SetChild(i, _metadata.Enter(i - 1, List).Metadata);
             }
 
             // update the reference at index
@@ -69,7 +69,7 @@ namespace FullInspector.Internal {
         public void Remove(int index) {
             // shift elements back
             for (int i = index; i < List.Count - 1; ++i) {
-                _metadata.SetChild(i, _metadata.Enter(i + 1).Metadata);
+                _metadata.SetChild(i, _metadata.Enter(i + 1, List).Metadata);
             }
             List.RemoveAt(index);
         }
@@ -78,8 +78,8 @@ namespace FullInspector.Internal {
                 --destIndex;
 
             // Swap the metadata.
-            var srcMetadata = _metadata.Enter(srcIndex).Metadata;
-            var destMetadata = _metadata.Enter(destIndex).Metadata;
+            var srcMetadata = _metadata.Enter(srcIndex, List).Metadata;
+            var destMetadata = _metadata.Enter(destIndex, List).Metadata;
             _metadata.SetChild(srcIndex, destMetadata);
             _metadata.SetChild(destIndex, srcMetadata);
 
@@ -100,7 +100,7 @@ namespace FullInspector.Internal {
                 return;
             }
 
-            var metadata = _metadata.Enter(index);
+            var metadata = _metadata.Enter(index, List);
             fiGraphMetadataCallbacks.ListMetadataCallback(metadata.Metadata, fiGraphMetadataCallbacks.Cast(List), index);
 
             var updatedItem = _itemDrawer(position, List[index], metadata);
@@ -112,7 +112,7 @@ namespace FullInspector.Internal {
             }
         }
         public virtual float GetItemHeight(int index) {
-            var metadata = _metadata.Enter(index);
+            var metadata = _metadata.Enter(index, List);
             fiGraphMetadataCallbacks.ListMetadataCallback(metadata.Metadata, fiGraphMetadataCallbacks.Cast(List), index);
             return _itemHeight(List[index], metadata);
         }

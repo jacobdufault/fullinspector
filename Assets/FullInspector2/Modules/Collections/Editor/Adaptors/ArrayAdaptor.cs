@@ -51,7 +51,7 @@ namespace FullInspector.Internal {
             // shift elements forwards
             for (int i = _array.Length - 1; i > index; --i) {
                 _array[i] = _array[i - 1];
-                _metadata.SetChild(i, _metadata.Enter(i - 1).Metadata);
+                _metadata.SetChild(i, _metadata.Enter(i - 1, _array).Metadata);
             }
 
             // update the reference at index
@@ -68,7 +68,7 @@ namespace FullInspector.Internal {
         public void Remove(int index) {
             for (int i = index; i < _array.Length - 1; ++i) {
                 _array[i] = _array[i + 1];
-                _metadata.SetChild(i, _metadata.Enter(i + 1).Metadata);
+                _metadata.SetChild(i, _metadata.Enter(i + 1, _array).Metadata);
             }
             Array.Resize(ref _array, _array.Length - 1);
         }
@@ -78,7 +78,7 @@ namespace FullInspector.Internal {
                 --destIndex;
 
             T item = _array[sourceIndex];
-            fiGraphMetadata itemMetadata = _metadata.Enter(sourceIndex).Metadata;
+            fiGraphMetadata itemMetadata = _metadata.Enter(sourceIndex, _array).Metadata;
 
             Remove(sourceIndex);
             Insert(destIndex);
@@ -97,13 +97,13 @@ namespace FullInspector.Internal {
                 return;
             }
 
-            var metadata = _metadata.Enter(index);
+            var metadata = _metadata.Enter(index, _array);
             fiGraphMetadataCallbacks.ListMetadataCallback(metadata.Metadata, _array, index);
             _array[index] = _itemDrawer(position, _array[index], metadata);
         }
 
         public virtual float GetItemHeight(int index) {
-            var metadata = _metadata.Enter(index);
+            var metadata = _metadata.Enter(index, _array);
             fiGraphMetadataCallbacks.ListMetadataCallback(metadata.Metadata, _array, index);
             return _itemHeight(_array[index], metadata);
         }

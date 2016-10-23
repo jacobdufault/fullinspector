@@ -14,7 +14,7 @@ namespace FullInspector.Tests {
 
             IPropertyEditor editor = PropertyEditor.Get(typeof(T), null).FirstEditor;
 
-            var height = editor.GetElementHeight(label, obj, metadata.Enter("Root"));
+            var height = editor.GetElementHeight(label, obj, metadata.Enter("Root", metadata.Context));
             Rect rect = new Rect(0, 0, 500, height);
 
             var serializedObj = obj as ISerializationCallbackReceiver;
@@ -23,7 +23,7 @@ namespace FullInspector.Tests {
                 serializedObj.OnAfterDeserialize();
             }
 
-            obj = editor.Edit(rect, label, obj, metadata.Enter("Root"));
+            obj = editor.Edit(rect, label, obj, metadata.Enter("Root", metadata.Context));
 
             if (serializedObj != null)
                 serializedObj.OnBeforeSerialize();

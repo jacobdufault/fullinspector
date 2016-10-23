@@ -225,7 +225,7 @@ namespace FullInspector.Internal {
             Rect tweakerRect = rect;
 
             if (control.Debug) {
-                float tweakerRectHeight = tkControl_PropertyEditor.FirstEditor.GetElementHeight(tkControl_DebugControl_Label, control, metadata.Enter(tkControl_Metadata_DebugControl));
+                float tweakerRectHeight = tkControl_PropertyEditor.FirstEditor.GetElementHeight(tkControl_DebugControl_Label, control, metadata.Enter(tkControl_Metadata_DebugControl, null));
 
                 layoutRect.height -= tkControl_MarginBeforeHelp + tkControl_HelpRectHeight +
                                      fiLateBindings.EditorGUIUtility.standardVerticalSpacing + tweakerRectHeight;
@@ -240,11 +240,11 @@ namespace FullInspector.Internal {
             }
 
             SetupContext(control, label);
-            element = control.Control.Edit(layoutRect, element, control.Context, metadata.Enter(tkControl_Metadata_Layout).Metadata);
+            element = control.Control.Edit(layoutRect, element, control.Context, metadata.Enter(tkControl_Metadata_Layout, metadata.Context).Metadata);
 
             if (control.Debug) {
                 EditorGUI.HelpBox(helpRect, "The layout below should be used for visualizing the runtime layout structure or for tweaking layout values like minimum width. Changes will *not* persist - you need to modify the code itself.", MessageType.Info);
-                tkControl_PropertyEditor.FirstEditor.Edit(tweakerRect, tkControl_DebugControl_Label, control, metadata.Enter(tkControl_Metadata_DebugControl));
+                tkControl_PropertyEditor.FirstEditor.Edit(tweakerRect, tkControl_DebugControl_Label, control, metadata.Enter(tkControl_Metadata_DebugControl, null));
             }
 
             return element;
@@ -262,13 +262,13 @@ namespace FullInspector.Internal {
             fiLateBindingsBinder.EnsureLoaded();
 
             SetupContext(control, label);
-            var height = control.Control.GetHeight(element, control.Context, metadata.Enter(tkControl_Metadata_Layout).Metadata);
+            var height = control.Control.GetHeight(element, control.Context, metadata.Enter(tkControl_Metadata_Layout, metadata.Context).Metadata);
 
             if (control.Debug) {
                 height += tkControl_MarginBeforeHelp;
                 height += tkControl_HelpRectHeight;
                 height += fiLateBindings.EditorGUIUtility.standardVerticalSpacing;
-                height += tkControl_PropertyEditor.FirstEditor.GetElementHeight(tkControl_DebugControl_Label, control, metadata.Enter(tkControl_Metadata_DebugControl));
+                height += tkControl_PropertyEditor.FirstEditor.GetElementHeight(tkControl_DebugControl_Label, control, metadata.Enter(tkControl_Metadata_DebugControl, null));
             }
 
             return height;
@@ -332,7 +332,7 @@ namespace FullInspector.Internal {
             IPropertyEditor editor = editorChain.FirstEditor;
 
             EditorGUI.BeginDisabledGroup(property.CanWrite == false);
-            propertyValue = editor.Edit(region, label, propertyValue, metadata.Enter("EditProperty"));
+            propertyValue = editor.Edit(region, label, propertyValue, metadata.Enter("EditProperty", metadata.Context));
             EditorGUI.EndDisabledGroup();
 
             return propertyValue;
@@ -363,7 +363,7 @@ namespace FullInspector.Internal {
 
             // Either the foldout is active or we are not displaying a foldout. Either way, we want
             // to report the full height of the property.
-            return editor.GetElementHeight(propertyLabel, propertyValue, metadata.Enter("EditProperty"));
+            return editor.GetElementHeight(propertyLabel, propertyValue, metadata.Enter("EditProperty", metadata.Context));
         }
 
         public static float EditPropertyHeight(object container, InspectedProperty property, fiGraphMetadataChild metadata) {

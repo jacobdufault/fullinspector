@@ -6,12 +6,11 @@ namespace FullInspector {
     /// this is not compatible with other attribute editors.
     /// </summary>
     // TODO: rename to [InspectorReadOnly]
-    // TODO: implement this inside of the core so we can support multiple attribute editors
+    // TODO: Find a way to support multiple primary attribute editors.
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class InspectorDisabledAttribute : Attribute {
     }
 
-#if false
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public class InspectorDisabledIfAttribute : Attribute {
         /// <summary>
@@ -23,9 +22,21 @@ namespace FullInspector {
             set { ConditionalMemberNames = new[] { value }; }
         }
 
-        // TODO
+        /// <summary>
+        /// A sequence of named boolean values to fetch from the object
+        /// instance. Each condition is combined using |Operator|.
+        /// </summary>
         public string[] ConditionalMemberNames;
+
+        /// <summary>
+        /// How |ConditionalMemberNames| should be combined into one value.
+        /// </summary>
         public fiLogicalOperator Operator;
+
+        public InspectorDisabledIfAttribute(fiLogicalOperator op, params string[] memberNames) {
+            Operator = op;
+            ConditionalMemberNames = memberNames;
+        }
 
         /// <summary>
         /// This allows a member to be conditionally hidden in the inspector depending upon the
@@ -40,5 +51,4 @@ namespace FullInspector {
             ConditionalMemberName = conditionalMemberName;
         }
     }
-#endif
 }

@@ -35,7 +35,7 @@ namespace FullInspector.Internal {
         }
 
         public object Edit(Rect region, GUIContent label, object element, fiGraphMetadata metadata) {
-            metadata.Enter("AbstractTypeEditor").Metadata.GetPersistentMetadata<fiDropdownMetadata>().ForceDisable();
+            metadata.Enter("AbstractTypeEditor", metadata.Context).Metadata.GetPersistentMetadata<fiDropdownMetadata>().ForceDisable();
 
             try {
                 fiEditorGUI.AnimatedBegin(ref region, metadata);
@@ -78,7 +78,7 @@ namespace FullInspector.Internal {
                     PropertyEditorChain chain = PropertyEditor.Get(element.GetType(), null);
                     IPropertyEditor editor = chain.SkipUntilNot(typeof(AbstractTypePropertyEditor));
 
-                    return editor.Edit(selectedRegion, GUIContent.none, element, metadata.Enter("AbstractTypeEditor"));
+                    return editor.Edit(selectedRegion, GUIContent.none, element, metadata.Enter("AbstractTypeEditor", metadata.Context));
                 }
             }
             finally {
@@ -95,7 +95,7 @@ namespace FullInspector.Internal {
                 PropertyEditorChain chain = PropertyEditor.Get(element.GetType(), null);
                 IPropertyEditor editor = chain.SkipUntilNot(typeof(AbstractTypePropertyEditor));
 
-                height += editor.GetElementHeight(GUIContent.none, element, metadata.Enter("AbstractTypeEditor"));
+                height += editor.GetElementHeight(GUIContent.none, element, metadata.Enter("AbstractTypeEditor", metadata.Context));
             }
 
             var abstractTypeMetadata = metadata.GetMetadata<AbstractTypeAnimationMetadata>();

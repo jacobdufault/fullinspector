@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using FullSerializer;
 using FullSerializer.Internal;
+using UnityEngine;
 using UnityObject = UnityEngine.Object;
 
 namespace FullInspector.Internal {
@@ -40,6 +41,45 @@ namespace FullInspector.Internal {
                 type.GetFlattenedMethod(methodName).Invoke(thisInstance, parameters);
             }
             catch { }
+        }
+
+        /// <summary>
+        /// Returns the value of a boolean, field, or property.
+        /// </summary>
+        public static bool GetBooleanReflectedMember(Type elementType, object element, string memberName, bool defaultValue) {
+            MemberInfo[] members = elementType.GetFlattenedMember(memberName);
+            if (members == null || members.Length == 0) {
+                Debug.LogError("Could not find a member with name " + memberName + " on object type " + elementType);
+                return true;
+            }
+
+            MemberInfo member = members[0];
+
+            object result = defaultValue;
+
+            try {
+                if (member is FieldInfo) {
+                    result = ((FieldInfo)member).GetValue(element);
+                }
+                else if (member is PropertyInfo) {
+                    result = ((PropertyInfo)member).GetValue(element, null);
+                }
+                else if (member is MethodInfo) {
+                    result = ((MethodInfo)member).Invoke(element, null);
+                }
+            }
+            catch (Exception e) {
+                Debug.LogError("When running " + member.ReflectedType + "::" + member.Name + ", caught exception " + e);
+                Debug.LogException(e);
+                result = defaultValue;
+            }
+
+            if (result.GetType() != typeof(bool)) {
+                Debug.LogError(member.ReflectedType + "::" + member.Name + " needs to return a bool to be used with [InspectorDisplayIf]");
+                result = defaultValue;
+            }
+
+            return (bool)result;
         }
 
         /// <summary>

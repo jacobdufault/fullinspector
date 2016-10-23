@@ -10,11 +10,11 @@ namespace FullInspector.Modules {
         where TSerializer : BaseSerializer {
 
         protected override void OnEdit(Rect rect, SharedInstance<T, TSerializer> behavior, fiGraphMetadata metadata) {
-            behavior.Instance = PropertyEditor.Get(typeof(T), null).FirstEditor.Edit(rect, GUIContent.none, behavior.Instance, metadata.Enter("Instance"));
+            behavior.Instance = PropertyEditor.Get(typeof(T), null).FirstEditor.Edit(rect, GUIContent.none, behavior.Instance, metadata.Enter("Instance", behavior));
         }
 
         protected override float OnGetHeight(SharedInstance<T, TSerializer> behavior, fiGraphMetadata metadata) {
-            return PropertyEditor.Get(typeof(T), null).FirstEditor.GetElementHeight(GUIContent.none, behavior.Instance, metadata.Enter("Instance"));
+            return PropertyEditor.Get(typeof(T), null).FirstEditor.GetElementHeight(GUIContent.none, behavior.Instance, metadata.Enter("Instance", behavior));
         }
 
         protected override void OnSceneGUI(SharedInstance<T, TSerializer> behavior) {
@@ -78,7 +78,7 @@ namespace FullInspector.Modules {
 
                 fiEditorGUI.PushHierarchyMode(false);
                 // Use the standard object property editor
-                element = EditorChain.GetNextEditor(this).Edit(objectRect, GUIContent.none, element, metadata.Enter("ObjectReference"));
+                element = EditorChain.GetNextEditor(this).Edit(objectRect, GUIContent.none, element, metadata.Enter("ObjectReference", metadata.Context));
                 fiEditorGUI.PopHierarchyMode();
             }
             else {
@@ -106,7 +106,7 @@ namespace FullInspector.Modules {
 
 
             TryEnsureScript();
-            return EditorChain.GetNextEditor(this).GetElementHeight(label, element, metadata.Enter("ObjectReference"));
+            return EditorChain.GetNextEditor(this).GetElementHeight(label, element, metadata.Enter("ObjectReference", metadata.Context));
         }
     }
 }

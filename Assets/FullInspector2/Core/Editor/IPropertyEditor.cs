@@ -100,11 +100,11 @@ namespace FullInspector {
         #region Virtual Methods
         public virtual TElement Edit(Rect region, GUIContent label, TElement element, fiGraphMetadata metadata) {
             var nextEditor = EditorChain.GetNextEditor(this);
-            return PropertyEditorExtensions.Edit(nextEditor, region, label, element, metadata.Enter("IPropertyEditor"));
+            return PropertyEditorExtensions.Edit(nextEditor, region, label, element, metadata.Enter("IPropertyEditor", metadata.Context));
         }
         public virtual float GetElementHeight(GUIContent label, TElement element, fiGraphMetadata metadata) {
             var nextEditor = EditorChain.GetNextEditor(this);
-            return PropertyEditorExtensions.GetElementHeight(nextEditor, label, element, metadata.Enter("IPropertyEditor"));
+            return PropertyEditorExtensions.GetElementHeight(nextEditor, label, element, metadata.Enter("IPropertyEditor", metadata.Context));
         }
         public virtual TElement OnSceneGUI(TElement element) {
             return element;

@@ -59,7 +59,7 @@ namespace FullInspector {
         /// for each object.
         /// </summary>
         protected fiGraphMetadata GetInstanceMetadata(fiGraphMetadata metadata) {
-            return metadata.Enter(_uniqueId).Metadata;
+            return metadata.Enter(_uniqueId, metadata.Context).Metadata;
         }
 
         /// <summary>

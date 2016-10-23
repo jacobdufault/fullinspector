@@ -62,12 +62,12 @@ namespace FullInspector.Internal {
                 }
 
                 for (int i = 0; i < _editors.Count; ++i) {
-                    metadata.Enter(i).Metadata.GetPersistentMetadata<fiDropdownMetadata>().ForceDisable();
+                    metadata.Enter(i, metadata.Context).Metadata.GetPersistentMetadata<fiDropdownMetadata>().ForceDisable();
                 }
             }
 
             if (_showPrimary) {
-                metadata.Enter("Primary").Metadata.GetPersistentMetadata<fiDropdownMetadata>().ForceDisable();
+                metadata.Enter("Primary", metadata.Context).Metadata.GetPersistentMetadata<fiDropdownMetadata>().ForceDisable();
             }
         }
 
@@ -81,19 +81,19 @@ namespace FullInspector.Internal {
 
             var heights = new List<float>(_editors.Count);
             for (int i = 0; i < _editors.Count; ++i) {
-                heights.Add(_editors[i].GetElementHeight(label, element, metadata.Enter(i)));
+                heights.Add(_editors[i].GetElementHeight(label, element, metadata.Enter(i, metadata.Context)));
             }
 
             Rect editRegion = region;
             for (int i = 0; i < _editors.Count; ++i) {
                 editRegion.height = heights[i];
-                element = _editors[i].Edit(editRegion, label, element, metadata.Enter(i));
+                element = _editors[i].Edit(editRegion, label, element, metadata.Enter(i, metadata.Context));
                 editRegion.y += editRegion.height;
             }
 
             if (_showPrimary) {
-                editRegion.height = NextEditor.GetElementHeight(label, element, metadata.Enter("Primary"));
-                element = NextEditor.Edit(editRegion, label, element, metadata.Enter("Primary"));
+                editRegion.height = NextEditor.GetElementHeight(label, element, metadata.Enter("Primary", metadata.Context));
+                element = NextEditor.Edit(editRegion, label, element, metadata.Enter("Primary", metadata.Context));
             }
 
             return element;
@@ -103,11 +103,11 @@ namespace FullInspector.Internal {
             float height = 0;
 
             for (int i = 0; i < _editors.Count; ++i) {
-                height += _editors[i].GetElementHeight(label, element, metadata.Enter(i));
+                height += _editors[i].GetElementHeight(label, element, metadata.Enter(i, metadata.Context));
             }
 
             if (_showPrimary) {
-                height += NextEditor.GetElementHeight(label, element, metadata.Enter("Primary"));
+                height += NextEditor.GetElementHeight(label, element, metadata.Enter("Primary", metadata.Context));
             }
 
             return height;

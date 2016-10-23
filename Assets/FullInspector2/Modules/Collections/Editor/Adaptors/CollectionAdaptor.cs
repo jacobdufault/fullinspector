@@ -119,7 +119,7 @@ namespace FullInspector.Internal {
             }
 
             T element = _collectionCache[index];
-            T updated = _drawer(position, element, _metadata.Enter(index));
+            T updated = _drawer(position, element, _metadata.Enter(index, _collection));
 
             // If the modified item is equal to the updated item, then we don't have to replace it
             // in the collection.
@@ -152,7 +152,7 @@ namespace FullInspector.Internal {
         public virtual float GetItemHeight(int index) {
             T element = _collectionCache[index];
 
-            return _height(element, _metadata.Enter(index));
+            return _height(element, _metadata.Enter(index, _collection));
         }
     }
 }

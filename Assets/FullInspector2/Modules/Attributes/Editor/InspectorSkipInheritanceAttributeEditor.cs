@@ -19,7 +19,7 @@ namespace FullInspector.Modules {
                 return element;
             }
 
-            return GetEditor(element).Edit(region, label, element, metadata.Enter("InspectorSkipInheritance"));
+            return GetEditor(element).Edit(region, label, element, metadata.Enter("InspectorSkipInheritance", metadata.Context));
         }
 
         protected override float GetElementHeight(GUIContent label, T element, InspectorSkipInheritanceAttribute attribute, fiGraphMetadata metadata) {
@@ -27,7 +27,7 @@ namespace FullInspector.Modules {
                 return EditorGUIUtility.singleLineHeight;
             }
 
-            return GetEditor(element).GetElementHeight(label, element, metadata.Enter("InspectorSkipInheritance"));
+            return GetEditor(element).GetElementHeight(label, element, metadata.Enter("InspectorSkipInheritance", metadata.Context));
         }
 
         public override GUIContent GetFoldoutHeader(GUIContent label, object element) {

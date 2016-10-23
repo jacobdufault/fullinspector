@@ -58,7 +58,7 @@ namespace FullInspector.Internal {
                 PropertyEditorChain chain = PropertyEditor.Get(element.GetType(), null);
                 IPropertyEditor editor = chain.SkipUntilNot(typeof(NullablePropertyEditor));
 
-                return editor.Edit(selectedRegion, GUIContent.none, element, metadata.Enter("NullableEditor"));
+                return editor.Edit(selectedRegion, GUIContent.none, element, metadata.Enter("NullableEditor", metadata.Context));
             }
         }
 
@@ -70,7 +70,7 @@ namespace FullInspector.Internal {
                 IPropertyEditor editor = chain.SkipUntilNot(typeof(NullablePropertyEditor));
 
                 height += fiRectUtility.IndentVertical;
-                height += editor.GetElementHeight(GUIContent.none, element, metadata.Enter("NullableEditor"));
+                height += editor.GetElementHeight(GUIContent.none, element, metadata.Enter("NullableEditor", metadata.Context));
             }
 
             return height;

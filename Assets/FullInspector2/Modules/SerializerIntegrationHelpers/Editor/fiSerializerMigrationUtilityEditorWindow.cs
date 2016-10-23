@@ -130,8 +130,8 @@ namespace FullInspector.Modules {
 
             fiEditorGUILayout.WithIndent(50, () => {
                 WithTemporaryLabelWidth(120, () => {
-                    editor.EditWithGUILayout(new GUIContent("Current Serializer"), _currentSerializer, _metadata.Enter(0));
-                    editor.EditWithGUILayout(new GUIContent("New Serializer"), _newSerializer, _metadata.Enter(1));
+                    editor.EditWithGUILayout(new GUIContent("Current Serializer"), _currentSerializer, _metadata.Enter(0, null));
+                    editor.EditWithGUILayout(new GUIContent("New Serializer"), _newSerializer, _metadata.Enter(1, null));
                 });
             });
 

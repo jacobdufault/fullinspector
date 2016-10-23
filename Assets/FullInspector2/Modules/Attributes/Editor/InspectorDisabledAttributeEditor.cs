@@ -8,7 +8,7 @@ namespace FullInspector.Modules {
             PropertyEditorChain chain = PropertyEditor.Get(typeof(T), null);
 
             EditorGUI.BeginDisabledGroup(true);
-            element = chain.FirstEditor.Edit(region, label, element, metadata.Enter("InspectorDisabledAttribute"));
+            element = chain.FirstEditor.Edit(region, label, element, metadata.NoOp());
             EditorGUI.EndDisabledGroup();
 
             return element;
@@ -16,19 +16,19 @@ namespace FullInspector.Modules {
 
         protected override float GetElementHeight(GUIContent label, T element, InspectorDisabledAttribute attribute, fiGraphMetadata metadata) {
             PropertyEditorChain chain = PropertyEditor.Get(typeof(T), null);
-            return chain.FirstEditor.GetElementHeight(label, element, metadata.Enter("InspectorDisabledAttribute"));
+            return chain.FirstEditor.GetElementHeight(label, element, metadata.NoOp());
         }
     }
 
-#if false
     [CustomAttributePropertyEditor(typeof(InspectorDisabledIfAttribute), ReplaceOthers = true)]
     public class InspectorDisabledIfAttributeEditor<T> : AttributePropertyEditor<T, InspectorDisabledIfAttribute> {
         protected override T Edit(Rect region, GUIContent label, T element, InspectorDisabledIfAttribute attribute, fiGraphMetadata metadata) {
-            PropertyEditorChain chain = PropertyEditor.Get(typeof(T), null);
+            bool disabled = fiLogicalOperatorSupport.ComputeValue(
+                attribute.Operator, attribute.ConditionalMemberNames, metadata.Context);
 
-            bool disabled = fiReflectionUtility.GetBooleanReflectedMember(typeof(T), element, attribute.ConditionalMemberName, true);
             EditorGUI.BeginDisabledGroup(disabled);
-            element = chain.FirstEditor.Edit(region, label, element, metadata.Enter("InspectorDisabledIfAttribute"));
+            PropertyEditorChain chain = PropertyEditor.Get(typeof(T), null);
+            element = chain.FirstEditor.Edit(region, label, element, metadata.NoOp());
             EditorGUI.EndDisabledGroup();
 
             return element;
@@ -36,8 +36,7 @@ namespace FullInspector.Modules {
 
         protected override float GetElementHeight(GUIContent label, T element, InspectorDisabledIfAttribute attribute, fiGraphMetadata metadata) {
             PropertyEditorChain chain = PropertyEditor.Get(typeof(T), null);
-            return chain.FirstEditor.GetElementHeight(label, element, metadata.Enter("InspectorDisabledIfAttribute"));
+            return chain.FirstEditor.GetElementHeight(label, element, metadata.NoOp());
         }
     }
-#endif
 }
