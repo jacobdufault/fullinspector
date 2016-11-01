@@ -218,6 +218,12 @@ namespace FullInspector {
         /// has a trailing slash.
         /// </summary>
         public static string RootDirectory = "Assets/FullInspector2/";
+        
+        /// <summary>
+        /// If this is set, the list will be use to limit what types are shown 
+        /// in the type selection. Also used in the ScriptableObjects inspector.
+        /// </summary>
+        public static List<string> TypeSelectionDefaultFilters;
 
         /// <summary>
         /// This is automatically configured based on RootDirectory. This has a
