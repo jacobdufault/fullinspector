@@ -224,6 +224,13 @@ namespace FullInspector {
         /// in the type selection. Also used in the ScriptableObjects inspector.
         /// </summary>
         public static List<string> TypeSelectionDefaultFilters;
+        
+        /// <summary>
+        /// If this is set, any type that matches any list element
+        /// will never be shown in the type selection.
+        /// Also used in the ScriptableObjects inspector.
+        /// </summary>
+        public static List<string> TypeSelectionBlacklist;
 
         /// <summary>
         /// This is automatically configured based on RootDirectory. This has a
