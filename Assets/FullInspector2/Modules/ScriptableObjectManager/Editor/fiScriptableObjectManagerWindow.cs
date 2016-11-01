@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using FullSerializer;
@@ -35,6 +35,9 @@ namespace FullInspector.Internal {
         private int _index;
         private Type[] _types;
         private GUIContent[] _labels;
+        private Type[] _filteredTypes;
+        private GUIContent[] _filteredLabels;
+        private bool _useGlobalFilter = true;
 
         public void OnEnable() {
             _types =
@@ -44,9 +47,38 @@ namespace FullInspector.Internal {
                  select type).ToArray();
 
             _labels = _types.Select(t => new GUIContent(t.FullName)).ToArray();
+
+            var filters = fiSettings.TypeSelectionDefaultFilters;
+            if (filters != null) {
+                _filteredTypes = (from type in _types
+                                  where filters.Any(t => type.FullName.ToUpper().Contains(t.ToUpper()))
+                                  select type).ToArray();
+                _filteredLabels = _filteredTypes.Select(t => new GUIContent(t.FullName)).ToArray();
+            } else {
+                //to avoid special checks in case we have no filters
+                _filteredTypes = new Type[0];
+                _filteredLabels = new GUIContent[0];
+
+                _useGlobalFilter = false;
+            }
+
             _index = 0;
 
             fiEditorUtility.RepaintableEditorWindows.Add(this);
+        }
+
+
+        private Type[] GetTypes() {
+            return _useGlobalFilter
+                ? _filteredTypes
+                : _types;
+        }
+
+
+        private GUIContent[] GetLabels() {
+            return _useGlobalFilter
+                ? _filteredLabels
+                : _labels;
         }
 
         private tkControlEditor Editor = new tkControlEditor(
@@ -64,7 +96,7 @@ namespace FullInspector.Internal {
                 {
                     true,
                     new tk.CenterVertical(new tk.Popup(fiGUIContent.Empty,
-                        /* get options */ tk.Val(o => o._labels),
+                        /* get options */ tk.Val(o => o.GetLabels()),
                         /* get index */ tk.Val(o => o._index),
                         /* set index */
                         (o, c, v) => {
@@ -78,8 +110,8 @@ namespace FullInspector.Internal {
                 {
                     65,
                     new tk.Button("Create",
-                        (o, c) => CreateNewScriptableObject(o._types[o._index])) {
-                            Style = new tk.EnabledIf(o => o._types.Length > 0)
+                        (o, c) => CreateNewScriptableObject(o.GetTypes()[o._index])) {
+                            Style = new tk.EnabledIf(o => o.GetTypes().Length > 0)
                         }
                 }
             },
@@ -90,13 +122,19 @@ namespace FullInspector.Internal {
                     HideAddButton = true,
                     DisableReordering = true
                 }),
-                (o, c) => fiEditorUtility.GetAllAssetsOfType(o._types[o._index]),
+                (o, c) => fiEditorUtility.GetAllAssetsOfType(o.GetTypes()[o._index]),
                 (o, c, v) => {}),
             }
         );
 
         public void OnGUI() {
-            if (_types.Length == 0) {
+            if (fiSettings.TypeSelectionDefaultFilters != null) {
+                GUILayout.BeginHorizontal();
+                _useGlobalFilter = EditorGUILayout.Toggle("global filter", _useGlobalFilter, GUILayout.ExpandWidth(false));
+                GUILayout.EndHorizontal();
+            }
+
+            if (GetTypes().Length == 0) {
                 EditorGUILayout.HelpBox("There are no derived ScriptableObject types to manage.", MessageType.Error);
                 return;
             }
