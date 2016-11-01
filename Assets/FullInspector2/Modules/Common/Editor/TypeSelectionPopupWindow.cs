@@ -12,12 +12,21 @@ namespace FullInspector.Modules {
     public class TypeSelectionPopupWindow : ScriptableWizard {
         public Type InitialType;
         private Action<Type> _onSelectType;
+        private bool _useGlobalFilter = true;
 
         public static TypeSelectionPopupWindow CreateSelectionWindow(Type initialType, Action<Type> onSelectType) {
             var window = ScriptableWizard.DisplayWizard<TypeSelectionPopupWindow>("Type (with statics) Selector");
             window.InitialType = initialType;
             window.minSize = new Vector2(600, 500);
             window._onSelectType = onSelectType;
+            var filters = fiSettings.TypeSelectionDefaultFilters;
+            if (filters != null) {
+                _filteredTypesWithStatics = (from type in _allTypesWithStatics
+                                             where filters.Any(t => type.FullName.ToUpper().Contains(t.ToUpper()))
+                                             select type).ToList();
+            } else {
+                window._useGlobalFilter = false;
+            }
             fiEditorUtility.ShouldInspectorRedraw.Push();
             return window;
         }
@@ -27,6 +36,7 @@ namespace FullInspector.Modules {
         }
 
         private static List<Type> _allTypesWithStatics;
+        private static List<Type> _filteredTypesWithStatics;
 
         static TypeSelectionPopupWindow() {
             _allTypesWithStatics = new List<Type>();
@@ -79,7 +89,12 @@ namespace FullInspector.Modules {
 
             fiEditorGUILayout.Splitter(2);
 
+            GUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Search for Type", EditorStyles.boldLabel);
+            if (fiSettings.TypeSelectionDefaultFilters != null) {
+                _useGlobalFilter = GUILayout.Toggle(_useGlobalFilter, "Use global filter");
+            }
+            GUILayout.EndHorizontal();
 
             // For the custom search bar, see:
             // http://answers.unity3d.com/questions/464708/custom-editor-search-bar.html
