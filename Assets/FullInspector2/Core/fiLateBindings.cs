@@ -19,8 +19,10 @@ namespace FullInspector.Internal {
             public static Func<bool> _EditorApplication_isPlaying;
             public static Func<bool> _EditorApplication_isCompilingOrChangingToPlayMode;
             public static Action<Action> _EditorApplication_InvokeOnEditorThread;
-            public static Action<Action> _EditorApplication_AddUpdateAction;
-            public static Action<Action> _EditorApplication_RemUpdateAction;
+            #if UNITY_EDITOR
+            public static Action<UnityEditor.EditorApplication.CallbackFunction> _EditorApplication_AddUpdateAction;
+            public static Action<UnityEditor.EditorApplication.CallbackFunction> _EditorApplication_RemUpdateAction;
+            #endif
             public static Func<double> _EditorApplication_timeSinceStartup;
 
             public static Func<string, string, string> _EditorPrefs_GetString;
@@ -113,17 +115,19 @@ namespace FullInspector.Internal {
                 }
             }
 
-            public static void AddUpdateFunc(Action func) {
+            #if UNITY_EDITOR
+            public static void AddUpdateFunc(UnityEditor.EditorApplication.CallbackFunction func) {
                 if (VerifyBinding("EditorApplication.AddUpdateFunc", _Bindings._EditorApplication_AddUpdateAction)) {
                     _Bindings._EditorApplication_AddUpdateAction(func);
                 }
             }
 
-            public static void RemUpdateFunc(Action func) {
+            public static void RemUpdateFunc(UnityEditor.EditorApplication.CallbackFunction func) {
                 if (VerifyBinding("EditorApplication.RemUpdateFunc", _Bindings._EditorApplication_RemUpdateAction)) {
                     _Bindings._EditorApplication_RemUpdateAction(func);
                 }
             }
+            #endif
         }
 
         public static class EditorPrefs {

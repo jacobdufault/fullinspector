@@ -66,7 +66,9 @@ namespace FullInspector.Internal {
         protected void BeginAnimating(T newTarget, T newStart) {
             this.m_Start = newStart;
             this.m_Target = newTarget;
+            #if UNITY_EDITOR
             fiLateBindings.EditorApplication.AddUpdateFunc(Update);
+            #endif
             this.m_Animating = true;
             this.m_LastTime = fiLateBindings.EditorApplication.timeSinceStartup;
             this.m_LerpPosition = 0.0;
@@ -79,7 +81,9 @@ namespace FullInspector.Internal {
             if ((double)this.lerpPosition < 1.0)
                 return;
             this.m_Animating = false;
+            #if UNITY_EDITOR
             fiLateBindings.EditorApplication.RemUpdateFunc(Update);
+            #endif
         }
 
         private void UpdateLerpPosition() {
