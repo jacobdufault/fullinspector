@@ -51,7 +51,7 @@ namespace FullInspector.Modules {
                     var inspected = InspectedType.Get(type);
                     if (inspected.IsCollection == false) {
                         var shouldAdd = blackList == null ||
-                                        (blackList != null) && !blackList.Any(t => type.FullName.ToUpper().Contains(t.ToUpper()));
+                                        !blackList.Any(t => type.FullName.ToUpper().Contains(t.ToUpper()));
 
                         if (shouldAdd) {
                             _allTypesWithStatics.Add(type);
