@@ -389,13 +389,27 @@ namespace FullInspector.Internal {
         /// Returns all types in the current AppDomain that derive from the given
         /// baseType and are a class that is not an open generic type.
         /// </summary>
-        public static IEnumerable<Type> AllSimpleTypesDerivingFrom(Type baseType) {
-            return from assembly in GetRuntimeAssemblies()
+        public static IEnumerable<Type> AllSimpleTypesDerivingFrom(Type t) {
+            if (_allSimpleTypesDerivingFromCache == null) {
+                _allSimpleTypesDerivingFromCache = new Dictionary<Type, List<Type>>();
+            }
+            List<Type> result;
+            if (!_allSimpleTypesDerivingFromCache.TryGetValue(t, out result)) {
+                result = AllSimpleTypesDerivingFromInternal(t);
+                _allSimpleTypesDerivingFromCache[t] = result;
+            }
+            return result;
+        }
+
+        private static Dictionary<Type, List<Type>> _allSimpleTypesDerivingFromCache;
+
+        private static List<Type> AllSimpleTypesDerivingFromInternal(Type baseType) {
+            return (from assembly in GetRuntimeAssemblies()
                    from type in assembly.GetTypesWithoutException()
                    where baseType.IsAssignableFrom(type)
                    where type.Resolve().IsClass
                    where type.Resolve().IsGenericTypeDefinition == false
-                   select type;
+                   select type).ToList();
         }
 
         /// <summary>
@@ -403,12 +417,26 @@ namespace FullInspector.Internal {
         /// baseType, are classes, are not generic, have a default constuctor,
         /// and are not abstract.
         /// </summary>
-        public static IEnumerable<Type> AllSimpleCreatableTypesDerivingFrom(Type baseType) {
-            return from type in AllSimpleTypesDerivingFrom(baseType)
+        public static IEnumerable<Type> AllSimpleCreatableTypesDerivingFrom(Type t) {
+            if (_allSimpleCreatableTypesDerivingFromCache == null) {
+                _allSimpleCreatableTypesDerivingFromCache = new Dictionary<Type, List<Type>>();
+            }
+            List<Type> result;
+            if (!_allSimpleCreatableTypesDerivingFromCache.TryGetValue(t, out result)) {
+                result = AllSimpleCreatableTypesDerivingFromInternal(t);
+                _allSimpleCreatableTypesDerivingFromCache[t] = result;
+            }
+            return result;
+        }
+
+        private static Dictionary<Type, List<Type>> _allSimpleCreatableTypesDerivingFromCache;
+
+        private static List<Type> AllSimpleCreatableTypesDerivingFromInternal(Type baseType) {
+            return (from type in AllSimpleTypesDerivingFrom(baseType)
                    where type.Resolve().IsAbstract == false
                    where type.Resolve().IsGenericType == false
                    where type.GetDeclaredConstructor(fsPortableReflection.EmptyTypes) != null
-                   select type;
+                   select type).ToList();
         }
     }
 }
