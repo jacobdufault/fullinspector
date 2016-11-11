@@ -22,9 +22,10 @@ namespace FullInspector {
         /// </summary>
         public float Step = float.NaN;
 
-        public InspectorRangeAttribute(float min, float max) {
+        public InspectorRangeAttribute(float min, float max, float step = float.NaN) {
             Min = min;
             Max = max;
+            Step = step;
         }
     }
 }
