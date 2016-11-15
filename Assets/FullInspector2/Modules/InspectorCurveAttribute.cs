@@ -7,17 +7,17 @@ namespace FullInspector {
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public sealed class InspectorCurveAttribute : Attribute {
-        public float xMin;
-        public float xMax;
+        public float TimeStart;
+        public float TimeEnd;
 
-        public float yMin;
-        public float yMax;
+        public float ValueStart;
+        public float ValueEnd;
 
-        public InspectorCurveAttribute(float xMin = 0, float yMin = 0, float xMax = 1, float yMax = 1) {
-            this.xMin = xMin;
-            this.xMax = xMax;
-            this.yMin = yMin;
-            this.xMax = xMax;
+        public InspectorCurveAttribute(float timeStart = 0, float valueStart = 0, float timeEnd = 1, float valueEnd = 1) {
+            TimeStart = timeStart;
+            TimeEnd = timeEnd;
+            ValueStart = valueStart;
+            ValueEnd = valueEnd;
         }
     }
 }

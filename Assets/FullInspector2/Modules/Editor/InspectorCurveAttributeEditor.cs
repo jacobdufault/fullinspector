@@ -10,22 +10,26 @@ namespace FullInspector.Modules {
         }
 
         protected override TElement Edit(Rect region, GUIContent label, TElement element, InspectorCurveAttribute attribute, fiGraphMetadata metadata) {
-            if (attribute.xMin >= attribute.xMax) {
+            if (attribute.TimeStart > attribute.TimeEnd) {
                 Debug.Log("xMin cannot be larger than xMax. Resetting to 0 and 1");
-                attribute.xMin = 0;
-                attribute.xMax = 1;
+                attribute.TimeStart = 0;
+                attribute.TimeEnd = 1;
             }
 
-            if (attribute.yMin >= attribute.yMax) {
+            if (attribute.ValueStart > attribute.ValueEnd) {
                 Debug.Log("yMin cannot be larger than yMax. Resetting to 0 and 1");
-                attribute.yMin = 0;
-               attribute.yMax =1;
+                attribute.ValueStart = 0;
+               attribute.ValueEnd =1;
             }
 
-            var curveRange = new Rect(attribute.xMin, attribute.yMin, attribute.xMax, attribute.yMax);
-            var curve = Cast<AnimationCurve>(element);
+
+            var curveRange = new Rect(attribute.TimeStart, attribute.ValueStart, attribute.TimeEnd, attribute.ValueEnd);
+            var curve = element == null ?
+                AnimationCurve.Linear(0, 0, 1, 1) :
+                Cast<AnimationCurve>(element);
             return Cast<TElement>(EditorGUI.CurveField(region, label, curve, Color.green, curveRange));
         }
+
 
         protected override float GetElementHeight(GUIContent label, TElement element, InspectorCurveAttribute attribute, fiGraphMetadata metadata) {
             return EditorStyles.largeLabel.CalcHeight(label, 100);
