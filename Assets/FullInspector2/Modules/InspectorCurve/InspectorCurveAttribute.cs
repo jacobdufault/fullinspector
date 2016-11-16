@@ -32,8 +32,8 @@ namespace FullInspector {
 
     /// <summary>
     ///     Uses the default constructor from <see cref="InspectorCurveAttribute" /><br />
-    /// Usage:<br />
-    ///     [<see cref="InspectorCollectionItemAttributesAttribute"/>(typeof(<see cref="InspectorMovementCurvesDefault"/>))]
+    ///     Usage:<br />
+    ///     [<see cref="InspectorCollectionItemAttributesAttribute" />(typeof(<see cref="InspectorMovementCurvesDefault" />))]
     /// </summary>
     public class InspectorMovementCurvesDefault: fiICollectionAttributeProvider {
         public IEnumerable<object> GetAttributes() {
