@@ -11,13 +11,13 @@ namespace FullInspector.Modules {
 
         protected override TElement Edit(Rect region, GUIContent label, TElement element, InspectorCurveAttribute attribute, fiGraphMetadata metadata) {
             if (attribute.TimeStart > attribute.TimeEnd) {
-                Debug.Log("xMin cannot be larger than xMax. Resetting to 0 and 1");
+                Debug.Log("TimeStart cannot be larger than TimeEnd. Resetting to 0 and 1");
                 attribute.TimeStart = 0;
                 attribute.TimeEnd = 1;
             }
 
             if (attribute.ValueStart > attribute.ValueEnd) {
-                Debug.Log("yMin cannot be larger than yMax. Resetting to 0 and 1");
+                Debug.Log("ValueStart cannot be larger than TimeStart. Resetting to 0 and 1");
                 attribute.ValueStart = 0;
                attribute.ValueEnd =1;
             }
