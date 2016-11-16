@@ -148,7 +148,9 @@ namespace FullInspector.Internal {
         public static class EditorUtility {
             public static void SetDirty(UnityObject unityObject) {
                 if (VerifyBinding("EditorUtility.SetDirty", _Bindings._EditorUtility_SetDirty)) {
-                    _Bindings._EditorUtility_SetDirty(unityObject);
+                    if (unityObject != null) {
+                        _Bindings._EditorUtility_SetDirty(unityObject);
+                    }
                 }
             }
 
