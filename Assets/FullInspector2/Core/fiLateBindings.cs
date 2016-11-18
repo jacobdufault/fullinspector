@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using UnityObject = UnityEngine.Object;
@@ -21,6 +22,9 @@ namespace FullInspector.Internal {
             public static Action<Action> _EditorApplication_InvokeOnEditorThread;
             public static Action<Action> _EditorApplication_AddUpdateAction;
             public static Action<Action> _EditorApplication_RemUpdateAction;
+            public static List<Action> _EditorApplication_Callbacks;
+            public static List<Action> _EditorApplication_CallbacksToBeAdded;
+            public static List<Action> _EditorApplication_CallbacksToBeRemoved;
             public static Func<double> _EditorApplication_timeSinceStartup;
 
             public static Func<string, string, string> _EditorPrefs_GetString;

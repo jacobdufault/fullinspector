@@ -2,6 +2,9 @@
 using UnityEngine;
 
 namespace FullInspector.Internal {
+    using System;
+    using System.Collections.Generic;
+
     // note: See the docs on fiLateBindings This is just the actual injection
     //       code which only gets run if we're in an editor
     //
@@ -23,8 +26,14 @@ namespace FullInspector.Internal {
                 };
                 EditorApplication.update += updateFn;
             };
-            fiLateBindings._Bindings._EditorApplication_AddUpdateAction = a => EditorApplication.update += new EditorApplication.CallbackFunction(a);
-            fiLateBindings._Bindings._EditorApplication_RemUpdateAction = a => EditorApplication.update -= new EditorApplication.CallbackFunction(a);
+            fiLateBindings._Bindings._EditorApplication_Callbacks = new List<Action>();
+            fiLateBindings._Bindings._EditorApplication_CallbacksToBeAdded = new List<Action>();
+            fiLateBindings._Bindings._EditorApplication_CallbacksToBeRemoved = new List<Action>();
+            fiLateBindings._Bindings._EditorApplication_AddUpdateAction = a => fiLateBindings._Bindings._EditorApplication_CallbacksToBeAdded.Add(a);
+            fiLateBindings._Bindings._EditorApplication_RemUpdateAction = a => fiLateBindings._Bindings._EditorApplication_CallbacksToBeRemoved.Add(a);
+            EditorApplication.update -= OnEditorUpdate;
+            EditorApplication.update += OnEditorUpdate;
+
             fiLateBindings._Bindings._EditorApplication_timeSinceStartup = () => EditorApplication.timeSinceStartup;
 
             fiLateBindings._Bindings._EditorPrefs_GetString = EditorPrefs.GetString;
@@ -83,6 +92,24 @@ namespace FullInspector.Internal {
 
                 return new[] { Selection.activeObject };
             };
+        }
+
+        private static void OnEditorUpdate() {
+            for (int i = 0; i < fiLateBindings._Bindings._EditorApplication_CallbacksToBeRemoved.Count; i++) {
+                var c = fiLateBindings._Bindings._EditorApplication_CallbacksToBeRemoved[i];
+                fiLateBindings._Bindings._EditorApplication_Callbacks.Remove(c);
+            }
+            fiLateBindings._Bindings._EditorApplication_CallbacksToBeRemoved.Clear();
+
+            for (int i = 0; i < fiLateBindings._Bindings._EditorApplication_CallbacksToBeAdded.Count; i++) {
+                var c = fiLateBindings._Bindings._EditorApplication_CallbacksToBeAdded[i];
+                fiLateBindings._Bindings._EditorApplication_Callbacks.Add(c);
+            }
+            fiLateBindings._Bindings._EditorApplication_CallbacksToBeAdded.Clear();
+
+            for (int i = 0; i < fiLateBindings._Bindings._EditorApplication_Callbacks.Count; i++) {
+                fiLateBindings._Bindings._EditorApplication_Callbacks[i]();
+            }
         }
 
         public static void EnsureLoaded() {
