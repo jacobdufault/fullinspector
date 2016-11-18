@@ -10,16 +10,21 @@ namespace FullInspector.Modules {
         }
 
         protected override TElement Edit(Rect region, GUIContent label, TElement element, InspectorCurveAttribute attribute, fiGraphMetadata metadata) {
-            if (attribute.TimeStart > attribute.TimeEnd) {
-                Debug.Log($"{nameof(attribute.TimeStart)} cannot be larger than {nameof(attribute.TimeEnd)}. Resetting to 0 and 1");
-                attribute.TimeStart = 0;
-                attribute.TimeEnd = 1;
+            if (attribute.Width <= 0) {
+                Debug.Log("Invalid width. Resetting to 1");
+                attribute.Width = 1;
             }
 
-            var curveRange = new Rect(attribute.TimeStart, attribute.ValueStart, attribute.TimeEnd, attribute.ValueEnd);
+            if (attribute.Height <= 0) {
+                Debug.Log("Invalid height. Resetting to 1");
+                attribute.Height = 1;
+            }
+
+            var curveRange = new Rect(attribute.X, attribute.Y, attribute.Width, attribute.Height);
             var curve = element == null ?
-                AnimationCurve.Linear(0, 0, 1, 1) :
+                AnimationCurve.Linear(0, 1, 1, 1) :
                 Cast<AnimationCurve>(element);
+            
             return Cast<TElement>(EditorGUI.CurveField(region, label, curve, Color.green, curveRange));
         }
 

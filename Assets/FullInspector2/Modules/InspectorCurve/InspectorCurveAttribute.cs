@@ -15,17 +15,22 @@ namespace FullInspector {
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public sealed class InspectorCurveAttribute : Attribute {
-        public float TimeStart;
-        public float TimeEnd;
 
-        public float ValueStart;
-        public float ValueEnd;
+        public float X;
+        public float Y;
 
-        public InspectorCurveAttribute(float timeStart = 0, float valueStart = 1, float timeEnd = 1, float valueEnd = 1) {
-            TimeStart = Mathf.Max(0, timeStart);
-            ValueStart = valueStart;
-            TimeEnd = timeEnd;
-            ValueEnd = valueEnd;
+        public float Height;
+        public float Width;
+
+
+        /// <summary>
+        ///     Creates a curve field constrained to the rect defined by the passed parameters.
+        /// </summary>
+        public InspectorCurveAttribute(float x = 0, float y = 0, float width = 1, float height = 1) {
+            X = x;
+            Y = y;
+            Width = width;
+            Height = height;
         }
     }
 
