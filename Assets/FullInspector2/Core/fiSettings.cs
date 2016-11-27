@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using FullInspector.Internal;
 using UnityEngine;
@@ -218,13 +219,13 @@ namespace FullInspector {
         /// has a trailing slash.
         /// </summary>
         public static string RootDirectory = "Assets/FullInspector2/";
-        
+
         /// <summary>
-        /// If this is set, the list will be use to limit what types are shown 
+        /// If this is set, the list will be use to limit what types are shown
         /// in the type selection. Also used in the ScriptableObjects inspector.
         /// </summary>
         public static List<string> TypeSelectionDefaultFilters;
-        
+
         /// <summary>
         /// If this is set, any type that matches any list element
         /// will never be shown in the type selection.
