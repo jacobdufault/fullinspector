@@ -73,12 +73,13 @@ namespace FullInspector {
 
             // Seed the label width - sometimes we don't always go through the
             // property editor logic.
+            float savedLabelWidth = EditorGUIUtility.labelWidth;
             EditorGUIUtility.labelWidth = fiGUI.PushLabelWidth(GUIContent.none, rect.width);
 
             // Run the editor
             OnEdit(rect, (TBehavior)behavior, fiPersistentMetadata.GetMetadataFor(behavior));
 
-            fiGUI.PopLabelWidth();
+            EditorGUIUtility.labelWidth = savedLabelWidth;
 
             // If the GUI has been changed, then we want to reserialize the
             // current object state. However, we don't bother doing this if we're

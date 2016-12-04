@@ -84,6 +84,7 @@ namespace FullInspector {
             BeginMethodSet(BaseMethodCall.Edit, out setBaseMethod);
 
             try {
+                float currentLabeWidth = EditorGUIUtility.labelWidth;
                 EditorGUIUtility.labelWidth = fiGUI.PushLabelWidth(label, region.width);
 
                 // TODO: introduce a fast-path, we are burning lots of time in
@@ -92,7 +93,7 @@ namespace FullInspector {
                 if (typeof(T).IsPrimitive) result = DoEditFast(api, region, label, element, metadata.Metadata);
                 else result = DoEditSlow(api, region, label, element, metadata.Metadata);
 
-                EditorGUIUtility.labelWidth = fiGUI.PopLabelWidth();
+                EditorGUIUtility.labelWidth = currentLabeWidth;
 
                 return result;
             }
