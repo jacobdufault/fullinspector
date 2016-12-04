@@ -1,6 +1,7 @@
 For v2.6.4
 
 New:
+- Added AOT FullSerializer serialization pipeline which can greatly reduce FI performance instantation impact. See "Window/Full Inspector/Aot Serialization Manager" to get started.
 - Added context state to property editors, which allows a property editor to fetch the parent object. This allows attribute editors to make behavior changes based on the instance that hosts the variable they are editing. See [InspectorDisabledIf] for an example implementation.
 - Added [InspectorDisabledIf], similar to [InspectorShowIf] and [InspectorHideIf].
 - [InspectorShowIf] and [InspectorHideIf] now support multiple fields/properties.
