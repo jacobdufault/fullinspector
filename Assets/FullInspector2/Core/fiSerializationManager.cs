@@ -58,7 +58,9 @@ namespace FullInspector.Internal {
                         SerializeObject(typeof(DeferredSerialization), _tracking);
                     }
                     else {
+                        #if UNITY_EDITOR
                         fiLateBindings.EditorApplication.AddUpdateFunc(Update);
+                        #endif
                     }
 
                     _tracking = tracking;
@@ -72,7 +74,9 @@ namespace FullInspector.Internal {
                     SerializeObject(typeof(DeferredSerialization), _tracking);
                     _tracking = null;
 
+                    #if UNITY_EDITOR
                     fiLateBindings.EditorApplication.RemUpdateFunc(Update);
+                    #endif
                 }
             }
         }
@@ -80,9 +84,11 @@ namespace FullInspector.Internal {
         private static DeferredSerialization s_inspectedObjectSerialization = new DeferredSerialization();
 
         static fiSerializationManager() {
+            #if UNITY_EDITOR
             if (fiUtility.IsEditor) {
                 fiLateBindings.EditorApplication.AddUpdateFunc(OnEditorUpdate);
             }
+            #endif
         }
 
         /// <summary>

@@ -23,8 +23,8 @@ namespace FullInspector.Internal {
                 };
                 EditorApplication.update += updateFn;
             };
-            fiLateBindings._Bindings._EditorApplication_AddUpdateAction = a => EditorApplication.update += new EditorApplication.CallbackFunction(a);
-            fiLateBindings._Bindings._EditorApplication_RemUpdateAction = a => EditorApplication.update -= new EditorApplication.CallbackFunction(a);
+            fiLateBindings._Bindings._EditorApplication_AddUpdateAction = a => EditorApplication.update += a;
+            fiLateBindings._Bindings._EditorApplication_RemUpdateAction = a => EditorApplication.update -= a;
             fiLateBindings._Bindings._EditorApplication_timeSinceStartup = () => EditorApplication.timeSinceStartup;
 
             fiLateBindings._Bindings._EditorPrefs_GetString = EditorPrefs.GetString;
