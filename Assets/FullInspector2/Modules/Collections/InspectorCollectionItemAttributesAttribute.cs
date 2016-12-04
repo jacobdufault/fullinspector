@@ -15,14 +15,18 @@ namespace FullInspector {
     /// Let's say we want to display a comment above every field inside of the
     /// list. Here's how we can do it:
     ///
-    /// <![CDATA[ class ObjectsItemAttrs : fiICollectionAttributeProvider {
-    /// public IEnumerable<object> GetAttributes() { yield return new
-    /// InspectorCommentAttribute("Hi!"); } }
-    /// [InspectorCollectionItemAttributes(typeof(ObjectsItemAttrs))] public
-    /// List<object> Objects; ]]>
+    /// class ObjectsItemAttrs : fiICollectionAttributeProvider {
+    ///     public IEnumerable<object> GetAttributes() {
+    ///         yield return new InspectorCommentAttribute("Hi!");
+    ///     }
+    /// }
+    /// [InspectorCollectionItemAttributes(typeof(ObjectsItemAttrs))]
+    /// public List<object> Objects;
     ///
     /// Whereas if we were displaying the same thing normally (without the
-    /// comment) it would be a simple: <![CDATA[ public List<object> Objects; ]]>
+    /// comment) it would be a simple:
+    ///
+    /// public List<object> Objects;
     ///
     /// There's quite a bit of boilerplate, but it enables this powerful
     /// customization.
