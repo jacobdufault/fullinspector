@@ -1,9 +1,9 @@
-﻿using UnityEditor;
+﻿using System;
+using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace FullInspector.Internal {
-    using System;
-    using System.Collections.Generic;
 
     // note: See the docs on fiLateBindings This is just the actual injection
     //       code which only gets run if we're in an editor
@@ -95,18 +95,18 @@ namespace FullInspector.Internal {
         }
 
         private static void OnEditorUpdate() {
+            // Remove callbacks from _EditorApplication_Callbacks.
             for (int i = 0; i < fiLateBindings._Bindings._EditorApplication_CallbacksToBeRemoved.Count; i++) {
                 var c = fiLateBindings._Bindings._EditorApplication_CallbacksToBeRemoved[i];
                 fiLateBindings._Bindings._EditorApplication_Callbacks.Remove(c);
             }
             fiLateBindings._Bindings._EditorApplication_CallbacksToBeRemoved.Clear();
 
-            for (int i = 0; i < fiLateBindings._Bindings._EditorApplication_CallbacksToBeAdded.Count; i++) {
-                var c = fiLateBindings._Bindings._EditorApplication_CallbacksToBeAdded[i];
-                fiLateBindings._Bindings._EditorApplication_Callbacks.Add(c);
-            }
+            // Add new callbacks to _EditorApplication_Callbacks.
+            fiLateBindings._Bindings._EditorApplication_Callbacks.AddRange(fiLateBindings._Bindings._EditorApplication_CallbacksToBeAdded);
             fiLateBindings._Bindings._EditorApplication_CallbacksToBeAdded.Clear();
 
+            // Invoke all _EditorApplication_Callbacks instances.
             for (int i = 0; i < fiLateBindings._Bindings._EditorApplication_Callbacks.Count; i++) {
                 fiLateBindings._Bindings._EditorApplication_Callbacks[i]();
             }
