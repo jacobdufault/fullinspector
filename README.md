@@ -10,13 +10,13 @@ Full Inspector supercharges the Unity inspector.
 
 Full Inspector is available under two different licenses. You can use either one, depending on your needs.
 - GPLv3: This can be used so long as you abide by the its terms and publish your source code.
-- Commercial: If you do not wish to publish your game's source code, please purchase a commerical license from the Unity Asset Store.
+- Commercial: If you do not wish to publish your game's source code, please purchase a commerical license from the Unity Asset Store under the terms described there.
 
 ## What this means
 
 If you just want to try Full Inspector out, the GPLv3 license is fine. If you distribute your game in any way, then you need to make the source code available if you continue to use the GPLv3 licensed version.
 
-If you want to use Full Inspector in a project where you do not publish source code, then you need to purchase a license from the Unity Asset Store.
+If you want to use Full Inspector in a project where you do not publish source code, then you need to purchase a license from the Unity Asset Store under the terms described there.
 
 # Checking out the code
 
