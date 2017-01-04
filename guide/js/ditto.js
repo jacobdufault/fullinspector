@@ -8,7 +8,7 @@ const MARKDOWN_SIDEBAR = 'sidebar.md'
 
 // selectors
 const ERROR_SELECTOR = '#error';
-const CONTENT_SELECTOR = '#content';
+const CONTENT_SELECTOR = '.content';
 const SIDEBAR_SELECTOR = '#sidebar';
 const EDIT_SELECTOR = '#edit';
 const LOADING_SELECTOR = '#loading';
@@ -19,6 +19,8 @@ const FRAGMENT_CLASS = '.fragment';
 
 // config
 const CACHE_EXPIRATION_MINUTES = 5;
+const MAX_SEARCH_MATCHES_PER_FILE = 15;
+const FULL_FUZZY_SEARCH = false;
 
 $(document).ready(() => {
   // Always clear the cache on startup so we don't have stale data.
@@ -33,18 +35,15 @@ $(document).ready(() => {
 });
 
 function init_sidebar() {
-  get_file(MARKDOWN_SIDEBAR, {
-    success: function (data) {
+  get_file(MARKDOWN_SIDEBAR)
+    .then(/* success */(data) => {
       var marked_data = marked(data);
       $(SIDEBAR_SELECTOR).html(marked_data);
 
       init_searchbar();
-    },
-
-    error: function () {
+    }, /* error */() => {
       alert('Sidebar failed to load');
-    }
-  });
+    });
 }
 
 function init_edit_button() {
@@ -70,31 +69,76 @@ function init_searchbar() {
 
   // html input searchbar
   var search = '<input name="' + SEARCH_SELECTOR + '"';
-  search = search + ' type="search"';
-  search = search + ' results="10">';
+  search = search + ' type="search">';
 
   // replace match code with a real html input search bar
   sidebar = sidebar.replace(match, search);
-  $(SIDEBAR_SELECTOR).html(sidebar);
+  let search_element = $(SIDEBAR_SELECTOR).html(sidebar);
 
-  // add search listener
-  $('input[name=' + SEARCH_SELECTOR + ']').keydown(searchbar_listener);
+  // add search listener and set initial searchbar value
+  $('input[name=' + SEARCH_SELECTOR + ']').keyup(searchbar_listener);
+  if (location.hash.indexOf('#search=') >= 0)
+    $('input[name=' + SEARCH_SELECTOR + ']')[0].value = location.hash.replace('#search=', '');
 }
 
-function build_text_matches_html(fragments) {
-  var html = '';
-  var class_name = FRAGMENTS_CLASS.replace('.', '');
+function build_text_matches_html(match) {
+  let file_content = match.content;
 
-  html += '<ul class="' + class_name + '">';
-  for (var i = 0; i < fragments.length; i++) {
-    var fragment = fragments[i].fragment.replace('/[\uE000-\uF8FF]/g', '');
+  let newline_regex = /[\n\r]/g;
+  // Have an initial newline at start to remove some edge cases.
+  let newline_indices = [ 0 ];
+  while (true) {
+    let match = newline_regex.exec(file_content);
+    if (!match)
+      break;
+    newline_indices.push(match.index);
+  }
+
+  function get_match_fragment(fragment) {
+    const CONTEXT_LINES = 3;
+
+    let before_newline_index = 0;
+    while (before_newline_index < newline_indices.length &&
+      newline_indices[before_newline_index] < fragment.match_start)
+      ++before_newline_index;
+
+    let match_end = fragment.match_start + fragment.match_length;
+    let after_newline_index = before_newline_index + 1;
+
+    before_newline_index -= CONTEXT_LINES + 1;
+    after_newline_index += CONTEXT_LINES + 1;
+
+    let newline_start = newline_indices[Math.max(before_newline_index - 1, 0)];
+    let newline_end = newline_indices[Math.min(after_newline_index, newline_indices.length - 1)];
+
+    return {
+      start: file_content.substr(newline_start, fragment.match_start - newline_start),
+      match: file_content.substr(fragment.match_start, fragment.match_length),
+      end: file_content.substr(match_end, newline_end - match_end)
+    }
+  }
+
+  let class_name = FRAGMENTS_CLASS.replace('.', '');
+
+  let html = '<ul class="' + class_name + '">';
+  console.log('There are ' + match.matches.length + ' matches');
+  let current = 0;
+  for (let entry of match.matches) {
+    if (current++ > MAX_SEARCH_MATCHES_PER_FILE) break;
+    let fragment = get_match_fragment(entry);
     html += '<li class="' + FRAGMENT_CLASS.replace('.', '') + '">';
     html += '<pre><code> ';
-    fragment = $('#hide').text(fragment).html();
-    html += fragment;
+    html += '<p>' + $('#hide').text(fragment.start).html() + '</p>';
+    html += '<p class="highlight">' + $('#hide').text(fragment.match).html() + '</p>';
+    html += '<p>' + $('#hide').text(fragment.end).html() + '</p>';
     html += ' </code></pre></li>';
   }
   html += '</ul>';
+
+  if (current > MAX_SEARCH_MATCHES_PER_FILE) {
+    let hidden_count = match.matches.length - MAX_SEARCH_MATCHES_PER_FILE;
+    html = '<p><i>(' + hidden_count + ' additional ' + (hidden_count > 1 ? 'matches' : 'match') + ' hidden)</i><p>' + html;
+  }
 
   return html;
 }
@@ -105,13 +149,7 @@ function build_result_matches_html(matches) {
 
   html += '<ul class="' + class_name + '">';
   for (var i = 0; i < matches.length; i++) {
-    var url = matches[i].path;
-    if (url.indexOf('sidebar.md') >= 0 || // Ignore sidebar markdown.
-      url.indexOf('index.md') >= 0 ||     // Ignore index markdown.
-      url.indexOf('guide/docs/') < 0) {   // Only include actual doc markdown files.
-      console.log('Search - ignoring file ' + url);
-      continue;
-    }
+    var url = matches[i].file;
 
     if (url == MARKDOWN_SIDEBAR) {
       console.log('Skipping ' + url);
@@ -140,13 +178,13 @@ function build_result_matches_html(matches) {
     destination = '#' + destination;
 
     var display_name = trim_start_with_end(file, toRemove);
-    if (display_name.startsWith('/docs/'))
-      display_name = display_name.substr('/docs/'.length);
+    if (display_name.startsWith('docs/'))
+      display_name = display_name.substr('docs/'.length);
     display_name = display_name.replace(/_/g, ' ');
 
     html += '<a href="' + destination + '">' + display_name + '</a>';
 
-    var match = build_text_matches_html(matches[i].text_matches);
+    var match = build_text_matches_html(matches[i]);
     html += match;
   }
   html += '</ul>';
@@ -171,21 +209,34 @@ function trim_start_with_end(initial, ending) {
   return initial;
 }
 
-function github_search(query) {
-  // build github search api url string
-  var github_api = 'https://api.github.com/';
-  var search = 'search/code?q=';
-  var search_details = '+in:file+language:markdown+repo:';
+function search(query) {
+  // Extremely aggressive fuzzy search (between every token).
+  if (FULL_FUZZY_SEARCH) {
+    function intersperse(string, token) {
+      let result = '';
+      let first = true;
+      for (let c of string) {
+        result += c;
+        if (!first)
+          result += token;
+        first = false;
+      }
+      return result;
+    }
+    query = intersperse(query, '.*?');
+  }
+  // Simple fuzzy search (in spaces)
+  else {
+    query = query.replace(' ', '.*?');
+  }
 
-  var url = github_api + search + query + search_details + GITHUB_REPO;
-  var accept_header = 'application/vnd.github.v3.text-match+json';
-
-  $.ajax(url, { headers: { Accept: accept_header } }).done(function (data) {
+  console.log('Running search for ' + query);
+  run_search(query).then((results) => {
     var results_html = '<h1>Search Results</h1>';
 
-    if (data.items.length) {
+    if (results.length) {
       hide_error();
-      results_html += build_result_matches_html(data.items);
+      results_html += build_result_matches_html(results);
     } else {
       show_error('Oops! No matches found');
     }
@@ -195,12 +246,9 @@ function github_search(query) {
 }
 
 function searchbar_listener(event) {
-  // when user presses ENTER in search bar
-  if (event.which === 13) {
-    var q = $('input[name=' + SEARCH_SELECTOR + ']').val();
-    if (q !== '') {
-      location.hash = '#search=' + q;
-    }
+  var q = $('input[name=' + SEARCH_SELECTOR + ']').val();
+  if (q !== '') {
+    location.hash = '#search=' + q;
   }
 }
 
@@ -319,29 +367,96 @@ function set_loading_visible(visible) {
   }
 }
 
-function get_file(path, {success, error, always}) {
-  console.assert(success);
-  console.assert(error);
+function get_file(path) {
+  return new Promise((resolve, reject) => {
+    lscache.enableWarnings(true);
 
-  lscache.enableWarnings(true);
+    var data = lscache.get(path);
+    if (data) {
+      console.log('[CACHE HIT]: ' + path);
+      resolve(data);
+    }
 
-  var data = lscache.get(path);
-  if (data) {
-    console.log('[CACHE HIT]: ' + path);
-    success(data);
+    else {
+      console.log('[CACHE MISS]: ' + path);
+      $.get(path, function (data) {
+        lscache.set(path, data, CACHE_EXPIRATION_MINUTES);
+        resolve(data);
+      }).fail(reject);
+    }
+  });
+}
 
-    if (always)
-      always();
+function run_search(search_string) {
+  // Collects all of the matches from a given regex.
+  function match_all(file, contents, regex) {
+    function build_match(match) {
+      return { match_start: match.index, match_length: match[0].length };
+    }
+
+    let matches = [];
+
+    var match;
+    if (regex.global) {
+      while (match = regex.exec(contents)) {
+        matches.push(build_match(match));
+      }
+    } else {
+      if (match = regex.exec(contents)) {
+        matches.push(build_match(match));
+      }
+    }
+
+    return {
+      file: file,
+      content: contents,
+      matches: matches
+    };
   }
 
-  else {
-    console.log('[CACHE MISS]: ' + path);
-    $.get(path, function (data) {
-      lscache.set(path, data, CACHE_EXPIRATION_MINUTES);
-      success(data);
-    }).fail(error)
-      .always(always);
+  return get_file(MARKDOWN_SIDEBAR).then(get_links_in_markdown).then((file_paths) => {
+    let to_search = [];
+    let promises = [];
+
+    for (let markdown_file of file_paths) {
+      let file_path = markdown_file + '.md';
+      let promise =
+        get_file(file_path)
+          .then((content) => to_search.push({ file: file_path, content: content }));
+      promises.push(promise);
+    }
+
+    return Promise.all(promises).then(() => to_search);
+  }).then((to_search) => {
+    console.log('Searching for ' + search_string);
+    let searcher = new RegExp(search_string, 'ig');
+    let result = [];
+
+    for (let item of to_search) {
+      let matches = match_all(item.file, item.content, searcher);
+      if (matches.matches.length > 0)
+        result.push(matches);
+    }
+
+    console.log('Result');
+    console.log(result);
+    return result;
+  });
+}
+
+function get_links_in_markdown(markdown_content) {
+  let result = [];
+
+  let url_regex = /\(#(docs\/.*?)\)/g;
+  while (true) {
+    let match = url_regex.exec(markdown_content);
+    if (!match)
+      break;
+
+    result.push(match[1]);
   }
+
+  return result;
 }
 
 function page_getter() {
@@ -381,8 +496,8 @@ function page_getter() {
   hide_error();
   set_loading_visible(true);
 
-  get_file(request_path, {
-    success: function (data) {
+  get_file(request_path).then(
+    /* success */(data) => {
       // compile the data
       data = marked(data);
       $(CONTENT_SELECTOR).html(data);
@@ -405,25 +520,23 @@ function page_getter() {
           scroll_to_header(header, /*animate:*/false);
       }
     },
-
-    error: function () {
+    /* error */() => {
       show_error('Opps! File not found!');
-    },
-
-    always: function () {
+    })
+    .then( /* always */() => {
       set_loading_visible(false);
-    }
-  });
+    });
 
   // hide loading after five seconds... sometimes the *always* function is not invoked
-  setTimeout(function() { set_loading_visible(false); }, 5000);
+  setTimeout(function () { set_loading_visible(false); }, 5000);
 }
 
 function router() {
-  var hash = location.hash;
+  let hash = location.hash;
   if (hash.slice(1, 7) !== 'search') {
     page_getter();
   } else {
-    github_search(hash.replace('#search=', ''));
+    let search_string = hash.replace('#search=', '');
+    search(search_string);
   }
 }

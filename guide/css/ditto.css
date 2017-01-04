@@ -70,7 +70,7 @@ body {
     /*font-size: 12px;*/
 }
 
-#content {
+.content {
     float: left;
     max-width: 700px;
     /* width: 580px; */
@@ -93,7 +93,7 @@ body {
     /*border-right: 1px solid black;*/
 }
 
-#content pre {
+.content pre {
     margin-left: auto;
     margin-right: auto;
 
@@ -107,11 +107,11 @@ body {
     border-radius: 5px;
 }
 
-#content pre code {
+.content pre code {
     padding-left: 0em;
 }
 
-#content code {
+.content code {
     padding-left: 5px;
     padding-right: 5px;
 
@@ -196,33 +196,33 @@ indent {
     display: block;
 }
 
-#content h1 {
+.content h1 {
     font-size: 2.5em;
 }
 
-#content h2 {
+.content h2 {
     padding-top: 10px;
     font-size: 1.3em;
 }
 
-#content h3 {
+.content h3 {
     padding-top: 10px;
     font-size: 1.1em;
 }
 
-#content h4 {
+.content h4 {
     padding-top: 10px;
     font-size: 1em;
 }
 
-#content hr {
+.content hr {
     border: 0;
     height: 0;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-#content img {
+.content img {
     max-width: 90%;
     display: block;
 
@@ -235,23 +235,23 @@ indent {
     /*box-shadow: 0 0 10px #ccc;*/
 }
 
-#content ul {
+.content ul {
     display: block;
     list-style-type: none;
 }
 
-#content ul li:before {  /* a hack to have dashes as a list style */
+.content ul li:before {  /* a hack to have dashes as a list style */
     content: "-";
     position: relative;
     left: -5px;
 }
 
-#content ul li {
+.content ul li {
     text-indent: -5px;  /* to compensate for the padding for the dash */
     /*font-size: 13px;*/
 }
 
-#content ul li.link {
+.content ul li.link {
     color: #4682BE;
     text-decoration: none;
     /*font-size: 13px;*/
@@ -259,7 +259,7 @@ indent {
     cursor: pointer;
 }
 
-#content a:link, #content a:visited {
+.content a:link, .content a:visited {
     color: #4682BE;
     text-decoration: none;
 }
@@ -330,30 +330,47 @@ input[type=search] {
     padding-right: 10px;
     padding-top: 0px;
     padding-bottom: 0px;
-    word-wrap: break-word;
+}
+
+.fragment pre {
+    white-space: pre-wrap;
+    display: inline-block;
+}
+
+.fragment p {
+    display: inline;
+    word-wrap: none;
+}
+
+.fragment p.highlight {
+    background: rgba(255, 230, 0, 0.5);
+    background-size: 500px 50px;
+    padding: 3px 7px;
+    margin: -3px -7px;
+    line-height: 1.7;
 }
 
 .search_results .link {
     margin-top: 35px;
 }
 
-#content ul li {
+.content ul li {
     text-align: left;
 }
 
-#content ul .fragments li:before {
+.content ul .fragments li:before {
     content: "";
     position: relative;
     left: 0px;
 }
 
-#content ul li.fragment:before {
+.content ul li.fragment:before {
     content: "";
     margin: 0;
     padding: 0;
 }
 
-#content img.github_badges {
+.content img.github_badges {
     display: inline;
     margin-top: 0;
     margin-bottom: 0;
