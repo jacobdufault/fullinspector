@@ -1,5 +1,0 @@
-var class_full_inspector_1_1_samples_1_1_proto_buf_net_1_1_sample_proto_custom_type_editor_editors_3_01_t1_00_01_t2_01_4 =
-[
-    [ "Edit", "class_full_inspector_1_1_samples_1_1_proto_buf_net_1_1_sample_proto_custom_type_editor_editors_3_01_t1_00_01_t2_01_4.html#a6bc891993ea5fa64e81553ad7ff120ad", null ],
-    [ "GetElementHeight", "class_full_inspector_1_1_samples_1_1_proto_buf_net_1_1_sample_proto_custom_type_editor_editors_3_01_t1_00_01_t2_01_4.html#a7406e1f44c440943ab4b4bbf3ae77407", null ]
-];

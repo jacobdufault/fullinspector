@@ -1,4 +1,0 @@
-var struct_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_behavibb6c6006cbfe6ecf9543d0ccc4757e60 =
-[
-    [ "Value", "struct_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_behavibb6c6006cbfe6ecf9543d0ccc4757e60.html#af996fb4ca277c0e954687a884f03c56d", null ]
-];

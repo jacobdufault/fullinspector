@@ -1,4 +1,0 @@
-var namespace_full_inspector_1_1_modules_1_1_type_specifier_impl =
-[
-    [ "TypeSpecifierPropertyEditor< TType >", "class_full_inspector_1_1_modules_1_1_type_specifier_impl_1_1_type_specifier_property_editor_3_01_t_type_01_4.html", "class_full_inspector_1_1_modules_1_1_type_specifier_impl_1_1_type_specifier_property_editor_3_01_t_type_01_4" ]
-];

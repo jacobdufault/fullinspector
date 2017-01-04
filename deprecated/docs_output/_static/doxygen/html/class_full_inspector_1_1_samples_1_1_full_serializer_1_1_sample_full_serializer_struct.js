@@ -1,5 +1,0 @@
-var class_full_inspector_1_1_samples_1_1_full_serializer_1_1_sample_full_serializer_struct =
-[
-    [ "MyStruct", "struct_full_inspector_1_1_samples_1_1_full_serializer_1_1_sample_full_serializer_struct_1_1_my_struct.html", "struct_full_inspector_1_1_samples_1_1_full_serializer_1_1_sample_full_serializer_struct_1_1_my_struct" ],
-    [ "StructValue", "class_full_inspector_1_1_samples_1_1_full_serializer_1_1_sample_full_serializer_struct.html#a072f8ca223a882d9c7b0f80ca33da7ca", null ]
-];

@@ -1,4 +1,0 @@
-var struct_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_dictionaries_1_1_container =
-[
-    [ "StrGoDict", "struct_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_dictionaries_1_1_container.html#a5b0093ef5e7363b8e33c231ffa61791a", null ]
-];

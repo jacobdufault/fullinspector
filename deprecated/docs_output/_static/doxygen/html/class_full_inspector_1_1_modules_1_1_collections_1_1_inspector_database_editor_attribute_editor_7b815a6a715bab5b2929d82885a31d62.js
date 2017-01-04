@@ -1,4 +1,0 @@
-var class_full_inspector_1_1_modules_1_1_collections_1_1_inspector_database_editor_attribute_editor_7b815a6a715bab5b2929d82885a31d62 =
-[
-    [ "CurrentIndex", "class_full_inspector_1_1_modules_1_1_collections_1_1_inspector_database_editor_attribute_editor_7b815a6a715bab5b2929d82885a31d62.html#ac3c0e7c18fb06207dbfe1789497f3db1", null ]
-];

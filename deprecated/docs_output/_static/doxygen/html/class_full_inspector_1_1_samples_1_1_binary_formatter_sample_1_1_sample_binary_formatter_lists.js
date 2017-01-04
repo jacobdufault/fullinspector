@@ -1,6 +1,0 @@
-var class_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_lists =
-[
-    [ "Container", "struct_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_lists_1_1_container.html", "struct_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_lists_1_1_container" ],
-    [ "IntArray", "class_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_lists.html#a77043e22c5fe736a8e58b3d251831f80", null ],
-    [ "IntList", "class_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_lists.html#ab55f18c07cf45cf9fbd69ef0ad910e67", null ]
-];

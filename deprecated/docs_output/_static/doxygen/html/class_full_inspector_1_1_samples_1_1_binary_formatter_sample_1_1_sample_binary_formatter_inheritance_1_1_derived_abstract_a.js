@@ -1,4 +1,0 @@
-var class_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_inheritance_1_1_derived_abstract_a =
-[
-    [ "A", "class_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_sample_binary_formatter_inheritance_1_1_derived_abstract_a.html#ab7c6668d093873e9637c1f15e08e81c4", null ]
-];

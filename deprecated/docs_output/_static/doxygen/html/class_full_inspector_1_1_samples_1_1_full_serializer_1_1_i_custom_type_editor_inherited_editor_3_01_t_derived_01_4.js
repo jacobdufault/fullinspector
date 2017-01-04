@@ -1,5 +1,0 @@
-var class_full_inspector_1_1_samples_1_1_full_serializer_1_1_i_custom_type_editor_inherited_editor_3_01_t_derived_01_4 =
-[
-    [ "Edit", "class_full_inspector_1_1_samples_1_1_full_serializer_1_1_i_custom_type_editor_inherited_editor_3_01_t_derived_01_4.html#a19c4c2ce94626df56e416e75abcd8650", null ],
-    [ "GetElementHeight", "class_full_inspector_1_1_samples_1_1_full_serializer_1_1_i_custom_type_editor_inherited_editor_3_01_t_derived_01_4.html#aa7d24200e98fd4e27e94a35cf3676fd0", null ]
-];

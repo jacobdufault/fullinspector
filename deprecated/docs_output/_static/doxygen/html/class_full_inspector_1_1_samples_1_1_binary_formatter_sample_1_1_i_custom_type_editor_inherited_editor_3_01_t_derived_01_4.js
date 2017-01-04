@@ -1,5 +1,0 @@
-var class_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_i_custom_type_editor_inherited_editor_3_01_t_derived_01_4 =
-[
-    [ "Edit", "class_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_i_custom_type_editor_inherited_editor_3_01_t_derived_01_4.html#a9d5f4215ac6e6addb0628c0f1f39dedb", null ],
-    [ "GetElementHeight", "class_full_inspector_1_1_samples_1_1_binary_formatter_sample_1_1_i_custom_type_editor_inherited_editor_3_01_t_derived_01_4.html#a380ed1f71d7af3b1f270c5875623e856", null ]
-];

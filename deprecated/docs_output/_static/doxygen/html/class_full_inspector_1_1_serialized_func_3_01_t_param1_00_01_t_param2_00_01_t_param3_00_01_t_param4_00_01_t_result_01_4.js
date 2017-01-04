@@ -1,4 +1,0 @@
-var class_full_inspector_1_1_serialized_func_3_01_t_param1_00_01_t_param2_00_01_t_param3_00_01_t_param4_00_01_t_result_01_4 =
-[
-    [ "Invoke", "class_full_inspector_1_1_serialized_func_3_01_t_param1_00_01_t_param2_00_01_t_param3_00_01_t_param4_00_01_t_result_01_4.html#a00a657835d14f32fd96edd556969f6ef", null ]
-];
