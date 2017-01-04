@@ -20,12 +20,9 @@ var ditto = {
 
   // where the docs are actually stored on github; this enables the edit button.
   base_url: "https://github.com/jacobdufault/fullinspector/edit/gh-pages/guide",
-
-  // initialize function
-  run: initialize
 };
 
-function initialize() {
+$(document).ready(() => {
   // Always clear the cache on startup so we don't have stale data.
   lscache.flush();
 
@@ -35,7 +32,7 @@ function initialize() {
   // page router
   router();
   $(window).on('hashchange', router);
-}
+});
 
 function init_sidebar() {
   get_file(ditto.sidebar_file,
