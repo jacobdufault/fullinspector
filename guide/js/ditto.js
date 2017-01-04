@@ -1,24 +1,21 @@
+// github info
 const GITHUB_REPO = 'jacobdufault/fullinspector';
+const GITHUB_DOC_URL = 'https://github.com/jacobdufault/fullinspector/edit/gh-pages/guide';
 
-var ditto = {
-  // selectors
-  content_id: "#content",
-  sidebar_id: "#sidebar",
-  edit_id: "#edit",
-  loading_id: "#loading",
-  error_id: "#error",
-  search_name: "#search",
-  search_results_class: ".search_results",
-  fragments_class: ".fragments",
-  fragment_class: ".fragment",
+// markdown files
+const MARKDOWN_INDEX = 'index.md'
+const MARKDOWN_SIDEBAR = 'sidebar.md'
 
-  // highlight markdown information
-  index: "index.md",
-  sidebar_file: "sidebar.md",
-
-  // where the docs are actually stored on github; this enables the edit button.
-  base_url: "https://github.com/jacobdufault/fullinspector/edit/gh-pages/guide",
-};
+// selectors
+const ERROR_SELECTOR = '#error';
+const CONTENT_SELECTOR = "#content";
+const SIDEBAR_SELECTOR = "#sidebar";
+const EDIT_SELECTOR = "#edit";
+const LOADING_SELECTOR = "#loading";
+const SEARCH_SELECTOR = "#search";
+const SEARCH_RESULTS_CLASS = ".search_results";
+const FRAGMENTS_CLASS = ".fragments";
+const FRAGMENT_CLASS = ".fragment";
 
 $(document).ready(() => {
   // Always clear the cache on startup so we don't have stale data.
@@ -33,10 +30,10 @@ $(document).ready(() => {
 });
 
 function init_sidebar() {
-  get_file(ditto.sidebar_file,
+  get_file(MARKDOWN_SIDEBAR,
     /*processor:*/function (data) {
       var marked_data = marked(data);
-      $(ditto.sidebar_id).html(marked_data);
+      $(SIDEBAR_SELECTOR).html(marked_data);
 
       init_searchbar();
     },
@@ -46,47 +43,47 @@ function init_sidebar() {
 }
 
 function init_edit_button() {
-  $(ditto.edit_id).show();
-  $(ditto.edit_id).on("click", function () {
+  $(EDIT_SELECTOR).show();
+  $(EDIT_SELECTOR).on("click", function () {
     var hash = location.hash.replace("#", "/");
 
     if (hash === "") {
-      hash = "/" + ditto.index.replace(".md", "");
+      hash = "/" + MARKDOWN_INDEX.replace(".md", "");
     }
 
     hash = hash.split('?')[0];
 
     // open is better than redirecting, as the previous page history
     // with redirect is a bit messed up
-    window.open(ditto.base_url + hash + ".md");
+    window.open(GITHUB_DOC_URL + hash + ".md");
   });
 }
 
 function init_searchbar() {
-  var sidebar = $(ditto.sidebar_id).html();
+  var sidebar = $(SIDEBAR_SELECTOR).html();
   var match = "[ditto:searchbar]";
 
   // html input searchbar
-  var search = "<input name='" + ditto.search_name + "'";
+  var search = "<input name='" + SEARCH_SELECTOR + "'";
   search = search + " type='search'";
   search = search + " results='10'>";
 
   // replace match code with a real html input search bar
   sidebar = sidebar.replace(match, search);
-  $(ditto.sidebar_id).html(sidebar);
+  $(SIDEBAR_SELECTOR).html(sidebar);
 
   // add search listener
-  $("input[name=" + ditto.search_name + "]").keydown(searchbar_listener);
+  $("input[name=" + SEARCH_SELECTOR + "]").keydown(searchbar_listener);
 }
 
 function build_text_matches_html(fragments) {
   var html = "";
-  var class_name = ditto.fragments_class.replace(".", "");
+  var class_name = FRAGMENTS_CLASS.replace(".", "");
 
   html += "<ul class='" + class_name + "'>";
   for (var i = 0; i < fragments.length; i++) {
     var fragment = fragments[i].fragment.replace("/[\uE000-\uF8FF]/g", "");
-    html += "<li class='" + ditto.fragment_class.replace(".", "") + "'>";
+    html += "<li class='" + FRAGMENT_CLASS.replace(".", "") + "'>";
     html += "<pre><code> ";
     fragment = $("#hide").text(fragment).html();
     html += fragment;
@@ -99,7 +96,7 @@ function build_text_matches_html(fragments) {
 
 function build_result_matches_html(matches) {
   var html = "";
-  var class_name = ditto.search_results_class.replace(".", "");
+  var class_name = SEARCH_RESULTS_CLASS.replace(".", "");
 
   html += "<ul class='" + class_name + "'>";
   for (var i = 0; i < matches.length; i++) {
@@ -111,7 +108,7 @@ function build_result_matches_html(matches) {
       continue;
     }
 
-    if (url == ditto.sidebar_file) {
+    if (url == MARKDOWN_SIDEBAR) {
       console.log("Skipping " + url);
       continue;
     }
@@ -188,14 +185,14 @@ function github_search(query) {
       show_error("Oops! No matches found");
     }
 
-    $(ditto.content_id).html(results_html);
+    $(CONTENT_SELECTOR).html(results_html);
   });
 }
 
 function searchbar_listener(event) {
   // when user presses ENTER in search bar
   if (event.which === 13) {
-    var q = $("input[name=" + ditto.search_name + "]").val();
+    var q = $("input[name=" + SEARCH_SELECTOR + "]").val();
     if (q !== "") {
       location.hash = "#search=" + q;
     }
@@ -216,7 +213,7 @@ function li_create_linkage(li_tag, header_level) {
   make_link(li_tag);
 
   // add click listener - on click scroll to relevant header section
-  $(ditto.content_id + " li#" + li_tag.attr("id")).click(function (event) {
+  $(CONTENT_SELECTOR + " li#" + li_tag.attr("id")).click(function (event) {
     event.preventDefault();
 
     // scroll to relevant section
@@ -237,7 +234,7 @@ function find_header(anchor_name) {
 }
 
 function find_header_at_level(anchor_name, level) {
-  return $(ditto.content_id + " h" + level + "." + anchor_name);
+  return $(CONTENT_SELECTOR + " h" + level + "." + anchor_name);
 }
 
 function scroll_to_header(header, animate) {
@@ -267,7 +264,7 @@ function create_page_anchors() {
   for (var i = 1; i <= 6; i++) {
     // parse all headers
     var headers = [];
-    $(ditto.content_id + ' h' + i).map(function () {
+    $(CONTENT_SELECTOR + ' h' + i).map(function () {
       headers.push($(this).text());
 
       var id = replace_symbols($(this).text());
@@ -278,7 +275,7 @@ function create_page_anchors() {
     });
 
     // parse and set links between li and h2
-    $(ditto.content_id + ' ul li').map(function () {
+    $(CONTENT_SELECTOR + ' ul li').map(function () {
       for (var j = 0; j < headers.length; j++) {
         if (headers[j] === $(this).text()) {
           li_create_linkage($(this), i);
@@ -289,31 +286,31 @@ function create_page_anchors() {
 }
 
 function show_error(err_msg) {
-  $(ditto.error_id).html(err_msg);
-  $(ditto.error_id).show();
+  $(ERROR_SELECTOR).html(err_msg);
+  $(ERROR_SELECTOR).show();
 }
 
 function hide_error() {
-  $(ditto.error_id).hide();
+  $(ERROR_SELECTOR).hide();
 }
 
 function set_loading_visible(visible) {
   // show
   if (visible) {
-    $(ditto.loading_id).show();
-    $(ditto.content_id).html("");  // clear content
+    $(LOADING_SELECTOR).show();
+    $(CONTENT_SELECTOR).html("");  // clear content
 
     // infinite loop until clearInterval() is called on loading
-    ditto.loading = setInterval(function () {
-      $(ditto.loading_id).fadeIn(1000).fadeOut(1000);
+    loading = setInterval(function () {
+      $(LOADING_SELECTOR).fadeIn(1000).fadeOut(1000);
     }, 2000);
   }
 
   // hide
   else {
-    clearInterval(ditto.loading);
-    delete ditto.loading;
-    $(ditto.loading_id).hide();
+    clearInterval(loading);
+    delete loading;
+    $(LOADING_SELECTOR).hide();
   }
 }
 
@@ -351,7 +348,7 @@ function page_getter() {
 
   // If we don't have a hash, then use the default page.
   if (location.hash === "") {
-    request_path = ditto.index;
+    request_path = MARKDOWN_INDEX;
     scroll_target = location.search.substr(1);
   }
 
@@ -381,10 +378,10 @@ function page_getter() {
     /*processor:*/ function (data) {
       // compile the data
       data = marked(data);
-      $(ditto.content_id).html(data);
+      $(CONTENT_SELECTOR).html(data);
 
       // We do not create anchors on the main page. It breaks things.
-      if (request_path != ditto.index)
+      if (request_path != MARKDOWN_INDEX)
         create_page_anchors();
 
       // Highlight code.
