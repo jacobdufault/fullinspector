@@ -411,7 +411,6 @@ function page_getter() {
 
 function router() {
   var hash = location.hash;
-
   if (hash.slice(1, 7) !== 'search') {
     page_getter();
   } else {
