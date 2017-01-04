@@ -1,3 +1,5 @@
+const GITHUB_REPO = 'jacobdufault/fullinspector';
+
 var ditto = {
   // selectors
   content_id: "#content",
@@ -9,10 +11,6 @@ var ditto = {
   search_results_class: ".search_results",
   fragments_class: ".fragments",
   fragment_class: ".fragment",
-
-  // github specifics
-  github_username: "jacobdufault",
-  github_repo: "fullinspector",
 
   // highlight markdown information
   index: "index.md",
@@ -175,10 +173,9 @@ function github_search(query) {
   // build github search api url string
   var github_api = "https://api.github.com/";
   var search = "search/code?q=";
-  var github_repo = ditto.github_username + "/" + ditto.github_repo;
   var search_details = "+in:file+language:markdown+repo:";
 
-  var url = github_api + search + query + search_details + github_repo;
+  var url = github_api + search + query + search_details + GITHUB_REPO;
   var accept_header = "application/vnd.github.v3.text-match+json";
 
   $.ajax(url, { headers: { Accept: accept_header } }).done(function (data) {
