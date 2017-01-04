@@ -17,6 +17,9 @@ const SEARCH_RESULTS_CLASS = '.search_results';
 const FRAGMENTS_CLASS = '.fragments';
 const FRAGMENT_CLASS = '.fragment';
 
+// config
+const CACHE_EXPIRATION_MINUTES = 5;
+
 $(document).ready(() => {
   // Always clear the cache on startup so we don't have stale data.
   lscache.flush();
@@ -30,16 +33,18 @@ $(document).ready(() => {
 });
 
 function init_sidebar() {
-  get_file(MARKDOWN_SIDEBAR,
-    /*processor:*/function (data) {
+  get_file(MARKDOWN_SIDEBAR, {
+    success: function (data) {
       var marked_data = marked(data);
       $(SIDEBAR_SELECTOR).html(marked_data);
 
       init_searchbar();
     },
-    /*error:*/function () {
+
+    error: function () {
       alert('Sidebar failed to load');
-    });
+    }
+  });
 }
 
 function init_edit_button() {
@@ -314,25 +319,27 @@ function set_loading_visible(visible) {
   }
 }
 
-function get_file(path, processor, failed, always) {
-  var CACHE_EXPIRATION_MINUTES = 5;
+function get_file(path, {success, error, always}) {
+  console.assert(success);
+  console.assert(error);
+
   lscache.enableWarnings(true);
 
   var data = lscache.get(path);
   if (data) {
-    console.log('found cached result for ' + path);
-    processor(data);
+    console.log('[CACHE HIT]: ' + path);
+    success(data);
 
     if (always)
       always();
   }
 
   else {
-    console.log('running query for ' + path);
+    console.log('[CACHE MISS]: ' + path);
     $.get(path, function (data) {
       lscache.set(path, data, CACHE_EXPIRATION_MINUTES);
-      processor(data);
-    }).fail(failed)
+      success(data);
+    }).fail(error)
       .always(always);
   }
 }
@@ -374,8 +381,8 @@ function page_getter() {
   hide_error();
   set_loading_visible(true);
 
-  get_file(request_path,
-    /*processor:*/ function (data) {
+  get_file(request_path, {
+    success: function (data) {
       // compile the data
       data = marked(data);
       $(CONTENT_SELECTOR).html(data);
@@ -398,12 +405,15 @@ function page_getter() {
           scroll_to_header(header, /*animate:*/false);
       }
     },
-    /*error:*/ function () {
+
+    error: function () {
       show_error('Opps! File not found!');
     },
-    /*always:*/ function () {
+
+    always: function () {
       set_loading_visible(false);
-    });
+    }
+  });
 
   // hide loading after five seconds... sometimes the *always* function is not invoked
   setTimeout(function() { set_loading_visible(false); }, 5000);
