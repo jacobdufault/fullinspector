@@ -171,9 +171,9 @@ namespace FullInspector {
 
             var type = GetType();
             while (type != null) {
-                foreach (var member in type.GetDeclaredMembers()) {
-                    Type memberType;
-                    if (TryGetMemberType(member, out memberType) == false) continue;
+                var inspectedMembers = InspectedType.Get(type).GetMembers(InspectedMemberFilters.TkControlMembers);
+                foreach (InspectedMember member in inspectedMembers) {
+                    var memberType = member.Property.StorageType;
 
                     if (typeof(tkIControl).IsAssignableFrom(memberType)) {
                         tkIControl control;
@@ -182,6 +182,8 @@ namespace FullInspector {
 
                         control.InitializeId(ref nextId);
                     }
+                    //this is a redundant check, since this is sure to be compatible with IEnumerable (because of our filter)
+                    //But, since this reads better, it is kept.
                     else if (typeof(IEnumerable<tkIControl>).IsAssignableFrom(memberType)) {
                         IEnumerable<tkIControl> controls;
                         if (TryReadValue(member, this, out controls) == false) continue;
@@ -204,31 +206,20 @@ namespace FullInspector {
             get { yield break; }
         }
 
-        private static bool TryReadValue<TValue>(MemberInfo member, object context, out TValue value) {
-            if (member is FieldInfo) {
-                value = (TValue)((FieldInfo)member).GetValue(context);
+        private static bool TryReadValue<TValue>(InspectedMember inspectedMember, object context, out TValue value) {
+            var propertyInfo = inspectedMember.MemberInfo as PropertyInfo;
+            if (propertyInfo != null) {
+                value = (TValue) propertyInfo.GetValue(context, null);
                 return true;
             }
-            if (member is PropertyInfo) {
-                value = (TValue)((PropertyInfo)member).GetValue(context, null);
+
+            var info = inspectedMember.MemberInfo as FieldInfo;
+            if (info != null) {
+                value = (TValue) info.GetValue(context);
                 return true;
             }
 
             value = default(TValue);
-            return false;
-        }
-
-        private static bool TryGetMemberType(MemberInfo member, out Type memberType) {
-            if (member is FieldInfo) {
-                memberType = ((FieldInfo)member).FieldType;
-                return true;
-            }
-            if (member is PropertyInfo) {
-                memberType = ((PropertyInfo)member).PropertyType;
-                return true;
-            }
-
-            memberType = null;
             return false;
         }
     }

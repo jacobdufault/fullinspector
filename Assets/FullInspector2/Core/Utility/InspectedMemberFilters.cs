@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using FullInspector.Internal;
 using FullSerializer.Internal;
@@ -65,6 +66,19 @@ namespace FullInspector {
             }
         }
         public static IInspectedMemberFilter ButtonMembers = new ButtonMembersFilter();
+
+        public class TkControlMembersFilter: IInspectedMemberFilter {
+
+            public bool IsInterested(InspectedProperty property) {
+                return (typeof(IEnumerable<tkIControl>).IsAssignableFrom(property.StorageType) ||
+                        typeof(tkIControl).IsAssignableFrom(property.StorageType));
+            }
+
+            public bool IsInterested(InspectedMethod method) {
+                return false;
+            }
+        }
+        public static TkControlMembersFilter TkControlMembers = new TkControlMembersFilter();
 
         /// <summary>
         /// Returns true if the given property should be displayed in the
