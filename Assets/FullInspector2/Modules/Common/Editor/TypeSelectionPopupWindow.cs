@@ -24,9 +24,10 @@ namespace FullInspector.Modules {
             window._onSelectType = onSelectType;
             var filters = fiSettings.TypeSelectionDefaultFilters;
             if (filters != null) {
-                _filteredTypesWithStatics = (from type in _allTypesWithStatics
-                                             where filters.Any(t => type.FullName.ToUpper().Contains(t.ToUpper()))
-                                             select type).ToList();
+                _filteredTypesWithStatics =
+                (from type in _allTypesWithStatics
+                 where filters.Any(t => type.FullName.IndexOf(t, StringComparison.InvariantCultureIgnoreCase) >= 0)
+                 select type).ToList();
             } else {
                 window._useGlobalFilter = false;
             }
@@ -43,13 +44,14 @@ namespace FullInspector.Modules {
         private static List<Type> _filteredTypesWithStatics;
 
         static TypeSelectionPopupWindow() {
+            var prevEmitWarningsSetting = fiSettings.EmitWarnings;
+            fiSettings.EmitWarnings = false;
             _allTypesWithStatics = new List<Type>();
             var blackList = fiSettings.TypeSelectionBlacklist;
 
             foreach (Assembly assembly in fiRuntimeReflectionUtility.GetUserDefinedEditorAssemblies()) {
                 foreach (Type type in assembly.GetTypesWithoutException()) {
-                    var inspected = InspectedType.Get(type);
-                    if (inspected.IsCollection == false) {
+                    if (!type.IsArray && !type.IsImplementationOf(typeof(ICollection<>))) {
                         var shouldAdd = blackList == null ||
                                         !blackList.Any(t => type.FullName.ToUpper().Contains(t.ToUpper()));
 
@@ -62,9 +64,10 @@ namespace FullInspector.Modules {
             }
 
             _allTypesWithStatics = (from type in _allTypesWithStatics
-                                    orderby type.CSharpName()
-                                    orderby type.Namespace
+                                    orderby type.CSharpName(), type.Namespace
                                     select type).ToList();
+
+            fiSettings.EmitWarnings = prevEmitWarningsSetting;
         }
 
         private Vector2 _scrollPosition;
