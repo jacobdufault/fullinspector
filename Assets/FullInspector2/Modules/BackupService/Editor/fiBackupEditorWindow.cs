@@ -1,7 +1,7 @@
-﻿using System;
+﻿using FullInspector.Internal;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using FullInspector.Internal;
 using UnityEditor;
 using UnityEngine;
 using UnityObject = UnityEngine.Object;
@@ -40,23 +40,21 @@ namespace FullInspector.BackupService {
             return target.name.IndexOf(NameFilter, StringComparison.CurrentCultureIgnoreCase) >= 0;
         }
 
-        private IEnumerable<UnityObject> Targets(IEnumerable<fiSerializedObject> backups) {
-            var targets = new HashSet<UnityObject>();
+        private IEnumerable<fiUnityObjectReference> Targets(IEnumerable<fiSerializedObject> backups) {
+            var targets = new HashSet<fiUnityObjectReference>();
 
             foreach (var backup in backups) {
-                targets.Add(backup.Target.Target);
+                targets.Add(backup.Target);
             }
 
-            return targets.OrderBy(obj => obj.name);
+            return targets.OrderBy(obj => obj.Target.name);
         }
 
         private void OnGUI() {
             var savedHierarchyMode = EditorGUIUtility.hierarchyMode;
             EditorGUIUtility.hierarchyMode = false;
-
             fiStorageManager.MigrateStorage();
             fiStorageManager.RemoveInvalidBackups();
-
             Repaint();
 
             //GUILayout.Label("Full Inspector Dynamic Object Saved State Solution", EditorStyles.boldLabel);
@@ -80,7 +78,8 @@ namespace FullInspector.BackupService {
 
             EditorGUILayout.Space();
 
-            if (fiStorageManager.SerializedObjects.Count() == 0) {
+            var allObjects = fiStorageManager.GetAllSerializedObjects().ToList();
+            if (!allObjects.Any()) {
                 EditorGUILayout.HelpBox(
                     "It looks like you don't have any backups! To create one, simply right click a " +
                     "supported behavior and hit the Backup context menu item. This will work in both " +
@@ -94,14 +93,14 @@ namespace FullInspector.BackupService {
             _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition, GUIStyle.none);
             var toRemove = new List<fiSerializedObject>();
 
-            foreach (UnityObject target in Targets(fiStorageManager.SerializedObjects)) {
-                if (PassesFilter(target) == false) {
+            foreach (fiUnityObjectReference target in Targets(allObjects)) {
+                if (PassesFilter(target.Target) == false) {
                     continue;
                 }
 
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Target (" + target.GetType().Name + ")", EditorStyles.boldLabel);
-                EditorGUILayout.ObjectField(target, target.GetType(), false, GUILayout.Width(200));
+                EditorGUILayout.LabelField("Target (" + target.Target.GetType().Name + ")", EditorStyles.boldLabel);
+                EditorGUILayout.ObjectField(target.Target, target.GetType(), false, GUILayout.Width(200));
                 EditorGUILayout.EndHorizontal();
 
                 GUILayout.Space(4);
@@ -116,8 +115,7 @@ namespace FullInspector.BackupService {
                 fiEditorGUILayout.Splitter(3);
             }
 
-            foreach (fiSerializedObject backup in toRemove) {
-                Undo.RecordObject(fiStorageManager.PersistentStorage, "Undo Backup Removal");
+            foreach (var backup in toRemove) {
                 fiStorageManager.RemoveBackup(backup);
             }
 
