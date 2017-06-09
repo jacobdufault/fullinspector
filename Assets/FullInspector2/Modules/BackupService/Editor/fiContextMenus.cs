@@ -4,12 +4,9 @@ using UnityEngine;
 namespace FullInspector.BackupService {
     public class fiContextMenus {
         // We support backup for *all* components derived from BaseBehavior
-        [MenuItem("CONTEXT/CommonBaseBehavior/Backup")]
+        [MenuItem("CONTEXT/CommonBaseBehavior/�� Backup")]
         public static void BackupBaseBehavior(MenuCommand command) {
-            if (command.context is Component) {
-                var component = (Component)command.context;
-                fiBackupManager.CreateBackup(component);
-            }
+            TryBackup(command.context);
         }
 
         // We have to white-list other components, to verify that they work with
@@ -17,10 +14,14 @@ namespace FullInspector.BackupService {
         // better support in the future for more components, we might need to
         // introduction an abstraction into CreateBackup.
 
-        [MenuItem("CONTEXT/Transform/Backup")]
+        [MenuItem("CONTEXT/Transform/�� Backup")]
         public static void BackupTransform(MenuCommand command) {
-            if (command.context is Component) {
-                var component = (Component)command.context;
+            TryBackup(command.context);
+        }
+
+        private static void TryBackup(Object o) {
+            var component = o as Component;
+            if (component != null) {
                 fiBackupManager.CreateBackup(component);
             }
         }

@@ -80,6 +80,7 @@ namespace FullInspector.BackupService {
             Type serializerType = BehaviorTypeToSerializerTypeMap.GetSerializerType(targetType);
             var serializer = (BaseSerializer)fiSingletons.Get(serializerType);
 
+            Undo.RegisterCompleteObjectUndo(serializedState.Target.Target, "Restored backup");
             foreach (fiSerializedMember member in serializedState.Members) {
                 // user requested a skip for restoring this property
                 if (member.ShouldRestore.Enabled == false) {
