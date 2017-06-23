@@ -88,7 +88,6 @@ namespace FullInspector.StoragesManager {
                 }
             }
 
-            //latodo this should be on the PR as well (the DontDestroyOnLoad check)
             if (!scene.IsValid() || !scene.isLoaded || scene.name == "DontDestroyOnLoad") {
                 return PrefabStorage;
             }
@@ -113,7 +112,7 @@ namespace FullInspector.StoragesManager {
                         mustRefresh = true;
                     } else {
                         for (var i = 0; i < SceneManager.sceneCount; i++) {
-                            var scene = SceneManager.GetSceneAt(i);
+                            Scene scene = SceneManager.GetSceneAt(i);
                             if (scene.isLoaded) {
                                 if (_Storages.ContainsKey(scene)) {
                                     continue;
@@ -153,7 +152,7 @@ namespace FullInspector.StoragesManager {
             }
 
             for (var i = 0; i < SceneManager.sceneCount; i++) {
-                var scene = SceneManager.GetSceneAt(i);
+                Scene scene = SceneManager.GetSceneAt(i);
                 if (_Storages.ContainsKey(scene) || !scene.isLoaded) {
                     continue;
                 }
@@ -172,7 +171,7 @@ namespace FullInspector.StoragesManager {
         private bool UpdateLastSeenScenes() {
             List<Scene> currentlyLoaded = new List<Scene>();
             for (int i = 0; i < SceneManager.sceneCount; i++) {
-                var s = SceneManager.GetSceneAt(i);
+                Scene s = SceneManager.GetSceneAt(i);
                 if (s.isLoaded) {
                     currentlyLoaded.Add(s);
                 }
