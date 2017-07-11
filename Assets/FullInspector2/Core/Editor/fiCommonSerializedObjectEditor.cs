@@ -267,8 +267,13 @@ namespace FullInspector {
             }
         }
 
+        private fiUnityObjectReference _fiUnityObjectReference;
         public override void OnInspectorGUI() {
-            ShowBackupButton(new fiUnityObjectReference(target, tryRestore: false));
+            if (_fiUnityObjectReference == null) {
+                _fiUnityObjectReference = new fiUnityObjectReference(target, tryRestore: false);
+            }
+
+            ShowBackupButton(_fiUnityObjectReference);
             ShowInspectorForSerializedObject(targets);
         }
 
