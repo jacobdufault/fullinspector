@@ -9,9 +9,11 @@ namespace FullInspector.Internal {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(MonoBehaviour), true)]
     public class fiInspectorOnly_MonoBehaviourEditor : Editor {
+        private readonly UnityEngine.Object[] _targetArr = new UnityEngine.Object[1];
         public override void OnInspectorGUI() {
             if (fsPortableReflection.HasAttribute<fiInspectorOnlyAttribute>(target.GetType()) || target is tkCustomEditor) {
-                fiCommonSerializedObjectEditor.ShowInspectorForSerializedObject(target);
+                _targetArr[0] = target;
+                fiCommonSerializedObjectEditor.ShowInspectorForSerializedObject(_targetArr);
             }
             else {
                 base.OnInspectorGUI();

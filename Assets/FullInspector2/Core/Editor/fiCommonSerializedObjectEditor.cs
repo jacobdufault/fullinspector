@@ -223,10 +223,6 @@ namespace FullInspector {
             }
         }
 
-        public static void ShowInspectorForSerializedObject(UnityObject target) {
-            ShowInspectorForSerializedObject(new[] { target });
-        }
-
         public static void ShowInspectorForSerializedObject(UnityObject[] targets) {
             CheckForNewBaseBehaviorType(targets[0].GetType());
             DrawOpenScriptButton(targets[0]);
