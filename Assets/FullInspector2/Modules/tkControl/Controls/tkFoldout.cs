@@ -8,15 +8,16 @@ namespace FullInspector {
         /// </summary>
         public class Foldout : tkControl<T, TContext> {
             private readonly GUIStyle _foldoutStyle;
+            private readonly Value<FontStyle> _foldoutFontStyle;
 
             [ShowInInspector]
-            private readonly fiGUIContent _label;
+            private readonly Value<fiGUIContent> _label;
 
             [ShowInInspector]
             private readonly tkControl<T, TContext> _control;
 
             [ShowInInspector]
-            private readonly bool _defaultToExpanded;
+            private readonly Value<bool> _defaultToExpanded;
 
             /// <summary>
             /// Should the child control be indented? This defaults to true.
@@ -47,26 +48,28 @@ namespace FullInspector {
                 : this(label, fontStyle, true, control) {
             }
 
-            public Foldout(fiGUIContent label, FontStyle fontStyle, bool defaultToExpanded, tkControl<T, TContext> control) {
+            public Foldout(Value<fiGUIContent> label, Value<FontStyle> fontStyle, Value<bool> defaultToExpanded, tkControl<T, TContext> control) {
                 _label = label;
-                _foldoutStyle = new GUIStyle(fiLateBindings.EditorStyles.foldout) {
-                    fontStyle = fontStyle
-                };
+                _foldoutStyle = new GUIStyle(fiLateBindings.EditorStyles.foldout);
+                _foldoutFontStyle = fontStyle;
                 _defaultToExpanded = defaultToExpanded;
                 _control = control;
             }
 
-            private tkFoldoutMetadata GetMetadata(fiGraphMetadata metadata) {
+            public Foldout(fiGUIContent label, FontStyle fontStyle, bool defaultToExpanded, tkControl<T, TContext> control)
+                : this(Val(label), Val(fontStyle), Val(defaultToExpanded), control) {
+            }
+
+
+            private tkFoldoutMetadata GetMetadata(fiGraphMetadata metadata, T obj, TContext context) {
                 bool wasCreated;
                 var foldout = GetInstanceMetadata(metadata).GetPersistentMetadata<tkFoldoutMetadata>(out wasCreated);
-
-                if (wasCreated) foldout.IsExpanded = _defaultToExpanded;
-
+                if (wasCreated) foldout.IsExpanded = _defaultToExpanded.GetCurrentValue(obj, context);
                 return foldout;
             }
 
             protected override T DoEdit(Rect rect, T obj, TContext context, fiGraphMetadata metadata) {
-                var foldout = GetMetadata(metadata);
+                var foldout = GetMetadata(metadata, obj, context);
 
                 if (HierarchyMode.HasValue) {
                     fiLateBindings.fiEditorGUI.PushHierarchyMode(HierarchyMode.Value);
@@ -74,7 +77,8 @@ namespace FullInspector {
 
                 Rect foldoutRect = rect;
                 foldoutRect.height = fiLateBindings.EditorGUIUtility.singleLineHeight;
-                foldout.IsExpanded = fiLateBindings.EditorGUI.Foldout(foldoutRect, foldout.IsExpanded, _label, /*toggleOnLabelClick:*/true, _foldoutStyle);
+                _foldoutStyle.fontStyle = _foldoutFontStyle.GetCurrentValue(obj, context);
+                foldout.IsExpanded = fiLateBindings.EditorGUI.Foldout(foldoutRect, foldout.IsExpanded, _label.GetCurrentValue(obj, context), /*toggleOnLabelClick:*/true, _foldoutStyle);
 
                 if (foldout.IsExpanded) {
                     var delta = fiLateBindings.EditorGUIUtility.singleLineHeight + fiLateBindings.EditorGUIUtility.standardVerticalSpacing;
@@ -98,7 +102,7 @@ namespace FullInspector {
             }
 
             protected override float DoGetHeight(T obj, TContext context, fiGraphMetadata metadata) {
-                var foldout = GetMetadata(metadata);
+                var foldout = GetMetadata(metadata, obj, context);
 
                 float height = fiLateBindings.EditorGUIUtility.singleLineHeight;
 
