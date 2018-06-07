@@ -236,6 +236,17 @@ namespace FullInspector.Modules {
         }
     }
 
+    [CustomPropertyEditor(typeof(Color32))]
+    public class Color32PropertyEditor : PropertyEditor<Color32> {
+        public override Color32 Edit(Rect region, GUIContent label, Color32 element, fiGraphMetadata metadata) {
+            return EditorGUI.ColorField(region, label, element);
+        }
+
+        public override float GetElementHeight(GUIContent label, Color32 element, fiGraphMetadata metadata) {
+            return EditorStyles.colorField.CalcHeight(label, 1000);
+        }
+    }
+
     [CustomPropertyEditor(typeof(AnimationCurve))]
     public class AnimationCurvePropertyEditor : PropertyEditor<AnimationCurve> {
         public override AnimationCurve Edit(Rect region, GUIContent label, AnimationCurve element, fiGraphMetadata metadata) {
