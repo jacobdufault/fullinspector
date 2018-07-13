@@ -77,7 +77,7 @@ namespace FullInspector {
             EditorGUIUtility.labelWidth = fiGUI.PushLabelWidth(GUIContent.none, rect.width);
 
             // Run the editor
-            OnEdit(rect, (TBehavior)behavior, fiPersistentMetadata.GetMetadataFor(behavior));
+            OnEdit(rect, (TBehavior)behavior, fiPersistentMetadata.GetMetadataFor(new fiUnityObjectReference(behavior, tryRestore: false)));
 
             EditorGUIUtility.labelWidth = savedLabelWidth;
 
@@ -99,7 +99,7 @@ namespace FullInspector {
         }
 
         public float GetHeight(UnityObject behavior) {
-            return OnGetHeight((TBehavior)behavior, fiPersistentMetadata.GetMetadataFor(behavior));
+            return OnGetHeight((TBehavior)behavior, fiPersistentMetadata.GetMetadataFor(new fiUnityObjectReference(behavior, tryRestore: false)));
         }
     }
 }

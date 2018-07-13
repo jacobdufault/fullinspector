@@ -54,7 +54,10 @@ namespace FullInspector {
 
         [MenuItem("Window/Full Inspector/Developer/Remove Metadata", priority = 2)]
         public static void RemoveMetadata() {
-            fiUtility.DestroyObject(fiPersistentEditorStorage.SceneStorage);
+            foreach (var storage in fiPersistentEditorStorage.GetAllCachedSceneStorages()) {
+                fiUtility.DestroyObject(storage);
+            }
+
             fiUtility.DestroyObject(fiPersistentEditorStorage.PrefabStorage);
         }
 

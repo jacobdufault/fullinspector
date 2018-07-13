@@ -8,8 +8,12 @@ namespace FullInspector.Internal {
     public abstract class fiPersistentEditorStorageMetadataProvider<TItem, TStorage> : fiIPersistentMetadataProvider
         where TItem : new()
         where TStorage : fiIGraphMetadataStorage, new() {
+
         public void RestoreData(fiUnityObjectReference target) {
-            fiPersistentEditorStorage.Read<TStorage>(target).RestoreData(target);
+            var o = fiPersistentEditorStorage.Read<TStorage>(target);
+            if (o != null) {
+                o.RestoreData(target);
+            }
         }
 
         public void Reset(fiUnityObjectReference target) {

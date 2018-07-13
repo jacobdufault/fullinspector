@@ -1,6 +1,6 @@
-﻿using System;
+﻿using FullInspector.Internal;
+using System;
 using System.Collections.Generic;
-using FullInspector.Internal;
 using UnityEditor;
 using UnityEngine;
 
@@ -14,7 +14,8 @@ namespace FullInspector.BackupService {
         /// Returns all backups for the given object.
         /// </summary>
         public static IEnumerable<fiSerializedObject> GetBackupsFor(CommonBaseBehavior behavior) {
-            foreach (var backup in fiStorageManager.SerializedObjects) {
+            var allObjects = fiStorageManager.GetAllSerializedObjects();
+            foreach (var backup in allObjects) {
                 if (backup.Target.Target == behavior) {
                     yield return backup;
                 }
@@ -31,19 +32,21 @@ namespace FullInspector.BackupService {
 
             // serialization failed
             if (serialized == null) {
+                Debug.Log("Failed to serialize object. Backup failed.");
                 return;
             }
 
+            fiStorageComponent storage;
             if (PrefabUtility.GetPrefabType(behavior) == PrefabType.Prefab) {
-                fiPrefabManager.Storage.Objects.Add(serialized);
-                EditorGUIUtility.PingObject(fiPrefabManager.Storage);
-            }
-            else {
-                fiStorageManager.PersistentStorage.Objects.Add(serialized);
-                EditorGUIUtility.PingObject(fiStorageManager.PersistentStorage);
+                storage = fiStorageManager.PrefabStorage ;
+            } else {
+                var target = serialized.Target.Target;
+                storage = fiStorageManager.GetPersistentStorage(target.GetInstanceID());
             }
 
-            fiPrefabManager.SetDirty();
+            storage.Objects.Add(serialized);
+            storage.SetDirty();
+            EditorGUIUtility.PingObject(storage);
         }
 
         /// <summary>
@@ -77,6 +80,7 @@ namespace FullInspector.BackupService {
             Type serializerType = BehaviorTypeToSerializerTypeMap.GetSerializerType(targetType);
             var serializer = (BaseSerializer)fiSingletons.Get(serializerType);
 
+            Undo.RegisterCompleteObjectUndo(serializedState.Target.Target, "Restored backup");
             foreach (fiSerializedMember member in serializedState.Members) {
                 // user requested a skip for restoring this property
                 if (member.ShouldRestore.Enabled == false) {
