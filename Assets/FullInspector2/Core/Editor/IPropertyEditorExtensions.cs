@@ -93,6 +93,7 @@ namespace FullInspector {
                 if (typeof(T).IsPrimitive) result = DoEditFast(api, region, label, element, metadata.Metadata);
                 else result = DoEditSlow(api, region, label, element, metadata.Metadata);
 
+                fiGUI.PopLabelWidth();
                 EditorGUIUtility.labelWidth = currentLabeWidth;
 
                 return result;
