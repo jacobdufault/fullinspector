@@ -79,6 +79,7 @@ namespace FullInspector {
             // Run the editor
             OnEdit(rect, (TBehavior)behavior, fiPersistentMetadata.GetMetadataFor(behavior));
 
+            fiGUI.PopLabelWidth();
             EditorGUIUtility.labelWidth = savedLabelWidth;
 
             // If the GUI has been changed, then we want to reserialize the
