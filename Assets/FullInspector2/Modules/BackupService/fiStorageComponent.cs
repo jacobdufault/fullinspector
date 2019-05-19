@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using FullInspector.Internal;
+﻿using FullInspector.Internal;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace FullInspector.BackupService {
@@ -24,15 +24,42 @@ namespace FullInspector.BackupService {
         /// Removes all backups that no longer have a target.
         /// </summary>
         public void RemoveInvalidBackups() {
+            bool removedAny = false;
             int i = 0;
             while (i < Objects.Count) {
                 if (Objects[i].Target.Target == null) {
                     Objects.RemoveAt(i);
+                    removedAny = true;
                 }
                 else {
                     ++i;
                 }
             }
+
+            if (removedAny) {
+                SetDirty();
+            }
         }
+
+
+        /// <summary>
+        ///     Unified method to set the storage dirty. Works with both prefab and scene storages.
+        /// </summary>
+        public void SetDirty() {
+            if (this == null) {
+                return;
+            }
+
+            if (fiLateBindings.PrefabUtility.IsPrefab(this)) {
+                fiLateBindings.EditorUtility.SetDirty(gameObject);
+                fiLateBindings.AssetDatabase.SaveAssets();
+                return;
+            }
+
+            if (!Application.isPlaying && gameObject.scene.IsValid()) {
+                fiLateBindings.SceneManagement.EditorSceneManager.MarkSceneDirty(gameObject.scene);
+            }
+        }
+
     }
 }

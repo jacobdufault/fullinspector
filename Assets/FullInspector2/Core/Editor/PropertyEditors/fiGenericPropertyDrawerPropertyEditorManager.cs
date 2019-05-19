@@ -5,6 +5,7 @@ using System.Linq;
 using FullSerializer;
 using UnityEditor;
 using UnityEngine;
+using System.Reflection;
 
 namespace FullInspector.Internal {
     public class fiGenericPropertyDrawerPropertyEditor<TContainer, T> : PropertyEditor<T>
@@ -147,28 +148,45 @@ namespace FullInspector.Internal {
             }
         }
 
-        private static readonly PropertyDrawerContainer[] _propertyDrawers;
+        private static readonly List<PropertyDrawerContainer> _propertyDrawers = new List<PropertyDrawerContainer>();
 
         static fiGenericPropertyDrawerPropertyEditorManager() {
-            _propertyDrawers =
-                (from assembly in fiRuntimeReflectionUtility.GetAllEditorAssemblies()
-                 from type in assembly.GetTypesWithoutException()
+            Assembly[] assemblies = fiRuntimeReflectionUtility.GetAllEditorAssembliesAsArray();
+            for (int i = 0; i < assemblies.Length; i++) {
+                Type[] types = assemblies[i].GetTypesWithoutException();
+                for (var j = 0; j < types.Length; j++) {
+                    var type = types[j];
+                    if (type == typeof(fiInspectorOnly_PropertyDrawer) || type == typeof(fiValuePropertyDrawer)) {
+                        continue;
+                    }
 
-                 let attrs = type.GetCustomAttributes(typeof(CustomPropertyDrawer), true)
-                 where attrs != null
+                    var attrs = type.GetCustomAttributes(typeof(CustomPropertyDrawer), true) as CustomPropertyDrawer[];
+                    if (attrs == null) {
+                        continue;
+                    }
 
-                 // Do not generate bindings for various the PropertyDrawer
-                 // binders
-                 where type != typeof(fiInspectorOnly_PropertyDrawer)
-                 where type != typeof(fiValuePropertyDrawer)
+                    for (int k = 0; k < attrs.Length; k++) {
+                        var attr = attrs[k];
+                        if (attr == null) {
+                            continue;
+                        }
 
-                 from CustomPropertyDrawer attr in attrs
+                        var container = new PropertyDrawerContainer() {
+                            // Unity renamed these fields after 4.3
+                            IsInherited =
+                                fiRuntimeReflectionUtility.ReadFields<CustomPropertyDrawer, bool>(
+                                        attr,
+                                        "m_UseForChildren",
+                                        "useForChildren"),
+                            PropertyType = fiRuntimeReflectionUtility.ReadFields<CustomPropertyDrawer, Type>(attr, "m_Type", "Type", "type")
 
-                 select new PropertyDrawerContainer {
-                     // Unity renamed these fields after 4.3
-                     IsInherited = fiRuntimeReflectionUtility.ReadFields<CustomPropertyDrawer, bool>(attr, "m_UseForChildren", "useForChildren"),
-                     PropertyType = fiRuntimeReflectionUtility.ReadFields<CustomPropertyDrawer, Type>(attr, "m_Type", "Type", "type") // Unity sure likes to rename things...
-                 }).ToArray();
+                            // Unity sure likes to rename things...
+                        };
+
+                        _propertyDrawers.Add(container);
+                    }
+                }
+            }
         }
 
         private static bool HasPropertyDrawer(Type type) {

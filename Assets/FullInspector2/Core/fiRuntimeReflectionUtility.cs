@@ -260,6 +260,21 @@ namespace FullInspector.Internal {
 #endif
         }
         private static List<Assembly> _cachedUserDefinedEditorAssemblies;
+        private static Assembly[] _cachedUserDefinedEditorAssembliesArray;
+
+
+        /// <summary>
+        /// Samve as <see cref="GetAllEditorAssemblies"/> but returns an array.
+        /// Useful for tighter loops.
+        /// </summary>
+        public static Assembly[] GetAllEditorAssembliesAsArray() {
+            if (_cachedUserDefinedEditorAssembliesArray == null) {
+                _cachedUserDefinedEditorAssembliesArray = GetAllEditorAssemblies().ToArray();
+            }
+
+            return _cachedUserDefinedEditorAssembliesArray;
+        }
+
 
         /// <summary>
         /// Gets all possible editor assemblies, including those defined by

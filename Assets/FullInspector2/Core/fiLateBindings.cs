@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityObject = UnityEngine.Object;
 
 namespace FullInspector.Internal {
@@ -16,6 +17,7 @@ namespace FullInspector.Internal {
     public static class fiLateBindings {
         public static class _Bindings {
             public static Func<string, Type, UnityObject> _AssetDatabase_LoadAssetAtPath;
+            public static Action _AssetDatabase_SaveAssets;
 
             public static Func<bool> _EditorApplication_isPlaying;
             public static Func<bool> _EditorApplication_isCompilingOrChangingToPlayMode;
@@ -31,6 +33,7 @@ namespace FullInspector.Internal {
             public static Action<string, string> _EditorPrefs_SetString;
 
             public static Action<UnityObject> _EditorUtility_SetDirty;
+            public static Func<Scene, bool> _SceneManagement_EditorSceneManager_MarkSceneDirty;
             public static Func<int, UnityObject> _EditorUtility_InstanceIdToObject;
             public static Func<UnityObject, bool> _EditorUtility_IsPersistent;
             public static Func<string, HideFlags, GameObject> _EditorUtility_CreateGameObjectWithHideFlags;
@@ -80,6 +83,12 @@ namespace FullInspector.Internal {
                     return _Bindings._AssetDatabase_LoadAssetAtPath(path, type);
                 }
                 return null;
+            }
+
+            public static void SaveAssets() {
+                if (VerifyBinding("AssetDatabase.SaveAssets", _Bindings._AssetDatabase_SaveAssets)) {
+                    _Bindings._AssetDatabase_SaveAssets();
+                }
             }
         }
 
@@ -176,6 +185,19 @@ namespace FullInspector.Internal {
                 var go = new GameObject(name);
                 go.hideFlags = hideFlags;
                 return go;
+            }
+        }
+
+
+        public static class SceneManagement {
+            public static class EditorSceneManager {
+                public static bool MarkSceneDirty(Scene scene) {
+                    if (VerifyBinding("EditorSceneManager.MarkSceneDirty", _Bindings._SceneManagement_EditorSceneManager_MarkSceneDirty)) {
+                        return _Bindings._SceneManagement_EditorSceneManager_MarkSceneDirty(scene);
+                    }
+
+                    return false;
+                }
             }
         }
 

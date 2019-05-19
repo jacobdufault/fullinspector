@@ -4,10 +4,9 @@ using UnityEngine;
 
 namespace FullInspector.BackupService {
     /// <summary>
-    /// Manages backups stored in prefab storage container. The prefab container
-    /// stores backups when Unity is in play-mode and when the backup target does
-    /// not live in the scene (an example would be a backup targeting another
-    /// prefab).
+    /// Manages backups stored in prefab storage container. The prefab container stores backups
+    /// when Unity is in play-mode and when the backup target does not live in the scene (an
+    /// example would be a backup targeting another prefab).
     /// </summary>
     public static class fiPrefabManager {
         private static string PrefabPath = fiUtility.CombinePaths(fiSettings.RootGeneratedDirectory, "fiBackupStorage.prefab");

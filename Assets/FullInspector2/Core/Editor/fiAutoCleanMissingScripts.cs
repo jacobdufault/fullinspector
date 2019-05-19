@@ -15,18 +15,17 @@ namespace FullInspector.Internal {
                 // NOTE: If this approach doesn't work, then we can use
                 //       RemoveComponent with the specific component type to
                 // remove. This is more similar to how RemoveMetadata works.
-                fiEditorUtility.RemoveMissingScripts(fiPersistentEditorStorage.SceneStorage);
-                EditorUtility.SetDirty(fiPersistentEditorStorage.SceneStorage);
-                fiEditorUtility.RemoveMissingScripts(fiPersistentEditorStorage.PrefabStorage);
+                foreach (var storage in fiPersistentEditorStorage.GetAllCachedSceneStorages()) {
+                    fiEditorUtility.RemoveMissingScripts(storage.gameObject);
+                    EditorUtility.SetDirty(storage);
+                }
+
+                fiEditorUtility.RemoveMissingScripts(fiPersistentEditorStorage.PrefabStorage.gameObject);
                 EditorUtility.SetDirty(fiPersistentEditorStorage.PrefabStorage);
 
-                if (fiPrefabManager.Storage != null) {
-                    fiEditorUtility.RemoveMissingScripts(fiPrefabManager.Storage.gameObject);
-                    EditorUtility.SetDirty(fiPrefabManager.Storage);
-                }
-                if (fiSceneManager.Storage != null) {
-                    fiEditorUtility.RemoveMissingScripts(fiSceneManager.Storage.gameObject);
-                    EditorUtility.SetDirty(fiSceneManager.Storage);
+                if (fiStorageManager.PrefabStorage != null) {
+                    fiEditorUtility.RemoveMissingScripts(fiStorageManager.PrefabStorage .gameObject);
+                    EditorUtility.SetDirty(fiStorageManager.PrefabStorage );
                 }
             });
         }

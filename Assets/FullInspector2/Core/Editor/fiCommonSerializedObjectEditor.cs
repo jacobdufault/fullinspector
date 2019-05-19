@@ -105,14 +105,12 @@ namespace FullInspector {
             BehaviorEditor.Get(target.GetType()).OnEditorDeactivate(target);
         }
 
-        private static void ShowBackupButton(UnityObject target) {
-            if (target is CommonBaseBehavior == false) {
+        private static void ShowBackupButton(fiUnityObjectReference target) {
+            if (target.Target is CommonBaseBehavior == false) {
                 return;
             }
 
-            var behavior = (CommonBaseBehavior)target;
-
-            if (fiStorageManager.HasBackups(behavior)) {
+            if (fiStorageManager.HasBackups(target)) {
                 // TODO: find a better location for these calls
                 fiStorageManager.MigrateStorage();
                 fiStorageManager.RemoveInvalidBackups();
@@ -129,16 +127,18 @@ namespace FullInspector {
                 GUILayout.Space(marginVertical);
                 GUI.Box(boxed, GUIContent.none);
 
+
                 {
                     List<fiSerializedObject> toRemove = new List<fiSerializedObject>();
 
                     GUILayout.BeginVertical(GUILayout.ExpandWidth(true));
-                    fiBackupEditorGUILayout.DrawBackupsFor(behavior, toRemove);
+                    fiBackupEditorGUILayout.DrawBackupsFor(target, toRemove);
                     GUILayout.EndVertical();
 
                     foreach (fiSerializedObject rem in toRemove) {
                         fiStorageManager.RemoveBackup(rem);
                     }
+
                 }
 
                 GUILayout.Space(marginVertical);
@@ -169,6 +169,7 @@ namespace FullInspector {
                 /* TODO: Support replacing the script with another one.
                 if (newScript != monoScript &&
                     element is MonoBehaviour && element is ISerializedObject) {
+
                     var root = ((MonoBehaviour)element).gameObject;
                     var newInstance = root.AddComponent(newScript.GetClass());
                     var newSerialized = new SerializedObject(newInstance);
@@ -209,21 +210,17 @@ namespace FullInspector {
             // 5. When these objects are next serialized, they will use the
             //    incorrect prefab data. Null check, sometimes there is no prefab
             // state.
-            if (fiPrefabManager.Storage == null || fiPrefabManager.Storage.SeenBaseBehaviors == null)
+            if (fiStorageManager.PrefabStorage  == null || fiStorageManager.PrefabStorage .SeenBaseBehaviors == null)
                 return;
 
-            if (fiPrefabManager.Storage.SeenBaseBehaviors.Contains(type.CSharpName()) == false) {
+            if (fiStorageManager.PrefabStorage .SeenBaseBehaviors.Contains(type.CSharpName()) == false) {
                 fiLog.Log(typeof(fiCommonSerializedObjectEditor),
                          "Saving all BaseBehaviors of type " + type.CSharpName());
 
-                fiPrefabManager.Storage.SeenBaseBehaviors.Add(type.CSharpName());
-                EditorUtility.SetDirty(fiPrefabManager.Storage);
+                fiStorageManager.PrefabStorage .SeenBaseBehaviors.Add(type.CSharpName());
+                EditorUtility.SetDirty(fiStorageManager.PrefabStorage );
                 fiSaveManager.SaveAll(type);
             }
-        }
-
-        public static void ShowInspectorForSerializedObject(UnityObject target) {
-            ShowInspectorForSerializedObject(new[] { target });
         }
 
         public static void ShowInspectorForSerializedObject(UnityObject[] targets) {
@@ -266,8 +263,13 @@ namespace FullInspector {
             }
         }
 
+        private fiUnityObjectReference _fiUnityObjectReference;
         public override void OnInspectorGUI() {
-            ShowBackupButton(target);
+            if (_fiUnityObjectReference == null) {
+                _fiUnityObjectReference = new fiUnityObjectReference(target, tryRestore: false);
+            }
+
+            ShowBackupButton(_fiUnityObjectReference);
             ShowInspectorForSerializedObject(targets);
         }
 

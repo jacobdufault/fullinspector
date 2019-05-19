@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using FullInspector.Internal;
+﻿using FullInspector.Internal;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityObject = UnityEngine.Object;
@@ -10,15 +10,22 @@ namespace FullInspector.BackupService {
     /// viewer.
     /// </summary>
     public class fiBackupEditorGUILayout {
-        public static void DrawBackupsFor(UnityObject target, List<fiSerializedObject> toRemove) {
+
+        public static void DrawBackupsFor(fiUnityObjectReference target, List<fiSerializedObject> toRemove) {
             bool showSpace = false;
 
             fiEditorGUI.PushHierarchyMode(false);
 
             fiGraphMetadata metadata = fiPersistentMetadata.GetMetadataFor(target);
 
-            foreach (fiSerializedObject backup in fiStorageManager.SerializedObjects) {
-                if (backup.Target.Target != target) {
+            var t = target.Target as CommonBaseBehavior;
+            if (t == null) {
+                return;
+            }
+
+            var backups = fiBackupManager.GetBackupsFor(t);
+            foreach (fiSerializedObject backup in backups) {
+                if (!Equals(backup.Target, target)) {
                     continue;
                 }
 
@@ -88,7 +95,7 @@ namespace FullInspector.BackupService {
 
                 string label = member.InspectedProperty.DisplayName;
                 if (member.ShouldRestore.Enabled) {
-                    editor.FirstEditor.EditWithGUILayout(new GUIContent(label), member.Value, metadata.Enter(label, null));
+                    editor.FirstEditor.EditWithGUILayout(new GUIContent(label), member.Value, metadata.Enter(label, metadata.Context));
                 }
                 else {
                     GUILayout.Label(new GUIContent(label + " (will not restore)"));
